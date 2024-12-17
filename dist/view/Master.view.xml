@@ -1,0 +1,265 @@
+<mvc:View
+    controllerName="sap.ui.demo.fiori2.controller.Master"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:core="sap.ui.core"
+>
+    <f:DynamicPage
+        id="dynamicPageId"
+        toggleHeaderOnTitleClick="false"
+    >
+        <!-- DynamicPage Title -->
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading>
+                    <Title
+                        text="Prodotti ({products>/ProductCollectionStats/Counts/Total})"
+                    />
+                </f:heading>
+            </f:DynamicPageTitle>
+        </f:title>
+        <f:header>
+            <f:DynamicPageHeader pinnable="true">
+                <f:content>
+                    <Toolbar>
+                        <Button
+                            press="navToHome"
+                            type="Back"
+                            text="Torna alla Home"
+                        />
+                    </Toolbar>
+
+                    <fb:FilterBar
+                        id="filterbar"
+                        persistencyKey="myPersKey"
+                        useToolbar="false"
+                        search=".onSearch"
+                        filterChange=".onFilterChange"
+                        afterVariantLoad=".onAfterVariantLoad"
+                    >
+                        <fb:filterGroupItems>
+                            <fb:FilterGroupItem
+                                name="Codice Cliente"
+                                label="Codice Cliente"
+                                groupName="Group1"
+                                visibleInFilterBar="true"
+                            >
+                                <fb:control>
+                                    <MultiComboBox
+                                        name=""
+                                        selectionChange=".onSelectionChange"
+                                        items="{
+											path: '/ProductNames',
+											templateShareable: true
+										}"
+                                    >
+                                        <core:Item
+                                            key="{key}"
+                                            text="{name}"
+                                        />
+                                    </MultiComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem
+                                name="Codice Articolo"
+                                label="Codice Articolo"
+                                groupName="Group1"
+                                visibleInFilterBar="true"
+                            >
+                                <fb:control>
+                                    <MultiComboBox
+                                        name="Category"
+                                        selectionChange=".onSelectionChange"
+                                        items="{
+											path: '/ProductCategories',
+											templateShareable: true
+										}"
+                                    >
+                                        <core:Item
+                                            key="{key}"
+                                            text="{name}"
+                                        />
+                                    </MultiComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem
+                                name="Ragione Sociale"
+                                label="Ragione Sociale"
+                                groupName="Group1"
+                                visibleInFilterBar="true"
+                            >
+                                <fb:control>
+                                    <MultiComboBox
+                                        name="SupplierName"
+                                        selectionChange=".onSelectionChange"
+                                        items="{
+											path: '/ProductSuppliers',
+											templateShareable: true
+										}"
+                                    >
+                                        <core:Item
+                                            key="{key}"
+                                            text="{name}"
+                                        />
+                                    </MultiComboBox>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                        </fb:filterGroupItems>
+                    </fb:FilterBar>
+                </f:content>
+            </f:DynamicPageHeader>
+        </f:header>
+        <!-- DynamicPage Content -->
+        <f:content>
+            <VBox fitContainer="true">
+                <OverflowToolbar class="sapFDynamicPageAlignContent">
+                    <ToolbarSpacer />
+                    <!-- <SearchField search=".onSearch" width="17.5rem"/> -->
+                    <!-- <OverflowToolbarButton icon="sap-icon://add" text="Add" type="Transparent" press=".onAdd"/> -->
+                    <OverflowToolbarButton
+                        icon="sap-icon://sort"
+                        text="Sort"
+                        type="Transparent"
+                        press=".onSort"
+                    />
+                </OverflowToolbar>
+                <Table
+                    id="productsTable"
+                    inset="false"
+                    items="{
+						path: 'products>/ProductCollection',
+						sorter: {
+							path: 'Name'
+						}
+					}"
+                    class="sapFDynamicPageAlignContent"
+                    width="auto"
+                >
+                    <columns>
+                        <Column width="12em">
+                            <Text text="Cod. Cliente/Rag. Soc." />
+                        </Column>
+                        <Column width="12em">
+                            <Text text="Articolo" />
+                        </Column>
+                        <Column width="6em">
+                            <Text text="1 sett." />
+                        </Column>
+                        <Column width="6em">
+                            <Text text="2 sett" />
+                        </Column>
+                        <Column width="6em">
+                            <Text text="3 sett" />
+                        </Column>
+                        <Column width="6em">
+                            <Text text="4 sett" />
+                        </Column>
+                        <Column width="6em">
+                            <Text text="5 sett" />
+                        </Column>
+                        <Column width="6em">
+                            <Text text="6 sett" />
+                        </Column>
+                        <Column width="6em">
+                            <Text text="7 sett" />
+                        </Column>
+                        <Column width="6em">
+                            <Text text="8 sett" />
+                        </Column>
+                        <Column width="6em">
+                            <Text text="Cod. Tot" />
+                        </Column>
+                        <Column width="6em">
+                            <Text text="Azz" />
+                        </Column>
+                        <Column width="6em">
+                            <Text text="Giac. Finito" />
+                        </Column>
+                        <Column width="6em">
+                            <Text text="Impegno Cong." />
+                        </Column>
+                        <Column width="6em">
+                            <Text text="Giac. Scalato" />
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem
+                            type="Navigation"
+                            press=".onListItemPress"
+                        >
+                            <cells>
+                                <ObjectIdentifier
+                                    title="{products>Name}"
+                                    text="{products>ProductId}"
+                                />
+                                <ObjectIdentifier
+                                    text="{products>codice_articolo}"
+                                />
+                                <ObjectIdentifier
+                                    title="{products>variazioni_quantita/0/quantita}"
+                                    text="{products>variazioni_percentuali/0/percentuale}{products>CurrencyCode}"
+                                />
+                                <ObjectIdentifier
+                                    title="{products>variazioni_quantita/1/quantita}"
+                                    text="{products>variazioni_percentuali/1/percentuale}{products>CurrencyCode}"
+                                />
+                                <ObjectIdentifier
+                                    title="{products>variazioni_quantita/2/quantita}"
+                                    text="{products>variazioni_percentuali/2/percentuale}{products>CurrencyCode}"
+                                />
+                                <ObjectIdentifier
+                                    title="{products>variazioni_quantita/3/quantita}"
+                                    text="{products>variazioni_percentuali/3/percentuale}{products>CurrencyCode}"
+                                />
+                                <ObjectIdentifier
+                                    title="{products>variazioni_quantita/4/quantita}"
+                                    text="{products>variazioni_percentuali/4/percentuale}{products>CurrencyCode}"
+                                />
+                                <ObjectIdentifier
+                                    title="{products>variazioni_quantita/5/quantita}"
+                                    text="{products>variazioni_percentuali/5/percentuale}{products>CurrencyCode}"
+                                />
+                                <ObjectIdentifier
+                                    title="{products>variazioni_quantita/6/quantita}"
+                                    text="{products>variazioni_percentuali/6/percentuale}{products>CurrencyCode}"
+                                />
+                                <ObjectIdentifier
+                                    title="{products>variazioni_quantita/7/quantita}"
+                                    text="{products>variazioni_percentuali/7/percentuale}{products>CurrencyCode}"
+                                />
+                                <ObjectIdentifier title="{products>Depth}" />
+                                <ObjectIdentifier title="{products>Azz}" />
+                                <ObjectIdentifier
+                                    title="{products>giac_finito}"
+                                />
+                                <ObjectIdentifier
+                                    title="{products>impegno_cong}"
+                                />
+                                <ObjectIdentifier
+                                    title="{products>giac_scalato}"
+                                />
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </VBox>
+        </f:content>
+
+        <!-- DynamicPage Footer -->
+        <f:footer>
+            <OverflowToolbar>
+                <ToolbarSpacer />
+                <Button
+                    type="Accept"
+                    text="Accept"
+                />
+                <Button
+                    type="Reject"
+                    text="Reject"
+                />
+            </OverflowToolbar>
+        </f:footer>
+    </f:DynamicPage>
+</mvc:View>

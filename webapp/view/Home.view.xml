@@ -1,0 +1,36 @@
+<mvc:View
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    controllerName="sap.ui.demo.fiori2.controller.Home">
+    <Page title="Home">
+        <content>
+            <FlexBox
+                justifyContent="Center"
+                alignItems="Center"
+                direction="Row"
+                class="sapUiSmallMarginTop"
+                width="100%">
+                <items>
+                    <GenericTile
+                        header="CONFRONTO ULTIME DUE PROGRAMMAZIONI"
+                        subheader="Dettaglio codice articolo"
+                        press="onNavigateToPage1"
+                        class="tileMargin">
+                        <TileContent>
+                            <ImageContent src="sap-icon://bbyd-dashboard" />
+                        </TileContent>
+                    </GenericTile>
+                    <GenericTile
+                        header="CONFRONTO ULTIME DUE PROGRAMMAZIONI"
+                        subheader="Dettaglio percentuale"
+                        press="onNavigateToPage2"
+                        class="tileMargin">
+                        <TileContent>
+                            <ImageContent src="sap-icon://business-objects-experience" />
+                        </TileContent>
+                    </GenericTile>
+                </items>
+            </FlexBox>
+        </content>
+    </Page>
+</mvc:View>

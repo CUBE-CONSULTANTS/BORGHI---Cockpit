@@ -1,0 +1,357 @@
+{
+	"ProductCollection": [
+		{
+			"ProductId": "8",
+			"Category": "Laptops",
+			"MainCategory": "Computer Systems",
+			"TaxTarifCode": "1",
+			"SupplierName": "Very Best Screens",
+			"WeightMeasure": 7.3,
+			"WeightUnit": "KG",
+			"Description": "Notebook Basic 15 with 2,80 GHz quad core, 15\" LCD, 4 GB DDR3 RAM, 500 GB Hard Disc, Windows 8 Pro",
+			"Name": "Ferrari",
+			"DateOfSale": "2017-03-26",
+			"ProductPicUrl": "https://sdk.openui5.org/test-resources/sap/ui/documentation/sdk/images/HT-1000.jpg",
+			"Status": "Available",
+			"Quantity": 57,
+			"Azz": "S",
+			"CurrencyCode": "%",
+			"Price": 1456.78,
+			"variazioni_quantita": [
+				{ "settimana": "1", "quantita": 15 },
+				{ "settimana": "2", "quantita": 25 },
+				{ "settimana": "3", "quantita": 35 },
+				{ "settimana": "4", "quantita": 45 },
+				{ "settimana": "5", "quantita": 55 },
+				{ "settimana": "6", "quantita": 65 },
+				{ "settimana": "7", "quantita": 75 },
+				{ "settimana": "8", "quantita": 85 }
+			],
+			"variazioni_percentuali": [
+				{ "settimana": "1", "percentuale": 12 },
+				{ "settimana": "2", "percentuale": 22 },
+				{ "settimana": "3", "percentuale": 32 },
+				{ "settimana": "4", "percentuale": 42 },
+				{ "settimana": "5", "percentuale": 52 },
+				{ "settimana": "6", "percentuale": 62 },
+				{ "settimana": "7", "percentuale": 72 },
+				{ "settimana": "8", "percentuale": 82 }
+			],
+			"Width": 30,
+			"Depth": 18,
+			"Height": 3,
+			"DimUnit": "cm",
+			"codice_articolo": "ART_001",
+			"giac_finito": "25",
+			"impegno_cong": "10",
+			"giac_scalato": "5"
+		},
+		{
+			"ProductId": "8",
+			"Category": "Laptops",
+			"MainCategory": "Computer Systems",
+			"TaxTarifCode": "2",
+			"SupplierName": "Top Quality Tech",
+			"WeightMeasure": 6.5,
+			"WeightUnit": "KG",
+			"Description": "Notebook Advanced 13 with 3.20 GHz quad core, 13\" Retina, 8 GB DDR4 RAM, 1 TB SSD, Windows 10 Pro",
+			"Name": "Ferrari",
+			"DateOfSale": "2019-06-15",
+			"ProductPicUrl": "https://sdk.openui5.org/test-resources/sap/ui/documentation/sdk/images/HT-1001.jpg",
+			"Status": "Available",
+			"Quantity": 42,
+			"Azz": "S",
+			"CurrencyCode": "%",
+			"Price": 1799.99,
+			"variazioni_quantita": [
+				{ "settimana": "1", "quantita": 12 },
+				{ "settimana": "2", "quantita": 22 },
+				{ "settimana": "3", "quantita": 32 },
+				{ "settimana": "4", "quantita": 42 },
+				{ "settimana": "5", "quantita": 52 },
+				{ "settimana": "6", "quantita": 62 },
+				{ "settimana": "7", "quantita": 72 },
+				{ "settimana": "8", "quantita": 82 }
+			],
+			"variazioni_percentuali": [
+				{ "settimana": "1", "percentuale": 10 },
+				{ "settimana": "2", "percentuale": 20 },
+				{ "settimana": "3", "percentuale": 30 },
+				{ "settimana": "4", "percentuale": 40 },
+				{ "settimana": "5", "percentuale": 50 },
+				{ "settimana": "6", "percentuale": 60 },
+				{ "settimana": "7", "percentuale": 70 },
+				{ "settimana": "8", "percentuale": 80 }
+			],
+			"Width": 28,
+			"Depth": 17,
+			"Height": 2.5,
+			"DimUnit": "cm",
+			"codice_articolo": "ART_002",
+			"giac_finito": "30",
+			"impegno_cong": "15",
+			"giac_scalato": "10"
+		},
+		{
+			"ProductId": "8",
+			"Category": "Smartphones",
+			"MainCategory": "Mobile Devices",
+			"TaxTarifCode": "1",
+			"SupplierName": "World Mobile Tech",
+			"WeightMeasure": 0.8,
+			"WeightUnit": "KG",
+			"Description": "Smartphone Pro 6.4 with 3.0 GHz octa core, 6.4\" OLED, 12 GB RAM, 256 GB Storage, Android 11",
+			"Name": "Ferrari",
+			"DateOfSale": "2021-08-05",
+			"ProductPicUrl": "https://sdk.openui5.org/test-resources/sap/ui/documentation/sdk/images/HT-1002.jpg",
+			"Status": "Out of Stock",
+			"Quantity": 0,
+			"Azz": "S",
+			"CurrencyCode": "%",
+			"Price": 999.99,
+			"variazioni_quantita": [
+				{ "settimana": "1", "quantita": 5 },
+				{ "settimana": "2", "quantita": 10 },
+				{ "settimana": "3", "quantita": 15 },
+				{ "settimana": "4", "quantita": 20 },
+				{ "settimana": "5", "quantita": 25 },
+				{ "settimana": "6", "quantita": 30 },
+				{ "settimana": "7", "quantita": 35 },
+				{ "settimana": "8", "quantita": 40 }
+			],
+			"variazioni_percentuali": [
+				{ "settimana": "1", "percentuale": 5 },
+				{ "settimana": "2", "percentuale": 15 },
+				{ "settimana": "3", "percentuale": 25 },
+				{ "settimana": "4", "percentuale": 35 },
+				{ "settimana": "5", "percentuale": 45 },
+				{ "settimana": "6", "percentuale": 55 },
+				{ "settimana": "7", "percentuale": 65 },
+				{ "settimana": "8", "percentuale": 75 }
+			],
+			"Width": 7.5,
+			"Depth": 0.8,
+			"Height": 15,
+			"DimUnit": "cm",
+			"codice_articolo": "ART_003",
+			"giac_finito": "0",
+			"impegno_cong": "0",
+			"giac_scalato": "0"
+		},
+		{
+			"ProductId": "8",
+			"Category": "Tablets",
+			"MainCategory": "Mobile Devices",
+			"TaxTarifCode": "2",
+			"SupplierName": "Tech Giants Co.",
+			"WeightMeasure": 1.2,
+			"WeightUnit": "KG",
+			"Description": "Tablet Pro 11 with 2.50 GHz hexa core, 11\" IPS LCD, 6 GB RAM, 512 GB SSD, iOS 14",
+			"Name": "Ferrari",
+			"DateOfSale": "2020-12-01",
+			"ProductPicUrl": "https://sdk.openui5.org/test-resources/sap/ui/documentation/sdk/images/HT-1003.jpg",
+			"Status": "Available",
+			"Quantity": 120,
+			"Azz": "N",
+			"CurrencyCode": "%",
+			"Price": 1299.00,
+			"variazioni_quantita": [
+				{ "settimana": "1", "quantita": 25 },
+				{ "settimana": "2", "quantita": 35 },
+				{ "settimana": "3", "quantita": 45 },
+				{ "settimana": "4", "quantita": 55 },
+				{ "settimana": "5", "quantita": 65 },
+				{ "settimana": "6", "quantita": 75 },
+				{ "settimana": "7", "quantita": 85 },
+				{ "settimana": "8", "quantita": 95 }
+			],
+			"variazioni_percentuali": [
+				{ "settimana": "1", "percentuale": 8 },
+				{ "settimana": "2", "percentuale": 18 },
+				{ "settimana": "3", "percentuale": 28 },
+				{ "settimana": "4", "percentuale": 38 },
+				{ "settimana": "5", "percentuale": 48 },
+				{ "settimana": "6", "percentuale": 58 },
+				{ "settimana": "7", "percentuale": 68 },
+				{ "settimana": "8", "percentuale": 78 }
+			],
+			"Width": 25,
+			"Depth": 0.7,
+			"Height": 17,
+			"DimUnit": "cm",
+			"codice_articolo": "ART_004",
+			"giac_finito": "100",
+			"impegno_cong": "50",
+			"giac_scalato": "20"
+		}
+
+	],
+	"ProductCollectionStats": {
+		"Counts": {
+			"Total": 5,
+			"Weight": {
+				"Ok": 53,
+				"Heavy": 51,
+				"Overweight": 19
+			}
+		},
+		"Groups": {
+			"Category": {
+				"Accessories" : 34,
+				"Desktop Computers" : 7,
+				"Flat Screens" : 2,
+				"Keyboards" : 4,
+				"Laptops" : 11,
+				"Printers" : 9,
+				"Smartphones and Tablets" : 9,
+				"Mice" : 7,
+				"Computer System Accessories" : 8,
+				"Graphics Card" : 4,
+				"Scanners" : 4,
+				"Speakers" : 3,
+				"Software" : 8,
+				"Telekommunikation" : 3,
+				"Servers" : 3,
+				"Flat Screen TVs" : 3
+			},
+			"SupplierName": {
+				"Titanium": 21,
+				"Technocom": 22,
+				"Red Point Stores": 7,
+				"Very Best Screens": 14,
+				"Smartcards": 2,
+				"Alpha Printers": 5,
+				"Printer for All": 8,
+				"Oxynum": 8,
+				"Fasttech": 15,
+				"Ultrasonic United": 15,
+				"Speaker Experts": 3,
+				"Brainsoft": 3
+			}
+		},
+		"Filters": [
+			{
+				"type": "Category",
+				"values": [
+					{
+						"text": "Accessories",
+						"data": 34
+					},
+					{
+						"text": "Desktop Computers",
+						"data": 7
+					},
+					{
+						"text": "Flat Screens",
+						"data": 2
+					},
+					{
+						"text": "Keyboards",
+						"data": 4
+					},
+					{
+						"text": "Laptops",
+						"data": 11
+					},
+					{
+						"text": "Printers",
+						"data": 9
+					},
+					{
+						"text": "Smartphones and Tablets",
+						"data": 9
+					},
+					{
+						"text": "Mice",
+						"data": 7
+					},
+					{
+						"text": "Computer System Accessories",
+						"data": 8
+					},
+					{
+						"text": "Graphics Card",
+						"data": 4
+					},
+					{
+						"text": "Scanners",
+						"data": 4
+					},
+					{
+						"text": "Speakers",
+						"data": 3
+					},
+					{
+						"text": "Software",
+						"data": 8
+					},
+					{
+						"text": "Telekommunikation",
+						"data": 3
+					},
+					{
+						"text": "Servers",
+						"data": 3
+					},
+					{
+					  "text": "Flat Screen TVs",
+					  "data": 3
+					}
+				]
+			},
+			{
+				"type": "SupplierName",
+				"values": [
+					{
+					"text": "Titanium",
+					"data": 21
+				  },
+				  {
+					"text": "Technocom",
+					"data": 22
+				  },
+				  {
+					"text": "Red Point Stores",
+					"data": 7
+				  },
+				  {
+					"text": "Very Best Screens",
+					"data": 14
+				  },
+				  {
+					"text": "Smartcards",
+					"data": 2
+				  },
+				  {
+					"text": "Alpha Printers",
+					"data": 5
+				  },
+				  {
+					"text": "Printer for All",
+					"data": 8
+				  },
+				  {
+					"text": "Oxynum",
+					"data": 8
+				  },
+				  {
+					"text": "Fasttech",
+					"data": 15
+				  },
+				  {
+					"text": "Ultrasonic United",
+					"data": 15
+				  },
+				  {
+					"text": "Speaker Experts",
+					"data": 3
+				  },
+				  {
+					"text": "Brainsoft",
+					"data": 3
+				  }
+				]
+			}
+		]
+	}
+}

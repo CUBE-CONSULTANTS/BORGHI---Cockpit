@@ -1,0 +1,148 @@
+<mvc:View
+    controllerName="sap.ui.demo.fiori2.controller.Master2"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:viz="sap.viz.ui5.controls"
+    xmlns:viz.data="sap.viz.ui5.data"
+    xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+    xmlns:layout="sap.ui.layout"
+    xmlns:form="sap.ui.layout.form">
+
+    <Page title="Confronto Programmazioni Clienti">
+        <content>
+            <!-- Informazioni Cliente con ObjectHeader -->
+            <VBox class="objectHeader">
+                <Title text="{cliente>/Cliente/RagioneSociale}" level="H1" class="pageTitle"/>
+                <ObjectHeader
+                    number="{cliente>/Cliente/CodiceInterno}"
+                    numberUnit="Codice Cliente"
+                    intro="{cliente>/Cliente/CodiceFiscale}"
+                    icon="sap-icon://customer">
+                </ObjectHeader>
+            </VBox>
+
+            <!-- IconTabBar per organizzare le sezioni -->
+            <IconTabBar class="iconTabBar">
+                <!-- Tab 1: Dettaglio Quantità -->
+                <items>
+                    <IconTabFilter text="Dettaglio Quantità" icon="sap-icon://number-sign">
+                        <VBox>
+                            <Table inset="false">
+                                <headerToolbar>
+                                    <Toolbar class="tableHeader">
+                                        <Title text="Dettaglio Quantità (per settimana)" />
+                                    </Toolbar>
+                                </headerToolbar>
+                                <columns>
+                                    <Column>
+                                        <Text text="Descrizione" class="tableColumn"/>
+                                    </Column>
+                                    <!-- Generare dinamicamente le colonne basate sulle settimane -->
+                                    <Column>
+                                        <Text text="202303" class="tableColumn"/>
+                                    </Column>
+                                    <Column>
+                                        <Text text="202304" class="tableColumn"/>
+                                    </Column>
+                                    <Column>
+                                        <Text text="202305" class="tableColumn"/>
+                                    </Column>
+                                    <!-- Continua per tutte le settimane -->
+                                </columns>
+                                <items>
+                                    <!-- Riga per IN ORDINE (PEZZI) -->
+                                    <ColumnListItem>
+                                        <cells>
+                                            <Text text="IN ORDINE (PEZZI)" />
+                                            <Text text="{cliente>/Cliente/DettaglioQuantita/0/QuantitaTotale}" />
+                                            <Text text="{cliente>/Cliente/DettaglioQuantita/1/QuantitaTotale}" />
+                                            <!-- Continua per tutte le settimane -->
+                                        </cells>
+                                    </ColumnListItem>
+                                    <!-- Riga per VARIAZIONI POSITIVE -->
+                                    <ColumnListItem>
+                                        <cells>
+                                            <Text text="VARIAZIONI POSITIVE" />
+                                            <Text text="{cliente>/Cliente/VariazioniQuantita/0/VariazionePositiva}" />
+                                            <!-- Continua per tutte le settimane -->
+                                        </cells>
+                                    </ColumnListItem>
+                                    <!-- Riga per VARIAZIONI NEGATIVE -->
+                                    <ColumnListItem>
+                                        <cells>
+                                            <Text text="VARIAZIONI NEGATIVE" />
+                                            <Text text="{cliente>/Cliente/VariazioniQuantita/0/VariazioneNegativa}" />
+                                            <!-- Continua per tutte le settimane -->
+                                        </cells>
+                                    </ColumnListItem>
+                                </items>
+                            </Table>
+                        </VBox>
+                    </IconTabFilter>
+
+                    <!-- Tab 2: Grafici -->
+                    <IconTabFilter text="Grafici" icon="sap-icon://bar-chart">
+                        <VBox>
+                            <!-- Grafico Variazioni (PEZZI) -->
+                            <VBox width="100%" class="chartContainer">
+                                <Title text="Variazioni (PEZZI)" level="H2" />
+                                <viz:VizFrame
+                                    id="quantitaChart"
+                                    uiConfig="{applicationSet:'fiori'}"
+                                    vizType="column"
+                                    width="100%"
+                                    height="400px">
+                                    <viz:dataset>
+                                        <viz.data:FlattenedDataset data="{cliente>/Cliente/VariazioniQuantita}">
+                                            <viz.data:dimensions>
+                                                <viz.data:DimensionDefinition name="Settimana" value="{cliente>Settimana}" />
+                                            </viz.data:dimensions>
+                                            <viz.data:measures>
+                                                <viz.data:MeasureDefinition name="Variazioni Positive" value="{cliente>VariazionePositiva}" />
+                                                <viz.data:MeasureDefinition name="Variazioni Negative" value="{cliente>VariazioneNegativa}" />
+                                            </viz.data:measures>
+                                        </viz.data:FlattenedDataset>
+                                    </viz:dataset>
+                                    <viz:feeds>
+                                        <viz.feeds:FeedItem uid="valueAxis" type="Measure" values="Variazioni Positive" />
+                                        <viz.feeds:FeedItem uid="valueAxis" type="Measure" values="Variazioni Negative" />
+                                        <viz.feeds:FeedItem uid="categoryAxis" type="Dimension" values="Settimana" />
+                                    </viz:feeds>
+                                </viz:VizFrame>
+                            </VBox>
+
+                            <!-- Grafico Variazioni (%) -->
+                            <VBox width="100%" class="chartContainer">
+                                <Title text="Variazioni (%)" level="H2" />
+                                <viz:VizFrame
+                                    id="percentualeChart"
+                                    uiConfig="{applicationSet:'fiori'}"
+                                    vizType="column"
+                                    width="100%"
+                                    height="400px">
+                                    <viz:dataset>
+                                        <viz.data:FlattenedDataset data="{cliente>/Cliente/VariazioniPercentuali}">
+                                            <viz.data:dimensions>
+                                                <viz.data:DimensionDefinition name="Settimana" value="{cliente>Settimana}" />
+                                            </viz.data:dimensions>
+                                            <viz.data:measures>
+                                                <viz.data:MeasureDefinition name="Variazioni % Positive" value="{cliente>VariazionePercentualePositiva}" />
+                                                <viz.data:MeasureDefinition name="Variazioni % Negative" value="{cliente>VariazionePercentualeNegativa}" />
+                                            </viz.data:measures>
+                                        </viz.data:FlattenedDataset>
+                                    </viz:dataset>
+                                    <viz:feeds>
+                                        <viz.feeds:FeedItem uid="valueAxis" type="Measure" values="Variazioni % Positive" />
+                                        <viz.feeds:FeedItem uid="valueAxis" type="Measure" values="Variazioni % Negative" />
+                                        <viz.feeds:FeedItem uid="categoryAxis" type="Dimension" values="Settimana" />
+                                    </viz:feeds>
+                                </viz:VizFrame>
+                            </VBox>
+                        </VBox>
+                    </IconTabFilter>
+                </items>
+            </IconTabBar>
+        </content>
+    </Page>
+</mvc:View>
