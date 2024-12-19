@@ -29,6 +29,15 @@
                             <ImageContent src="sap-icon://business-objects-experience" />
                         </TileContent>
                     </GenericTile>
+                    <GenericTile
+                        header="COCKPIT ACQUISIZIONE EDI"
+                        subheader="Storicizzazione dati"
+                        press="onNavigateToPage3"
+                        class="tileMargin">
+                        <TileContent>
+                            <ImageContent src="sap-icon://history" />
+                        </TileContent>
+                    </GenericTile>
                 </items>
             </FlexBox>
         </content>

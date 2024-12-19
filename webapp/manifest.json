@@ -66,11 +66,24 @@
 					"target": "master2"
 				},
 				{
+					"pattern": "master3",
+					"name": "master3",
+					"target": "master3"
+				},
+				{
 					"pattern": "detail/{product}/{layout}",
 					"name": "detail",
 					"target": [
 						"master",
 						"detail"
+					]
+				},
+				{
+					"pattern": "detailMaster3/{product}/{layout}",
+					"name": "detailMaster3",
+					"target": [
+						"master3",
+						"detailMaster3"
 					]
 				}
 				
@@ -91,8 +104,18 @@
 					"controlAggregation": "beginColumnPages",
 					"viewLevel": 2
 				},
+				"master3": {
+					"viewName": "Master3",
+					"controlAggregation": "beginColumnPages",
+					"viewLevel": 2
+				},
 				"detail": {
 					"viewName": "Detail",
+					"controlAggregation": "midColumnPages",
+					"viewLevel": 2
+				},
+				"detailMaster3": {
+					"viewName": "DetailMaster3",
 					"controlAggregation": "midColumnPages",
 					"viewLevel": 2
 				}

@@ -15,6 +15,7 @@ sap.ui.define([
 		init: function () {
 			var oModel,
 				oProductsModel,
+				// oMaster3Model,
 				oRouter;
 
 			UIComponent.prototype.init.apply(this, arguments);
@@ -26,6 +27,10 @@ sap.ui.define([
 			oProductsModel = new JSONModel(sap.ui.require.toUrl('sap/ui/demo/fiori2/mockdata/products.json'));
 			oProductsModel.setSizeLimit(1000);
 			this.setModel(oProductsModel, 'products');
+
+			// oMaster3Model = new JSONModel(sap.ui.require.toUrl('sap/ui/demo/fiori2/mockdata/master3.json'));
+			// this.setModel(oMaster3Model, 'master3');
+			
 
 			oRouter = this.getRouter();
 			oRouter.attachBeforeRouteMatched(this._onBeforeRouteMatched, this);

@@ -1,0 +1,443 @@
+{
+    "Master3": [
+    {
+      "CompanyName": "MAN",
+      "DataRicezione": "Data ricezione",
+      "Materiale": "Materiale",
+      "Stato": "OK",
+      "MessaggioStato": "Messaggio",
+      "Dettaglio": [
+        {
+          "Week": "2023-W40",
+          "TotalQuantity": 1000,
+          "TotalVariation": 50,
+          "PositiveVariation": 70,
+          "NegativeVariation": -20,
+          "VariationPercentage": 5
+        },
+        {
+          "Week": "2023-W41",
+          "TotalQuantity": 1200,
+          "TotalVariation": -30,
+          "PositiveVariation": 40,
+          "NegativeVariation": -70,
+          "VariationPercentage": -2.5
+        },
+        {
+          "Week": "2023-W42",
+          "TotalQuantity": 1100,
+          "TotalVariation": 20,
+          "PositiveVariation": 50,
+          "NegativeVariation": -30,
+          "VariationPercentage": 1.82
+        },
+        {
+          "Week": "2023-W43",
+          "TotalQuantity": 900,
+          "TotalVariation": 60,
+          "PositiveVariation": 80,
+          "NegativeVariation": -20,
+          "VariationPercentage": 6.67
+        },
+        {
+          "Week": "2023-W44",
+          "TotalQuantity": 950,
+          "TotalVariation": -10,
+          "PositiveVariation": 30,
+          "NegativeVariation": -40,
+          "VariationPercentage": -1.05
+        },
+        {
+          "Week": "2023-W45",
+          "TotalQuantity": 1050,
+          "TotalVariation": 25,
+          "PositiveVariation": 55,
+          "NegativeVariation": -30,
+          "VariationPercentage": 2.38
+        },
+        {
+          "Week": "2023-W46",
+          "TotalQuantity": 1150,
+          "TotalVariation": -15,
+          "PositiveVariation": 20,
+          "NegativeVariation": -35,
+          "VariationPercentage": -1.3
+        },
+        {
+          "Week": "2023-W47",
+          "TotalQuantity": 1000,
+          "TotalVariation": 40,
+          "PositiveVariation": 60,
+          "NegativeVariation": -20,
+          "VariationPercentage": 4
+        }
+      ]
+    },
+    {
+      "CompanyName": "Deutz",
+      "DataRicezione": "Data ricezione",
+      "Materiale": "Materiale",
+      "Stato": "KO",
+      "MessaggioStato": "Messaggio",
+      "Dettaglio": [
+        {
+          "Week": "2023-W40",
+          "TotalQuantity": 800,
+          "TotalVariation": -20,
+          "PositiveVariation": 30,
+          "NegativeVariation": -50,
+          "VariationPercentage": -2.5
+        },
+        {
+          "Week": "2023-W41",
+          "TotalQuantity": 850,
+          "TotalVariation": 35,
+          "PositiveVariation": 50,
+          "NegativeVariation": -15,
+          "VariationPercentage": 4.12
+        },
+        {
+          "Week": "2023-W42",
+          "TotalQuantity": 900,
+          "TotalVariation": 10,
+          "PositiveVariation": 40,
+          "NegativeVariation": -30,
+          "VariationPercentage": 1.11
+        },
+        {
+          "Week": "2023-W43",
+          "TotalQuantity": 950,
+          "TotalVariation": -25,
+          "PositiveVariation": 20,
+          "NegativeVariation": -45,
+          "VariationPercentage": -2.63
+        },
+        {
+          "Week": "2023-W44",
+          "TotalQuantity": 1000,
+          "TotalVariation": 50,
+          "PositiveVariation": 70,
+          "NegativeVariation": -20,
+          "VariationPercentage": 5
+        },
+        {
+          "Week": "2023-W45",
+          "TotalQuantity": 1050,
+          "TotalVariation": -30,
+          "PositiveVariation": 25,
+          "NegativeVariation": -55,
+          "VariationPercentage": -2.86
+        },
+        {
+          "Week": "2023-W46",
+          "TotalQuantity": 1100,
+          "TotalVariation": 40,
+          "PositiveVariation": 60,
+          "NegativeVariation": -20,
+          "VariationPercentage": 3.64
+        },
+        {
+          "Week": "2023-W47",
+          "TotalQuantity": 1150,
+          "TotalVariation": -10,
+          "PositiveVariation": 30,
+          "NegativeVariation": -40,
+          "VariationPercentage": -0.87
+        }
+      ]
+    },
+    {
+     "CompanyName": "Opel",
+      "DataRicezione": "Data ricezione",
+      "Materiale": "Materiale",
+      "Stato": "W",
+      "MessaggioStato": "Messaggio",
+      "Dettaglio": [
+        {
+          "Week": "2023-W40",
+          "TotalQuantity": 1500,
+          "TotalVariation": 75,
+          "PositiveVariation": 100,
+          "NegativeVariation": -25,
+          "VariationPercentage": 5
+        },
+        {
+          "Week": "2023-W41",
+          "TotalQuantity": 1400,
+          "TotalVariation": -50,
+          "PositiveVariation": 30,
+          "NegativeVariation": -80,
+          "VariationPercentage": -3.57
+        },
+        {
+          "Week": "2023-W42",
+          "TotalQuantity": 1300,
+          "TotalVariation": 60,
+          "PositiveVariation": 90,
+          "NegativeVariation": -30,
+          "VariationPercentage": 4.62
+        },
+        {
+          "Week": "2023-W43",
+          "TotalQuantity": 1350,
+          "TotalVariation": -20,
+          "PositiveVariation": 40,
+          "NegativeVariation": -60,
+          "VariationPercentage": -1.48
+        },
+        {
+          "Week": "2023-W44",
+          "TotalQuantity": 1400,
+          "TotalVariation": 50,
+          "PositiveVariation": 80,
+          "NegativeVariation": -30,
+          "VariationPercentage": 3.57
+        },
+        {
+          "Week": "2023-W45",
+          "TotalQuantity": 1450,
+          "TotalVariation": -35,
+          "PositiveVariation": 25,
+          "NegativeVariation": -60,
+          "VariationPercentage": -2.41
+        },
+        {
+          "Week": "2023-W46",
+          "TotalQuantity": 1500,
+          "TotalVariation": 65,
+          "PositiveVariation": 90,
+          "NegativeVariation": -25,
+          "VariationPercentage": 4.33
+        },
+        {
+          "Week": "2023-W47",
+          "TotalQuantity": 1550,
+          "TotalVariation": -15,
+          "PositiveVariation": 35,
+          "NegativeVariation": -50,
+          "VariationPercentage": -0.97
+        }
+      ]
+    },
+    {
+      "CompanyName": "GM",
+       "DataRicezione": "Data ricezione",
+       "Materiale": "Materiale",
+       "Stato": "W",
+       "MessaggioStato": "Messaggio",
+       "Dettaglio": [
+         {
+           "Week": "2023-W40",
+           "TotalQuantity": 1500,
+           "TotalVariation": 75,
+           "PositiveVariation": 100,
+           "NegativeVariation": -25,
+           "VariationPercentage": 5
+         },
+         {
+           "Week": "2023-W41",
+           "TotalQuantity": 1400,
+           "TotalVariation": -50,
+           "PositiveVariation": 30,
+           "NegativeVariation": -80,
+           "VariationPercentage": -3.57
+         },
+         {
+           "Week": "2023-W42",
+           "TotalQuantity": 1300,
+           "TotalVariation": 60,
+           "PositiveVariation": 90,
+           "NegativeVariation": -30,
+           "VariationPercentage": 4.62
+         },
+         {
+           "Week": "2023-W43",
+           "TotalQuantity": 1350,
+           "TotalVariation": -20,
+           "PositiveVariation": 40,
+           "NegativeVariation": -60,
+           "VariationPercentage": -1.48
+         },
+         {
+           "Week": "2023-W44",
+           "TotalQuantity": 1400,
+           "TotalVariation": 50,
+           "PositiveVariation": 80,
+           "NegativeVariation": -30,
+           "VariationPercentage": 3.57
+         },
+         {
+           "Week": "2023-W45",
+           "TotalQuantity": 1450,
+           "TotalVariation": -35,
+           "PositiveVariation": 25,
+           "NegativeVariation": -60,
+           "VariationPercentage": -2.41
+         },
+         {
+           "Week": "2023-W46",
+           "TotalQuantity": 1500,
+           "TotalVariation": 65,
+           "PositiveVariation": 90,
+           "NegativeVariation": -25,
+           "VariationPercentage": 4.33
+         },
+         {
+           "Week": "2023-W47",
+           "TotalQuantity": 1550,
+           "TotalVariation": -15,
+           "PositiveVariation": 35,
+           "NegativeVariation": -50,
+           "VariationPercentage": -0.97
+         }
+       ]
+     },
+     {
+      "CompanyName": "Audi+VW+Porsche",
+       "DataRicezione": "Data ricezione",
+       "Materiale": "Materiale",
+       "Stato": "W",
+       "MessaggioStato": "Messaggio",
+       "Dettaglio": [
+         {
+           "Week": "2023-W40",
+           "TotalQuantity": 1500,
+           "TotalVariation": 75,
+           "PositiveVariation": 100,
+           "NegativeVariation": -25,
+           "VariationPercentage": 5
+         },
+         {
+           "Week": "2023-W41",
+           "TotalQuantity": 1400,
+           "TotalVariation": -50,
+           "PositiveVariation": 30,
+           "NegativeVariation": -80,
+           "VariationPercentage": -3.57
+         },
+         {
+           "Week": "2023-W42",
+           "TotalQuantity": 1300,
+           "TotalVariation": 60,
+           "PositiveVariation": 90,
+           "NegativeVariation": -30,
+           "VariationPercentage": 4.62
+         },
+         {
+           "Week": "2023-W43",
+           "TotalQuantity": 1350,
+           "TotalVariation": -20,
+           "PositiveVariation": 40,
+           "NegativeVariation": -60,
+           "VariationPercentage": -1.48
+         },
+         {
+           "Week": "2023-W44",
+           "TotalQuantity": 1400,
+           "TotalVariation": 50,
+           "PositiveVariation": 80,
+           "NegativeVariation": -30,
+           "VariationPercentage": 3.57
+         },
+         {
+           "Week": "2023-W45",
+           "TotalQuantity": 1450,
+           "TotalVariation": -35,
+           "PositiveVariation": 25,
+           "NegativeVariation": -60,
+           "VariationPercentage": -2.41
+         },
+         {
+           "Week": "2023-W46",
+           "TotalQuantity": 1500,
+           "TotalVariation": 65,
+           "PositiveVariation": 90,
+           "NegativeVariation": -25,
+           "VariationPercentage": 4.33
+         },
+         {
+           "Week": "2023-W47",
+           "TotalQuantity": 1550,
+           "TotalVariation": -15,
+           "PositiveVariation": 35,
+           "NegativeVariation": -50,
+           "VariationPercentage": -0.97
+         }
+       ]
+     },
+     {
+      "CompanyName": "Delins",
+       "DataRicezione": "Data ricezione",
+       "Materiale": "Materiale",
+       "Stato": "W",
+       "MessaggioStato": "Messaggio",
+       "Dettaglio": [
+         {
+           "Week": "2023-W40",
+           "TotalQuantity": 1500,
+           "TotalVariation": 75,
+           "PositiveVariation": 100,
+           "NegativeVariation": -25,
+           "VariationPercentage": 5
+         },
+         {
+           "Week": "2023-W41",
+           "TotalQuantity": 1400,
+           "TotalVariation": -50,
+           "PositiveVariation": 30,
+           "NegativeVariation": -80,
+           "VariationPercentage": -3.57
+         },
+         {
+           "Week": "2023-W42",
+           "TotalQuantity": 1300,
+           "TotalVariation": 60,
+           "PositiveVariation": 90,
+           "NegativeVariation": -30,
+           "VariationPercentage": 4.62
+         },
+         {
+           "Week": "2023-W43",
+           "TotalQuantity": 1350,
+           "TotalVariation": -20,
+           "PositiveVariation": 40,
+           "NegativeVariation": -60,
+           "VariationPercentage": -1.48
+         },
+         {
+           "Week": "2023-W44",
+           "TotalQuantity": 1400,
+           "TotalVariation": 50,
+           "PositiveVariation": 80,
+           "NegativeVariation": -30,
+           "VariationPercentage": 3.57
+         },
+         {
+           "Week": "2023-W45",
+           "TotalQuantity": 1450,
+           "TotalVariation": -35,
+           "PositiveVariation": 25,
+           "NegativeVariation": -60,
+           "VariationPercentage": -2.41
+         },
+         {
+           "Week": "2023-W46",
+           "TotalQuantity": 1500,
+           "TotalVariation": 65,
+           "PositiveVariation": 90,
+           "NegativeVariation": -25,
+           "VariationPercentage": 4.33
+         },
+         {
+           "Week": "2023-W47",
+           "TotalQuantity": 1550,
+           "TotalVariation": -15,
+           "PositiveVariation": 35,
+           "NegativeVariation": -50,
+           "VariationPercentage": -0.97
+         }
+       ]
+     }
+  ]
+  }
+  

@@ -1,0 +1,176 @@
+<mvc:View
+    controllerName="sap.ui.demo.fiori2.controller.Master3"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:core="sap.ui.core"
+    xmlns:ui="sap.ui.table"
+>
+    <f:DynamicPage
+        id="dynamicPageId"
+        toggleHeaderOnTitleClick="false"
+    >
+        <!-- DynamicPage Title -->
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading>
+                    <Title
+                        text="???"
+                    />
+                </f:heading>
+            </f:DynamicPageTitle>
+        </f:title>
+        <f:header>
+            <f:DynamicPageHeader pinnable="true">
+                <f:content>
+                    <Toolbar>
+                        <Button
+                            press="navToHome"
+                            type="Back"
+                            text="Torna alla Home"
+                        />
+                    </Toolbar>
+
+                   <IconTabBar
+		id="idIconTabBar"
+		select=".onFilterSelect"
+		class="sapUiResponsiveContentPadding"
+        width="100%">
+		<items>
+			<IconTabFilter
+				icon="sap-icon://shipping-status"
+				iconColor="Default"
+				count="{/ProductCollectionStats/Counts/Weight/Ok}"
+				text="Delivery Forecast"
+				key="01" />
+			<IconTabFilter
+				icon="sap-icon://time-off"
+				iconColor="Default"
+				count="{/ProductCollectionStats/Counts/Weight/Heavy}"
+				text="Call-Off"
+				key="02" />
+			<IconTabFilter
+				icon="sap-icon://monitor-payments"
+				iconColor="Default"
+				count="{/ProductCollectionStats/Counts/Weight/Overweight}"
+				text="Self Billing"
+				key="03" />
+                <IconTabFilter
+				icon="sap-icon://letter"
+				iconColor="Default"
+				count="{/ProductCollectionStats/Counts/Weight/Overweight}"
+				text="Despatch Advice"
+				key="04" />
+                <IconTabFilter
+				icon="sap-icon://sales-order"
+				iconColor="Default"
+				count="{/ProductCollectionStats/Counts/Weight/Overweight}"
+				text="Invoice"
+				key="05" />
+		</items>
+		<content>
+				<ui:Table
+				id="table"
+				selectionMode="None"
+				rows="{master3>/Master3}"
+                cellClick=".rowDetailPress"
+				sort="sortDeliveryDate"
+				ariaLabelledBy="title">
+				<ui:extension>
+					<OverflowToolbar style="Clear">
+						<Title id="title" text="Storico"/>
+						<ToolbarSpacer/>
+						<Button
+							icon="sap-icon://sorting-ranking"
+							tooltip="Sort ascending across Categories and Name"
+							press="sortCategoriesAndName"/>
+						<Button
+							icon="sap-icon://sort"
+							tooltip="Sort Categories in addition to current sorting"
+							press="sortCategories"/>
+					</OverflowToolbar>
+				</ui:extension>
+				<ui:columns>
+					<ui:Column
+						id="cliente"
+						sortProperty="Cliente">
+						<Label text="Cliente" />
+						<ui:template>
+                              <ObjectIdentifier
+                                    title="{master3>CompanyName}"
+                                />
+						</ui:template>
+					</ui:Column>
+					<ui:Column
+						id="materiale"
+						showSortMenuEntry="false"
+						sortProperty="Materiale">
+						<Label text="Materiale" />
+						<ui:template>
+                             <ObjectIdentifier
+                                    title="{master3>Materiale}"
+                                />
+						</ui:template>
+					</ui:Column>
+					<ui:Column id="dataRicezione">
+						<Label text="Data ricezione" />
+						<ui:template>
+							 <ObjectIdentifier
+                                    title="{master3>DataRicezione}"
+                                />
+						</ui:template>
+					</ui:Column>
+					<ui:Column
+						id="stato"
+					
+						sortProperty="Stato">
+						<Label text="Stato" />
+						<ui:template>
+						 <!-- <ObjectIdentifier
+                                    title="{master3>Stato}"
+                                /> -->
+                                 <core:Icon 
+            src="{= ${master3>Stato} === 'OK' ? 'sap-icon://accept' : ${master3>Stato} === 'KO' ? 'sap-icon://decline' : 'sap-icon://warning'}" 
+            color="{= ${master3>Stato} === 'OK' ? 'green' : ${master3>Stato} === 'KO' ? 'red' : 'yellow'}"
+            tooltip="{master3>Stato}" />
+						</ui:template>
+					</ui:Column>
+					<ui:Column
+						id="statusMessage"
+						sortProperty="Status Message">
+						<Label text="Status Message" />
+						<ui:template>
+						 <ObjectIdentifier
+                                    title="{master3>MessaggioStato}"
+                                />
+						</ui:template>
+					</ui:Column>
+				</ui:columns>
+			</ui:Table>
+		</content>
+	</IconTabBar>
+                </f:content>
+            </f:DynamicPageHeader>
+        </f:header>
+        <!-- DynamicPage Content -->
+        <f:content>
+           
+        </f:content>
+
+        <!-- DynamicPage Footer -->
+        <f:footer>
+            <OverflowToolbar>
+                <ToolbarSpacer />
+                <Button
+                    type="Accept"
+                    text="Accept"
+                />
+                <Button
+                    type="Reject"
+                    text="Reject"
+                />
+            </OverflowToolbar>
+        </f:footer>
+    </f:DynamicPage>
+</mvc:View>
