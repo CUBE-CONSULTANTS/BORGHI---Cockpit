@@ -49,30 +49,26 @@
                                 visibleInFilterBar="true"
                             >
                                 <fb:control>
-                                    <!-- <MultiComboBox
-                                        name=""
-                                        selectionChange=".onSelectionChange"
-                                        items="{
-											path: '/ProductNames',
-											templateShareable: true
-										}"
-                                    >
-                                        <core:Item
-                                            key="{key}"
-                                            text="{name}"
-                                        />
-                                    </MultiComboBox> -->
-                                    <Input/>
+                                <DatePicker
+                                tooltip="..."
+					secondaryCalendarType="Gregorian"
+					change="handleChange"
+					/>
                                 </fb:control>
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem
+                            id="idDataConsegna"
                                 name="Date di consegna"
                                 label="Date di consegna"
                                 groupName="Group1"
                                 visibleInFilterBar="true"
                             >
                                 <fb:control>
-                                <Input/>
+                                 <DatePicker
+                                  tooltip="..."
+					secondaryCalendarType="Gregorian"
+					change="handleChange"
+					/>
                                 </fb:control>
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem
@@ -95,16 +91,7 @@
                                 <Input/>
                                 </fb:control>
                             </fb:FilterGroupItem>
-                            <fb:FilterGroupItem
-                                name="Data Ricezione"
-                                label="Data Ricezione"
-                                groupName="Group1"
-                                visibleInFilterBar="true"
-                            >
-                                <fb:control>
-                                   <Input/>
-                                </fb:control>
-                            </fb:FilterGroupItem>
+                            
                              <fb:FilterGroupItem
                                 name="Stato"
                                 label="Stato"
@@ -112,22 +99,35 @@
                                 visibleInFilterBar="true"
                             >
                                 <fb:control>
-                                <Input/>
+                                    <ComboBox
+                                        name=""
+                                        selectionChange=".onSelectionChange"
+                                    >
+                                        <core:Item
+                                            key="{key}"
+                                            text="OK"
+                                        />
+                                        <core:Item
+                                            key="{key}"
+                                            text="KO"
+                                        />
+                                        <core:Item
+                                            key="{key}"
+                                            text="W"
+                                        />
+                                    </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
-                             <fb:FilterGroupItem
-                                name="Status Message"
-                                label="Status Message"
-                                groupName="Group1"
-                                visibleInFilterBar="true"
-                            >
-                                <fb:control>
-                                <Input/>
-                                </fb:control>
-                            </fb:FilterGroupItem>
+                            
                         </fb:filterGroupItems>
                     </fb:FilterBar>
-                   <IconTabBar
+     
+                </f:content>
+            </f:DynamicPageHeader>
+        </f:header>
+        <!-- DynamicPage Content -->
+        <f:content>
+                       <IconTabBar
 		id="idIconTabBar"
 		select=".onFilterSelect"
 		
@@ -179,16 +179,17 @@
 					<OverflowToolbar style="Clear">
 						<Title id="title" text="Storico"/>
 						<ToolbarSpacer/>
-						<Button
+						<!-- <Button
 							icon="sap-icon://sorting-ranking"
-							press="sortCategoriesAndName"/>
+							press="sortCategoriesAndName"/> -->
 						<Button
 							icon="sap-icon://sort"
+                            text="Ordinamento"
 							press="sortCategories"/>
                             <Button
                             id="buttonDelete"
-							icon="sap-icon://delete"
-                            enabled="false"
+                            text="Esportazione in excel"
+							icon="sap-icon://excel-attachment"
 							press="deletePress"/>
 					</OverflowToolbar>
 				</ui:extension>
@@ -252,13 +253,7 @@
 				</ui:columns>
 			</ui:Table>
 		</content>
-	</IconTabBar>
-                </f:content>
-            </f:DynamicPageHeader>
-        </f:header>
-        <!-- DynamicPage Content -->
-        <f:content>
-           
+	</IconTabBar>  
         </f:content>
 
         <!-- DynamicPage Footer -->

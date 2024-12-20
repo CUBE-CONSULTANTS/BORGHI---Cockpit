@@ -14,6 +14,7 @@ sap.ui.define([
             // var oMaster3Model = new JSONModel(sap.ui.require.toUrl('sap/ui/demo/fiori2/mockdata/master3.json'));
 			// this.getView().setModel(oMaster3Model, 'master3');
             this.oRouter = this.getOwnerComponent().getRouter();
+            this.onFilterSelect();
         },
 
         onFilterSelect: function (oEvent){
@@ -32,6 +33,8 @@ sap.ui.define([
                 break;
             case "04":
                 this.getOwnerComponent().setModel(new JSONModel({}), 'master3');
+                this.byId("idDataConsegna").setProperty("label", "Data di uscita merci")
+                this.byId("idDataConsegna").setProperty("name", "Data di uscita merci")
                 break;
             case "05":
                 this.getOwnerComponent().setModel(new JSONModel({}), 'master3');
