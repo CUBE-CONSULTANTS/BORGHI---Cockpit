@@ -25,16 +25,16 @@ sap.ui.define([
                 this.getOwnerComponent().setModel(oMaster3Model, 'master3');
                 break;
             case "02":
-                this.getView().setModel(new JSONModel({}), 'master3');
+                this.getOwnerComponent().setModel(new JSONModel({}), 'master3');
                 break;
             case "03":
-              
+                this.getOwnerComponent().setModel(new JSONModel({}), 'master3');
                 break;
             case "04":
-              
+                this.getOwnerComponent().setModel(new JSONModel({}), 'master3');
                 break;
             case "05":
-              
+                this.getOwnerComponent().setModel(new JSONModel({}), 'master3');
                 break;
         }
         },
@@ -66,6 +66,19 @@ sap.ui.define([
 				});
 			}.bind(this));
 		},
+
+        deletePress: function(oEvent) {
+this.getView().byId("table")
+        },
+
+        onPressRow: function(oEvent){
+           var index= oEvent.getParameter("rowIndex");
+           if(index === 0){
+            this.getView().byId("buttonDelete").setProperty("enabled", false)
+           }else{
+            this.getView().byId("buttonDelete").setProperty("enabled", true)
+           }
+        },
 
         navToHome: function() {
 			this.oRouter.navTo("home");

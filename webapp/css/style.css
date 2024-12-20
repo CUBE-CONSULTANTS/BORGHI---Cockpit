@@ -81,3 +81,7 @@
 .tileMargin {
     margin: 0 20px;
 }
+
+.sapUiTableRowHdr, .sapUiTableSelCol {
+    display: table-cell !important;
+}
