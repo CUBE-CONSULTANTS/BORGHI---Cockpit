@@ -30,7 +30,7 @@
                         </TileContent>
                     </GenericTile>
                     <GenericTile
-                        header="COCKPIT ACQUISIZIONE EDI"
+                        header="Monitoraggio EDI"
                         subheader="Storicizzazione dati"
                         press="onNavigateToPage3"
                         class="tileMargin">

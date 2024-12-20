@@ -16,7 +16,7 @@
             <f:DynamicPageTitle>
                 <f:heading>
                     <Title
-                        text="???"
+                        text="Monitoraggio EDI"
                     />
                 </f:heading>
             </f:DynamicPageTitle>
@@ -31,7 +31,95 @@
                             text="Torna alla Home"
                         />
                     </Toolbar>
-
+  <fb:FilterBar
+                        id="filterbar"
+                        persistencyKey="myPersKey"
+                        useToolbar="false"
+                        search=".onSearch"
+                        filterChange=".onFilterChange"
+                        afterVariantLoad=".onAfterVariantLoad"
+                    >
+                        <fb:filterGroupItems>
+                            <fb:FilterGroupItem
+                                name="Date Processamento EDI"
+                                label="Date Processamento EDI"
+                                groupName="Group1"
+                                visibleInFilterBar="true"
+                            >
+                                <fb:control>
+                                    <!-- <MultiComboBox
+                                        name=""
+                                        selectionChange=".onSelectionChange"
+                                        items="{
+											path: '/ProductNames',
+											templateShareable: true
+										}"
+                                    >
+                                        <core:Item
+                                            key="{key}"
+                                            text="{name}"
+                                        />
+                                    </MultiComboBox> -->
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem
+                                name="Date di consegna"
+                                label="Date di consegna"
+                                groupName="Group1"
+                                visibleInFilterBar="true"
+                            >
+                                <fb:control>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem
+                                name="Cliente"
+                                label="Cliente"
+                                groupName="Group1"
+                                visibleInFilterBar="true"
+                            >
+                                <fb:control>
+                                   
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                             <fb:FilterGroupItem
+                                name="Materiale"
+                                label="Materiale"
+                                groupName="Group1"
+                                visibleInFilterBar="true"
+                            >
+                                <fb:control>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                            <fb:FilterGroupItem
+                                name="Data Ricezione"
+                                label="Data Ricezione"
+                                groupName="Group1"
+                                visibleInFilterBar="true"
+                            >
+                                <fb:control>
+                                   
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                             <fb:FilterGroupItem
+                                name="Stato"
+                                label="Stato"
+                                groupName="Group1"
+                                visibleInFilterBar="true"
+                            >
+                                <fb:control>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                             <fb:FilterGroupItem
+                                name="Status Message"
+                                label="Status Message"
+                                groupName="Group1"
+                                visibleInFilterBar="true"
+                            >
+                                <fb:control>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+                        </fb:filterGroupItems>
+                    </fb:FilterBar>
                    <IconTabBar
 		id="idIconTabBar"
 		select=".onFilterSelect"
@@ -72,7 +160,7 @@
 		<content>
 				<ui:Table
 				id="table"
-				selectionMode="None"
+				selectionMode="Single"
 				rows="{master3>/Master3}"
                 cellClick=".rowDetailPress"
 				sort="sortDeliveryDate"
@@ -130,10 +218,12 @@
 						 <!-- <ObjectIdentifier
                                     title="{master3>Stato}"
                                 /> -->
-                                 <core:Icon 
+                                <Button text="{master3>Stato}" icon="{= ${master3>Stato} === 'OK' ? 'sap-icon://accept' : ${master3>Stato} === 'KO' ? 'sap-icon://decline' : 'sap-icon://warning'}" 
+                                type="{= ${master3>Stato} === 'OK' ? 'Accept' : ${master3>Stato} === 'KO' ? 'Critical' : 'Attention'}"/>
+                                 <!-- <core:Icon 
             src="{= ${master3>Stato} === 'OK' ? 'sap-icon://accept' : ${master3>Stato} === 'KO' ? 'sap-icon://decline' : 'sap-icon://warning'}" 
             color="{= ${master3>Stato} === 'OK' ? 'green' : ${master3>Stato} === 'KO' ? 'red' : 'yellow'}"
-            tooltip="{master3>Stato}" />
+            tooltip="{master3>Stato}" /> -->
 						</ui:template>
 					</ui:Column>
 					<ui:Column

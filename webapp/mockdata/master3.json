@@ -6,72 +6,54 @@
       "Materiale": "Materiale",
       "Stato": "OK",
       "MessaggioStato": "Messaggio",
-      "Dettaglio": [
-        {
-          "Week": "2023-W40",
-          "TotalQuantity": 1000,
-          "TotalVariation": 50,
-          "PositiveVariation": 70,
-          "NegativeVariation": -20,
-          "VariationPercentage": 5
-        },
-        {
-          "Week": "2023-W41",
-          "TotalQuantity": 1200,
-          "TotalVariation": -30,
-          "PositiveVariation": 40,
-          "NegativeVariation": -70,
-          "VariationPercentage": -2.5
-        },
-        {
-          "Week": "2023-W42",
-          "TotalQuantity": 1100,
-          "TotalVariation": 20,
-          "PositiveVariation": 50,
-          "NegativeVariation": -30,
-          "VariationPercentage": 1.82
-        },
-        {
-          "Week": "2023-W43",
-          "TotalQuantity": 900,
-          "TotalVariation": 60,
-          "PositiveVariation": 80,
-          "NegativeVariation": -20,
-          "VariationPercentage": 6.67
-        },
-        {
-          "Week": "2023-W44",
-          "TotalQuantity": 950,
-          "TotalVariation": -10,
-          "PositiveVariation": 30,
-          "NegativeVariation": -40,
-          "VariationPercentage": -1.05
-        },
-        {
-          "Week": "2023-W45",
-          "TotalQuantity": 1050,
-          "TotalVariation": 25,
-          "PositiveVariation": 55,
-          "NegativeVariation": -30,
-          "VariationPercentage": 2.38
-        },
-        {
-          "Week": "2023-W46",
-          "TotalQuantity": 1150,
-          "TotalVariation": -15,
-          "PositiveVariation": 20,
-          "NegativeVariation": -35,
-          "VariationPercentage": -1.3
-        },
-        {
-          "Week": "2023-W47",
-          "TotalQuantity": 1000,
-          "TotalVariation": 40,
-          "PositiveVariation": 60,
-          "NegativeVariation": -20,
-          "VariationPercentage": 4
-        }
-      ]
+      "Testata": {
+        "IdInterno": "da 1 in avanti",
+        "NumProgInvio": "BGM+241",
+        "DataProgInvio": "DTM+137 riferito a BGM+241",
+        "CodBuyer": "NAD+BY",
+        "CodSeller": "NAD+SE",
+        "NumSegTracciati" : "UNT+",
+        "Unh": "Non presente",
+        "NumMessInviati": "UNZ+1+"
+    },
+    "Posizione": {
+        "IdPos": "definito dai segmenti LIN",
+        "Destinatario":"NAD+CN+Cod. Destinatario",
+        "CodCliMateriale": "LIN+++ Customer Material Code+IN",
+        "CodMaterFornitore": "PIA+1+Supplier's article number:SA",
+        "DescrMateriale": "IMD+++03::10:article's description",
+        "PuntoScarico": "LOC+11 + Location identification",
+        "DestInterna":"Non presente",
+        "TestoRiga": "Non presente",
+        "DataIniQuaCumul":"DTM+51;yyyymmdd",
+        "ProgInvio": "RFF+AAN+20231101162924::0000040886",
+        "DataProgInvio": "DTM+171:yyyymmdd collegato ad RFF+AAN",
+        "NumUltDelfor": "RFF+AIF:",
+        "DataUltDelfor":"DTM+171: collegato ad RFF+AIF",
+        "NumOrdAcquisto": "RFF+ON:5500136459",
+        "UltQuaSpedita" : "QTY+12+qty:uom",
+        "NumUltRicevuta": "RFF+AAK:13'",
+        "DataUltRicevuta": "DTM+171: yyyymmdd riferito a RFF+AAK",
+        "QuaCumRicevuta": "QTY+70+qty:uom",
+        "UltQuaOrdinata": "Non presente",
+        "RelNumber":"Non presente",
+        "QuaCumPrecedente":"Non presente",
+        "QuaBackorder": "",
+        "QuaRicAccettata": "",
+        "ContCliente": "CTA",
+        "InfoContEmail": "COM",
+        "InfoContTel": "",
+        "InfoContFax": ""
+    },
+    "Schedulazioni": {
+"IdSchedulazione": "progressivo che parte da 1",
+"QuaDaConsegnare": "QTY+113:",
+"Schedulazione":"SCC+ rif. Qty+113",
+"DataSpedRichEffettiva": "DTM+2:  rif. Qty+113",
+"DataSpedRichDa": "Non presente",
+"DataSpedRichA": "Non presente"
+
+    }
     },
     {
       "CompanyName": "Deutz",
@@ -79,72 +61,56 @@
       "Materiale": "Materiale",
       "Stato": "KO",
       "MessaggioStato": "Messaggio",
-      "Dettaglio": [
-        {
-          "Week": "2023-W40",
-          "TotalQuantity": 800,
-          "TotalVariation": -20,
-          "PositiveVariation": 30,
-          "NegativeVariation": -50,
-          "VariationPercentage": -2.5
-        },
-        {
-          "Week": "2023-W41",
-          "TotalQuantity": 850,
-          "TotalVariation": 35,
-          "PositiveVariation": 50,
-          "NegativeVariation": -15,
-          "VariationPercentage": 4.12
-        },
-        {
-          "Week": "2023-W42",
-          "TotalQuantity": 900,
-          "TotalVariation": 10,
-          "PositiveVariation": 40,
-          "NegativeVariation": -30,
-          "VariationPercentage": 1.11
-        },
-        {
-          "Week": "2023-W43",
-          "TotalQuantity": 950,
-          "TotalVariation": -25,
-          "PositiveVariation": 20,
-          "NegativeVariation": -45,
-          "VariationPercentage": -2.63
-        },
-        {
-          "Week": "2023-W44",
-          "TotalQuantity": 1000,
-          "TotalVariation": 50,
-          "PositiveVariation": 70,
-          "NegativeVariation": -20,
-          "VariationPercentage": 5
-        },
-        {
-          "Week": "2023-W45",
-          "TotalQuantity": 1050,
-          "TotalVariation": -30,
-          "PositiveVariation": 25,
-          "NegativeVariation": -55,
-          "VariationPercentage": -2.86
-        },
-        {
-          "Week": "2023-W46",
-          "TotalQuantity": 1100,
-          "TotalVariation": 40,
-          "PositiveVariation": 60,
-          "NegativeVariation": -20,
-          "VariationPercentage": 3.64
-        },
-        {
-          "Week": "2023-W47",
-          "TotalQuantity": 1150,
-          "TotalVariation": -10,
-          "PositiveVariation": 30,
-          "NegativeVariation": -40,
-          "VariationPercentage": -0.87
+      "Testata":
+        {   "IdInterno": "da 1 in avanti",
+        "NumProgInvio": "BGM+241",
+        "DataProgInvio": "DTM+137 riferito a BGM+241",
+        "CodBuyer": "NAD+BY",
+        "CodSeller": "NAD+SE",
+        "NumSegTracciati" : "UNT+",
+        "Unh": "Non presente",
+        "NumMessInviati": "UNZ+1+"
         }
-      ]
+      ,
+      "Posizione": {
+        "IdPos": "definito dai segmenti LIN",
+        "Destinatario":"NAD+CN+Cod. Destinatario",
+        "CodCliMateriale": "LIN+++ Customer Material Code+IN",
+        "CodMaterFornitore": "PIA+1+Supplier's article number:SA",
+        "DescrMateriale": "IMD+++03::10:article's description",
+        "PuntoScarico": "LOC+11 + Location identification",
+        "DestInterna":"Non presente",
+        "TestoRiga": "Non presente",
+        "DataIniQuaCumul":"DTM+51;yyyymmdd",
+        "ProgInvio": "RFF+AAN+20231101162924::0000040886",
+        "DataProgInvio": "DTM+171:yyyymmdd collegato ad RFF+AAN",
+        "NumUltDelfor": "RFF+AIF:",
+        "DataUltDelfor":"DTM+171: collegato ad RFF+AIF",
+        "NumOrdAcquisto": "RFF+ON:5500136459",
+        "UltQuaSpedita" : "QTY+12+qty:uom",
+        "NumUltRicevuta": "RFF+AAK:13'",
+        "DataUltRicevuta": "DTM+171: yyyymmdd riferito a RFF+AAK",
+        "QuaCumRicevuta": "QTY+70+qty:uom",
+        "UltQuaOrdinata": "Non presente",
+        "RelNumber":"Non presente",
+        "QuaCumPrecedente":"Non presente",
+        "QuaBackorder": "",
+        "QuaRicAccettata": "",
+        "ContCliente": "CTA",
+        "InfoContEmail": "COM",
+        "InfoContTel": "",
+        "InfoContFax": ""
+    },
+    "Schedulazioni": {
+"IdSchedulazione": "progressivo che parte da 1",
+"QuaDaConsegnare": "QTY+113:",
+"Schedulazione":"SCC+ rif. Qty+113",
+"DataSpedRichEffettiva": "DTM+2:  rif. Qty+113",
+"DataSpedRichDa": "Non presente",
+"DataSpedRichA": "Non presente"
+
+    }
+      
     },
     {
      "CompanyName": "Opel",
@@ -152,72 +118,54 @@
       "Materiale": "Materiale",
       "Stato": "W",
       "MessaggioStato": "Messaggio",
-      "Dettaglio": [
-        {
-          "Week": "2023-W40",
-          "TotalQuantity": 1500,
-          "TotalVariation": 75,
-          "PositiveVariation": 100,
-          "NegativeVariation": -25,
-          "VariationPercentage": 5
-        },
-        {
-          "Week": "2023-W41",
-          "TotalQuantity": 1400,
-          "TotalVariation": -50,
-          "PositiveVariation": 30,
-          "NegativeVariation": -80,
-          "VariationPercentage": -3.57
-        },
-        {
-          "Week": "2023-W42",
-          "TotalQuantity": 1300,
-          "TotalVariation": 60,
-          "PositiveVariation": 90,
-          "NegativeVariation": -30,
-          "VariationPercentage": 4.62
-        },
-        {
-          "Week": "2023-W43",
-          "TotalQuantity": 1350,
-          "TotalVariation": -20,
-          "PositiveVariation": 40,
-          "NegativeVariation": -60,
-          "VariationPercentage": -1.48
-        },
-        {
-          "Week": "2023-W44",
-          "TotalQuantity": 1400,
-          "TotalVariation": 50,
-          "PositiveVariation": 80,
-          "NegativeVariation": -30,
-          "VariationPercentage": 3.57
-        },
-        {
-          "Week": "2023-W45",
-          "TotalQuantity": 1450,
-          "TotalVariation": -35,
-          "PositiveVariation": 25,
-          "NegativeVariation": -60,
-          "VariationPercentage": -2.41
-        },
-        {
-          "Week": "2023-W46",
-          "TotalQuantity": 1500,
-          "TotalVariation": 65,
-          "PositiveVariation": 90,
-          "NegativeVariation": -25,
-          "VariationPercentage": 4.33
-        },
-        {
-          "Week": "2023-W47",
-          "TotalQuantity": 1550,
-          "TotalVariation": -15,
-          "PositiveVariation": 35,
-          "NegativeVariation": -50,
-          "VariationPercentage": -0.97
-        }
-      ]
+      "Testata": [{
+        "IdInterno": "",
+        "NumProgInvio": "",
+        "DataProgInvio": "",
+        "CodBuyer": "",
+        "CodSeller": "",
+        "NumSegTracciati" : "",
+        "Unh": "",
+        "NumMessInviati": ""
+    }],
+    "Posizione": [{
+        "IdPos": "",
+        "Destinatario":"",
+        "CodCliMateriale": "",
+        "CodMaterFornitore": "",
+        "DescrMateriale": "",
+        "PuntoScarico": "",
+        "DestInterna":"",
+        "TestoRiga": "",
+        "DataIniQuaCumul":"",
+        "ProgInvio": "",
+        "DataProgInvio": "",
+        "NumUltDelfor": "",
+        "DataUltDelfor":"",
+        "NumOrdAcquisto": "",
+        "UltQuaSpedita" : "",
+        "NumUltRicevuta": "",
+        "DataUltRicevuta": "",
+        "QuaCumRicevuta": "",
+        "UltQuaOrdinata": "",
+        "RelNumber":"",
+        "QuaCumPrecedente":"",
+        "QuaBackorder": "",
+        "QuaRicAccettata": "",
+        "ContCliente": "",
+        "InfoContEmail": "",
+        "InfoContTel": "",
+        "InfoContFax": ""
+    }],
+    "Schedulazioni": [{
+"IdSchedulazione": "",
+"QuaDaConsegnare": "",
+"Schedulazione":"",
+"DataSpedRichEffettiva": "",
+"DataSpedRichDa": "",
+"DataSpedRichA": ""
+
+    }]
     },
     {
       "CompanyName": "GM",
@@ -225,72 +173,54 @@
        "Materiale": "Materiale",
        "Stato": "W",
        "MessaggioStato": "Messaggio",
-       "Dettaglio": [
-         {
-           "Week": "2023-W40",
-           "TotalQuantity": 1500,
-           "TotalVariation": 75,
-           "PositiveVariation": 100,
-           "NegativeVariation": -25,
-           "VariationPercentage": 5
-         },
-         {
-           "Week": "2023-W41",
-           "TotalQuantity": 1400,
-           "TotalVariation": -50,
-           "PositiveVariation": 30,
-           "NegativeVariation": -80,
-           "VariationPercentage": -3.57
-         },
-         {
-           "Week": "2023-W42",
-           "TotalQuantity": 1300,
-           "TotalVariation": 60,
-           "PositiveVariation": 90,
-           "NegativeVariation": -30,
-           "VariationPercentage": 4.62
-         },
-         {
-           "Week": "2023-W43",
-           "TotalQuantity": 1350,
-           "TotalVariation": -20,
-           "PositiveVariation": 40,
-           "NegativeVariation": -60,
-           "VariationPercentage": -1.48
-         },
-         {
-           "Week": "2023-W44",
-           "TotalQuantity": 1400,
-           "TotalVariation": 50,
-           "PositiveVariation": 80,
-           "NegativeVariation": -30,
-           "VariationPercentage": 3.57
-         },
-         {
-           "Week": "2023-W45",
-           "TotalQuantity": 1450,
-           "TotalVariation": -35,
-           "PositiveVariation": 25,
-           "NegativeVariation": -60,
-           "VariationPercentage": -2.41
-         },
-         {
-           "Week": "2023-W46",
-           "TotalQuantity": 1500,
-           "TotalVariation": 65,
-           "PositiveVariation": 90,
-           "NegativeVariation": -25,
-           "VariationPercentage": 4.33
-         },
-         {
-           "Week": "2023-W47",
-           "TotalQuantity": 1550,
-           "TotalVariation": -15,
-           "PositiveVariation": 35,
-           "NegativeVariation": -50,
-           "VariationPercentage": -0.97
-         }
-       ]
+       "Testata": [{
+        "IdInterno": "",
+        "NumProgInvio": "",
+        "DataProgInvio": "",
+        "CodBuyer": "",
+        "CodSeller": "",
+        "NumSegTracciati" : "",
+        "Unh": "",
+        "NumMessInviati": ""
+    }],
+    "Posizione": [{
+        "IdPos": "",
+        "Destinatario":"",
+        "CodCliMateriale": "",
+        "CodMaterFornitore": "",
+        "DescrMateriale": "",
+        "PuntoScarico": "",
+        "DestInterna":"",
+        "TestoRiga": "",
+        "DataIniQuaCumul":"",
+        "ProgInvio": "",
+        "DataProgInvio": "",
+        "NumUltDelfor": "",
+        "DataUltDelfor":"",
+        "NumOrdAcquisto": "",
+        "UltQuaSpedita" : "",
+        "NumUltRicevuta": "",
+        "DataUltRicevuta": "",
+        "QuaCumRicevuta": "",
+        "UltQuaOrdinata": "",
+        "RelNumber":"",
+        "QuaCumPrecedente":"",
+        "QuaBackorder": "",
+        "QuaRicAccettata": "",
+        "ContCliente": "",
+        "InfoContEmail": "",
+        "InfoContTel": "",
+        "InfoContFax": ""
+    }],
+    "Schedulazioni": [{
+"IdSchedulazione": "",
+"QuaDaConsegnare": "",
+"Schedulazione":"",
+"DataSpedRichEffettiva": "",
+"DataSpedRichDa": "",
+"DataSpedRichA": ""
+
+    }]
      },
      {
       "CompanyName": "Audi+VW+Porsche",
@@ -298,72 +228,54 @@
        "Materiale": "Materiale",
        "Stato": "W",
        "MessaggioStato": "Messaggio",
-       "Dettaglio": [
-         {
-           "Week": "2023-W40",
-           "TotalQuantity": 1500,
-           "TotalVariation": 75,
-           "PositiveVariation": 100,
-           "NegativeVariation": -25,
-           "VariationPercentage": 5
-         },
-         {
-           "Week": "2023-W41",
-           "TotalQuantity": 1400,
-           "TotalVariation": -50,
-           "PositiveVariation": 30,
-           "NegativeVariation": -80,
-           "VariationPercentage": -3.57
-         },
-         {
-           "Week": "2023-W42",
-           "TotalQuantity": 1300,
-           "TotalVariation": 60,
-           "PositiveVariation": 90,
-           "NegativeVariation": -30,
-           "VariationPercentage": 4.62
-         },
-         {
-           "Week": "2023-W43",
-           "TotalQuantity": 1350,
-           "TotalVariation": -20,
-           "PositiveVariation": 40,
-           "NegativeVariation": -60,
-           "VariationPercentage": -1.48
-         },
-         {
-           "Week": "2023-W44",
-           "TotalQuantity": 1400,
-           "TotalVariation": 50,
-           "PositiveVariation": 80,
-           "NegativeVariation": -30,
-           "VariationPercentage": 3.57
-         },
-         {
-           "Week": "2023-W45",
-           "TotalQuantity": 1450,
-           "TotalVariation": -35,
-           "PositiveVariation": 25,
-           "NegativeVariation": -60,
-           "VariationPercentage": -2.41
-         },
-         {
-           "Week": "2023-W46",
-           "TotalQuantity": 1500,
-           "TotalVariation": 65,
-           "PositiveVariation": 90,
-           "NegativeVariation": -25,
-           "VariationPercentage": 4.33
-         },
-         {
-           "Week": "2023-W47",
-           "TotalQuantity": 1550,
-           "TotalVariation": -15,
-           "PositiveVariation": 35,
-           "NegativeVariation": -50,
-           "VariationPercentage": -0.97
-         }
-       ]
+       "Testata": [{
+        "IdInterno": "",
+        "NumProgInvio": "",
+        "DataProgInvio": "",
+        "CodBuyer": "",
+        "CodSeller": "",
+        "NumSegTracciati" : "",
+        "Unh": "",
+        "NumMessInviati": ""
+    }],
+    "Posizione": [{
+        "IdPos": "",
+        "Destinatario":"",
+        "CodCliMateriale": "",
+        "CodMaterFornitore": "",
+        "DescrMateriale": "",
+        "PuntoScarico": "",
+        "DestInterna":"",
+        "TestoRiga": "",
+        "DataIniQuaCumul":"",
+        "ProgInvio": "",
+        "DataProgInvio": "",
+        "NumUltDelfor": "",
+        "DataUltDelfor":"",
+        "NumOrdAcquisto": "",
+        "UltQuaSpedita" : "",
+        "NumUltRicevuta": "",
+        "DataUltRicevuta": "",
+        "QuaCumRicevuta": "",
+        "UltQuaOrdinata": "",
+        "RelNumber":"",
+        "QuaCumPrecedente":"",
+        "QuaBackorder": "",
+        "QuaRicAccettata": "",
+        "ContCliente": "",
+        "InfoContEmail": "",
+        "InfoContTel": "",
+        "InfoContFax": ""
+    }],
+    "Schedulazioni": [{
+"IdSchedulazione": "",
+"QuaDaConsegnare": "",
+"Schedulazione":"",
+"DataSpedRichEffettiva": "",
+"DataSpedRichDa": "",
+"DataSpedRichA": ""
+
+    }]
      },
      {
       "CompanyName": "Delins",
@@ -371,72 +283,54 @@
        "Materiale": "Materiale",
        "Stato": "W",
        "MessaggioStato": "Messaggio",
-       "Dettaglio": [
-         {
-           "Week": "2023-W40",
-           "TotalQuantity": 1500,
-           "TotalVariation": 75,
-           "PositiveVariation": 100,
-           "NegativeVariation": -25,
-           "VariationPercentage": 5
-         },
-         {
-           "Week": "2023-W41",
-           "TotalQuantity": 1400,
-           "TotalVariation": -50,
-           "PositiveVariation": 30,
-           "NegativeVariation": -80,
-           "VariationPercentage": -3.57
-         },
-         {
-           "Week": "2023-W42",
-           "TotalQuantity": 1300,
-           "TotalVariation": 60,
-           "PositiveVariation": 90,
-           "NegativeVariation": -30,
-           "VariationPercentage": 4.62
-         },
-         {
-           "Week": "2023-W43",
-           "TotalQuantity": 1350,
-           "TotalVariation": -20,
-           "PositiveVariation": 40,
-           "NegativeVariation": -60,
-           "VariationPercentage": -1.48
-         },
-         {
-           "Week": "2023-W44",
-           "TotalQuantity": 1400,
-           "TotalVariation": 50,
-           "PositiveVariation": 80,
-           "NegativeVariation": -30,
-           "VariationPercentage": 3.57
-         },
-         {
-           "Week": "2023-W45",
-           "TotalQuantity": 1450,
-           "TotalVariation": -35,
-           "PositiveVariation": 25,
-           "NegativeVariation": -60,
-           "VariationPercentage": -2.41
-         },
-         {
-           "Week": "2023-W46",
-           "TotalQuantity": 1500,
-           "TotalVariation": 65,
-           "PositiveVariation": 90,
-           "NegativeVariation": -25,
-           "VariationPercentage": 4.33
-         },
-         {
-           "Week": "2023-W47",
-           "TotalQuantity": 1550,
-           "TotalVariation": -15,
-           "PositiveVariation": 35,
-           "NegativeVariation": -50,
-           "VariationPercentage": -0.97
-         }
-       ]
+       "Testata": [{
+        "IdInterno": "",
+        "NumProgInvio": "",
+        "DataProgInvio": "",
+        "CodBuyer": "",
+        "CodSeller": "",
+        "NumSegTracciati" : "",
+        "Unh": "",
+        "NumMessInviati": ""
+    }],
+    "Posizione": [{
+        "IdPos": "",
+        "Destinatario":"",
+        "CodCliMateriale": "",
+        "CodMaterFornitore": "",
+        "DescrMateriale": "",
+        "PuntoScarico": "",
+        "DestInterna":"",
+        "TestoRiga": "",
+        "DataIniQuaCumul":"",
+        "ProgInvio": "",
+        "DataProgInvio": "",
+        "NumUltDelfor": "",
+        "DataUltDelfor":"",
+        "NumOrdAcquisto": "",
+        "UltQuaSpedita" : "",
+        "NumUltRicevuta": "",
+        "DataUltRicevuta": "",
+        "QuaCumRicevuta": "",
+        "UltQuaOrdinata": "",
+        "RelNumber":"",
+        "QuaCumPrecedente":"",
+        "QuaBackorder": "",
+        "QuaRicAccettata": "",
+        "ContCliente": "",
+        "InfoContEmail": "",
+        "InfoContTel": "",
+        "InfoContFax": ""
+    }],
+    "Schedulazioni": [{
+"IdSchedulazione": "",
+"QuaDaConsegnare": "",
+"Schedulazione":"",
+"DataSpedRichEffettiva": "",
+"DataSpedRichDa": "",
+"DataSpedRichA": ""
+
+    }]
      }
   ]
   }

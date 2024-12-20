@@ -40,22 +40,22 @@ sap.ui.define([
 
 		handleFullScreen: function () {
 			var sNextLayout = this.oModel.getProperty("/actionButtonsInfo/midColumn/fullScreen");
-			this.oRouter.navTo("detail", {layout: sNextLayout, product: this._product});
+			this.oRouter.navTo("detailMaster3", {layout: sNextLayout, product: this._product});
 		},
 
 		handleExitFullScreen: function () {
 			var sNextLayout = this.oModel.getProperty("/actionButtonsInfo/midColumn/exitFullScreen");
-			this.oRouter.navTo("detail", {layout: sNextLayout, product: this._product});
+			this.oRouter.navTo("detailMaster3", {layout: sNextLayout, product: this._product});
 		},
 
 		handleClose: function () {
 			var sNextLayout = this.oModel.getProperty("/actionButtonsInfo/midColumn/closeColumn");
-			this.oRouter.navTo("master", {layout: sNextLayout});
+			this.oRouter.navTo("master3", {layout: sNextLayout});
 		},
 
 		onExit: function () {
-			this.oRouter.getRoute("master").detachPatternMatched(this._onProductMatched, this);
-			this.oRouter.getRoute("detail").detachPatternMatched(this._onProductMatched, this);
+			this.oRouter.getRoute("master3").detachPatternMatched(this._onProductMatched, this);
+			this.oRouter.getRoute("detailMaster3").detachPatternMatched(this._onProductMatched, this);
 		}
 	});
 });

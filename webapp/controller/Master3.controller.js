@@ -33,6 +33,9 @@ sap.ui.define([
             case "04":
               
                 break;
+            case "05":
+              
+                break;
         }
         },
 
