@@ -12,6 +12,10 @@ sap.ui.define([
         onNavigateToPage2: function () {
             var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
             oRouter.navTo("master2"); 
+        },
+        onNavigateToPage3: function () {
+            var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+            oRouter.navTo("master3"); 
         }
     });
 });
