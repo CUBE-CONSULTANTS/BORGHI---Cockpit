@@ -38,6 +38,8 @@
                         search=".onSearch"
                         filterChange=".onFilterChange"
                         afterVariantLoad=".onAfterVariantLoad"
+                        showGoOnFB="false"
+                        showFilterConfiguration="false"
                     >
                         <fb:filterGroupItems>
                             <fb:FilterGroupItem
@@ -60,6 +62,7 @@
                                             text="{name}"
                                         />
                                     </MultiComboBox> -->
+                                    <Input/>
                                 </fb:control>
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem
@@ -69,6 +72,7 @@
                                 visibleInFilterBar="true"
                             >
                                 <fb:control>
+                                <Input/>
                                 </fb:control>
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem
@@ -78,7 +82,7 @@
                                 visibleInFilterBar="true"
                             >
                                 <fb:control>
-                                   
+                                   <Input/>
                                 </fb:control>
                             </fb:FilterGroupItem>
                              <fb:FilterGroupItem
@@ -88,6 +92,7 @@
                                 visibleInFilterBar="true"
                             >
                                 <fb:control>
+                                <Input/>
                                 </fb:control>
                             </fb:FilterGroupItem>
                             <fb:FilterGroupItem
@@ -97,7 +102,7 @@
                                 visibleInFilterBar="true"
                             >
                                 <fb:control>
-                                   
+                                   <Input/>
                                 </fb:control>
                             </fb:FilterGroupItem>
                              <fb:FilterGroupItem
@@ -107,6 +112,7 @@
                                 visibleInFilterBar="true"
                             >
                                 <fb:control>
+                                <Input/>
                                 </fb:control>
                             </fb:FilterGroupItem>
                              <fb:FilterGroupItem
@@ -116,6 +122,7 @@
                                 visibleInFilterBar="true"
                             >
                                 <fb:control>
+                                <Input/>
                                 </fb:control>
                             </fb:FilterGroupItem>
                         </fb:filterGroupItems>
@@ -123,7 +130,8 @@
                    <IconTabBar
 		id="idIconTabBar"
 		select=".onFilterSelect"
-		class="sapUiResponsiveContentPadding"
+		
+        expandable="false"
         width="100%">
 		<items>
 			<IconTabFilter
@@ -157,10 +165,12 @@
 				text="Invoice"
 				key="05" />
 		</items>
-		<content>
+		<content class="sapUiNoContentPadding">
 				<ui:Table
 				id="table"
 				selectionMode="Single"
+                selectionBehavior="RowSelector"
+                rowSelectionChange="onPressRow"
 				rows="{master3>/Master3}"
                 cellClick=".rowDetailPress"
 				sort="sortDeliveryDate"
