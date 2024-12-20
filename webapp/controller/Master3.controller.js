@@ -67,6 +67,10 @@ sap.ui.define([
 			}.bind(this));
 		},
 
+        deletePress: function(oEvent) {
+this.getView().byId("table")
+        },
+
         navToHome: function() {
 			this.oRouter.navTo("home");
 		}

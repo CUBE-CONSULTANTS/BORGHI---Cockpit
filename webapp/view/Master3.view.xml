@@ -171,15 +171,35 @@
 						<ToolbarSpacer/>
 						<Button
 							icon="sap-icon://sorting-ranking"
-							tooltip="Sort ascending across Categories and Name"
 							press="sortCategoriesAndName"/>
 						<Button
 							icon="sap-icon://sort"
-							tooltip="Sort Categories in addition to current sorting"
 							press="sortCategories"/>
+                            <Button
+                            id="buttonDelete"
+							icon="sap-icon://delete"
+                            enabled="false"
+							press="deletePress"/>
 					</OverflowToolbar>
 				</ui:extension>
 				<ui:columns>
+                <ui:Column
+						id="stato"
+					
+						sortProperty="Stato">
+						<Label text="Stato" />
+						<ui:template>
+						 <!-- <ObjectIdentifier
+                                    title="{master3>Stato}"
+                                /> -->
+                                <Button text="{master3>Stato}" icon="{= ${master3>Stato} === 'OK' ? 'sap-icon://accept' : ${master3>Stato} === 'KO' ? 'sap-icon://decline' : 'sap-icon://warning'}" 
+                                type="{= ${master3>Stato} === 'OK' ? 'Accept' : ${master3>Stato} === 'KO' ? 'Critical' : 'Attention'}"/>
+                                 <!-- <core:Icon 
+            src="{= ${master3>Stato} === 'OK' ? 'sap-icon://accept' : ${master3>Stato} === 'KO' ? 'sap-icon://decline' : 'sap-icon://warning'}" 
+            color="{= ${master3>Stato} === 'OK' ? 'green' : ${master3>Stato} === 'KO' ? 'red' : 'yellow'}"
+            tooltip="{master3>Stato}" /> -->
+						</ui:template>
+					</ui:Column>
 					<ui:Column
 						id="cliente"
 						sortProperty="Cliente">
@@ -207,23 +227,6 @@
 							 <ObjectIdentifier
                                     title="{master3>DataRicezione}"
                                 />
-						</ui:template>
-					</ui:Column>
-					<ui:Column
-						id="stato"
-					
-						sortProperty="Stato">
-						<Label text="Stato" />
-						<ui:template>
-						 <!-- <ObjectIdentifier
-                                    title="{master3>Stato}"
-                                /> -->
-                                <Button text="{master3>Stato}" icon="{= ${master3>Stato} === 'OK' ? 'sap-icon://accept' : ${master3>Stato} === 'KO' ? 'sap-icon://decline' : 'sap-icon://warning'}" 
-                                type="{= ${master3>Stato} === 'OK' ? 'Accept' : ${master3>Stato} === 'KO' ? 'Critical' : 'Attention'}"/>
-                                 <!-- <core:Icon 
-            src="{= ${master3>Stato} === 'OK' ? 'sap-icon://accept' : ${master3>Stato} === 'KO' ? 'sap-icon://decline' : 'sap-icon://warning'}" 
-            color="{= ${master3>Stato} === 'OK' ? 'green' : ${master3>Stato} === 'KO' ? 'red' : 'yellow'}"
-            tooltip="{master3>Stato}" /> -->
 						</ui:template>
 					</ui:Column>
 					<ui:Column
