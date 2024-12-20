@@ -20,6 +20,7 @@
         preserveHeaderStateOnScroll="false"
         headerContentPinnable="true"
         isChildPage="true"
+        showFooter="true"
         upperCaseAnchorBar="false">
 
         <headerTitle>
@@ -198,180 +199,178 @@
                                 selectionMode="None"
                                 rows="{master3>/Master3}"
                                 cellClick=".rowDetailPress"
+                                autoPopinMode="true"
+                                fixedLayout="false"
                                 sort="sortDeliveryDate"
                                 ariaLabelledBy="title">
                                 <ui:extension>
                                     <m:OverflowToolbar style="Clear">
                                         <m:Title text="" />
                                         <m:ToolbarSpacer />
-                                        <m:Button
-                                            icon="sap-icon://sorting-ranking"
-                                            tooltip="Sort ascending across Categories and Name"
-                                            press="sortCategoriesAndName" />
-                                        <m:Button
-                                            icon="sap-icon://sort"
-                                            tooltip="Sort Categories in addition to current sorting"
-                                            press="sortCategories" />
+                                       	<m:Button
+							icon="sap-icon://sort"
+                            text="Ordinamento"
+							press="sortCategories"/>
                                     </m:OverflowToolbar>
                                 </ui:extension>
                                 <ui:columns>
-                                    <ui:Column sortProperty="Cliente">
+                                    <ui:Column width="10rem"  sortProperty="Cliente">
                                         <m:Label text="Id Posizione" />
                                         <ui:template>
                                             <m:ObjectIdentifier title="{detailData>/DettaglioMaster3/0/Posizione/IdPos}" />
                                         </ui:template>
                                     </ui:Column>
-                                    <ui:Column showSortMenuEntry="false">
+                                    <ui:Column width="10rem" showSortMenuEntry="false">
                                         <m:Label text="Destinatario" />
                                         <ui:template>
                                             <m:ObjectIdentifier title="{detailData>/DettaglioMaster3/0/Posizione/Destinatario}" />
                                         </ui:template>
                                     </ui:Column>
-                                    <ui:Column >
+                                    <ui:Column width="10rem" >
                                         <m:Label text="Cod. Cliente Materiale" />
                                         <ui:template>
                                             <m:ObjectIdentifier title="{detailData>/DettaglioMaster3/0/Posizione/CodCliMateriale}" />
                                         </ui:template>
                                     </ui:Column>
-                                    <ui:Column>
+                                    <ui:Column width="12rem">
                                         <m:Label text="Cod. Materiale Fornitore" />
                                         <ui:template>
                                             <m:ObjectIdentifier title="{detailData>/DettaglioMaster3/0/Posizione/CodMaterFornitore}" />
                                         </ui:template>
                                     </ui:Column>
-                                    <ui:Column>
+                                    <ui:Column width="10rem">
                                         <m:Label text="Descr. Materiale" />
                                         <ui:template>
                                             <m:ObjectIdentifier title="{detailData>/DettaglioMaster3/0/Posizione/DescrMateriale}" />
                                         </ui:template>
                                     </ui:Column>
-                                    <ui:Column sortProperty="Punto di scarico">
+                                    <ui:Column width="10rem" sortProperty="Punto di scarico">
                                         <m:Label text="Punto di scarico" />
                                         <ui:template>
                                             <m:ObjectIdentifier title="{detailData>/DettaglioMaster3/0/Posizione/PuntoScarico}" />
                                         </ui:template>
                                     </ui:Column>
-                                    <ui:Column showSortMenuEntry="false">
+                                    <ui:Column width="10rem" showSortMenuEntry="false">
                                         <m:Label text="Destinazione Interna" />
                                         <ui:template>
                                             <m:ObjectIdentifier title="{detailData>/DettaglioMaster3/0/Posizione/DestInterna}" />
                                         </ui:template>
                                     </ui:Column>
-                                    <ui:Column >
+                                    <ui:Column width="10rem" >
                                         <m:Label text="Testo riga" />
                                         <ui:template>
                                             <m:ObjectIdentifier title="{detailData>/DettaglioMaster3/0/Posizione/TestoRiga}" />
                                         </ui:template>
                                     </ui:Column>
-                                    <ui:Column>
+                                    <ui:Column width="15rem">
                                         <m:Label text="Data inizio calc. quantità cumulata" />
                                         <ui:template>
                                             <m:ObjectIdentifier title="{detailData>/DettaglioMaster3/0/Posizione/DataIniQuaCumul}" />
                                         </ui:template>
                                     </ui:Column>
-                                    <ui:Column>
+                                    <ui:Column width="10rem">
                                         <m:Label text="Progressivo invio" />
                                         <ui:template>
                                             <m:ObjectIdentifier title="{detailData>/DettaglioMaster3/0/Posizione/ProgInvio}" />
                                         </ui:template>
                                     </ui:Column>
-                                    <ui:Column sortProperty="Cliente">
+                                    <ui:Column width="10rem" sortProperty="Cliente">
                                         <m:Label text="Data progressivo invio" />
                                         <ui:template>
                                             <m:ObjectIdentifier title="{detailData>/DettaglioMaster3/0/Posizione/DataProgInvio}" />
                                         </ui:template>
                                     </ui:Column>
-                                    <ui:Column showSortMenuEntry="false">
+                                    <ui:Column width="10rem" showSortMenuEntry="false">
                                         <m:Label text="Numero ultimo Delfor" />
                                         <ui:template>
                                             <m:ObjectIdentifier title="{detailData>/DettaglioMaster3/0/Posizione/NumUltDelfor}" />
                                         </ui:template>
                                     </ui:Column>
-                                    <ui:Column >
+                                    <ui:Column width="10rem" >
                                         <m:Label text="Data ultimo Delfor" />
                                         <ui:template>
                                             <m:ObjectIdentifier title="{detailData>/DettaglioMaster3/0/Posizione/DataUltDelfor}" />
                                         </ui:template>
                                     </ui:Column>
-                                    <ui:Column>
+                                    <ui:Column width="12rem">
                                         <m:Label text="Numero ordine di acquisto" />
                                         <ui:template>
                                             <m:ObjectIdentifier title="{detailData>/DettaglioMaster3/0/Posizione/NumOrdAcquisto}" />
                                         </ui:template>
                                     </ui:Column>
-                                    <ui:Column>
+                                    <ui:Column width="10rem">
                                         <m:Label text="Ultima quantità spedita" />
                                         <ui:template>
                                             <m:ObjectIdentifier title="{detailData>/DettaglioMaster3/0/Posizione/UltQuaSpedita}" />
                                         </ui:template>
                                     </ui:Column>
-                                    <ui:Column sortProperty="Cliente">
+                                    <ui:Column width="17rem" sortProperty="Cliente">
                                         <m:Label text="Numero Ultima bolla ricevuta dal cliente" />
                                         <ui:template>
                                             <m:ObjectIdentifier title="{detailData>/DettaglioMaster3/0/Posizione/NumUltRicevuta}" />
                                         </ui:template>
                                     </ui:Column>
-                                    <ui:Column showSortMenuEntry="false">
+                                    <ui:Column width="13rem" showSortMenuEntry="false">
                                         <m:Label text="Data ultima bolla ricevuta" />
                                         <ui:template>
                                             <m:ObjectIdentifier title="{detailData>/DettaglioMaster3/0/Posizione/DataUltRicevuta}" />
                                         </ui:template>
                                     </ui:Column>
-                                    <ui:Column >
+                                    <ui:Column width="13rem" >
                                         <m:Label text="Quantità cumulativa ricevuta" />
                                         <ui:template>
                                             <m:ObjectIdentifier title="{detailData>/DettaglioMaster3/0/Posizione/QuaCumRicevuta}" />
                                         </ui:template>
                                     </ui:Column>
-                                    <ui:Column>
+                                    <ui:Column width="11rem">
                                         <m:Label text="Ultima quantità ordinata" />
                                         <ui:template>
                                             <m:ObjectIdentifier title="{detailData>/DettaglioMaster3/0/Posizione/UltQuaOrdinata}" />
                                         </ui:template>
                                     </ui:Column>
-                                    <ui:Column>
+                                    <ui:Column width="10rem">
                                         <m:Label text="Release number" />
                                         <ui:template>
                                             <m:ObjectIdentifier title="{detailData>/DettaglioMaster3/0/Posizione/RelNumber}" />
                                         </ui:template>
                                     </ui:Column>
-                                    <ui:Column sortProperty="Cliente">
+                                    <ui:Column width="15rem" sortProperty="Cliente">
                                         <m:Label text="Quantità cumulativa precedente" />
                                         <ui:template>
                                             <m:ObjectIdentifier title="{detailData>/DettaglioMaster3/0/Posizione/QuaCumPrecedente}" />
                                         </ui:template>
                                     </ui:Column>
-                                    <ui:Column showSortMenuEntry="false">
+                                    <ui:Column width="10rem" showSortMenuEntry="false">
                                         <m:Label text="Quantità in backorder " />
                                         <ui:template>
                                             <m:ObjectIdentifier title="{detailData>/DettaglioMaster3/0/Posizione/QuaBackorder}" />
                                         </ui:template>
                                     </ui:Column>
-                                    <ui:Column >
+                                    <ui:Column width="13rem" >
                                         <m:Label text="Quantità ricevuta e accettata" />
                                         <ui:template>
                                             <m:ObjectIdentifier title="{detailData>/DettaglioMaster3/0/Posizione/QuaRicAccettata}" />
                                         </ui:template>
                                     </ui:Column>
-                                    <ui:Column>
+                                    <ui:Column width="10rem">
                                         <m:Label text="Contatto cliente" />
                                         <ui:template>
                                             <m:ObjectIdentifier title="{detailData>/DettaglioMaster3/0/Posizione/ContCliente}" />
                                         </ui:template>
                                     </ui:Column>
-                                    <ui:Column>
+                                    <ui:Column width="10rem">
                                         <m:Label text="Info contatto email" />
                                         <ui:template>
                                             <m:ObjectIdentifier title="{detailData>/DettaglioMaster3/0/Posizione/InfoContEmail}" />
                                         </ui:template>
                                     </ui:Column>
-                                     <ui:Column>
+                                     <ui:Column width="10rem">
                                         <m:Label text="Info contatto telefonico" />
                                         <ui:template>
                                             <m:ObjectIdentifier title="{detailData>/DettaglioMaster3/0/Posizione/InfoContTel}" />
                                         </ui:template>
                                     </ui:Column>
-                                     <ui:Column>
+                                     <ui:Column width="10rem">
                                         <m:Label text="Info contatto fax" />
                                         <ui:template>
                                             <m:ObjectIdentifier title="{detailData>/DettaglioMaster3/0/Posizione/InfoContFax}" />
@@ -399,48 +398,44 @@
                                     <m:OverflowToolbar style="Clear">
                                         <m:Title text="" />
                                         <m:ToolbarSpacer />
-                                        <m:Button
-                                            icon="sap-icon://sorting-ranking"
-                                            tooltip="Sort ascending across Categories and Name"
-                                            press="sortCategoriesAndName" />
-                                        <m:Button
-                                            icon="sap-icon://sort"
-                                            tooltip="Sort Categories in addition to current sorting"
-                                            press="sortCategories" />
+                                        	<m:Button
+							icon="sap-icon://sort"
+                            text="Ordinamento"
+							press="sortCategories"/>
                                     </m:OverflowToolbar>
                                 </ui:extension>
                                 <ui:columns>
-                                    <ui:Column  sortProperty="Cliente">
+                                    <ui:Column width="10rem"  sortProperty="Cliente">
                                         <m:Label text="Id Schedulazione" />
                                         <ui:template>
                                             <m:ObjectIdentifier title="{detailData>/DettaglioMaster3/0/Schedulazioni/IdSchedulazione}" />
                                         </ui:template>
                                     </ui:Column>
-                                    <ui:Column showSortMenuEntry="false" sortProperty="Materiale">
+                                    <ui:Column width="11rem" showSortMenuEntry="false" sortProperty="Materiale">
                                         <m:Label text="Quantita' da consegnare" />
                                         <ui:template>
                                             <m:ObjectIdentifier title="{detailData>/DettaglioMaster3/0/Schedulazioni/QuaDaConsegnare}" />
                                         </ui:template>
                                     </ui:Column>
-                                    <ui:Column >
+                                    <ui:Column width="10rem">
                                         <m:Label text="Schedulazione" />
                                         <ui:template>
                                             <m:ObjectIdentifier title="{detailData>/DettaglioMaster3/0/Schedulazioni/Schedulazione}" />
                                         </ui:template>
                                     </ui:Column>
-                                    <ui:Column>
+                                    <ui:Column width="15rem">
                                         <m:Label text="Data spedizione richiesta effettiva" />
                                         <ui:template>
                                             <m:ObjectIdentifier title="{detailData>/DettaglioMaster3/0/Schedulazioni/DataSpedRichEffettiva}" />
                                         </ui:template>
                                     </ui:Column>
-                                    <ui:Column>
+                                    <ui:Column width="13rem">
                                         <m:Label text="Data spedizione richiesta da" />
                                         <ui:template>
                                             <m:ObjectIdentifier title="{detailData>/DettaglioMaster3/0/Schedulazioni/DataSpedRichDa}" />
                                         </ui:template>
                                     </ui:Column>
-                                    <ui:Column>
+                                    <ui:Column width="13rem"> 
                                         <m:Label text="Data spedizione richiesta a" />
                                         <ui:template>
                                             <m:ObjectIdentifier title="{detailData>/DettaglioMaster3/0/Schedulazioni/DataSpedRichA}" />
@@ -466,8 +461,9 @@
         <footer>
             <m:OverflowToolbar>
                 <m:ToolbarSpacer />
-                <m:Button type="Accept" text="Save" />
-                <m:Button type="Reject" text="Cancel" />
+                <m:Button icon="sap-icon://excel-attachment" type="Accept" text="Esporta" />
+                <m:Button icon="sap-icon://synchronize" type="Ghost" text="Rielabora" />
+                <m:Button icon="sap-icon://delete" type="Reject" text="Elimina" />
             </m:OverflowToolbar>
         </footer>
     </ObjectPageLayout>
