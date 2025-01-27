@@ -164,11 +164,17 @@
 				count="{/ProductCollectionStats/Counts/Weight/Overweight}"
 				text="Invoice"
 				key="05" />
+                <IconTabFilter
+				icon="sap-icon://excel-attachment"
+				iconColor="Default"
+				count="{/ProductCollectionStats/Counts/Weight/Overweight}"
+				text="Import excel"
+				key="06" />
 		</items>
 		<content class="sapUiNoContentPadding">
 				<ui:Table
 				id="table"
-				selectionMode="Single"
+				selectionMode="MultiToggle"
                 selectionBehavior="RowSelector"
                 rowSelectionChange="onPressRow"
 				rows="{master3>/Master3}"
@@ -191,6 +197,11 @@
                             text="Esportazione in excel"
 							icon="sap-icon://excel-attachment"
 							press="deletePress"/>
+                            <Button
+                            id="buttonProcessa"
+                            text="Processa"
+							icon="sap-icon://process"
+							press="onProcessaButton"/>
 					</OverflowToolbar>
 				</ui:extension>
 				<ui:columns>
@@ -248,6 +259,14 @@
 						 <ObjectIdentifier
                                     title="{master3>MessaggioStato}"
                                 />
+						</ui:template>
+					</ui:Column>
+                    <ui:Column
+						id="rielabora"
+						sortProperty="Rielabora">
+						<Label text="Rielabora" />
+						<ui:template>
+                            <Button text="Rielabora" visible="{= ${master3>Stato} === 'KO' ? true : false}"/>
 						</ui:template>
 					</ui:Column>
 				</ui:columns>
