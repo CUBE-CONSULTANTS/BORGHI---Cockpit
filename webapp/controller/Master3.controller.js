@@ -4,8 +4,9 @@ sap.ui.define(
     "sap/ui/model/json/JSONModel",
     "sap/ui/model/Sorter",
     "sap/ui/core/library",
+    "sap/ui/core/Fragment",
   ],
-  function (Controller, JSONModel, Sorter, CoreLibrary) {
+  function (Controller, JSONModel, Sorter, CoreLibrary, Fragment) {
     "use strict";
 
     const SortOrder = CoreLibrary.SortOrder;
@@ -108,6 +109,41 @@ sap.ui.define(
 
       onProcessaButton: function () {
         debugger;
+        let indici = this.getView().byId("table").getSelectedIndices();
+        let data = this.getView().getModel("master3").getData().Master3;
+        let selected = [];
+        indici.forEach((x) => {
+          selected.push(data[x]);
+        });
+        let flag = 0;
+        selected.forEach((y) => {
+          if (y.Stato == "KO") {
+            flag++;
+          }
+        });
+        if (flag > 0) {
+          console.log("errori nel processo");
+        } else {
+          if (!this._oDialog) {
+            Fragment.load({
+              id: this.getView().getId(),
+              name: "sap.ui.demo.fiori2.view.fragments.linkDialogMaster3",
+              controller: this,
+            }).then(
+              function (oDialog) {
+                this._oDialog = oDialog;
+                this.getView().addDependent(this._oDialog);
+                this._oDialog.open();
+              }.bind(this)
+            );
+          } else {
+            this._oDialog.open();
+          }
+        }
+      },
+
+      onclose: function (oEvent) {
+        oEvent.getSource().getParent().close;
       },
     });
   }

@@ -1,0 +1,18 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+    <Dialog title="Fine del processamento">
+        <content>
+            <VBox class= "sapUiMediumMargin">
+                <HBox class="sapUiLargeMarginBottom" >
+                    <Text text="Processo terminato senza errori"/>
+                </HBox>
+                <HBox >
+                    <Link text="Link 1" press="onLink1Press" class="sapUiLargeMarginEnd"/>
+                    <Link text="Link 2" press="onLink2Press"/>
+                </HBox>
+            </VBox>
+        </content>
+        <buttons>
+            <Button text="Chiudi" press="onclose"/> 
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>
