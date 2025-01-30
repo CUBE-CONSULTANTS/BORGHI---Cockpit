@@ -6,8 +6,8 @@
                     <Text text="Processo terminato senza errori"/>
                 </HBox>
                 <HBox >
-                    <Link text="Link 1" press="onLink1Press" class="sapUiLargeMarginEnd"/>
-                    <Link text="Link 2" press="onLink2Press"/>
+                    <Link text="Reportistica Cumulativi" press="onLink1Press" class="sapUiLargeMarginEnd"/>
+                    <Link text="Reportistica Progressivi" press="onLink2Press"/>
                 </HBox>
             </VBox>
         </content>

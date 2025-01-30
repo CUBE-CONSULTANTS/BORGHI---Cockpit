@@ -143,7 +143,7 @@ sap.ui.define(
       },
 
       onclose: function (oEvent) {
-        oEvent.getSource().getParent().close;
+        oEvent.getSource().getParent().close();
       },
     });
   }
