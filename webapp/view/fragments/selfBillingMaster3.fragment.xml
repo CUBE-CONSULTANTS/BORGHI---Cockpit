@@ -1,0 +1,154 @@
+<core:FragmentDefinition xmlns="sap.m" 
+    xmlns:core="sap.ui.core" 
+    xmlns:f="sap.f" 
+    xmlns:fb="sap.ui.comp.filterbar" 
+    xmlns:ui="sap.ui.table" 
+    xmlns:mvc="sap.ui.core.mvc">
+
+    <f:DynamicPage >
+        <f:header>
+        <f:DynamicPageHeader pinnable="true">
+            <f:content>
+            <fb:FilterBar
+            id="1"
+            persistencyKey="myPersKey"
+            useToolbar="false"
+            search=".onSearch"
+            filterChange=".onFilterChange"
+            afterVariantLoad=".onAfterVariantLoad"
+            showGoOnFB="true"
+            showFilterConfiguration="true"
+           
+        >
+            <fb:filterGroupItems>
+                <fb:FilterGroupItem
+                    name="Date Processamento EDI"
+                    label="Date Processamento EDI"
+                    groupName="Group1"
+                    visibleInFilterBar="true"
+                >
+                    <fb:control>
+                    <DatePicker
+                    tooltip="..."
+        secondaryCalendarType="Gregorian"
+        change="handleChange"
+        />
+                    </fb:control>
+                </fb:FilterGroupItem>
+                <fb:FilterGroupItem
+                id="2"
+                    name="Date di consegna"
+                    label="Date di consegna"
+                    groupName="Group1"
+                    visibleInFilterBar="true"
+                >
+                    <fb:control>
+                     <DatePicker
+                      tooltip="..."
+        secondaryCalendarType="Gregorian"
+        change="handleChange"
+        />
+                    </fb:control>
+                </fb:FilterGroupItem>
+                <fb:FilterGroupItem
+                    name="Cliente"
+                    label="Cliente"
+                    groupName="Group1"
+                    visibleInFilterBar="true"
+                >
+                    <fb:control>
+                       <Input/>
+                    </fb:control>
+                </fb:FilterGroupItem>
+                 <fb:FilterGroupItem
+                    name="Materiale"
+                    label="Materiale"
+                    groupName="Group1"
+                    visibleInFilterBar="true"
+                >
+                    <fb:control>
+                    <Input/>
+                    </fb:control>
+                </fb:FilterGroupItem>
+                
+                 <fb:FilterGroupItem
+                    name="Stato"
+                    label="Stato"
+                    groupName="Group1"
+                    visibleInFilterBar="true"
+                >
+                    <fb:control>
+                        <ComboBox
+                            name=""
+                            selectionChange=".onSelectionChange"
+                        >
+                            <core:Item
+                                key="{key}"
+                                text="OK"
+                            />
+                            <core:Item
+                                key="{key}"
+                                text="KO"
+                            />
+                            <core:Item
+                                key="{key}"
+                                text="WARNING"
+                            />
+                        </ComboBox>
+                    </fb:control>
+                </fb:FilterGroupItem>
+                
+            </fb:filterGroupItems>
+        </fb:FilterBar>
+    </f:content>
+        </f:DynamicPageHeader >
+    </f:header>
+        
+        <f:content>
+            <ui:TreeTable
+                    id="TreeTableBasic"
+                    rows="{path:'/catalog/clothing', parameters: {arrayNames:['categories']}}"
+                    selectionMode="MultiToggle"
+                    enableSelectAll="false"
+                    ariaLabelledBy="title">
+                <ui:extension>
+                    <OverflowToolbar style="Clear">
+                        <Title id="89" text="Clothing"/>
+                        <ToolbarSpacer/>
+                        <Button text="Collapse all" press="onCollapseAll"/>
+                        <Button text="Collapse selection" press="onCollapseSelection"/>
+                        <Button text="Expand first level" press="onExpandFirstLevel"/>
+                        <Button text="Expand selection" press="onExpandSelection"/>
+                    </OverflowToolbar>
+                </ui:extension>
+                <ui:columns>
+                    <ui:Column width="13rem">
+                        <Label text="Categories"/>
+                        <ui:template>
+                            <Text text="{name}" wrapping="false" />
+                        </ui:template>
+                    </ui:Column>
+                    <ui:Column width="9rem">
+                        <Label text="Price"/>
+                        <ui:template>
+                            
+                        </ui:template>
+                    </ui:Column>
+                    <ui:Column width="11rem">
+                        <Label text="Size"/>
+                        <ui:template>
+                            <Select
+                                    items="{path: '/sizes', templateShareable: true}"
+                                    selectedKey="{size}"
+                                    visible="{= !!${size}}"
+                                    forceSelection="false">
+                                <core:Item key="{key}" text="{value}"/>
+                            </Select>
+                        </ui:template>
+                    </ui:Column>
+                </ui:columns>
+            </ui:TreeTable>
+        </f:content>
+    </f:DynamicPage>
+   
+</core:FragmentDefinition>

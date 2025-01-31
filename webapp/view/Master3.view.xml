@@ -160,8 +160,8 @@
 				count="{/ProductCollectionStats/Counts/Weight/Overweight}"
 				text="Self Billing"
 				key="03" >
-                <!-- <core:Fragment fragmentName="sap.ui.demo.fiori2.view.fragments.linkDialogMaster3"
-                    type="XML" /> -->
+                <core:Fragment fragmentName="sap.ui.demo.fiori2.view.fragments.selfBillingMaster3"
+                    type="XML" />
             </IconTabFilter>
                 <IconTabFilter
 				icon="sap-icon://letter"
