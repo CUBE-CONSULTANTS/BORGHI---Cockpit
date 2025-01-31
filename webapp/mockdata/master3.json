@@ -116,7 +116,7 @@
      "CompanyName": "Opel",
       "DataRicezione": "Data ricezione",
       "Materiale": "Materiale",
-      "Stato": "W",
+      "Stato": "WARNING",
       "MessaggioStato": "Messaggio",
       "Testata": [{
         "IdInterno": "",
@@ -171,7 +171,7 @@
       "CompanyName": "GM",
        "DataRicezione": "Data ricezione",
        "Materiale": "Materiale",
-       "Stato": "W",
+       "Stato": "WARNING",
        "MessaggioStato": "Messaggio",
        "Testata": [{
         "IdInterno": "",
@@ -226,7 +226,7 @@
       "CompanyName": "Audi+VW+Porsche",
        "DataRicezione": "Data ricezione",
        "Materiale": "Materiale",
-       "Stato": "W",
+       "Stato": "WARNING",
        "MessaggioStato": "Messaggio",
        "Testata": [{
         "IdInterno": "",
@@ -281,7 +281,7 @@
       "CompanyName": "Delins",
        "DataRicezione": "Data ricezione",
        "Materiale": "Materiale",
-       "Stato": "W",
+       "Stato": "WARNING",
        "MessaggioStato": "Messaggio",
        "Testata": [{
         "IdInterno": "",

@@ -1,0 +1,222 @@
+<core:FragmentDefinition xmlns="sap.m" 
+    xmlns:core="sap.ui.core" 
+    xmlns:f="sap.f" 
+    xmlns:fb="sap.ui.comp.filterbar" 
+    xmlns:ui="sap.ui.table" 
+    xmlns:mvc="sap.ui.core.mvc">
+
+    <f:DynamicPage >
+        <f:header>
+        <f:DynamicPageHeader pinnable="true">
+            <f:content>
+            <fb:FilterBar
+            id="filterbar"
+            persistencyKey="myPersKey"
+            useToolbar="false"
+            search=".onSearch"
+            filterChange=".onFilterChange"
+            afterVariantLoad=".onAfterVariantLoad"
+            showGoOnFB="true"
+            showFilterConfiguration="true"
+           
+        >
+            <fb:filterGroupItems>
+                <fb:FilterGroupItem
+                    name="Date Processamento EDI"
+                    label="Date Processamento EDI"
+                    groupName="Group1"
+                    visibleInFilterBar="true"
+                >
+                    <fb:control>
+                    <DatePicker
+                    tooltip="..."
+        secondaryCalendarType="Gregorian"
+        change="handleChange"
+        />
+                    </fb:control>
+                </fb:FilterGroupItem>
+                <fb:FilterGroupItem
+                id="idDataConsegna"
+                    name="Date di consegna"
+                    label="Date di consegna"
+                    groupName="Group1"
+                    visibleInFilterBar="true"
+                >
+                    <fb:control>
+                     <DatePicker
+                      tooltip="..."
+        secondaryCalendarType="Gregorian"
+        change="handleChange"
+        />
+                    </fb:control>
+                </fb:FilterGroupItem>
+                <fb:FilterGroupItem
+                    name="Cliente"
+                    label="Cliente"
+                    groupName="Group1"
+                    visibleInFilterBar="true"
+                >
+                    <fb:control>
+                       <Input/>
+                    </fb:control>
+                </fb:FilterGroupItem>
+                 <fb:FilterGroupItem
+                    name="Materiale"
+                    label="Materiale"
+                    groupName="Group1"
+                    visibleInFilterBar="true"
+                >
+                    <fb:control>
+                    <Input/>
+                    </fb:control>
+                </fb:FilterGroupItem>
+                
+                 <fb:FilterGroupItem
+                    name="Stato"
+                    label="Stato"
+                    groupName="Group1"
+                    visibleInFilterBar="true"
+                >
+                    <fb:control>
+                        <ComboBox
+                            name=""
+                            selectionChange=".onSelectionChange"
+                        >
+                            <core:Item
+                                key="{key}"
+                                text="OK"
+                            />
+                            <core:Item
+                                key="{key}"
+                                text="KO"
+                            />
+                            <core:Item
+                                key="{key}"
+                                text="WARNING"
+                            />
+                        </ComboBox>
+                    </fb:control>
+                </fb:FilterGroupItem>
+                
+            </fb:filterGroupItems>
+        </fb:FilterBar>
+    </f:content>
+        </f:DynamicPageHeader >
+    </f:header>
+        
+        <f:content>
+            
+        <ui:Table
+				id="table"
+				selectionMode="MultiToggle"
+                selectionBehavior="RowSelector"
+                rowSelectionChange="onPressRow"
+				rows="{master3>/Master3}"
+                cellClick=".rowDetailPress"
+				sort="sortDeliveryDate"
+				ariaLabelledBy="title">
+				<ui:extension>
+					<OverflowToolbar style="Clear">
+						<Title id="title" text="Storico"/>
+						<ToolbarSpacer/>
+						<!-- <Button
+							icon="sap-icon://sorting-ranking"
+							press="sortCategoriesAndName"/> -->
+						<Button
+							icon="sap-icon://sort"
+                            text="Ordinamento"
+							press="sortCategories"/>
+                            <Button
+							icon="sap-icon://excel-attachment"
+                            text="Import excel"
+							press=""/>
+                            <Button
+                            id="buttonDelete"
+                            text="Esportazione in excel"
+							icon="sap-icon://excel-attachment"
+							press="deletePress"/>
+                            <Button
+                            id="buttonProcessa"
+                            text="Processa"
+							icon="sap-icon://process"
+							press="onProcessaButton"
+                            type="Emphasized"/>
+                            <Button
+                            id="buttonRielabora"
+                            text="Rielabora"
+							icon="sap-icon://synchronize"
+							press=""
+                            type="Attention"/>
+                            <Button
+                            id="buttonElimina"
+                            text="Elimina"
+							icon="sap-icon://delete"
+							press=""
+                            type="Reject"/>
+					</OverflowToolbar>
+				</ui:extension>
+				<ui:columns>
+                <ui:Column
+						id="stato"
+					
+						sortProperty="Stato">
+						<Label text="Stato" />
+						<ui:template>
+						 <!-- <ObjectIdentifier
+                                    title="{master3>Stato}"
+                                /> -->
+                                <Button icon="{= ${master3>Stato} === 'OK' ? 'sap-icon://accept' : ${master3>Stato} === 'KO' ? 'sap-icon://decline' : 'sap-icon://warning'}" 
+                                type="{= ${master3>Stato} === 'OK' ? 'Accept' : ${master3>Stato} === 'KO' ? 'Critical' : 'Attention'}"
+                                tooltip="{master3>Stato}"/>
+                                 <!-- <core:Icon 
+            src="{= ${master3>Stato} === 'OK' ? 'sap-icon://accept' : ${master3>Stato} === 'KO' ? 'sap-icon://decline' : 'sap-icon://warning'}" 
+            color="{= ${master3>Stato} === 'OK' ? 'green' : ${master3>Stato} === 'KO' ? 'red' : 'yellow'}"
+            tooltip="{master3>Stato}" /> -->
+						</ui:template>
+					</ui:Column>
+					<ui:Column
+						id="cliente"
+						sortProperty="Cliente">
+						<Label text="Cliente" />
+						<ui:template>
+                              <ObjectIdentifier
+                                    title="{master3>CompanyName}"
+                                />
+						</ui:template>
+					</ui:Column>
+					<ui:Column
+						id="materiale"
+						showSortMenuEntry="false"
+						sortProperty="Materiale">
+						<Label text="Materiale" />
+						<ui:template>
+                             <ObjectIdentifier
+                                    title="{master3>Materiale}"
+                                />
+						</ui:template>
+					</ui:Column>
+					<ui:Column id="dataRicezione">
+						<Label text="Data ricezione" />
+						<ui:template>
+							 <ObjectIdentifier
+                                    title="{master3>DataRicezione}"
+                                />
+						</ui:template>
+					</ui:Column>
+					<ui:Column
+						id="statusMessage"
+						sortProperty="Status Message">
+						<Label text="Status Message" />
+						<ui:template>
+						 <ObjectIdentifier
+                                    title="{master3>MessaggioStato}"
+                                />
+						</ui:template>
+					</ui:Column>
+                    
+				</ui:columns>
+			</ui:Table>
+        </f:content>
+    </f:DynamicPage>
+   
+</core:FragmentDefinition>

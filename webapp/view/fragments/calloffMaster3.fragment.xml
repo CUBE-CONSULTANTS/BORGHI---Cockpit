@@ -1,0 +1,105 @@
+<core:FragmentDefinition xmlns="sap.m" 
+    xmlns:core="sap.ui.core" 
+    xmlns:f="sap.f" 
+    xmlns:fb="sap.ui.comp.filterbar" 
+    xmlns:ui="sap.ui.table" 
+    xmlns:mvc="sap.ui.core.mvc">
+
+    <f:DynamicPage >
+        <f:content>
+            <fb:FilterBar
+            id="rthr"
+            persistencyKey="myPersKey"
+            useToolbar="false"
+            search=".onSearch"
+            filterChange=".onFilterChange"
+            afterVariantLoad=".onAfterVariantLoad"
+            showGoOnFB="false"
+            showFilterConfiguration="false"
+            width="100%"
+        >
+            <fb:filterGroupItems>
+                <fb:FilterGroupItem
+                    name="Date Processamento EDI"
+                    label="Date Processamento EDI"
+                    groupName="Group1"
+                    visibleInFilterBar="true"
+                >
+                    <fb:control>
+                    <DatePicker
+                    tooltip="..."
+        secondaryCalendarType="Gregorian"
+        change="handleChange"
+        />
+                    </fb:control>
+                </fb:FilterGroupItem>
+                <fb:FilterGroupItem
+                id="gne"
+                    name="Date di consegna"
+                    label="Date di consegna"
+                    groupName="Group1"
+                    visibleInFilterBar="true"
+                >
+                    <fb:control>
+                     <DatePicker
+                      tooltip="..."
+        secondaryCalendarType="Gregorian"
+        change="handleChange"
+        />
+                    </fb:control>
+                </fb:FilterGroupItem>
+                <fb:FilterGroupItem
+                    name="Cliente"
+                    label="Cliente"
+                    groupName="Group1"
+                    visibleInFilterBar="true"
+                >
+                    <fb:control>
+                       <Input/>
+                    </fb:control>
+                </fb:FilterGroupItem>
+                 <fb:FilterGroupItem
+                    name="Materiale"
+                    label="Materiale"
+                    groupName="Group1"
+                    visibleInFilterBar="true"
+                >
+                    <fb:control>
+                    <Input/>
+                    </fb:control>
+                </fb:FilterGroupItem>
+                
+                 <fb:FilterGroupItem
+                    name="Stato"
+                    label="Stato"
+                    groupName="Group1"
+                    visibleInFilterBar="true"
+                >
+                    <fb:control>
+                        <ComboBox
+                            name=""
+                            selectionChange=".onSelectionChange"
+                        >
+                            <core:Item
+                                key="{key}"
+                                text="OK"
+                            />
+                            <core:Item
+                                key="{key}"
+                                text="KO"
+                            />
+                            <core:Item
+                                key="{key}"
+                                text="WARNING"
+                            />
+                        </ComboBox>
+                    </fb:control>
+                </fb:FilterGroupItem>
+                
+            </fb:filterGroupItems>
+        </fb:FilterBar>
+        
+        </f:content>
+    </f:DynamicPage>
+   
+</core:FragmentDefinition>

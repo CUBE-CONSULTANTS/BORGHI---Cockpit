@@ -22,7 +22,7 @@
             </f:DynamicPageTitle>
         </f:title>
         <f:header>
-            <f:DynamicPageHeader pinnable="true">
+            <f:DynamicPageHeader pinnable="false">
                 <f:content>
                     <Toolbar>
                         <Button
@@ -31,7 +31,7 @@
                             text="Torna alla Home"
                         />
                     </Toolbar>
-  <fb:FilterBar
+  <!-- <fb:FilterBar
                         id="filterbar"
                         persistencyKey="myPersKey"
                         useToolbar="false"
@@ -113,14 +113,14 @@
                                         />
                                         <core:Item
                                             key="{key}"
-                                            text="W"
+                                            text="WARNING"
                                         />
                                     </ComboBox>
                                 </fb:control>
                             </fb:FilterGroupItem>
                             
                         </fb:filterGroupItems>
-                    </fb:FilterBar>
+                    </fb:FilterBar> -->
      
                 </f:content>
             </f:DynamicPageHeader>
@@ -130,7 +130,7 @@
                        <IconTabBar
 		id="idIconTabBar"
 		select=".onFilterSelect"
-		
+		selectedKey="01"
         expandable="false"
         width="100%">
 		<items>
@@ -139,140 +139,56 @@
 				iconColor="Default"
 				count="{/ProductCollectionStats/Counts/Weight/Ok}"
 				text="Delivery Forecast"
-				key="01" />
+				key="01" >
+                
+                <core:Fragment fragmentName="sap.ui.demo.fiori2.view.fragments.deliveryMaster3"
+                    type="XML" />
+                
+            </IconTabFilter>
 			<IconTabFilter
 				icon="sap-icon://time-off"
 				iconColor="Default"
 				count="{/ProductCollectionStats/Counts/Weight/Heavy}"
 				text="Call-Off"
-				key="02" />
+				key="02" >
+                <core:Fragment fragmentName="sap.ui.demo.fiori2.view.fragments.calloffMaster3"
+                    type="XML" />
+            </IconTabFilter>
 			<IconTabFilter
 				icon="sap-icon://monitor-payments"
 				iconColor="Default"
 				count="{/ProductCollectionStats/Counts/Weight/Overweight}"
 				text="Self Billing"
-				key="03" />
+				key="03" >
+                <!-- <core:Fragment fragmentName="sap.ui.demo.fiori2.view.fragments.linkDialogMaster3"
+                    type="XML" /> -->
+            </IconTabFilter>
                 <IconTabFilter
 				icon="sap-icon://letter"
 				iconColor="Default"
 				count="{/ProductCollectionStats/Counts/Weight/Overweight}"
 				text="Despatch Advice"
-				key="04" />
+				key="04" >
+                <!-- <core:Fragment fragmentName="sap.ui.demo.fiori2.view.fragments.linkDialogMaster3"
+                    type="XML" /> -->
+            </IconTabFilter>
                 <IconTabFilter
 				icon="sap-icon://sales-order"
 				iconColor="Default"
 				count="{/ProductCollectionStats/Counts/Weight/Overweight}"
 				text="Invoice"
-				key="05" />
-                <IconTabFilter
-				icon="sap-icon://excel-attachment"
-				iconColor="Default"
-				count="{/ProductCollectionStats/Counts/Weight/Overweight}"
-				text="Import excel"
-				key="06" />
+				key="05" >
+                <!-- <core:Fragment fragmentName="sap.ui.demo.fiori2.view.fragments.linkDialogMaster3"
+                    type="XML" /> -->
+            </IconTabFilter>
+                
 		</items>
-		<content class="sapUiNoContentPadding">
-				<ui:Table
-				id="table"
-				selectionMode="MultiToggle"
-                selectionBehavior="RowSelector"
-                rowSelectionChange="onPressRow"
-				rows="{master3>/Master3}"
-                cellClick=".rowDetailPress"
-				sort="sortDeliveryDate"
-				ariaLabelledBy="title">
-				<ui:extension>
-					<OverflowToolbar style="Clear">
-						<Title id="title" text="Storico"/>
-						<ToolbarSpacer/>
-						<!-- <Button
-							icon="sap-icon://sorting-ranking"
-							press="sortCategoriesAndName"/> -->
-						<Button
-							icon="sap-icon://sort"
-                            text="Ordinamento"
-							press="sortCategories"/>
-                            <Button
-                            id="buttonDelete"
-                            text="Esportazione in excel"
-							icon="sap-icon://excel-attachment"
-							press="deletePress"/>
-                            <Button
-                            id="buttonProcessa"
-                            text="Processa"
-							icon="sap-icon://process"
-							press="onProcessaButton"/>
-					</OverflowToolbar>
-				</ui:extension>
-				<ui:columns>
-                <ui:Column
-						id="stato"
-					
-						sortProperty="Stato">
-						<Label text="Stato" />
-						<ui:template>
-						 <!-- <ObjectIdentifier
-                                    title="{master3>Stato}"
-                                /> -->
-                                <Button text="{master3>Stato}" icon="{= ${master3>Stato} === 'OK' ? 'sap-icon://accept' : ${master3>Stato} === 'KO' ? 'sap-icon://decline' : 'sap-icon://warning'}" 
-                                type="{= ${master3>Stato} === 'OK' ? 'Accept' : ${master3>Stato} === 'KO' ? 'Critical' : 'Attention'}"/>
-                                 <!-- <core:Icon 
-            src="{= ${master3>Stato} === 'OK' ? 'sap-icon://accept' : ${master3>Stato} === 'KO' ? 'sap-icon://decline' : 'sap-icon://warning'}" 
-            color="{= ${master3>Stato} === 'OK' ? 'green' : ${master3>Stato} === 'KO' ? 'red' : 'yellow'}"
-            tooltip="{master3>Stato}" /> -->
-						</ui:template>
-					</ui:Column>
-					<ui:Column
-						id="cliente"
-						sortProperty="Cliente">
-						<Label text="Cliente" />
-						<ui:template>
-                              <ObjectIdentifier
-                                    title="{master3>CompanyName}"
-                                />
-						</ui:template>
-					</ui:Column>
-					<ui:Column
-						id="materiale"
-						showSortMenuEntry="false"
-						sortProperty="Materiale">
-						<Label text="Materiale" />
-						<ui:template>
-                             <ObjectIdentifier
-                                    title="{master3>Materiale}"
-                                />
-						</ui:template>
-					</ui:Column>
-					<ui:Column id="dataRicezione">
-						<Label text="Data ricezione" />
-						<ui:template>
-							 <ObjectIdentifier
-                                    title="{master3>DataRicezione}"
-                                />
-						</ui:template>
-					</ui:Column>
-					<ui:Column
-						id="statusMessage"
-						sortProperty="Status Message">
-						<Label text="Status Message" />
-						<ui:template>
-						 <ObjectIdentifier
-                                    title="{master3>MessaggioStato}"
-                                />
-						</ui:template>
-					</ui:Column>
-                    <ui:Column
-						id="rielabora"
-						sortProperty="Rielabora">
-						<Label text="Rielabora" />
-						<ui:template>
-                            <Button text="Rielabora" visible="{= ${master3>Stato} === 'KO' ? true : false}"/>
-						</ui:template>
-					</ui:Column>
-				</ui:columns>
-			</ui:Table>
-		</content>
+
+		 <content>
+            
+         </content>
 	</IconTabBar>  
+   
         </f:content>
 
         <!-- DynamicPage Footer -->

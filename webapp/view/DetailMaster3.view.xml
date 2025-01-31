@@ -458,13 +458,13 @@
             </ObjectPageSection>
         </sections>
 
-        <footer>
+        <!-- <footer>
             <m:OverflowToolbar>
                 <m:ToolbarSpacer />
                 <m:Button icon="sap-icon://excel-attachment" type="Accept" text="Esporta" />
                 <m:Button icon="sap-icon://synchronize" type="Ghost" text="Rielabora" />
                 <m:Button icon="sap-icon://delete" type="Reject" text="Elimina" />
             </m:OverflowToolbar>
-        </footer>
+        </footer> -->
     </ObjectPageLayout>
 </mvc:View>

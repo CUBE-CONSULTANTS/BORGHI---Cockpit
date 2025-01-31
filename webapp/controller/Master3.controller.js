@@ -16,11 +16,12 @@ sap.ui.define(
         // var oMaster3Model = new JSONModel(sap.ui.require.toUrl('sap/ui/demo/fiori2/mockdata/master3.json'));
         // this.getView().setModel(oMaster3Model, 'master3');
         this.oRouter = this.getOwnerComponent().getRouter();
-        this.onFilterSelect();
+        // this.onFilterSelect();
       },
 
       onFilterSelect: function (oEvent) {
         var selectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
+        // this.getView().getContent()[0].getContent().getContent()[0].destroy();
 
         switch (selectedKey) {
           case "01":
@@ -28,9 +29,12 @@ sap.ui.define(
               sap.ui.require.toUrl("sap/ui/demo/fiori2/mockdata/master3.json")
             );
             this.getOwnerComponent().setModel(oMaster3Model, "master3");
+            // caricare fragment
+
             break;
           case "02":
             this.getOwnerComponent().setModel(new JSONModel({}), "master3");
+
             break;
           case "03":
             this.getOwnerComponent().setModel(new JSONModel({}), "master3");
@@ -145,6 +149,32 @@ sap.ui.define(
       onclose: function (oEvent) {
         oEvent.getSource().getParent().close();
       },
+
+      // loadFragment: function (oEvent) {
+      //   if (!this._oMyFragment) {
+      //     this._oMyFragment = sap.ui.xmlfragment(
+      //       // this.getView().getId(),
+      //       "sap.ui.demo.fiori2.view.fragments.deliveryMaster3",
+      //       this
+      //     );
+
+      //     // this.getView()
+      //     //   .getContent()[0]
+      //     //   .getContent()
+      //     //   .getContent()[0]
+      //     //   .addContent(this._oMyFragment.oFragment);
+      //     // this.getView()
+      //     //   .getContent()[0]
+      //     //   .getContent()
+      //     //   .getContent()
+      //     //   .addContent(this._oMyFragment.oFragment);
+
+      //     this.getView()
+      //       .getContent()[0]
+      //       .getContent()
+      //       .addDependent(this._oMyFragment.oFragment);
+      //   }
+      // },
     });
   }
 );
