@@ -107,45 +107,121 @@
         <f:content>
             <ui:TreeTable
                     id="TreeTableBasic"
-                    rows="{path:'/catalog/clothing', parameters: {arrayNames:['categories']}}"
+                    rows="{master3>/posizioni}"
                     selectionMode="MultiToggle"
                     enableSelectAll="false"
                     ariaLabelledBy="title">
                 <ui:extension>
                     <OverflowToolbar style="Clear">
-                        <Title id="89" text="Clothing"/>
+                        <Title id="toobar" />
                         <ToolbarSpacer/>
                         <Button text="Collapse all" press="onCollapseAll"/>
                         <Button text="Collapse selection" press="onCollapseSelection"/>
                         <Button text="Expand first level" press="onExpandFirstLevel"/>
                         <Button text="Expand selection" press="onExpandSelection"/>
+                        <Button
+							icon="sap-icon://sort"
+                            text="Ordinamento"
+							press="sortCategories"/>
+                            <Button
+							icon="sap-icon://excel-attachment"
+                            text="Import excel"
+							press=""/>
+                            <Button
+                            id="buttonDelete2"
+                            text="Esportazione in excel"
+							icon="sap-icon://excel-attachment"
+							press="deletePress"/>
+                            <Button
+                            id="buttonProcessa2"
+                            text="Processa"
+							icon="sap-icon://process"
+							press="onProcessaButton"
+                            type="Emphasized"/>
+                            <Button
+                            id="buttonRielabora2"
+                            text="Rielabora"
+							icon="sap-icon://synchronize"
+							press=""
+                            type="Attention"/>
+                            <Button
+                            id="buttonElimina2"
+                            text="Elimina"
+							icon="sap-icon://delete"
+							press=""
+                            type="Reject"/>
                     </OverflowToolbar>
                 </ui:extension>
                 <ui:columns>
-                    <ui:Column width="13rem">
-                        <Label text="Categories"/>
+                    <ui:Column >
+                        <Label text="destinatario"/>
                         <ui:template>
-                            <Text text="{name}" wrapping="false" />
+                            <!-- <Button icon="{= ${master3>Stato} === 'OK' ? 'sap-icon://accept' : ${master3>Stato} === 'KO' ? 'sap-icon://decline' : 'sap-icon://warning'}" 
+                                type="{= ${master3>Stato} === 'OK' ? 'Accept' : ${master3>Stato} === 'KO' ? 'Critical' : 'Attention'}"
+                                tooltip="{master3>Stato}"/> -->
+                            <!-- <Button text="{master3>template}"></Button> -->
+                             <Text text="{master3>destinatario}"/>
                         </ui:template>
                     </ui:Column>
-                    <ui:Column width="9rem">
-                        <Label text="Price"/>
+                    <ui:Column >
+                        <Label text="quantita_da_consegnare"/>
                         <ui:template>
-                            
+                            <!-- <ObjectIdentifier
+                                    title="{master3>CompanyName}"
+                                /> -->
+                                  <Text text="{master3>quantita_da_consegnare}"/>
                         </ui:template>
                     </ui:Column>
-                    <ui:Column width="11rem">
-                        <Label text="Size"/>
+                    <ui:Column>
+                        <Label text="Numero idoc"/>
                         <ui:template>
-                            <Select
-                                    items="{path: '/sizes', templateShareable: true}"
-                                    selectedKey="{size}"
-                                    visible="{= !!${size}}"
-                                    forceSelection="false">
-                                <core:Item key="{key}" text="{value}"/>
-                            </Select>
+                            <ObjectIdentifier
+                                    title="{master3>numero_idoc}"
+                                />
                         </ui:template>
                     </ui:Column>
+                    <ui:Column >
+						<Label text="Data ricezione" />
+						<ui:template>
+							 <ObjectIdentifier
+                                    title="{master3>data_ricezione}"
+                                />
+						</ui:template>
+					</ui:Column>
+                    <!-- body -->
+                    <ui:Column>
+						<Label text="destinatario" />
+						<ui:template>
+						 <ObjectIdentifier
+                                    title="{master3>destinatario}"
+                                />
+						</ui:template>
+					</ui:Column>
+                      <ui:Column>
+						<Label text="punto_scarico" />
+						<ui:template>
+						 <ObjectIdentifier
+                                    title="{master3>punto_scarico}"
+                                />
+						</ui:template>
+					</ui:Column>
+                    <!-- sched -->
+                      <ui:Column>
+						<Label text="quantita_da_consegnare" />
+						<ui:template>
+						 <ObjectIdentifier
+                                    title="{master3>quantita_da_consegnare}"
+                                />
+						</ui:template>
+					</ui:Column>
+                      <ui:Column>
+						<Label text="data_spedizione_richiesta_a" />
+						<ui:template>
+						 <ObjectIdentifier
+                                    title="{master3>data_spedizione_richiesta_a}"
+                                />
+						</ui:template>
+					</ui:Column>
                 </ui:columns>
             </ui:TreeTable>
         </f:content>

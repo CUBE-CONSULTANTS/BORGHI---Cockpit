@@ -26,10 +26,11 @@ sap.ui.define(
         switch (selectedKey) {
           case "01":
             var oMaster3Model = new JSONModel(
-              sap.ui.require.toUrl("sap/ui/demo/fiori2/mockdata/master3.json")
+              sap.ui.require.toUrl(
+                "sap/ui/demo/fiori2/mockdata/dataMaster3.json"
+              )
             );
             this.getOwnerComponent().setModel(oMaster3Model, "master3");
-            // caricare fragment
 
             break;
           case "02":
@@ -37,7 +38,13 @@ sap.ui.define(
 
             break;
           case "03":
-            this.getOwnerComponent().setModel(new JSONModel({}), "master3");
+            var oMaster3Model = new JSONModel(
+              sap.ui.require.toUrl(
+                "sap/ui/demo/fiori2/mockdata/dataMaster3.json"
+              )
+            );
+            this.getOwnerComponent().setModel(oMaster3Model, "master3");
+            // this.getOwnerComponent().setModel(new JSONModel({}), "master3");
             break;
           case "04":
             this.getOwnerComponent().setModel(new JSONModel({}), "master3");
@@ -79,7 +86,10 @@ sap.ui.define(
 
       rowDetailPress: function (oEvent) {
         var detailPath = oEvent.getParameter("rowBindingContext").getPath(),
-          detail = detailPath.split("/").slice(-1).pop(),
+          detailRowIndex = detailPath.split("/").slice(-1).pop(),
+          detail = this.getView()
+            .getModel("master3")
+            .getProperty(`/Master3/${detailRowIndex}/DelforTestata/id`),
           oNextUIState;
         this.getOwnerComponent()
           .getHelper()

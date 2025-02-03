@@ -180,18 +180,18 @@
 						<Label text="Cliente" />
 						<ui:template>
                               <ObjectIdentifier
-                                    title="{master3>CompanyName}"
+                                    title="{master3>DelforTestata/template}"
                                 />
 						</ui:template>
 					</ui:Column>
 					<ui:Column
 						id="materiale"
 						showSortMenuEntry="false"
-						sortProperty="Materiale">
-						<Label text="Materiale" />
+						sortProperty="numero_progressivo_invio">
+						<Label text="Numero idoc" />
 						<ui:template>
                              <ObjectIdentifier
-                                    title="{master3>Materiale}"
+                                    title="{master3>DelforTestata/numero_progressivo_invio}"
                                 />
 						</ui:template>
 					</ui:Column>
@@ -199,7 +199,7 @@
 						<Label text="Data ricezione" />
 						<ui:template>
 							 <ObjectIdentifier
-                                    title="{master3>DataRicezione}"
+                                    title="{master3>DelforTestata/data_ricezione}"
                                 />
 						</ui:template>
 					</ui:Column>

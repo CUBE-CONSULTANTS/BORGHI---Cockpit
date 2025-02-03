@@ -142,42 +142,42 @@
 					<form:formElements>
 						<form:FormElement label="Id Testata">
 							<form:fields>
-								<m:Text text="{detailData>/DettaglioMaster3/0/Testata/IdInterno}" id="nameText"  />
+								<m:Text text="{detailData>/DettaglioMaster3/DelforTestata/id}" id="nameText"  />
 							</form:fields>
 						</form:FormElement>
 						<form:FormElement label="Numero progressivo invio">
 							<form:fields>
-								<m:Text text="{detailData>/DettaglioMaster3/0/Testata/NumProgInvio}" />
+								<m:Text text="{detailData>/DettaglioMaster3/DelforTestata/numero_progressivo_invio}" />
 							</form:fields>
 						</form:FormElement>
 						<form:FormElement label="Data progressivo invio">
 							<form:fields>
-								<m:Text text="{detailData>/DettaglioMaster3/0/Testata/DataProgInvio}" />
+								<m:Text text="{detailData>/DettaglioMaster3/DelforTestata/data_progressivo_invio}" />
 							</form:fields>
 						</form:FormElement>
 						<form:FormElement label="Codice buyer">
 							<form:fields>
-								<m:Text text="{detailData>/DettaglioMaster3/0/Testata/CodBuyer}" />
+								<m:Text text="{detailData>/DettaglioMaster3/DelforTestata/codice_buyer}" />
 							</form:fields>
 						</form:FormElement>
                         <form:FormElement label="Codice seller">
 							<form:fields>
-								<m:Text text="{detailData>/DettaglioMaster3/0/Testata/CodSeller}"  />
+								<m:Text text="{detailData>/DettaglioMaster3/DelforTestata/codice_seller}"  />
 							</form:fields>
 						</form:FormElement>
                         <form:FormElement label="Numero segmenti tracciato">
 							<form:fields>
-								<m:Text text="{detailData>/DettaglioMaster3/0/Testata/NumSegTracciati}" />
+								<m:Text text="{detailData>/DettaglioMaster3/DelforTestata/numero_segmenti_tracciato}" />
 							</form:fields>
 						</form:FormElement>
                         <form:FormElement label="UNH+">
 							<form:fields>
-								<m:Text text="{detailData>/DettaglioMaster3/0/Testata/Unh}" />
+								<m:Text text="{detailData>/DettaglioMaster3/DelforTestata/unh}" />
 							</form:fields>
 						</form:FormElement>
                         <form:FormElement label="Numero messaggi inviati">
 							<form:fields>
-								<m:Text text="{detailData>/DettaglioMaster3/0/Testata/NumMessInviati}" id="countryText" />
+								<m:Text text="{detailData>/DettaglioMaster3/DelforTestata/numero_messaggi_inviati}" id="countryText" />
 							</form:fields>
 						</form:FormElement>
 					</form:formElements>
@@ -191,6 +191,289 @@
             </ObjectPageSection>
 
             <ObjectPageSection title="Posizione">
+                <subSections>
+                    <ObjectPageSubSection >
+                        <blocks>
+                            <m:VBox height="90%"  >
+                                <m:OverflowToolbar style="Clear">
+                                    <m:Title />
+                                    <m:ToolbarSpacer/>
+                                    <m:Button text="Collapse all" press="onCollapseAll"/>
+                                    <m:Button text="Collapse selection" press="onCollapseSelection"/>
+                                    <m:Button text="Expand first level" press="onExpandFirstLevel"/>
+                                    <m:Button text="Expand selection" press="onExpandSelection"/>
+                                    <m:Button
+                                        icon="sap-icon://sort"
+                                        text="Ordinamento"
+                                        press="sortCategories"/>
+                                    <m:Button
+                                        icon="sap-icon://excel-attachment"
+                                        text="Import excel"
+                                        press=""/>
+                                    <m:Button
+                                        text="Esportazione in excel"
+                                        icon="sap-icon://excel-attachment"
+                                        press="deletePress"/>
+                                    <m:Button
+                                        text="Processa"
+                                        icon="sap-icon://process"
+                                        press="onProcessaButton"
+                                        type="Emphasized"/>
+                                    <m:Button
+                                        text="Rielabora"
+                                        icon="sap-icon://synchronize"
+                                        press=""
+                                        type="Attention"/>
+                                    <m:Button
+                                        text="Elimina"
+                                        icon="sap-icon://delete"
+                                        press=""
+                                        type="Reject"/>
+                                </m:OverflowToolbar>
+                                <m:ScrollContainer height="100%" width="100%" vertical="true" horizontal="true">
+                                    <ui:TreeTable
+                            rows="{detailData>/DettaglioMaster3/DelforPosizioni}"
+                            selectionMode="MultiToggle"
+                            enableSelectAll="false"
+                            ariaLabelledBy="title">
+                            <ui:extension>
+                                <!-- <m:OverflowToolbar style="Clear">
+                                    <m:Title />
+                                    <m:ToolbarSpacer/>
+                                    <m:Button text="Collapse all" press="onCollapseAll"/>
+                                    <m:Button text="Collapse selection" press="onCollapseSelection"/>
+                                    <m:Button text="Expand first level" press="onExpandFirstLevel"/>
+                                    <m:Button text="Expand selection" press="onExpandSelection"/>
+                                    <m:Button
+                                        icon="sap-icon://sort"
+                                        text="Ordinamento"
+                                        press="sortCategories"/>
+                                    <m:Button
+                                        icon="sap-icon://excel-attachment"
+                                        text="Import excel"
+                                        press=""/>
+                                    <m:Button
+                                        text="Esportazione in excel"
+                                        icon="sap-icon://excel-attachment"
+                                        press="deletePress"/>
+                                    <m:Button
+                                        text="Processa"
+                                        icon="sap-icon://process"
+                                        press="onProcessaButton"
+                                        type="Emphasized"/>
+                                    <m:Button
+                                        text="Rielabora"
+                                        icon="sap-icon://synchronize"
+                                        press=""
+                                        type="Attention"/>
+                                    <m:Button
+                                        text="Elimina"
+                                        icon="sap-icon://delete"
+                                        press=""
+                                        type="Reject"/>
+                                </m:OverflowToolbar> -->
+                            </ui:extension>
+                            <ui:columns>
+                                <ui:Column resizable="true" minWidth="150">
+                                    <m:Label text="Destinatario"/>
+                                    <ui:template>
+                                        <m:Text text="{detailData>destinatario}"/>
+                                    </ui:template>
+                                </ui:Column>
+                        
+                                <ui:Column resizable="true" minWidth="150">
+                                    <m:Label text="Codice Cliente Materiale"/>
+                                    <ui:template>
+                                        <m:Text text="{detailData>codice_cliente_materiale}"/>
+                                    </ui:template>
+                                </ui:Column>
+                        
+                                <ui:Column resizable="true" minWidth="150">
+                                    <m:Label text="Codice Materiale Fornitore"/>
+                                    <ui:template>
+                                        <m:Text text="{detailData>codice_materiale_fornitore}"/>
+                                    </ui:template>
+                                </ui:Column>
+                        
+                                <ui:Column resizable="true" minWidth="150">
+                                    <m:Label text="Descrizione Materiale"/>
+                                    <ui:template>
+                                        <m:Text text="{detailData>descrizione_materiale}"/>
+                                    </ui:template>
+                                </ui:Column>
+                        
+                                <ui:Column resizable="true" minWidth="150">
+                                    <m:Label text="Punto Scarico"/>
+                                    <ui:template>
+                                        <m:Text text="{detailData>punto_scarico}"/>
+                                    </ui:template>
+                                </ui:Column>
+                        
+                                <ui:Column resizable="true" minWidth="150">
+                                    <m:Label text="Destinazione Interna"/>
+                                    <ui:template>
+                                        <m:Text text="{detailData>destinazione_interna}"/>
+                                    </ui:template>
+                                </ui:Column>
+                        
+                                <ui:Column resizable="true" minWidth="150">
+                                    <m:Label text="Testo Riga"/>
+                                    <ui:template>
+                                        <m:Text text="{detailData>testo_riga}"/>
+                                    </ui:template>
+                                </ui:Column>
+                        
+                                <ui:Column resizable="true" minWidth="150">
+                                    <m:Label text="Data Inizio Calcolo Quantità Cumulata"/>
+                                    <ui:template>
+                                        <m:Text text="{detailData>data_inizio_calc_quantita_cumulata}"/>
+                                    </ui:template>
+                                </ui:Column>
+                        
+                                <ui:Column resizable="true" minWidth="150">
+                                    <m:Label text="Progressivo Invio"/>
+                                    <ui:template>
+                                        <m:Text text="{detailData>progressivo_invio}"/>
+                                    </ui:template>
+                                </ui:Column>
+                        
+                                <ui:Column resizable="true" minWidth="150">
+                                    <m:Label text="Data Progressivo Invio"/>
+                                    <ui:template>
+                                        <m:Text text="{detailData>data_progressivo_invio}"/>
+                                    </ui:template>
+                                </ui:Column>
+                        
+                                <ui:Column resizable="true" minWidth="150">
+                                    <m:Label text="Numero Ultima Schedulazione Ricevuta"/>
+                                    <ui:template>
+                                        <m:Text text="{detailData>numero_ultima_schedulazione_ricevuta}"/>
+                                    </ui:template>
+                                </ui:Column>
+                        
+                                <ui:Column resizable="true" minWidth="150">
+                                    <m:Label text="Data Numero Ultima Schedulazione Ricevuta"/>
+                                    <ui:template>
+                                        <m:Text text="{detailData>data_numero_ultima_schedulazione_ricevuta}"/>
+                                    </ui:template>
+                                </ui:Column>
+                        
+                                <ui:Column resizable="true" minWidth="150">
+                                    <m:Label text="Numero Ordine Acquisto"/>
+                                    <ui:template>
+                                        <m:Text text="{detailData>numero_ordine_acquisto}"/>
+                                    </ui:template>
+                                </ui:Column>
+                        
+                                <ui:Column resizable="true" minWidth="150">
+                                    <m:Label text="Ultima Quantità Spedita"/>
+                                    <ui:template>
+                                        <m:Text text="{detailData>ultima_quantita_spedita}"/>
+                                    </ui:template>
+                                </ui:Column>
+                        
+                                <ui:Column resizable="true" minWidth="150">
+                                    <m:Label text="Numero Ultima Bolla Ricevuta Cliente"/>
+                                    <ui:template>
+                                        <m:Text text="{detailData>numero_ultima_bolla_ricevuta_cliente}"/>
+                                    </ui:template>
+                                </ui:Column>
+                        
+                                <ui:Column resizable="true" minWidth="150">
+                                    <m:Label text="Data Ultima Bolla Ricevuta"/>
+                                    <ui:template>
+                                        <m:Text text="{detailData>data_ultima_bolla_ricevuta}"/>
+                                    </ui:template>
+                                </ui:Column>
+                        
+                                <ui:Column resizable="true" minWidth="150">
+                                    <m:Label text="Quantità Cumulativa Ricevuta"/>
+                                    <ui:template>
+                                        <m:Text text="{detailData>quantita_cumulativa_ricevuta}"/>
+                                    </ui:template>
+                                </ui:Column>
+                        
+                                <ui:Column resizable="true" minWidth="150">
+                                    <m:Label text="Contatto Cliente"/>
+                                    <ui:template>
+                                        <m:Text text="{detailData>contatto_cliente}"/>
+                                    </ui:template>
+                                </ui:Column>
+                        
+                                <ui:Column resizable="true" minWidth="150">
+                                    <m:Label text="Informazioni Contatto Email"/>
+                                    <ui:template>
+                                        <m:Text text="{detailData>informazioni_contatto_email}"/>
+                                    </ui:template>
+                                </ui:Column>
+                        
+                                <ui:Column resizable="true" minWidth="150">
+                                    <m:Label text="Informazioni Contatto Telefonico"/>
+                                    <ui:template>
+                                        <m:Text text="{detailData>informazioni_contatto_telefonico}"/>
+                                    </ui:template>
+                                </ui:Column>
+                        
+                                <ui:Column resizable="true" minWidth="150">
+                                    <m:Label text="Informazioni Contatto Fax"/>
+                                    <ui:template>
+                                        <m:Text text="{detailData>informazioni_contatto_fax}"/>
+                                    </ui:template>
+                                </ui:Column>
+                        
+                                <!-- E per i DelforSchedulazioni -->
+                                <ui:Column resizable="true" minWidth="150">
+                                    <m:Label text="Quantità da Consegnare"/>
+                                    <ui:template>
+                                        <m:Text text="{detailData>quantita_da_consegnare}"/>
+                                    </ui:template>
+                                </ui:Column>
+                        
+                                <ui:Column resizable="true" minWidth="150">
+                                    <m:Label text="Schedulazione"/>
+                                    <ui:template>
+                                        <m:Text text="{detailData>schedulazione}"/>
+                                    </ui:template>
+                                </ui:Column>
+                        
+                                <ui:Column resizable="true" minWidth="150">
+                                    <m:Label text="Data Spedizione Richiesta Effettiva"/>
+                                    <ui:template>
+                                        <m:Text text="{detailData>data_spedizione_richiesta_effettiva}"/>
+                                    </ui:template>
+                                </ui:Column>
+                        
+                                <ui:Column resizable="true" minWidth="150">
+                                    <m:Label text="Data Spedizione Richiesta Da"/>
+                                    <ui:template>
+                                        <m:Text text="{detailData>data_spedizione_richiesta_da}"/>
+                                    </ui:template>
+                                </ui:Column>
+                        
+                                <ui:Column resizable="true" minWidth="150">
+                                    <m:Label text="Data Spedizione Richiesta A"/>
+                                    <ui:template>
+                                        <m:Text text="{detailData>data_spedizione_richiesta_a}"/>
+                                    </ui:template>
+                                </ui:Column>
+                        
+                                <ui:Column resizable="true" minWidth="150">
+                                    <m:Label text="Numero SA"/>
+                                    <ui:template>
+                                        <m:Text text="{detailData>numero_sa}"/>
+                                    </ui:template>
+                                </ui:Column>
+                            </ui:columns>
+                        </ui:TreeTable>
+                                </m:ScrollContainer>
+                            </m:VBox>
+                            
+                        
+                        </blocks>
+                    </ObjectPageSubSection>
+                </subSections>
+            </ObjectPageSection>
+            <!-- <ObjectPageSection title="Posizione">
                 <subSections>
                     <ObjectPageSubSection>
                         <blocks>
@@ -446,7 +729,7 @@
                         </blocks>
                     </ObjectPageSubSection>
                 </subSections>
-            </ObjectPageSection>
+            </ObjectPageSection> -->
              <ObjectPageSection title="LOG">
                 <subSections>
                     <ObjectPageSubSection>
