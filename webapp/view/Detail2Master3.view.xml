@@ -7,6 +7,32 @@
     xmlns:commons="sap.suite.ui.commons"
 >
     <f:DynamicPage fitContent="true" >
+        <f:title>
+            <f:DynamicPageTitle >
+                <f:actions>
+            <m:Button
+                type="Transparent"
+                icon="sap-icon://full-screen"
+                press=".handleFullScreen"
+                tooltip="Enter Full Screen Mode"
+                visible="{= ${/actionButtonsInfo/midColumn/fullScreen} !== null }" />
+            <m:Button
+                type="Transparent"
+                icon="sap-icon://exit-full-screen"
+                press=".handleExitFullScreen"
+                tooltip="Exit Full Screen Mode"
+                visible="{= ${/actionButtonsInfo/midColumn/exitFullScreen} !== null }" />
+            <m:Button
+                type="Transparent"
+                icon="sap-icon://decline"
+                press=".handleClose"
+                tooltip="Close column"
+                visible="{= ${/actionButtonsInfo/midColumn/closeColumn} !== null }" />
+           
+        </f:actions>
+            </f:DynamicPageTitle>
+        </f:title>
+        
         <f:content>
           
             <commons:Timeline

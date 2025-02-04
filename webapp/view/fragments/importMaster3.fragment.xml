@@ -5,8 +5,11 @@
                 <HBox class="sapUiLargeMarginBottom" >
                     <Text text="Caricamento file Excel"/>
                 </HBox>
-                <HBox >
+                <HBox class="sapUiMediumMarginBottom">
                     <unified:FileUploader ></unified:FileUploader>
+                    <Button text="Upload" class="sapUiSmallMarginBegin"></Button>
+                </HBox>
+                <HBox >
                     <Button text="Scarica template"></Button>
                 </HBox>
             </VBox>
