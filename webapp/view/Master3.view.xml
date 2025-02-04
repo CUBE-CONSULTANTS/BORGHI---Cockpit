@@ -9,19 +9,20 @@
 >
     <f:DynamicPage
         id="dynamicPageId"
+        fitContent="true"
         toggleHeaderOnTitleClick="false"
 
     >
         <!-- DynamicPage Title -->
         <f:title>
-            <f:DynamicPageTitle>
+            <f:DynamicPageTitle backgroundDesign="Solid">
                 <f:heading>
                     <Title text="Monitoraggio EDI" />
                 </f:heading>
             </f:DynamicPageTitle>
         </f:title>
         <f:header>
-            <f:DynamicPageHeader pinnable="false">
+            <f:DynamicPageHeader pinnable="false" backgroundDesign="Solid"  >
                 <f:content>
                     <Toolbar>
                         <Button

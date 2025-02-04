@@ -1,9 +1,9 @@
 sap.ui.define(
-  ["sap/ui/core/mvc/Controller", "sap/ui/model/json/JSONModel"],
-  function (Controller) {
+  ["./BaseController", "sap/ui/model/json/JSONModel"],
+  function (BaseController) {
     "use strict";
 
-    return Controller.extend("sap.ui.demo.fiori2.controller.DetailMaster3", {
+    return BaseController.extend("sap.ui.demo.fiori2.controller.DetailMaster3", {
       onInit: function () {
         this.oOwnerComponent = this.getOwnerComponent();
 

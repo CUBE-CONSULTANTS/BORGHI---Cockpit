@@ -1,39 +1,42 @@
 sap.ui.define(
   [
-    "sap/ui/core/mvc/Controller",
+    "./BaseController",
     "sap/ui/model/json/JSONModel",
     "sap/ui/model/Sorter",
     "sap/ui/core/library",
     "sap/ui/core/Fragment",
   ],
-  function (Controller, JSONModel, Sorter, CoreLibrary, Fragment) {
+  function (BaseController, JSONModel, Sorter, CoreLibrary, Fragment) {
     "use strict";
 
     const SortOrder = CoreLibrary.SortOrder;
 
-    return Controller.extend("sap.ui.demo.fiori2.controller.Master3", {
+    return BaseController.extend("sap.ui.demo.fiori2.controller.Master3", {
       onInit: function () {
         // var oMaster3Model = new JSONModel(sap.ui.require.toUrl('sap/ui/demo/fiori2/mockdata/master3.json'));
         // this.getView().setModel(oMaster3Model, 'master3');
         this.oRouter = this.getOwnerComponent().getRouter();
         this.onFilterSelect(null,"01")
         // this.onFilterSelect();
+        
       },
 
       onFilterSelect: function (oEvent,key) {
+        this.showBusy(0)
         var selectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
         !selectedKey ? selectedKey = key : selectedKey = selectedKey  
         // this.getView().getContent()[0].getContent().getContent()[0].destroy();
 
         switch (selectedKey) {
           case "01":
+            
             var oMaster3Model = new JSONModel(
               sap.ui.require.toUrl(
                 "sap/ui/demo/fiori2/mockdata/dataMaster3.json"
               )
             );
             this.getOwnerComponent().setModel(oMaster3Model, "master3");
-
+            
             break;
           case "02":
             this.getOwnerComponent().setModel(new JSONModel({}), "master3");
@@ -63,6 +66,7 @@ sap.ui.define(
             this.getOwnerComponent().setModel(new JSONModel({}), "master3");
             break;
         }
+        this.hideBusy(0)
       },
 
       sortCategoriesAndName: function (oEvent) {
