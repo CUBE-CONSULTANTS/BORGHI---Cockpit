@@ -5,8 +5,16 @@ sap.ui.define(
     "sap/ui/model/Sorter",
     "sap/ui/core/library",
     "sap/ui/core/Fragment",
+    "sap/m/MessageBox",
   ],
-  function (BaseController, JSONModel, Sorter, CoreLibrary, Fragment) {
+  function (
+    BaseController,
+    JSONModel,
+    Sorter,
+    CoreLibrary,
+    Fragment,
+    MessageBox
+  ) {
     "use strict";
 
     const SortOrder = CoreLibrary.SortOrder;
@@ -16,27 +24,25 @@ sap.ui.define(
         // var oMaster3Model = new JSONModel(sap.ui.require.toUrl('sap/ui/demo/fiori2/mockdata/master3.json'));
         // this.getView().setModel(oMaster3Model, 'master3');
         this.oRouter = this.getOwnerComponent().getRouter();
-        this.onFilterSelect(null,"01")
+        this.onFilterSelect(null, "01");
         // this.onFilterSelect();
-        
       },
 
-      onFilterSelect: function (oEvent,key) {
-        this.showBusy(0)
+      onFilterSelect: function (oEvent, key) {
+        this.showBusy(0);
         var selectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
-        !selectedKey ? selectedKey = key : selectedKey = selectedKey  
+        !selectedKey ? (selectedKey = key) : (selectedKey = selectedKey);
         // this.getView().getContent()[0].getContent().getContent()[0].destroy();
 
         switch (selectedKey) {
           case "01":
-            
             var oMaster3Model = new JSONModel(
               sap.ui.require.toUrl(
                 "sap/ui/demo/fiori2/mockdata/dataMaster3.json"
               )
             );
             this.getOwnerComponent().setModel(oMaster3Model, "master3");
-            
+
             break;
           case "02":
             this.getOwnerComponent().setModel(new JSONModel({}), "master3");
@@ -66,7 +72,7 @@ sap.ui.define(
             this.getOwnerComponent().setModel(new JSONModel({}), "master3");
             break;
         }
-        this.hideBusy(0)
+        this.hideBusy(0);
       },
 
       sortCategoriesAndName: function (oEvent) {
@@ -89,8 +95,6 @@ sap.ui.define(
         );
         this._bSortColumnDescending = !this._bSortColumnDescending;
       },
-
-      
 
       deletePress: function (oEvent) {
         this.getView().byId("table");
@@ -190,11 +194,22 @@ sap.ui.define(
       },
       dettaglioNav: function (oEvent) {
         debugger;
-        let level = oEvent.getSource().getParent().getBindingContext("master3").getPath().includes("DelforPosizioni");
+        let level = oEvent
+          .getSource()
+          .getParent()
+          .getBindingContext("master3")
+          .getPath()
+          .includes("DelforPosizioni");
         // let detailSched = oEvent.getSource().getParent().getBindingContext("master3").getObject().DelforSchedulazioni
-        let detailPath = oEvent.getSource().getParent().getBindingContext("master3").getPath()
-        
-        let detail = this.getView().getModel("master3").getProperty(`${detailPath}`); 
+        let detailPath = oEvent
+          .getSource()
+          .getParent()
+          .getBindingContext("master3")
+          .getPath();
+
+        let detail = this.getView()
+          .getModel("master3")
+          .getProperty(`${detailPath}`);
         if (level) {
           debugger;
           let oNextUIState;
@@ -217,6 +232,17 @@ sap.ui.define(
             .getPath();
           this.rowDetailPress(path);
         }
+      },
+
+      statoButtonPress: function (oEvent) {
+        debugger;
+        MessageBox.error("Errori nel processamento delle posizioni.", {
+          title: "Error",
+
+          details: "<p><strong>This can happen if:</strong></p>",
+          contentWidth: "100px",
+          dependentOn: this.getView(),
+        });
       },
 
       // loadFragment: function (oEvent) {

@@ -162,7 +162,7 @@
             <ui:template>
                 <Button icon="{= ${master3>Stato} === 'OK' ? 'sap-icon://accept' : ${master3>Stato} === 'KO' ? 'sap-icon://decline' : 'sap-icon://warning'}" 
                     type="{= ${master3>Stato} === 'OK' ? 'Accept' : ${master3>Stato} === 'KO' ? 'Critical' : 'Attention'}"
-                    tooltip="{master3>Stato}"/>
+                    tooltip="{master3>Stato}" press="statoButtonPress"/>
                 <!-- <Button text="{master3>template}"></Button> -->
                  <!-- <Text text="X"/> -->
             </ui:template>

@@ -38,7 +38,7 @@
             <commons:Timeline
                 id="idTimeline"
                 enableDoubleSided="true"
-                groupBy="HireDate"
+                groupBy="data_spedizione_richiesta_effettiva"
                 growingThreshold="0"
                 filterTitle="Schedulazioni"
                 sortOldestFirst="true"
@@ -51,7 +51,7 @@
                         userName="{detailSched>id_posizione}"
                         text="Quantità da consegnare: {detailSched>quantita_da_consegnare}"
                         icon="sap-icon://shipping-status"
-                        color="Neutral"
+                        
                     />
                 </commons:content>
             </commons:Timeline>
