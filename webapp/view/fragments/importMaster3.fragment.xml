@@ -1,0 +1,18 @@
+<core:FragmentDefinition xmlns:unified="sap.ui.unified" xmlns="sap.m" xmlns:core="sap.ui.core">
+    <Dialog title="Import">
+        <content>
+            <VBox class= "sapUiMediumMargin">
+                <HBox class="sapUiLargeMarginBottom" >
+                    <Text text="Caricamento file Excel"/>
+                </HBox>
+                <HBox >
+                    <unified:FileUploader ></unified:FileUploader>
+                    <Button text="Scarica template"></Button>
+                </HBox>
+            </VBox>
+        </content>
+        <buttons>
+            <Button text="Chiudi" press="onclose"/> 
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

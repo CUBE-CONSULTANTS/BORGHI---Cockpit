@@ -106,116 +106,126 @@
         
         <f:content>
             
-        <ui:Table
-				id="table"
-				selectionMode="MultiToggle"
-                selectionBehavior="RowSelector"
-                rowSelectionChange="onPressRow"
-				rows="{master3>/Master3}"
-                cellClick=".rowDetailPress"
-				sort="sortDeliveryDate"
-				ariaLabelledBy="title">
-				<ui:extension>
-					<OverflowToolbar style="Clear">
-						<Title id="title" text="Storico"/>
-						<ToolbarSpacer/>
-						<!-- <Button
-							icon="sap-icon://sorting-ranking"
-							press="sortCategoriesAndName"/> -->
-						<Button
-							icon="sap-icon://sort"
-                            text="Ordinamento"
-							press="sortCategories"/>
-                            <Button
-							icon="sap-icon://excel-attachment"
-                            text="Import excel"
-							press=""/>
-                            <Button
-                            id="buttonDelete"
-                            text="Esportazione in excel"
-							icon="sap-icon://excel-attachment"
-							press="deletePress"/>
-                            <Button
-                            id="buttonProcessa"
-                            text="Processa"
-							icon="sap-icon://process"
-							press="onProcessaButton"
-                            type="Emphasized"/>
-                            <Button
-                            id="buttonRielabora"
-                            text="Rielabora"
-							icon="sap-icon://synchronize"
-							press=""
-                            type="Attention"/>
-                            <Button
-                            id="buttonElimina"
-                            text="Elimina"
-							icon="sap-icon://delete"
-							press=""
-                            type="Reject"/>
-					</OverflowToolbar>
-				</ui:extension>
-				<ui:columns>
-                <ui:Column
-						id="stato"
-					
-						sortProperty="Stato">
-						<Label text="Stato" />
-						<ui:template>
-						 <!-- <ObjectIdentifier
-                                    title="{master3>Stato}"
-                                /> -->
-                                <Button icon="{= ${master3>Stato} === 'OK' ? 'sap-icon://accept' : ${master3>Stato} === 'KO' ? 'sap-icon://decline' : 'sap-icon://warning'}" 
-                                type="{= ${master3>Stato} === 'OK' ? 'Accept' : ${master3>Stato} === 'KO' ? 'Critical' : 'Attention'}"
-                                tooltip="{master3>Stato}"/>
-                                 <!-- <core:Icon 
-            src="{= ${master3>Stato} === 'OK' ? 'sap-icon://accept' : ${master3>Stato} === 'KO' ? 'sap-icon://decline' : 'sap-icon://warning'}" 
-            color="{= ${master3>Stato} === 'OK' ? 'green' : ${master3>Stato} === 'KO' ? 'red' : 'yellow'}"
-            tooltip="{master3>Stato}" /> -->
-						</ui:template>
-					</ui:Column>
-					<ui:Column
-						id="cliente"
-						sortProperty="Cliente">
-						<Label text="Cliente" />
-						<ui:template>
-                              <ObjectIdentifier
-                                    title="{master3>DelforTestata/template}"
-                                />
-						</ui:template>
-					</ui:Column>
-					<ui:Column
-						id="materiale"
-						showSortMenuEntry="false"
-						sortProperty="numero_progressivo_invio">
-						<Label text="numero_progressivo_i" />
-						<ui:template>
-                             <ObjectIdentifier
-                                    title="{master3>DelforTestata/numero_progressivo_invio}"
-                                />
-						</ui:template>
-					</ui:Column>
-					<ui:Column id="dataRicezione">
-						<Label text="Data ricezione" />
-						<ui:template>
-							 <ObjectIdentifier
-                                    title="{master3>DelforTestata/data_ricezione}"
-                                />
-						</ui:template>
-					</ui:Column>
-					<ui:Column
-						id="statusMessage"
-						sortProperty="Status Message">
-						<Label text="Status Message" />
-						<ui:template>
-						 <ObjectIdentifier
-                                    title="{master3>MessaggioStato}"
-                                />
-						</ui:template>
-					</ui:Column>
-                    
-				</ui:columns>
-			</ui:Table>
+        <ui:TreeTable
+       
+        rows="{path: 'master3>/Master3', parameters: {arrayNames: ['DelforPosizioni']}}"
+        selectionMode="MultiToggle"
+        enableSelectAll="false"
+        ariaLabelledBy="title"
+        cellClick=".rowDetailPress">
+    <ui:extension>
+        <OverflowToolbar style="Clear">
+            <Title  />
+            <ToolbarSpacer/>
+            <Button text="Collapse all" press="onCollapseAll"/>
+            <Button text="Collapse selection" press="onCollapseSelection"/>
+            <Button text="Expand first level" press="onExpandFirstLevel"/>
+            <Button text="Expand selection" press="onExpandSelection"/>
+            <Button
+                icon="sap-icon://sort"
+                text="Ordinamento"
+                press="sortCategories"/>
+                <Button
+                icon="sap-icon://excel-attachment"
+                text="Import excel"
+                press="importaPress"/>
+                <Button
+               
+                text="Esportazione in excel"
+                icon="sap-icon://excel-attachment"
+                press="deletePress"/>
+                <Button
+               
+                text="Processa"
+                icon="sap-icon://process"
+                press="onProcessaButton"
+                type="Emphasized"/>
+                <Button
+                
+                text="Rielabora"
+                icon="sap-icon://synchronize"
+                press=""
+                type="Attention"/>
+                <Button
+                
+                text="Elimina"
+                icon="sap-icon://delete"
+                press=""
+                type="Reject"/>
+        </OverflowToolbar>
+    </ui:extension>
+    <ui:columns>
+        <ui:Column >
+            <Label text="Stato"/>
+            <ui:template>
+                <!-- <Button icon="{= ${master3>Stato} === 'OK' ? 'sap-icon://accept' : ${master3>Stato} === 'KO' ? 'sap-icon://decline' : 'sap-icon://warning'}" 
+                    type="{= ${master3>Stato} === 'OK' ? 'Accept' : ${master3>Stato} === 'KO' ? 'Critical' : 'Attention'}"
+                    tooltip="{master3>Stato}"/> -->
+                <!-- <Button text="{master3>template}"></Button> -->
+                 <Text text="X"/>
+            </ui:template>
+        </ui:Column>
+        <ui:Column >
+            <Label text="Cliente"/>
+            <ui:template>
+                <!-- <ObjectIdentifier
+                        title="{master3>CompanyName}"
+                    /> -->
+                      <Text text="{master3>DelforTestata/template}"/>
+            </ui:template>
+        </ui:Column>
+        <ui:Column>
+            <Label text="Numero progressivo invio"/>
+            <ui:template>
+                <ObjectIdentifier
+                        title="{master3>DelforTestata/numero_progressivo_invio}"
+                    />
+            </ui:template>
+        </ui:Column>
+        <ui:Column >
+            <Label text="Data ricezione" />
+            <ui:template>
+                 <ObjectIdentifier
+                        title="{master3>DelforTestata/data_ricezione}"
+                    />
+            </ui:template>
+        </ui:Column>
+        <!-- posizioni -->
+        <ui:Column>
+            <Label text="Codice materiale fornitore" />
+            <ui:template>
+             <ObjectIdentifier
+                        title="{master3>codice_materiale_fornitore}"
+                    />
+            </ui:template>
+        </ui:Column>
+          <ui:Column>
+            <Label text="Numero ordine acquisto" />
+            <ui:template>
+             <ObjectIdentifier
+                        title="{master3>numero_ordine_acquisto}"
+                    />
+            </ui:template>
+        </ui:Column>
+      
+          <ui:Column>
+            <Label text="Numero idoc" />
+            <ui:template>
+             <ObjectIdentifier
+                        title="{master3>numero_idoc}"
+                    />
+            </ui:template>
+        </ui:Column>
+          <ui:Column>
+            <Label text="Status message" />
+            <ui:template>
+             <ObjectIdentifier
+                        title="{master3>data_spedizione_richiesta_a}"
+                    />
+            </ui:template>
+        </ui:Column>
+    </ui:columns>
+</ui:TreeTable>
         </f:content>
     </f:DynamicPage>
    

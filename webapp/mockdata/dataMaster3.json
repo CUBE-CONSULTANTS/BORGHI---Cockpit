@@ -17,8 +17,9 @@
               "numero_idoc": null
             },
             "DelforPosizioni": [
-              [
+              
                 {
+                    
                   "destinatario": "MWMB",
                   "codice_cliente_materiale": "51856117",
                   "codice_materiale_fornitore": "51856117",
@@ -478,7 +479,7 @@
                     }
                   ]
                 }
-              ]
+              
             ]
           },
           {

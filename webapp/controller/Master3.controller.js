@@ -121,9 +121,13 @@ sap.ui.define(
         this.oRouter.navTo("home");
       },
 
-      onProcessaButton: function () {
+      onProcessaButton: function (oEvent) {
         debugger;
-        let indici = this.getView().byId("table").getSelectedIndices();
+        let indici = oEvent
+          .getSource()
+          .getParent()
+          .getParent()
+          .getSelectedIndices();
         let data = this.getView().getModel("master3").getData().Master3;
         let selected = [];
         indici.forEach((x) => {
@@ -158,6 +162,24 @@ sap.ui.define(
 
       onclose: function (oEvent) {
         oEvent.getSource().getParent().close();
+      },
+
+      importaPress: function (oEvent) {
+        if (!this._oDialog) {
+          Fragment.load({
+            id: this.getView().getId(),
+            name: "sap.ui.demo.fiori2.view.fragments.importMaster3",
+            controller: this,
+          }).then(
+            function (oDialog) {
+              this._oDialog = oDialog;
+              this.getView().addDependent(this._oDialog);
+              this._oDialog.open();
+            }.bind(this)
+          );
+        } else {
+          this._oDialog.open();
+        }
       },
 
       // loadFragment: function (oEvent) {
