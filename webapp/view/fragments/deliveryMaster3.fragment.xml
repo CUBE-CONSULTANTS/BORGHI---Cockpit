@@ -188,7 +188,7 @@
 						id="materiale"
 						showSortMenuEntry="false"
 						sortProperty="numero_progressivo_invio">
-						<Label text="Numero idoc" />
+						<Label text="numero_progressivo_i" />
 						<ui:template>
                              <ObjectIdentifier
                                     title="{master3>DelforTestata/numero_progressivo_invio}"
