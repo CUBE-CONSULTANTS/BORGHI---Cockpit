@@ -84,13 +84,13 @@ sap.ui.define(
         this._bSortColumnDescending = !this._bSortColumnDescending;
       },
 
-      rowDetailPress: function (oEvent) {
-        var detailPath = oEvent.getParameter("rowBindingContext").getPath(),
-          detailRowIndex = detailPath.split("/").slice(-1).pop(),
-          detail = this.getView()
-            .getModel("master3")
-            .getProperty(`/Master3/${detailRowIndex}/DelforTestata/id`),
-          oNextUIState;
+      rowDetailPress: function (detailPath) {
+        // var detailPath = oEvent.getParameter("rowBindingContext").getPath()
+        let detailRowIndex = detailPath.split("/").slice(-1).pop();
+        let detail = this.getView()
+          .getModel("master3")
+          .getProperty(`/Master3/${detailRowIndex}/DelforTestata/id`);
+        let oNextUIState;
         this.getOwnerComponent()
           .getHelper()
           .then(
@@ -179,6 +179,29 @@ sap.ui.define(
           );
         } else {
           this._oDialog.open();
+        }
+      },
+
+      dettaglioNav: function (oEvent) {
+        debugger;
+        let level = oEvent
+          .getSource()
+          .getParent()
+          .getBindingContext("master3")
+          .getPath()
+          .includes("DelforPosizioni");
+
+        if (level) {
+          debugger;
+          // this.oRouter.navTo("detail2Master3");
+          this.getOwnerComponent().getRouter().navTo("detail2Master3");
+        } else {
+          let path = oEvent
+            .getSource()
+            .getParent()
+            .getBindingContext("master3")
+            .getPath();
+          this.rowDetailPress(path);
         }
       },
 

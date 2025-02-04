@@ -113,6 +113,7 @@
         enableSelectAll="false"
         ariaLabelledBy="title"
         cellClick=".rowDetailPress">
+        <!-- cellClick=".rowDetailPress" -->
     <ui:extension>
         <OverflowToolbar style="Clear">
             <Title  />
@@ -158,11 +159,11 @@
         <ui:Column >
             <Label text="Stato"/>
             <ui:template>
-                <!-- <Button icon="{= ${master3>Stato} === 'OK' ? 'sap-icon://accept' : ${master3>Stato} === 'KO' ? 'sap-icon://decline' : 'sap-icon://warning'}" 
+                <Button icon="{= ${master3>Stato} === 'OK' ? 'sap-icon://accept' : ${master3>Stato} === 'KO' ? 'sap-icon://decline' : 'sap-icon://warning'}" 
                     type="{= ${master3>Stato} === 'OK' ? 'Accept' : ${master3>Stato} === 'KO' ? 'Critical' : 'Attention'}"
-                    tooltip="{master3>Stato}"/> -->
+                    tooltip="{master3>Stato}"/>
                 <!-- <Button text="{master3>template}"></Button> -->
-                 <Text text="X"/>
+                 <!-- <Text text="X"/> -->
             </ui:template>
         </ui:Column>
         <ui:Column >
@@ -217,11 +218,9 @@
             </ui:template>
         </ui:Column>
           <ui:Column>
-            <Label text="Status message" />
+            <Label text="Dettaglio" />
             <ui:template>
-             <ObjectIdentifier
-                        title="{master3>data_spedizione_richiesta_a}"
-                    />
+             <Button text="Espandi" press="dettaglioNav"></Button>
             </ui:template>
         </ui:Column>
     </ui:columns>

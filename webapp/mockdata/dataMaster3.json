@@ -19,7 +19,7 @@
             "DelforPosizioni": [
               
                 {
-                    
+                    "id":1,
                   "destinatario": "MWMB",
                   "codice_cliente_materiale": "51856117",
                   "codice_materiale_fornitore": "51856117",
@@ -250,6 +250,7 @@
                   ]
                 },
                 {
+                    "id":2,
                   "destinatario": "MWMB",
                   "codice_cliente_materiale": "51856117",
                   "codice_materiale_fornitore": "51856117",
@@ -500,6 +501,7 @@
             "DelforPosizioni": [
               [
                 {
+                    "id":1,
                   "destinatario": "MWMB",
                   "codice_cliente_materiale": "51856117",
                   "codice_materiale_fornitore": "51856117",
@@ -730,6 +732,7 @@
                   ]
                 },
                 {
+                    "id":2,
                   "destinatario": "MWMB",
                   "codice_cliente_materiale": "51856117",
                   "codice_materiale_fornitore": "51856117",
