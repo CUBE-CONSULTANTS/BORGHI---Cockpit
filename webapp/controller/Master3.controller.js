@@ -16,11 +16,13 @@ sap.ui.define(
         // var oMaster3Model = new JSONModel(sap.ui.require.toUrl('sap/ui/demo/fiori2/mockdata/master3.json'));
         // this.getView().setModel(oMaster3Model, 'master3');
         this.oRouter = this.getOwnerComponent().getRouter();
+        this.onFilterSelect(null,"01")
         // this.onFilterSelect();
       },
 
-      onFilterSelect: function (oEvent) {
+      onFilterSelect: function (oEvent,key) {
         var selectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
+        !selectedKey ? selectedKey = key : selectedKey = selectedKey  
         // this.getView().getContent()[0].getContent().getContent()[0].destroy();
 
         switch (selectedKey) {

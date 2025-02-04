@@ -2,11 +2,13 @@
     controllerName="sap.ui.demo.fiori2.controller.Detail2Master3"
     xmlns="sap.uxap"
     xmlns:f="sap.f"
+    xmlns:m="sap.m"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:commons="sap.suite.ui.commons"
 >
-    <f:DynamicPage>
+    <f:DynamicPage fitContent="true" >
         <f:content>
+          
             <commons:Timeline
                 id="idTimeline"
                 enableDoubleSided="true"
@@ -27,6 +29,7 @@
                     />
                 </commons:content>
             </commons:Timeline>
+ 
         </f:content>
     </f:DynamicPage>
 </mvc:View>

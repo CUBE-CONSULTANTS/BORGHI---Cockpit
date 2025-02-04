@@ -10,14 +10,13 @@
     <f:DynamicPage
         id="dynamicPageId"
         toggleHeaderOnTitleClick="false"
+
     >
         <!-- DynamicPage Title -->
         <f:title>
             <f:DynamicPageTitle>
                 <f:heading>
-                    <Title
-                        text="Monitoraggio EDI"
-                    />
+                    <Title text="Monitoraggio EDI" />
                 </f:heading>
             </f:DynamicPageTitle>
         </f:title>
@@ -31,7 +30,7 @@
                             text="Torna alla Home"
                         />
                     </Toolbar>
-  <!-- <fb:FilterBar
+                    <!-- <fb:FilterBar
                         id="filterbar"
                         persistencyKey="myPersKey"
                         useToolbar="false"
@@ -121,74 +120,80 @@
                             
                         </fb:filterGroupItems>
                     </fb:FilterBar> -->
-     
                 </f:content>
             </f:DynamicPageHeader>
         </f:header>
         <!-- DynamicPage Content -->
         <f:content>
-                       <IconTabBar
-		id="idIconTabBar"
-		select=".onFilterSelect"
-		selectedKey="01"
-        expandable="false"
-        width="100%">
-		<items>
-			<IconTabFilter
-				icon="sap-icon://shipping-status"
-				iconColor="Default"
-				count="{/ProductCollectionStats/Counts/Weight/Ok}"
-				text="Delivery Forecast"
-				key="01" >
-                
-                <core:Fragment fragmentName="sap.ui.demo.fiori2.view.fragments.deliveryMaster3"
-                    type="XML" />
-                
-            </IconTabFilter>
-			<IconTabFilter
-				icon="sap-icon://time-off"
-				iconColor="Default"
-				count="{/ProductCollectionStats/Counts/Weight/Heavy}"
-				text="Call-Off"
-				key="02" >
-                <core:Fragment fragmentName="sap.ui.demo.fiori2.view.fragments.calloffMaster3"
-                    type="XML" />
-            </IconTabFilter>
-			<IconTabFilter
-				icon="sap-icon://monitor-payments"
-				iconColor="Default"
-				count="{/ProductCollectionStats/Counts/Weight/Overweight}"
-				text="Self Billing"
-				key="03" >
-                <core:Fragment fragmentName="sap.ui.demo.fiori2.view.fragments.selfBillingMaster3"
-                    type="XML" />
-            </IconTabFilter>
-                <IconTabFilter
-				icon="sap-icon://letter"
-				iconColor="Default"
-				count="{/ProductCollectionStats/Counts/Weight/Overweight}"
-				text="Despatch Advice"
-				key="04" >
-                <!-- <core:Fragment fragmentName="sap.ui.demo.fiori2.view.fragments.linkDialogMaster3"
-                    type="XML" /> -->
-            </IconTabFilter>
-                <IconTabFilter
-				icon="sap-icon://sales-order"
-				iconColor="Default"
-				count="{/ProductCollectionStats/Counts/Weight/Overweight}"
-				text="Invoice"
-				key="05" >
-                <!-- <core:Fragment fragmentName="sap.ui.demo.fiori2.view.fragments.linkDialogMaster3"
-                    type="XML" /> -->
-            </IconTabFilter>
-                
-		</items>
+            <IconTabBar
+                id="idIconTabBar"
+                select=".onFilterSelect"
+                selectedKey="01"
+                expandable="false"
+                width="100%"
+            >
+                <items>
+                    <IconTabFilter
 
-		 <content>
-            
-         </content>
-	</IconTabBar>  
-   
+                        icon="sap-icon://shipping-status"
+                        iconColor="Default"
+                        count="{/ProductCollectionStats/Counts/Weight/Ok}"
+                        text="Delivery Forecast"
+                        key="01"
+                    >
+                        <core:Fragment
+                            fragmentName="sap.ui.demo.fiori2.view.fragments.deliveryMaster3"
+                            type="XML"
+                        />
+                    </IconTabFilter>
+                    <IconTabFilter
+                        icon="sap-icon://time-off"
+                        iconColor="Default"
+                        count="{/ProductCollectionStats/Counts/Weight/Heavy}"
+                        text="Call-Off"
+                        key="02"
+                    >
+                        <core:Fragment
+                            fragmentName="sap.ui.demo.fiori2.view.fragments.calloffMaster3"
+                            type="XML"
+                        />
+                    </IconTabFilter>
+                    <IconTabFilter
+                        icon="sap-icon://monitor-payments"
+                        iconColor="Default"
+                        count="{/ProductCollectionStats/Counts/Weight/Overweight}"
+                        text="Self Billing"
+                        key="03"
+                    >
+                        <core:Fragment
+                            fragmentName="sap.ui.demo.fiori2.view.fragments.selfBillingMaster3"
+                            type="XML"
+                        />
+                    </IconTabFilter>
+                    <IconTabFilter
+                        icon="sap-icon://letter"
+                        iconColor="Default"
+                        count="{/ProductCollectionStats/Counts/Weight/Overweight}"
+                        text="Despatch Advice"
+                        key="04"
+                    >
+                        <!-- <core:Fragment fragmentName="sap.ui.demo.fiori2.view.fragments.linkDialogMaster3"
+                    type="XML" /> -->
+                    </IconTabFilter>
+                    <IconTabFilter
+                        icon="sap-icon://sales-order"
+                        iconColor="Default"
+                        count="{/ProductCollectionStats/Counts/Weight/Overweight}"
+                        text="Invoice"
+                        key="05"
+                    >
+                        <!-- <core:Fragment fragmentName="sap.ui.demo.fiori2.view.fragments.linkDialogMaster3"
+                    type="XML" /> -->
+                    </IconTabFilter>
+                </items>
+
+                <content />
+            </IconTabBar>
         </f:content>
 
         <!-- DynamicPage Footer -->

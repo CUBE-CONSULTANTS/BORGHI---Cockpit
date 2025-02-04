@@ -3,11 +3,13 @@
     xmlns:f="sap.f" 
     xmlns:fb="sap.ui.comp.filterbar" 
     xmlns:ui="sap.ui.table" 
-    xmlns:mvc="sap.ui.core.mvc">
+    xmlns:mvc="sap.ui.core.mvc"
+    >
 
-    <f:DynamicPage >
+    <f:DynamicPage fitContent="true">
         <f:header>
-        <f:DynamicPageHeader pinnable="true">
+        <f:DynamicPageHeader pinnable="true"
+        >
             <f:content>
             <fb:FilterBar
             id="filterbar"
@@ -106,13 +108,12 @@
         
         <f:content>
             
-        <ui:TreeTable
-       
+        <ui:TreeTable 
         rows="{path: 'master3>/Master3', parameters: {arrayNames: ['DelforPosizioni']}}"
         selectionMode="MultiToggle"
         enableSelectAll="false"
         ariaLabelledBy="title"
-        cellClick=".rowDetailPress">
+        >
         <!-- cellClick=".rowDetailPress" -->
     <ui:extension>
         <OverflowToolbar style="Clear">
