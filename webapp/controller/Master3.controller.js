@@ -84,25 +84,7 @@ sap.ui.define(
         this._bSortColumnDescending = !this._bSortColumnDescending;
       },
 
-      rowDetailPress: function (detailPath) {
-        // var detailPath = oEvent.getParameter("rowBindingContext").getPath()
-        let detailRowIndex = detailPath.split("/").slice(-1).pop();
-        let detail = this.getView()
-          .getModel("master3")
-          .getProperty(`/Master3/${detailRowIndex}/DelforTestata/id`);
-        let oNextUIState;
-        this.getOwnerComponent()
-          .getHelper()
-          .then(
-            function (oHelper) {
-              oNextUIState = oHelper.getNextUIState(1);
-              this.oRouter.navTo("detailMaster3", {
-                product: detail,
-                layout: oNextUIState.layout,
-              });
-            }.bind(this)
-          );
-      },
+      
 
       deletePress: function (oEvent) {
         this.getView().byId("table");
@@ -181,20 +163,46 @@ sap.ui.define(
           this._oDialog.open();
         }
       },
-
+      rowDetailPress: function (detailPath) {
+        // var detailPath = oEvent.getParameter("rowBindingContext").getPath()
+        let detailRowIndex = detailPath.split("/").slice(-1).pop();
+        let detail = this.getView()
+          .getModel("master3")
+          .getProperty(`/Master3/${detailRowIndex}/DelforTestata/id`);
+        let oNextUIState;
+        this.getOwnerComponent()
+          .getHelper()
+          .then(
+            function (oHelper) {
+              oNextUIState = oHelper.getNextUIState(1);
+              this.oRouter.navTo("detailMaster3", {
+                product: detail,
+                layout: oNextUIState.layout,
+              });
+            }.bind(this)
+          );
+      },
       dettaglioNav: function (oEvent) {
         debugger;
-        let level = oEvent
-          .getSource()
-          .getParent()
-          .getBindingContext("master3")
-          .getPath()
-          .includes("DelforPosizioni");
-
+        let level = oEvent.getSource().getParent().getBindingContext("master3").getPath().includes("DelforPosizioni");
+        // let detailSched = oEvent.getSource().getParent().getBindingContext("master3").getObject().DelforSchedulazioni
+        let detailPath = oEvent.getSource().getParent().getBindingContext("master3").getPath()
+        
+        let detail = this.getView().getModel("master3").getProperty(`${detailPath}`); 
         if (level) {
           debugger;
-          // this.oRouter.navTo("detail2Master3");
-          this.getOwnerComponent().getRouter().navTo("detail2Master3");
+          let oNextUIState;
+          this.getOwnerComponent()
+            .getHelper()
+            .then(
+              function (oHelper) {
+                oNextUIState = oHelper.getNextUIState(1);
+                this.oRouter.navTo("Detail2Master3", {
+                  product: JSON.stringify(detail),
+                  layout: oNextUIState.layout,
+                });
+              }.bind(this)
+            );
         } else {
           let path = oEvent
             .getSource()

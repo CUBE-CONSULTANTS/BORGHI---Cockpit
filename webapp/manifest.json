@@ -87,11 +87,11 @@
 					]
 				},
 				{
-					"pattern": "detail2Master3",
-					"name": "detail2Master3",
+					"pattern": "Detail2Master3/{product}/{layout}",
+					"name": "Detail2Master3",
 					"target": [
 						"master3",
-						"detail2Master3"
+						"Detail2Master3"
 					]
 				}
 				
@@ -127,7 +127,7 @@
 					"controlAggregation": "midColumnPages",
 					"viewLevel": 2
 				},
-				"detail2Master3": {
+				"Detail2Master3": {
 					"viewName": "Detail2Master3",
 					"controlAggregation": "midColumnPages",
 					"viewLevel": 2
