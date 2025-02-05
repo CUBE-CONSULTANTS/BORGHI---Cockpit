@@ -499,7 +499,7 @@
               "numero_idoc": null
             },
             "DelforPosizioni": [
-              [
+              
                 {
                     "id":1,
                   "destinatario": "MWMB",
@@ -962,7 +962,7 @@
                     }
                   ]
                 }
-              ]
+              
             ]
           }         
       
