@@ -9,6 +9,7 @@ sap.ui.define([
   "sap/ui/model/Sorter",
   "sap/m/PDFViewer",
   "sap/ui/export/Spreadsheet",
+  "sap/ui/core/format/DateFormat" 
 ],
 function (
   Controller,
@@ -18,8 +19,10 @@ function (
   JSONModel,
   MessageBox,
   MessageToast,
+  Sorter,
   PDFViewer,
-  Spreadsheet
+  Spreadsheet,
+  DateFormat
 ) {
 	"use strict";
 
@@ -103,7 +106,21 @@ function (
         // sap.ui.core.BusyIndicator.hide(delay || 0);
         sap.ui.core.BusyIndicator.hide(delay);
       },
+      formatDate: function (dateString) {
+        if (!dateString) return "";
+        let match = dateString.match(/^(\d{4})(\d{2})(\d{2})$/);       
+        if (!match) {
+          console.log("Formato data non valido:", dateString);
+          return "";
+        }
+        let [, year, month, day] = match; 
+        let oDate = new Date(year, month - 1, day); 
+        let oDateFormat = DateFormat.getInstance({ 
+            pattern: "dd/MM/yyyy"
+        });
 
+        return oDateFormat.format(oDate);
+      },
 
 	});
 });

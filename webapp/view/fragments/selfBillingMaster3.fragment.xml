@@ -5,10 +5,7 @@
     xmlns:ui="sap.ui.table" 
     xmlns:mvc="sap.ui.core.mvc">
 
-    <f:DynamicPage >
-        <f:header>
-        <f:DynamicPageHeader pinnable="true">
-            <f:content>
+   
             <fb:FilterBar
             id="1"
             persistencyKey="myPersKey"
@@ -100,11 +97,7 @@
                 
             </fb:filterGroupItems>
         </fb:FilterBar>
-    </f:content>
-        </f:DynamicPageHeader >
-    </f:header>
-        
-        <f:content>
+    
             <ui:TreeTable
                     id="TreeTableBasic"
                     rows="{master3>/posizioni}"
@@ -224,7 +217,6 @@
 					</ui:Column>
                 </ui:columns>
             </ui:TreeTable>
-        </f:content>
-    </f:DynamicPage>
+       
    
 </core:FragmentDefinition>

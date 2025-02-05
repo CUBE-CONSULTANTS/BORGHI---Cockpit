@@ -1,6 +1,6 @@
 sap.ui.define(
   ["./BaseController", "sap/ui/model/json/JSONModel"],
-  function (BaseController) {
+  function (BaseController,JSONModel) {
     "use strict";
 
     return BaseController.extend(
@@ -26,12 +26,19 @@ sap.ui.define(
           let datiElementoSelect = JSON.parse(
             this._product
           ).DelforSchedulazioni;
+       
+          datiElementoSelect = datiElementoSelect.map(item => {
+            if (item.data_spedizione_richiesta_effettiva) {
+                item.data_spedizione_richiesta_effettiva = this.formatDate(item.data_spedizione_richiesta_effettiva);
+            }
+            return item;
+          });
+
           this.getView().setModel(
-            new sap.ui.model.json.JSONModel({ datiElementoSelect }),
+            new JSONModel({ datiElementoSelect }),
             "detailSched"
           );
         },
-
         onEditToggleButtonPress: function () {
           var oObjectPage = this.getView().byId("ObjectPageLayout"),
             bCurrentShowFooterState = oObjectPage.getShowFooter();

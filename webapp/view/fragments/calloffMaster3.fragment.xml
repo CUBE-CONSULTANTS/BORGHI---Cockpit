@@ -5,8 +5,7 @@
     xmlns:ui="sap.ui.table" 
     xmlns:mvc="sap.ui.core.mvc">
 
-    <f:DynamicPage >
-        <f:content>
+   
             <fb:FilterBar
             id="rthr"
             persistencyKey="myPersKey"
@@ -99,7 +98,6 @@
             </fb:filterGroupItems>
         </fb:FilterBar>
         
-        </f:content>
-    </f:DynamicPage>
+
    
 </core:FragmentDefinition>

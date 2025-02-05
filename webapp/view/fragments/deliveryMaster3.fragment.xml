@@ -6,11 +6,7 @@
     xmlns:mvc="sap.ui.core.mvc"
     >
 
-    <f:DynamicPage fitContent="true">
-        <f:header>
-        <f:DynamicPageHeader pinnable="true"
-        >
-            <f:content>
+    
             <fb:FilterBar
             id="filterbar"
             persistencyKey="myPersKey"
@@ -20,7 +16,7 @@
             afterVariantLoad=".onAfterVariantLoad"
             showGoOnFB="true"
             showFilterConfiguration="true"
-           
+            class="sapUiSmallMarginBottom"   
         >
             <fb:filterGroupItems>
                 <fb:FilterGroupItem
@@ -102,11 +98,7 @@
                 
             </fb:filterGroupItems>
         </fb:FilterBar>
-    </f:content>
-        </f:DynamicPageHeader >
-    </f:header>
-        
-        <f:content>
+   
             
         <ui:TreeTable 
         rows="{path: 'master3>/Master3', parameters: {arrayNames: ['DelforPosizioni']}}"
@@ -226,7 +218,5 @@
         </ui:Column>
     </ui:columns>
 </ui:TreeTable>
-        </f:content>
-    </f:DynamicPage>
-   
+    
 </core:FragmentDefinition>
