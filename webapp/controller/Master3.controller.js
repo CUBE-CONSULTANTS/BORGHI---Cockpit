@@ -158,16 +158,16 @@ sap.ui.define(
       },
 
       importaPress: function (oEvent) {
-        if (!this._oDialog) {
+        if (!this._oDialog2) {
           Fragment.load({
             id: this.getView().getId(),
             name: "sap.ui.demo.fiori2.view.fragments.importMaster3",
             controller: this,
           }).then(
-            function (oDialog) {
-              this._oDialog = oDialog;
-              this.getView().addDependent(this._oDialog);
-              this._oDialog.open();
+            function (oDialog2) {
+              this._oDialog2 = oDialog2;
+              this.getView().addDependent(this._oDialog2);
+              this._oDialog2.open();
             }.bind(this)
           );
         } else {
@@ -248,6 +248,26 @@ sap.ui.define(
 
       formatData: function (data) {
         debugger;
+      },
+
+      onCollapseAll: function () {
+        const oTreeTable = this.byId("treetableMain");
+        oTreeTable.collapseAll();
+      },
+
+      onCollapseSelection: function () {
+        const oTreeTable = this.byId("treetableMain");
+        oTreeTable.collapse(oTreeTable.getSelectedIndices());
+      },
+
+      onExpandFirstLevel: function () {
+        const oTreeTable = this.byId("treetableMain");
+        oTreeTable.expandToLevel(1);
+      },
+
+      onExpandSelection: function () {
+        const oTreeTable = this.byId("treetableMain");
+        oTreeTable.expand(oTreeTable.getSelectedIndices());
       },
 
       // loadFragment: function (oEvent) {

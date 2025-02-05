@@ -14,7 +14,7 @@
     xmlns:ui="sap.ui.table">
 
     <ObjectPageLayout
-        id="ObjectPageLayout"
+     
         showTitleInHeaderContent="true"
         alwaysShowContentHeader="true"
         preserveHeaderStateOnScroll="false"
@@ -27,7 +27,7 @@
             <ObjectPageDynamicHeaderTitle>
                 <expandedHeading>
                     <m:Title
-                        text="{detailData>/DettaglioMaster3/0/CompanyName}"
+                        text="{detailData>/DettaglioMaster3/DelforTestata/template}"
                         wrapping="true"
                         class="sapUiSmallMarginEnd" />
                 </expandedHeading>
@@ -43,7 +43,7 @@
                             alignItems="Center"
                             class="sapUiTinyMarginEnd">
                             <m:Title
-                                text="{detailData>/DettaglioMaster3/0/CompanyName}"
+                                text="{detailData>/DettaglioMaster3/DelforTestata/template}"
                                 wrapping="true" />
                         </m:FlexBox>
                     </m:FlexBox>
@@ -81,79 +81,79 @@
                     justifyContent="Center"
                     class="sapUiSmallMarginEnd">
                     <m:Label text="Cliente" />
-                    <m:Text text="{detailData>/DettaglioMaster3/0/CompanyName}" />
+                    <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/template}" />
                 </m:VBox>
                 <m:VBox
                     justifyContent="Center"
                     class="sapUiSmallMarginEnd">
                     <m:Label text="Materiale" />
-                    <m:Text text="{detailData>/DettaglioMaster3/0/Materiale}" />
+                    <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/materiale}" />
                 </m:VBox>
                 <m:VBox
                     justifyContent="Center"
                     class="sapUiSmallMarginEnd">
                     <m:Label text="Data Ricezione" />
-                    <m:Text text="{detailData>/DettaglioMaster3/0/DataRicezione}" />
+                    <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/data_ricezione}" />
                 </m:VBox>
                 <m:VBox
                     justifyContent="Center"
                     class="sapUiSmallMarginEnd">
                     <m:Label text="Stato" />
-                    <m:Text text="{detailData>/DettaglioMaster3/0/Stato}" />
+                    <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/stato}" />
                 </m:VBox>
                 <m:VBox
                     justifyContent="Center"
                     class="sapUiSmallMarginEnd">
                     <m:Label text="Status Message" />
-                    <m:Text text="{detailData>/DettaglioMaster3/0/MessaggioStato}" />
+                    <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/status_message}" />
                 </m:VBox>
                 <m:VBox
                     justifyContent="Center"
                     class="sapUiSmallMarginEnd">
                     <m:Label text="Id Testata" />
-                    <m:Text text="{detailData>/DettaglioMaster3/0/MessaggioStato}" />
+                    <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/id}" />
                 </m:VBox>
                 <m:VBox
                     justifyContent="Center"
                     class="sapUiSmallMarginEnd">
                     <m:Label text="Numero progressivo invio" />
-                    <m:Text text="{detailData>/DettaglioMaster3/0/MessaggioStato}" />
+                    <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/numero_progressivo_invio}" />
                 </m:VBox>
                 <m:VBox
                     justifyContent="Center"
                     class="sapUiSmallMarginEnd">
                     <m:Label text="Data progressivo invio" />
-                    <m:Text text="{detailData>/DettaglioMaster3/0/MessaggioStato}" />
+                    <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/data_progressivo_invio}" />
                 </m:VBox>
                 <m:VBox
                     justifyContent="Center"
                     class="sapUiSmallMarginEnd">
                     <m:Label text="Codice buyer" />
-                    <m:Text text="{detailData>/DettaglioMaster3/0/MessaggioStato}" />
+                    <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/codice_buyer}" />
                 </m:VBox>
                 <m:VBox
                     justifyContent="Center"
                     class="sapUiSmallMarginEnd">
                     <m:Label text="Codice seller" />
-                    <m:Text text="{detailData>/DettaglioMaster3/0/MessaggioStato}" />
+                    <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/codice_seller}" />
                 </m:VBox>
                 <m:VBox
                     justifyContent="Center"
                     class="sapUiSmallMarginEnd">
                     <m:Label text="Numero segmenti tracciato" />
-                    <m:Text text="{detailData>/DettaglioMaster3/0/MessaggioStato}" />
+                    <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/numero_segmenti_tracciato}" />
                 </m:VBox>
                 <m:VBox
                     justifyContent="Center"
                     class="sapUiSmallMarginEnd">
                     <m:Label text="UNH+" />
-                    <m:Text text="{detailData>/DettaglioMaster3/0/MessaggioStato}" />
+                    <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/unh}" />
                 </m:VBox>
                 <m:VBox
                     justifyContent="Center"
                     class="sapUiSmallMarginEnd">
                     <m:Label text="Numero messaggi inviati" />
-                    <m:Text text="{detailData>/DettaglioMaster3/0/MessaggioStato}" />
+                    <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/template}" />
                 </m:VBox>
             </m:FlexBox>
         </headerContent>
@@ -257,7 +257,7 @@
                                     <m:Button
                                         icon="sap-icon://excel-attachment"
                                         text="Import excel"
-                                        press=""/>
+                                        press="importaPress"/>
                                     <m:Button
                                         text="Esportazione in excel"
                                         icon="sap-icon://excel-attachment"
@@ -279,7 +279,8 @@
                                         type="Reject"/>
                                 </m:OverflowToolbar>
                                 <m:ScrollContainer height="100%" width="100%" vertical="true" horizontal="true">
-                                    <ui:TreeTable
+                            <ui:TreeTable
+                            id="treetableDetail"
                             rows="{detailData>/DettaglioMaster3/DelforPosizioni}"
                             selectionMode="MultiToggle"
                             enableSelectAll="false"
@@ -322,6 +323,49 @@
                                 </m:OverflowToolbar> -->
                             </ui:extension>
                             <ui:columns>
+                        <!-- inserisco prima le colonne delle schedulazioni -->
+                          <!-- E per i DelforSchedulazioni -->
+                          <ui:Column resizable="true" minWidth="150">
+                            <m:Label text="Quantità da Consegnare"/>
+                            <ui:template>
+                                <m:Text text="{detailData>quantita_da_consegnare}"/>
+                            </ui:template>
+                        </ui:Column>
+                
+                        <ui:Column resizable="true" minWidth="150">
+                            <m:Label text="Schedulazione"/>
+                            <ui:template>
+                                <m:Text text="{detailData>schedulazione}"/>
+                            </ui:template>
+                        </ui:Column>
+                
+                        <ui:Column resizable="true" minWidth="150">
+                            <m:Label text="Data Spedizione Richiesta Effettiva"/>
+                            <ui:template>
+                                <m:Text text="{path:'detailData>data_spedizione_richiesta_effettiva', formatter: '.formatDate'}"/>
+                            </ui:template>
+                        </ui:Column>
+                
+                        <ui:Column resizable="true" minWidth="150">
+                            <m:Label text="Data Spedizione Richiesta Da"/>
+                            <ui:template>
+                                <m:Text text="{path:'detailData>data_spedizione_richiesta_da', formatter: '.formatDate'}"/>
+                            </ui:template>
+                        </ui:Column>
+                
+                        <ui:Column resizable="true" minWidth="150">
+                            <m:Label text="Data Spedizione Richiesta A"/>
+                            <ui:template>
+                                <m:Text text="{detailData>data_spedizione_richiesta_a}"/>
+                            </ui:template>
+                        </ui:Column>
+                
+                        <ui:Column resizable="true" minWidth="150">
+                            <m:Label text="Numero SA"/>
+                            <ui:template>
+                                <m:Text text="{detailData>numero_sa}"/>
+                            </ui:template>
+                        </ui:Column>
                                 <ui:Column resizable="true" minWidth="150">
                                     <m:Label text="Destinatario"/>
                                     <ui:template>
@@ -469,48 +513,7 @@
                                     </ui:template>
                                 </ui:Column>
                         
-                                <!-- E per i DelforSchedulazioni -->
-                                <ui:Column resizable="true" minWidth="150">
-                                    <m:Label text="Quantità da Consegnare"/>
-                                    <ui:template>
-                                        <m:Text text="{detailData>quantita_da_consegnare}"/>
-                                    </ui:template>
-                                </ui:Column>
-                        
-                                <ui:Column resizable="true" minWidth="150">
-                                    <m:Label text="Schedulazione"/>
-                                    <ui:template>
-                                        <m:Text text="{detailData>schedulazione}"/>
-                                    </ui:template>
-                                </ui:Column>
-                        
-                                <ui:Column resizable="true" minWidth="150">
-                                    <m:Label text="Data Spedizione Richiesta Effettiva"/>
-                                    <ui:template>
-                                        <m:Text text="{value:'detailData>data_spedizione_richiesta_effettiva', formatter: '.formatDate'}"/>
-                                    </ui:template>
-                                </ui:Column>
-                        
-                                <ui:Column resizable="true" minWidth="150">
-                                    <m:Label text="Data Spedizione Richiesta Da"/>
-                                    <ui:template>
-                                        <m:Text text="{value:'detailData>data_spedizione_richiesta_da', formatter: '.formatDate'}"/>
-                                    </ui:template>
-                                </ui:Column>
-                        
-                                <ui:Column resizable="true" minWidth="150">
-                                    <m:Label text="Data Spedizione Richiesta A"/>
-                                    <ui:template>
-                                        <m:Text text="{detailData>data_spedizione_richiesta_a}"/>
-                                    </ui:template>
-                                </ui:Column>
-                        
-                                <ui:Column resizable="true" minWidth="150">
-                                    <m:Label text="Numero SA"/>
-                                    <ui:template>
-                                        <m:Text text="{detailData>numero_sa}"/>
-                                    </ui:template>
-                                </ui:Column>
+                               
                             </ui:columns>
                         </ui:TreeTable>
                                 </m:ScrollContainer>

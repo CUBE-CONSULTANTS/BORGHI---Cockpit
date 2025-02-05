@@ -101,6 +101,7 @@
    
             
         <ui:TreeTable 
+        id="treetableMain"
         rows="{path: 'master3>/Master3', parameters: {arrayNames: ['DelforPosizioni']}}"
         selectionMode="MultiToggle"
         enableSelectAll="false"
@@ -150,7 +151,7 @@
     </ui:extension>
     <ui:columns>
        
-        <ui:Column >
+        <ui:Column tooltip="Cliente">
             <Label text="Cliente"/>
             <ui:template>
                 <!-- <ObjectIdentifier
@@ -159,7 +160,7 @@
                       <Text text="{master3>DelforTestata/template}"/>
             </ui:template>
         </ui:Column>
-        <ui:Column>
+        <ui:Column tooltip="Numero progressivo invio">
             <Label text="Numero progressivo invio"/>
             <ui:template>
                 <ObjectIdentifier
@@ -167,7 +168,7 @@
                     />
             </ui:template>
         </ui:Column>
-        <ui:Column >
+        <ui:Column tooltip="Data ricezione">
             <Label text="Data ricezione" />
             <ui:template>
                  <ObjectIdentifier
@@ -177,7 +178,7 @@
             </ui:template>
         </ui:Column>
         <!-- posizioni -->
-        <ui:Column>
+        <ui:Column tooltip="Codice materiale fornitore">
             <Label text="Codice materiale fornitore" />
             <ui:template>
              <ObjectIdentifier
@@ -185,7 +186,7 @@
                     />
             </ui:template>
         </ui:Column>
-          <ui:Column>
+          <ui:Column tooltip="Numero ordine acquisto">
             <Label text="Numero ordine acquisto" />
             <ui:template>
              <ObjectIdentifier
@@ -194,7 +195,7 @@
             </ui:template>
         </ui:Column>
       
-          <ui:Column>
+          <ui:Column tooltip="Numero idoc">
             <Label text="Numero idoc" />
             <ui:template>
              <ObjectIdentifier
@@ -202,7 +203,7 @@
                     />
             </ui:template>
         </ui:Column>
-        <ui:Column hAlign="Center" >
+        <ui:Column hAlign="Center" tooltip="Stato">
           <Label text="Stato"/>
           <ui:template>
               <Button icon="{= ${master3>Stato} === 'OK' ? 'sap-icon://accept' : ${master3>Stato} === 'KO' ? 'sap-icon://decline' : 'sap-icon://warning'}" 
@@ -212,7 +213,7 @@
                <!-- <Text text="X"/> -->
           </ui:template>
       </ui:Column>
-          <ui:Column hAlign="Center">
+          <ui:Column hAlign="Center" tooltip="Dettaglio">
             <Label text="Dettaglio" />
             <ui:template>
              <Button text="Espandi" type="Emphasized" press="dettaglioNav"></Button>
