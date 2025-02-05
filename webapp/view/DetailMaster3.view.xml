@@ -79,81 +79,81 @@
                 alignItems="Stretch">
                 <m:VBox
                     justifyContent="Center"
-                    class="sapUiSmallMarginEnd">
+                    class="sapUiSmallMargin">
                     <m:Label text="Cliente" />
                     <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/template}" />
                 </m:VBox>
                 <m:VBox
                     justifyContent="Center"
-                    class="sapUiSmallMarginEnd">
-                    <m:Label text="Materiale" />
-                    <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/materiale}" />
+                    class="sapUiSmallMargin">
+                    <m:Label text="Nome file" />
+                    <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/nome_file}" />
                 </m:VBox>
                 <m:VBox
                     justifyContent="Center"
-                    class="sapUiSmallMarginEnd">
+                    class="sapUiSmallMargin">
                     <m:Label text="Data Ricezione" />
                     <m:Text text="{path:'detailData>/DettaglioMaster3/DelforTestata/data_ricezione', formatter: '.formatDate'}" />
                 </m:VBox>
                 <m:VBox
                     justifyContent="Center"
-                    class="sapUiSmallMarginEnd">
-                    <m:Label text="Stato" />
-                    <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/stato}" />
-                </m:VBox>
-                <m:VBox
-                    justifyContent="Center"
-                    class="sapUiSmallMarginEnd">
-                    <m:Label text="Status Message" />
-                    <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/status_message}" />
-                </m:VBox>
-                <m:VBox
-                    justifyContent="Center"
-                    class="sapUiSmallMarginEnd">
+                    class="sapUiSmallMargin">
                     <m:Label text="Id Testata" />
                     <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/id}" />
                 </m:VBox>
                 <m:VBox
                     justifyContent="Center"
-                    class="sapUiSmallMarginEnd">
+                    class="sapUiSmallMargin">
                     <m:Label text="Numero progressivo invio" />
                     <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/numero_progressivo_invio}" />
                 </m:VBox>
                 <m:VBox
                     justifyContent="Center"
-                    class="sapUiSmallMarginEnd">
+                    class="sapUiSmallMargin">
                     <m:Label text="Data progressivo invio" />
                     <m:Text text="{path:'detailData>/DettaglioMaster3/DelforTestata/data_progressivo_invio', formatter: '.formatDate'}" />
                 </m:VBox>
                 <m:VBox
                     justifyContent="Center"
-                    class="sapUiSmallMarginEnd">
+                    class="sapUiSmallMargin">
                     <m:Label text="Codice buyer" />
                     <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/codice_buyer}" />
                 </m:VBox>
                 <m:VBox
                     justifyContent="Center"
-                    class="sapUiSmallMarginEnd">
+                    class="sapUiSmallMargin">
                     <m:Label text="Codice seller" />
                     <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/codice_seller}" />
                 </m:VBox>
                 <m:VBox
                     justifyContent="Center"
-                    class="sapUiSmallMarginEnd">
+                    class="sapUiSmallMargin">
                     <m:Label text="Numero segmenti tracciato" />
                     <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/numero_segmenti_tracciato}" />
                 </m:VBox>
                 <m:VBox
                     justifyContent="Center"
-                    class="sapUiSmallMarginEnd">
+                    class="sapUiSmallMargin">
                     <m:Label text="UNH+" />
                     <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/unh}" />
                 </m:VBox>
                 <m:VBox
                     justifyContent="Center"
-                    class="sapUiSmallMarginEnd">
+                    class="sapUiSmallMargin">
                     <m:Label text="Numero messaggi inviati" />
-                    <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/template}" />
+                    <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/numero_messaggi_inviati}" />
+                </m:VBox>
+                <m:VBox
+                    justifyContent="Center"
+                    class="sapUiSmallMargin">
+                    <m:Label text="Stato" />
+                    <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/stato}" />
+                </m:VBox>
+                <m:VBox
+                    justifyContent="Center"
+                    class="sapUiSmallMargin">
+                    <m:Label text="Status Message" />
+                    <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/status_message}" />
                 </m:VBox>
             </m:FlexBox>
         </headerContent>
