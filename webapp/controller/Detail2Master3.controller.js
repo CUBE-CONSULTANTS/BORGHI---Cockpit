@@ -32,12 +32,20 @@ sap.ui.define(
                 item.data_spedizione_richiesta_effettiva = this.formatDate(item.data_spedizione_richiesta_effettiva);
             }
             return item;
-          });
+          }).sort((a, b) => {
+            let dateA = this.parseDate(a.data_spedizione_richiesta_effettiva);
+            let dateB = this.parseDate(b.data_spedizione_richiesta_effettiva);
+            return dateA - dateB; 
+        });
 
           this.getView().setModel(
             new JSONModel({ datiElementoSelect,codiceClienteMateriale,numeroOrdineAcquisto  }),
             "detailSched"
           );
+        },
+        parseDate:function(dateStr) {
+          let parts = dateStr.split("/"); 
+          return new Date(parts[2], parts[1] - 1, parts[0]); 
         },
         onEditToggleButtonPress: function () {
           var oObjectPage = this.getView().byId("ObjectPageLayout"),
