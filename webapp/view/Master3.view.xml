@@ -6,11 +6,13 @@
     xmlns:fb="sap.ui.comp.filterbar"
     xmlns:core="sap.ui.core"
     xmlns:ui="sap.ui.table"
+    xmlns:layout="sap.ui.layout"
 >
     <f:DynamicPage
         id="dynamicPageId"
         fitContent="true"
         toggleHeaderOnTitleClick="false"
+        showFooter="true"
 
     >
         <!-- DynamicPage Title -->
@@ -19,18 +21,23 @@
                 <f:heading>
                     <Title text="Monitoraggio EDI" />
                 </f:heading>
+                <f:actions>
+                  <layout:HorizontalLayout allowWrapping="true">
+                    <layout:VerticalLayout>
+                      <Image 
+                        src="public/images/borghiLogo2.png"
+                        height="35.00000000px"
+                        width="100%"
+                      />
+                    </layout:VerticalLayout>
+                  </layout:HorizontalLayout>
+                </f:actions>
             </f:DynamicPageTitle>
         </f:title>
         <f:header>
             <f:DynamicPageHeader pinnable="false" backgroundDesign="Solid"  >
                 <f:content>
-                    <Toolbar style="Clear">
-                        <Button
-                            press="navToHome"
-                            type="Back"
-                            text="Torna alla Home"
-                        />
-                    </Toolbar>
+                    
                     <!-- <fb:FilterBar
                         id="filterbar"
                         persistencyKey="myPersKey"
@@ -200,15 +207,15 @@
         <!-- DynamicPage Footer -->
         <f:footer>
             <OverflowToolbar>
+          
+                <Button
+                    press="navToHome"
+                    type="Back"
+                    text="Torna alla Home"
+                />
+      
                 <ToolbarSpacer />
-                <Button
-                    type="Accept"
-                    text="Accept"
-                />
-                <Button
-                    type="Reject"
-                    text="Reject"
-                />
+
             </OverflowToolbar>
         </f:footer>
     </f:DynamicPage>

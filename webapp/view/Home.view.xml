@@ -1,45 +1,77 @@
 <mvc:View
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
-    controllerName="sap.ui.demo.fiori2.controller.Home">
-    <Page title="Home">
-        <content>
-            <FlexBox
-                justifyContent="Center"
-                alignItems="Center"
-                direction="Row"
-                class="sapUiSmallMarginTop"
-                width="100%">
-                <items>
-                    <GenericTile
-                        header="CONFRONTO ULTIME DUE PROGRAMMAZIONI"
-                        subheader="Dettaglio codice articolo"
-                        press="onNavigateToPage1"
-                        class="tileMargin">
-                        <TileContent>
-                            <ImageContent src="sap-icon://bbyd-dashboard" />
-                        </TileContent>
-                    </GenericTile>
-                    <GenericTile
-                        header="CONFRONTO ULTIME DUE PROGRAMMAZIONI"
-                        subheader="Dettaglio percentuale"
-                        press="onNavigateToPage2"
-                        class="tileMargin">
-                        <TileContent>
-                            <ImageContent src="sap-icon://business-objects-experience" />
-                        </TileContent>
-                    </GenericTile>
-                    <GenericTile
-                        header="Monitoraggio EDI"
-                        subheader="Storicizzazione dati"
-                        press="onNavigateToPage3"
-                        class="tileMargin">
-                        <TileContent>
-                            <ImageContent src="sap-icon://history" />
-                        </TileContent>
-                    </GenericTile>
-                </items>
-            </FlexBox>
-        </content>
-    </Page>
+    xmlns:layout="sap.ui.layout"
+    controllerName="sap.ui.demo.fiori2.controller.Home"
+    xmlns:f="sap.f">
+    <f:DynamicPage title="Cockpit Flussi EDI"  showFooter="true">
+      <f:title>
+			<f:DynamicPageTitle>
+				<f:heading>
+					<Title
+						text="EDI Cockpit"
+						class="title"
+					/>
+				</f:heading>
+				<f:actions>
+					<layout:HorizontalLayout allowWrapping="true">
+						<layout:VerticalLayout>
+							<Image 
+								src="public/images/borghiLogo2.png"
+								height="35.00000000px"
+								width="100%"
+							/>
+						</layout:VerticalLayout>
+					</layout:HorizontalLayout>
+				</f:actions>
+			</f:DynamicPageTitle>
+		</f:title>
+    <f:content>
+      <FlexBox
+           
+      justifyContent="Center"
+      alignItems="Center"
+      direction="Row"
+      class="sapUiResponsiveMargin"
+      height="70%">
+      <items>
+          <GenericTile    
+              width="250px"              
+              header="CONFRONTO ULTIME DUE PROGRAMMAZIONI"
+              subheader="Dettaglio codice articolo"
+              press="onNavigateToPage1"
+              class="tileMargin">
+              <TileContent>
+                  <ImageContent src="sap-icon://bbyd-dashboard" />
+              </TileContent>
+          </GenericTile>
+          <GenericTile
+              width="250px"     
+              header="CONFRONTO ULTIME DUE PROGRAMMAZIONI"
+              subheader="Dettaglio percentuale"
+              press="onNavigateToPage2"
+              class="tileMargin">
+              <TileContent>
+                  <ImageContent src="sap-icon://business-objects-experience" />
+              </TileContent>
+          </GenericTile>
+          <GenericTile
+              width="250px"     
+              header="Monitoraggio EDI"
+              subheader="Storicizzazione dati"
+              press="onNavigateToPage3"
+              class="tileMargin">
+              <TileContent>
+                  <ImageContent src="sap-icon://history" />
+              </TileContent>
+          </GenericTile>
+      </items>
+  </FlexBox>
+    </f:content>
+    <f:footer>    
+        <OverflowToolbar style="Standard"
+        />
+    </f:footer>
+    
+  </f:DynamicPage>
 </mvc:View>

@@ -31,7 +31,13 @@
 			  {
 				"uri": "css/style.css"
 			  }
-			]
+			],
+      "img": [
+        {
+          "uri": "public/images/",
+          "name": "borghi.images"
+        }
+      ]
 		},
 		"config": {
 			"fullWidth": true
