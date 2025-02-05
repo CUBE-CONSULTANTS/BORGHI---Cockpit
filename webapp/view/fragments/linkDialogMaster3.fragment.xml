@@ -1,18 +1,33 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
-    <Dialog title="Fine del processamento">
+    <Dialog title="Fine del processamento" >
         <content>
-            <VBox class= "sapUiMediumMargin">
-                <HBox class="sapUiLargeMarginBottom" >
-                    <Text text="Processo terminato senza errori"/>
-                </HBox>
-                <HBox >
-                    <Link text="Reportistica Cumulativi" press="onLink1Press" class="sapUiLargeMarginEnd"/>
-                    <Link text="Reportistica Progressivi" press="onLink2Press"/>
-                </HBox>
-            </VBox>
+          <VBox class="sapUiMediumMargin">
+            <!-- Messaggio di fine processo -->
+            <Text text="Processo terminato senza errori." 
+                class="sapUiLargeMarginBottom" 
+                textAlign="Center" 
+                wrap="true" 
+            />
+            
+            <!-- Sezione per i bottoni di reportistica -->
+            <HBox justifyContent="SpaceBetween" class="sapUiResponsiveMargin">
+                <Button 
+                    text="Reportistica Cumulativi" 
+                    press="onLink1Press" 
+                    type="Emphasized" 
+                    class="sapUiSmallMarginEnd"
+                />
+                <Button 
+                    text="Reportistica Progressivi" 
+                    press="onLink2Press" 
+                    type="Emphasized" 
+                    class="sapUiSmallMarginStart"
+                />
+            </HBox>
+        </VBox>
         </content>
         <buttons>
-            <Button text="Chiudi" press="onclose"/> 
+            <Button text="Chiudi" press="onclose" icon="sap-icon://decline"/> 
         </buttons>
     </Dialog>
 </core:FragmentDefinition>
