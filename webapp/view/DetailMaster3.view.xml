@@ -93,7 +93,7 @@
                     justifyContent="Center"
                     class="sapUiSmallMarginEnd">
                     <m:Label text="Data Ricezione" />
-                    <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/data_ricezione}" />
+                    <m:Text text="{path:'detailData>/DettaglioMaster3/DelforTestata/data_ricezione', formatter: '.formatDate'}" />
                 </m:VBox>
                 <m:VBox
                     justifyContent="Center"
@@ -123,7 +123,7 @@
                     justifyContent="Center"
                     class="sapUiSmallMarginEnd">
                     <m:Label text="Data progressivo invio" />
-                    <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/data_progressivo_invio}" />
+                    <m:Text text="{path:'detailData>/DettaglioMaster3/DelforTestata/data_progressivo_invio', formatter: '.formatDate'}" />
                 </m:VBox>
                 <m:VBox
                     justifyContent="Center"
