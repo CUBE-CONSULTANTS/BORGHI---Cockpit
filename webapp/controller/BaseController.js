@@ -106,6 +106,26 @@ function (
         // sap.ui.core.BusyIndicator.hide(delay || 0);
         sap.ui.core.BusyIndicator.hide(delay);
       },
+      onOpenDialog: function (dialName, fragmName, self, ...oModel) {
+        let oView = this.getView();
+        dialName = self.dialName;
+        if (!dialName) {
+          dialName = Fragment.load({
+            id: oView.getId(),
+            name: fragmName,
+            controller: self,
+          }).then((oValueHelpDialog) => {
+            oView.addDependent(oValueHelpDialog);
+            oValueHelpDialog.setModel(this.getModel(...oModel));
+            return oValueHelpDialog;
+          });
+          dialName.then(function (oValueHelpDialog) {
+            oValueHelpDialog.open();
+          });
+        } else {
+          self.dialName.open()
+        }
+      },
       formatDate: function (dateString) {
         if (!dateString) return "";
         let match = dateString.match(/^(\d{4})(\d{2})(\d{2})$/);       

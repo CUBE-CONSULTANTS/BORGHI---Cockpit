@@ -21,11 +21,11 @@ sap.ui.define(
 
         _onProductMatched: function (oEvent) {
           debugger;
-          this._product =
-            oEvent.getParameter("arguments").product || this._product || "0";
-          let datiElementoSelect = JSON.parse(
-            this._product
-          ).DelforSchedulazioni;
+          this._product =oEvent.getParameter("arguments").product || this._product || "0";
+          let productData = JSON.parse(this._product)
+          let codiceClienteMateriale = productData.codice_cliente_materiale;
+          let numeroOrdineAcquisto = productData.numero_ordine_acquisto;
+          let datiElementoSelect = productData.DelforSchedulazioni;
        
           datiElementoSelect = datiElementoSelect.map(item => {
             if (item.data_spedizione_richiesta_effettiva) {
@@ -35,7 +35,7 @@ sap.ui.define(
           });
 
           this.getView().setModel(
-            new JSONModel({ datiElementoSelect }),
+            new JSONModel({ datiElementoSelect,codiceClienteMateriale,numeroOrdineAcquisto  }),
             "detailSched"
           );
         },

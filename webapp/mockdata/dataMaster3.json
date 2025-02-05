@@ -139,7 +139,7 @@
                       "numero_sa": null,
                       "id_posizione": 1
                     },
-                    {
+                    { 
                       "quantita_da_consegnare": "250",
                       "schedulazione": "4",
                       "data_spedizione_richiesta_effettiva": "20250513",

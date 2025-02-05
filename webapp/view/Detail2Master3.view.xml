@@ -9,6 +9,9 @@
     <f:DynamicPage fitContent="true" >
         <f:title>
             <f:DynamicPageTitle >
+              <f:heading>
+                <m:Title text="Schedulazioni {detailSched>/numeroOrdineAcquisto} / {detailSched>/codiceClienteMateriale}" />
+              </f:heading>
                 <f:actions>
             <m:Button
                 type="Transparent"
@@ -53,9 +56,8 @@
             >
                 <commons:content>
                     <commons:TimelineItem
-                        dateTime="{detailSched>data_spedizione_richiesta_effettiva}"
+                        dateTime="Stato Piano Consegna: {detailSched>schedulazione}"
                         userName="{detailSched>data_spedizione_richiesta_effettiva}"
-                        title="Schedulazione {detailSched>schedulazione}"
                         text="Quantità da consegnare: {detailSched>quantita_da_consegnare}"
                         icon="sap-icon://shipping-status"
                         
