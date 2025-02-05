@@ -1,222 +1,239 @@
-<core:FragmentDefinition xmlns="sap.m" 
-    xmlns:core="sap.ui.core" 
-    xmlns:f="sap.f" 
-    xmlns:fb="sap.ui.comp.filterbar" 
-    xmlns:ui="sap.ui.table" 
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.f"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:ui="sap.ui.table"
     xmlns:mvc="sap.ui.core.mvc"
+>
+    <fb:FilterBar
+        id="filterbar"
+        persistencyKey="myPersKey"
+        useToolbar="false"
+        search=".onSearch"
+        filterChange=".onFilterChange"
+        afterVariantLoad=".onAfterVariantLoad"
+        showGoOnFB="true"
+        showFilterConfiguration="true"
+        class="sapUiSmallMarginBottom"
     >
-
-    
-            <fb:FilterBar
-            id="filterbar"
-            persistencyKey="myPersKey"
-            useToolbar="false"
-            search=".onSearch"
-            filterChange=".onFilterChange"
-            afterVariantLoad=".onAfterVariantLoad"
-            showGoOnFB="true"
-            showFilterConfiguration="true"
-            class="sapUiSmallMarginBottom"   
-        >
-            <fb:filterGroupItems>
-                <fb:FilterGroupItem
-                    name="Date Processamento EDI"
-                    label="Date Processamento EDI"
-                    groupName="Group1"
-                    visibleInFilterBar="true"
-                >
-                    <fb:control>
+        <fb:filterGroupItems>
+            <fb:FilterGroupItem
+                name="Date Processamento EDI"
+                label="Date Processamento EDI"
+                groupName="Group1"
+                visibleInFilterBar="true"
+            >
+                <fb:control>
                     <DatePicker
-                    tooltip="..."
-        secondaryCalendarType="Gregorian"
-        change="handleChange"
-        />
-                    </fb:control>
-                </fb:FilterGroupItem>
-                <fb:FilterGroupItem
+                        tooltip="..."
+                        secondaryCalendarType="Gregorian"
+                        change="handleChange"
+                    />
+                </fb:control>
+            </fb:FilterGroupItem>
+            <fb:FilterGroupItem
                 id="idDataConsegna"
-                    name="Date di consegna"
-                    label="Date di consegna"
-                    groupName="Group1"
-                    visibleInFilterBar="true"
-                >
-                    <fb:control>
-                     <DatePicker
-                      tooltip="..."
-        secondaryCalendarType="Gregorian"
-        change="handleChange"
-        />
-                    </fb:control>
-                </fb:FilterGroupItem>
-                <fb:FilterGroupItem
-                    name="Cliente"
-                    label="Cliente"
-                    groupName="Group1"
-                    visibleInFilterBar="true"
-                >
-                    <fb:control>
-                       <Input/>
-                    </fb:control>
-                </fb:FilterGroupItem>
-                 <fb:FilterGroupItem
-                    name="Materiale"
-                    label="Materiale"
-                    groupName="Group1"
-                    visibleInFilterBar="true"
-                >
-                    <fb:control>
-                    <Input/>
-                    </fb:control>
-                </fb:FilterGroupItem>
-                
-                 <fb:FilterGroupItem
-                    name="Stato"
-                    label="Stato"
-                    groupName="Group1"
-                    visibleInFilterBar="true"
-                >
-                    <fb:control>
-                        <ComboBox
-                            name=""
-                            selectionChange=".onSelectionChange"
-                        >
-                            <core:Item
-                                key="{key}"
-                                text="OK"
-                            />
-                            <core:Item
-                                key="{key}"
-                                text="KO"
-                            />
-                            <core:Item
-                                key="{key}"
-                                text="WARNING"
-                            />
-                        </ComboBox>
-                    </fb:control>
-                </fb:FilterGroupItem>
-                
-            </fb:filterGroupItems>
-        </fb:FilterBar>
-   
-            
-        <ui:TreeTable 
+                name="Date di consegna"
+                label="Date di consegna"
+                groupName="Group1"
+                visibleInFilterBar="true"
+            >
+                <fb:control>
+                    <DatePicker
+                        tooltip="..."
+                        secondaryCalendarType="Gregorian"
+                        change="handleChange"
+                    />
+                </fb:control>
+            </fb:FilterGroupItem>
+            <fb:FilterGroupItem
+                name="Cliente"
+                label="Cliente"
+                groupName="Group1"
+                visibleInFilterBar="true"
+            >
+                <fb:control>
+                    <Input />
+                </fb:control>
+            </fb:FilterGroupItem>
+            <fb:FilterGroupItem
+                name="Materiale"
+                label="Materiale"
+                groupName="Group1"
+                visibleInFilterBar="true"
+            >
+                <fb:control>
+                    <Input />
+                </fb:control>
+            </fb:FilterGroupItem>
+
+            <fb:FilterGroupItem
+                name="Stato"
+                label="Stato"
+                groupName="Group1"
+                visibleInFilterBar="true"
+            >
+                <fb:control>
+                    <ComboBox
+                        name=""
+                        selectionChange=".onSelectionChange"
+                    >
+                        <core:Item
+                            key="{key}"
+                            text="OK"
+                        />
+                        <core:Item
+                            key="{key}"
+                            text="KO"
+                        />
+                        <core:Item
+                            key="{key}"
+                            text="WARNING"
+                        />
+                    </ComboBox>
+                </fb:control>
+            </fb:FilterGroupItem>
+        </fb:filterGroupItems>
+    </fb:FilterBar>
+
+    <ui:TreeTable
         rows="{path: 'master3>/Master3', parameters: {arrayNames: ['DelforPosizioni']}}"
         selectionMode="MultiToggle"
         enableSelectAll="false"
         ariaLabelledBy="title"
-        >
+    >
         <!-- cellClick=".rowDetailPress" -->
-    <ui:extension>
-        <OverflowToolbar style="Clear">
-            <Title  />
-            <ToolbarSpacer/>
-            <Button text="Collapse all" press="onCollapseAll"/>
-            <Button text="Collapse selection" press="onCollapseSelection"/>
-            <Button text="Expand first level" press="onExpandFirstLevel"/>
-            <Button text="Expand selection" press="onExpandSelection"/>
-            <Button
-                icon="sap-icon://sort"
-                text="Ordinamento"
-                press="sortCategories"/>
+        <ui:extension>
+            <OverflowToolbar style="Clear">
+                <Title />
+                <ToolbarSpacer />
                 <Button
-                icon="sap-icon://excel-attachment"
-                text="Import excel"
-                press="importaPress"/>
+                    text="Collapse all"
+                    press="onCollapseAll"
+                />
                 <Button
-               
-                text="Esportazione in excel"
-                icon="sap-icon://excel-attachment"
-                press="deletePress"/>
+                    text="Collapse selection"
+                    press="onCollapseSelection"
+                />
                 <Button
-               
-                text="Processa"
-                icon="sap-icon://process"
-                press="onProcessaButton"
-                type="Emphasized"/>
+                    text="Expand first level"
+                    press="onExpandFirstLevel"
+                />
                 <Button
-                
-                text="Rielabora"
-                icon="sap-icon://synchronize"
-                press=""
-                type="Attention"/>
+                    text="Expand selection"
+                    press="onExpandSelection"
+                />
                 <Button
-                
-                text="Elimina"
-                icon="sap-icon://delete"
-                press=""
-                type="Reject"/>
-        </OverflowToolbar>
-    </ui:extension>
-    <ui:columns>
-        <ui:Column >
-            <Label text="Stato"/>
-            <ui:template>
-                <Button icon="{= ${master3>Stato} === 'OK' ? 'sap-icon://accept' : ${master3>Stato} === 'KO' ? 'sap-icon://decline' : 'sap-icon://warning'}" 
-                    type="{= ${master3>Stato} === 'OK' ? 'Accept' : ${master3>Stato} === 'KO' ? 'Critical' : 'Attention'}"
-                    tooltip="{master3>Stato}" press="statoButtonPress"/>
-                <!-- <Button text="{master3>template}"></Button> -->
-                 <!-- <Text text="X"/> -->
-            </ui:template>
-        </ui:Column>
-        <ui:Column >
-            <Label text="Cliente"/>
-            <ui:template>
-                <!-- <ObjectIdentifier
+                    icon="sap-icon://sort"
+                    text="Ordinamento"
+                    press="sortCategories"
+                />
+                <Button
+                    icon="sap-icon://excel-attachment"
+                    text="Import excel"
+                    press="importaPress"
+                />
+                <Button
+                    text="Esportazione in excel"
+                    icon="sap-icon://excel-attachment"
+                    press="deletePress"
+                />
+                <Button
+                    text="Processa"
+                    icon="sap-icon://process"
+                    press="onProcessaButton"
+                    type="Emphasized"
+                />
+                <Button
+                    text="Rielabora"
+                    icon="sap-icon://synchronize"
+                    press=""
+                    type="Attention"
+                />
+                <Button
+                    text="Elimina"
+                    icon="sap-icon://delete"
+                    press=""
+                    type="Reject"
+                />
+            </OverflowToolbar>
+        </ui:extension>
+        <ui:columns>
+            
+            <ui:Column>
+                <Label text="Cliente" />
+                <ui:template>
+                    <!-- <ObjectIdentifier
                         title="{master3>CompanyName}"
                     /> -->
-                      <Text text="{master3>DelforTestata/template}"/>
-            </ui:template>
-        </ui:Column>
-        <ui:Column>
-            <Label text="Numero progressivo invio"/>
-            <ui:template>
-                <ObjectIdentifier
+                    <Text text="{master3>DelforTestata/template}" />
+                </ui:template>
+            </ui:Column>
+            <ui:Column>
+                <Label text="Numero progressivo invio" />
+                <ui:template>
+                    <ObjectIdentifier
                         title="{master3>DelforTestata/numero_progressivo_invio}"
                     />
-            </ui:template>
-        </ui:Column>
-        <ui:Column >
-            <Label text="Data ricezione" />
-            <ui:template>
-                 <ObjectIdentifier
+                </ui:template>
+            </ui:Column>
+            <ui:Column>
+                <Label text="Data ricezione" />
+                <ui:template>
+                    <ObjectIdentifier
                         title="{master3>DelforTestata/data_ricezione}"
                     />
-            </ui:template>
-        </ui:Column>
-        <!-- posizioni -->
-        <ui:Column>
-            <Label text="Codice materiale fornitore" />
-            <ui:template>
-             <ObjectIdentifier
+                </ui:template>
+            </ui:Column>
+            <!-- posizioni -->
+            <ui:Column>
+                <Label text="Codice materiale fornitore" />
+                <ui:template>
+                    <ObjectIdentifier
                         title="{master3>codice_materiale_fornitore}"
                     />
-            </ui:template>
-        </ui:Column>
-          <ui:Column>
-            <Label text="Numero ordine acquisto" />
-            <ui:template>
-             <ObjectIdentifier
+                </ui:template>
+            </ui:Column>
+            <ui:Column>
+                <Label text="Numero ordine acquisto" />
+                <ui:template>
+                    <ObjectIdentifier
                         title="{master3>numero_ordine_acquisto}"
                     />
-            </ui:template>
-        </ui:Column>
-      
-          <ui:Column>
-            <Label text="Numero idoc" />
-            <ui:template>
-             <ObjectIdentifier
-                        title="{master3>numero_idoc}"
+                </ui:template>
+            </ui:Column>
+
+            <ui:Column>
+                <Label text="Numero idoc" />
+                <ui:template>
+                    <ObjectIdentifier title="{master3>numero_idoc}" />
+                </ui:template>
+            </ui:Column>
+            <ui:Column hAlign="Center" width="6rem">
+                <Label text="Stato" />
+                <ui:template>
+                    <Button
+                        icon="{= ${master3>Stato} === 'OK' ? 'sap-icon://accept' : ${master3>Stato} === 'KO' ? 'sap-icon://decline' : 'sap-icon://warning'}"
+                        type="{= ${master3>Stato} === 'OK' ? 'Accept' : ${master3>Stato} === 'KO' ? 'Negative' : 'Critical'}"
+                        tooltip="{master3>Stato}"
+                        press="statoButtonPress"
                     />
-            </ui:template>
-        </ui:Column>
-          <ui:Column>
-            <Label text="Dettaglio" />
-            <ui:template>
-             <Button text="Espandi" press="dettaglioNav"></Button>
-            </ui:template>
-        </ui:Column>
-    </ui:columns>
-</ui:TreeTable>
-    
+                    <!--  -->
+                    <!-- <Button text="{master3>template}"></Button> -->
+                    <!-- <Text text="X"/> -->
+                </ui:template>
+            </ui:Column>
+            <ui:Column hAlign="Center">
+                <Label text="Dettaglio" />
+                <ui:template>
+                    <Button
+                        text="Espandi"
+                        type="Emphasized"
+                        press="dettaglioNav"
+                    />
+                </ui:template>
+            </ui:Column>
+        </ui:columns>
+    </ui:TreeTable>
 </core:FragmentDefinition>

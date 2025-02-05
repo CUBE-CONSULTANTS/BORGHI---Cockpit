@@ -54,7 +54,8 @@
                 <commons:content>
                     <commons:TimelineItem
                         dateTime="{detailSched>data_spedizione_richiesta_effettiva}"
-                        userName="Schedulazione {detailSched>schedulazione}"
+                        userName="{detailSched>data_spedizione_richiesta_effettiva}"
+                        title="Schedulazione {detailSched>schedulazione}"
                         text="Quantità da consegnare: {detailSched>quantita_da_consegnare}"
                         icon="sap-icon://shipping-status"
                         

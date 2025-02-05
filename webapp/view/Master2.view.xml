@@ -7,29 +7,35 @@
     xmlns:viz="sap.viz.ui5.controls"
     xmlns:viz.data="sap.viz.ui5.data"
     xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+    
     xmlns:layout="sap.ui.layout"
     xmlns:fb="sap.ui.comp.filterbar"
     xmlns:form="sap.ui.layout.form">
 
-    <f:DynamicPage id="dynamicPageId">
+    <f:DynamicPage id="dynamicPageId" showFooter="true">
         <!-- Header Title -->
         <f:title>
             <f:DynamicPageTitle>
                 <f:heading>
                     <Title text="Confronto Programmazioni Clienti" />
                 </f:heading>
+                <f:actions>
+                  <layout:HorizontalLayout allowWrapping="true">
+                    <layout:VerticalLayout>
+                      <Image 
+                        src="public/images/borghiLogo2.png"
+                        height="35.00000000px"
+                        width="100%"
+                      />
+                    </layout:VerticalLayout>
+                  </layout:HorizontalLayout>
+                </f:actions>
             </f:DynamicPageTitle>
         </f:title>
         <f:header>
             <f:DynamicPageHeader pinnable="true">
                 <f:content>
-                    <Toolbar>
-                        <Button
-                            press="navToHome"
-                            type="Back"
-                            text="Torna alla Home"
-                        />
-                    </Toolbar>
+                   
 
                     <fb:FilterBar
                         id="filterbar"
@@ -197,5 +203,14 @@
                 </VBox>
             </VBox>
         </f:content>
+        <f:footer>
+          <Toolbar>
+            <Button
+                press="navToHome"
+                type="Back"
+                text="Torna alla Home"
+            />
+        </Toolbar>
+        </f:footer>
     </f:DynamicPage>
 </mvc:View>
