@@ -182,7 +182,7 @@
                 <Label text="Data ricezione" />
                 <ui:template>
                     <ObjectIdentifier
-                        title="{master3>DelforTestata/data_ricezione}"
+                    title="{path: 'master3>DelforTestata/data_ricezione', formatter: '.formatDate'}"
                     />
                 </ui:template>
             </ui:Column>

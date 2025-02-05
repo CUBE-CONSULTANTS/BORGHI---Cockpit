@@ -41,6 +41,7 @@ sap.ui.define(
                 "sap/ui/demo/fiori2/mockdata/dataMaster3.json"
               )
             );
+            
             this.getOwnerComponent().setModel(oMaster3Model, "master3");
 
             break;
