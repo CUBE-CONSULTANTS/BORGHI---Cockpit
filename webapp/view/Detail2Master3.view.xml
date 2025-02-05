@@ -37,18 +37,24 @@
           
             <commons:Timeline
                 id="idTimeline"
+                dateTimePath="{detailSched>/data_spedizione_richiesta_effettiva}"
                 enableDoubleSided="true"
-                groupBy="data_spedizione_richiesta_effettiva"
+                groupBy="{detailSched>/data_spedizione_richiesta_effettiva}"
                 growingThreshold="0"
                 filterTitle="Schedulazioni"
                 sortOldestFirst="true"
-                content="{detailSched>/datiElementoSelect}"
+                content="{
+                  path: 'detailSched>/datiElementoSelect',
+                  sorter: {
+                      path: 'data_spedizione_richiesta_effettiva',
+                      descending: false
+                  }
+              }"
             >
                 <commons:content>
                     <commons:TimelineItem
                         dateTime="{detailSched>data_spedizione_richiesta_effettiva}"
-                        title="{detailSched>schedulazione}"
-                        userName="{detailSched>id_posizione}"
+                        userName="Schedulazione {detailSched>schedulazione}"
                         text="Quantità da consegnare: {detailSched>quantita_da_consegnare}"
                         icon="sap-icon://shipping-status"
                         

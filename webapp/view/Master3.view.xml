@@ -24,7 +24,7 @@
         <f:header>
             <f:DynamicPageHeader pinnable="false" backgroundDesign="Solid"  >
                 <f:content>
-                    <Toolbar>
+                    <Toolbar style="Clear">
                         <Button
                             press="navToHome"
                             type="Back"
