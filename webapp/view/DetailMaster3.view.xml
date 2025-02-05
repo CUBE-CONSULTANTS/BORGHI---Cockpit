@@ -430,7 +430,7 @@
                                 <ui:Column resizable="true" minWidth="150">
                                     <m:Label text="Data Ultima Bolla Ricevuta"/>
                                     <ui:template>
-                                        <m:Text text="{detailData>data_ultima_bolla_ricevuta}"/>
+                                        <m:Text text="{path:'detailData>data_ultima_bolla_ricevuta',formatter: '.formatDate'}"/>
                                     </ui:template>
                                 </ui:Column>
                         
@@ -487,14 +487,14 @@
                                 <ui:Column resizable="true" minWidth="150">
                                     <m:Label text="Data Spedizione Richiesta Effettiva"/>
                                     <ui:template>
-                                        <m:Text text="{detailData>data_spedizione_richiesta_effettiva}"/>
+                                        <m:Text text="{value:'detailData>data_spedizione_richiesta_effettiva', formatter: '.formatDate'}"/>
                                     </ui:template>
                                 </ui:Column>
                         
                                 <ui:Column resizable="true" minWidth="150">
                                     <m:Label text="Data Spedizione Richiesta Da"/>
                                     <ui:template>
-                                        <m:Text text="{detailData>data_spedizione_richiesta_da}"/>
+                                        <m:Text text="{value:'detailData>data_spedizione_richiesta_da', formatter: '.formatDate'}"/>
                                     </ui:template>
                                 </ui:Column>
                         
