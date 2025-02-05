@@ -43,10 +43,6 @@ sap.ui.define(
             "detailSched"
           );
         },
-        parseDate:function(dateStr) {
-          let parts = dateStr.split("/"); 
-          return new Date(parts[2], parts[1] - 1, parts[0]); 
-        },
         onEditToggleButtonPress: function () {
           var oObjectPage = this.getView().byId("ObjectPageLayout"),
             bCurrentShowFooterState = oObjectPage.getShowFooter();

@@ -149,16 +149,7 @@
         </OverflowToolbar>
     </ui:extension>
     <ui:columns>
-        <ui:Column >
-            <Label text="Stato"/>
-            <ui:template>
-                <Button icon="{= ${master3>Stato} === 'OK' ? 'sap-icon://accept' : ${master3>Stato} === 'KO' ? 'sap-icon://decline' : 'sap-icon://warning'}" 
-                    type="{= ${master3>Stato} === 'OK' ? 'Accept' : ${master3>Stato} === 'KO' ? 'Critical' : 'Attention'}"
-                    tooltip="{master3>Stato}" press="statoButtonPress"/>
-                <!-- <Button text="{master3>template}"></Button> -->
-                 <!-- <Text text="X"/> -->
-            </ui:template>
-        </ui:Column>
+       
         <ui:Column >
             <Label text="Cliente"/>
             <ui:template>
@@ -211,10 +202,20 @@
                     />
             </ui:template>
         </ui:Column>
-          <ui:Column>
+        <ui:Column hAlign="Center" >
+          <Label text="Stato"/>
+          <ui:template>
+              <Button icon="{= ${master3>Stato} === 'OK' ? 'sap-icon://accept' : ${master3>Stato} === 'KO' ? 'sap-icon://decline' : 'sap-icon://warning'}" 
+                  type="{= ${master3>Stato} === 'OK' ? 'Accept' : ${master3>Stato} === 'KO' ? 'Negative' : 'Critical'}"
+                  tooltip="{master3>Stato}" press="statoButtonPress"/>
+              <!-- <Button text="{master3>template}"></Button> -->
+               <!-- <Text text="X"/> -->
+          </ui:template>
+      </ui:Column>
+          <ui:Column hAlign="Center">
             <Label text="Dettaglio" />
             <ui:template>
-             <Button text="Espandi" press="dettaglioNav"></Button>
+             <Button text="Espandi" type="Emphasized" press="dettaglioNav"></Button>
             </ui:template>
         </ui:Column>
     </ui:columns>

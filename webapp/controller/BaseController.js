@@ -126,6 +126,10 @@ function (
           self.dialName.open()
         }
       },
+      parseDate:function(dateStr) {
+        let parts = dateStr.split("/"); 
+        return new Date(parts[2], parts[1] - 1, parts[0]); 
+      },
       formatDate: function (dateString) {
         if (!dateString) return "";
         let match = dateString.match(/^(\d{4})(\d{2})(\d{2})$/);       
