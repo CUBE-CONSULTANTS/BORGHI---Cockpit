@@ -418,7 +418,7 @@
                                 <ui:Column resizable="true" minWidth="150">
                                     <m:Label text="Data Inizio Calcolo Quantità Cumulata"/>
                                     <ui:template>
-                                        <m:Text text="{detailData>data_inizio_calc_quantita_cumulata}"/>
+                                        <m:Text text="{path:'detailData>data_inizio_calc_quantita_cumulata', formatter: '.formatDate'}"/>
                                     </ui:template>
                                 </ui:Column>
                         
@@ -432,7 +432,7 @@
                                 <ui:Column resizable="true" minWidth="150">
                                     <m:Label text="Data Progressivo Invio"/>
                                     <ui:template>
-                                        <m:Text text="{detailData>data_progressivo_invio}"/>
+                                        <m:Text text="{path:'detailData>data_progressivo_invio', formatter: '.formatDate'}"/>
                                     </ui:template>
                                 </ui:Column>
                         
@@ -446,7 +446,7 @@
                                 <ui:Column resizable="true" minWidth="150">
                                     <m:Label text="Data Numero Ultima Schedulazione Ricevuta"/>
                                     <ui:template>
-                                        <m:Text text="{detailData>data_numero_ultima_schedulazione_ricevuta}"/>
+                                        <m:Text text="{path:'detailData>data_numero_ultima_schedulazione_ricevuta', formatter: '.formatDate'}"/>
                                     </ui:template>
                                 </ui:Column>
                         
