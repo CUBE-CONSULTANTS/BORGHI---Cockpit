@@ -113,9 +113,8 @@
             <Title  />
             <ToolbarSpacer/>
             <Button text="Collassa tutti" press="onCollapseAll"/>
-            <Button text="Collassa selezione" press="onCollapseSelection"/>
             <Button text="Espandi primo livello" press="onExpandFirstLevel"/>
-            <Button text="Espandi selezione" press="onExpandSelection"/>
+     
             <Button
                 icon="sap-icon://sort"
                 text="Ordinamento"
