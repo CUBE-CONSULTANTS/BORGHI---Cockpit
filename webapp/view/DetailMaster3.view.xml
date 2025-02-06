@@ -27,7 +27,7 @@
             <ObjectPageDynamicHeaderTitle>
                 <expandedHeading>
                     <m:Title
-                        text="{detailData>/DettaglioMaster3/DelforTestata/template}"
+                        text="{detailData>/DettaglioMaster3/DelforTestata/template}  {detailData>/DettaglioMaster3/DelforTestata/numero_progressivo_invio}"
                         wrapping="true"
                         class="sapUiSmallMarginEnd" />
                 </expandedHeading>
@@ -73,89 +73,96 @@
         </headerTitle>
 
         <headerContent>
-            <m:FlexBox
-                wrap="Wrap"
-                fitContainer="true"
-                alignItems="Stretch">
-                <m:VBox
-                    justifyContent="Center"
-                    class="sapUiSmallMargin">
-                    <m:Label text="Cliente" />
-                    <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/template}" />
-                </m:VBox>
-                <m:VBox
-                    justifyContent="Center"
-                    class="sapUiSmallMargin">
-                    <m:Label text="Nome file" />
-                    <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/nome_file}" />
-                </m:VBox>
-                <m:VBox
-                    justifyContent="Center"
-                    class="sapUiSmallMargin">
-                    <m:Label text="Data Ricezione" />
-                    <m:Text text="{path:'detailData>/DettaglioMaster3/DelforTestata/data_ricezione', formatter: '.formatDate'}" />
-                </m:VBox>
-                <m:VBox
-                    justifyContent="Center"
-                    class="sapUiSmallMargin">
-                    <m:Label text="Id Testata" />
-                    <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/id}" />
-                </m:VBox>
-                <m:VBox
-                    justifyContent="Center"
-                    class="sapUiSmallMargin">
-                    <m:Label text="Numero progressivo invio" />
-                    <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/numero_progressivo_invio}" />
-                </m:VBox>
-                <m:VBox
-                    justifyContent="Center"
-                    class="sapUiSmallMargin">
-                    <m:Label text="Data progressivo invio" />
-                    <m:Text text="{path:'detailData>/DettaglioMaster3/DelforTestata/data_progressivo_invio', formatter: '.formatDate'}" />
-                </m:VBox>
-                <m:VBox
-                    justifyContent="Center"
-                    class="sapUiSmallMargin">
-                    <m:Label text="Codice buyer" />
-                    <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/codice_buyer}" />
-                </m:VBox>
-                <m:VBox
-                    justifyContent="Center"
-                    class="sapUiSmallMargin">
-                    <m:Label text="Codice seller" />
-                    <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/codice_seller}" />
-                </m:VBox>
-                <m:VBox
-                    justifyContent="Center"
-                    class="sapUiSmallMargin">
-                    <m:Label text="Numero segmenti tracciato" />
-                    <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/numero_segmenti_tracciato}" />
-                </m:VBox>
-                <m:VBox
-                    justifyContent="Center"
-                    class="sapUiSmallMargin">
-                    <m:Label text="UNH+" />
-                    <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/unh}" />
-                </m:VBox>
-                <m:VBox
-                    justifyContent="Center"
-                    class="sapUiSmallMargin">
-                    <m:Label text="Numero messaggi inviati" />
-                    <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/numero_messaggi_inviati}" />
-                </m:VBox>
-                <m:VBox
-                    justifyContent="Center"
-                    class="sapUiSmallMargin">
-                    <m:Label text="Stato" />
-                    <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/stato}" />
-                </m:VBox>
-                <m:VBox
-                    justifyContent="Center"
-                    class="sapUiSmallMargin">
-                    <m:Label text="Status Message" />
-                    <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/status_message}" />
-                </m:VBox>
-            </m:FlexBox>
+         
+            <m:VBox >
+                <form:Form id="SimpleFormDisplayColumn_threeGroups346"
+                editable="false"
+                layout="ColumnLayout"
+                
+                >
+                <form:layout>
+                    <form:ColumnLayout 
+                    columnsM="2"
+                    columnsL="3"
+                    columnsXL="4"
+                    />
+            </form:layout>
+                <form:formContainers>
+                    <form:FormContainer >
+                        <form:formElements>
+                            <form:FormElement label="Cliente">
+                                <form:fields>
+                                   <m:Text  text="{detailData>/DettaglioMaster3/DelforTestata/template}" />
+                                </form:fields>
+                            </form:FormElement>   
+                            <form:FormElement label="Nome file">
+                                <form:fields>
+                                   <m:Text  text="{detailData>/DettaglioMaster3/DelforTestata/nome_file}" />
+                                </form:fields>
+                            </form:FormElement>
+                            <form:FormElement label="Data Ricezione">
+                                <form:fields>
+                                   <m:Text  text="{path:'detailData>/DettaglioMaster3/DelforTestata/data_ricezione', formatter: '.formatDate'}" />
+                                </form:fields>
+                            </form:FormElement>
+                            <form:FormElement label="Numero progressivo invio">
+                                <form:fields>
+                                   <m:Text  text="{detailData>/DettaglioMaster3/DelforTestata/numero_progressivo_invio}" />
+                                </form:fields>
+                            </form:FormElement> 
+                            <form:FormElement label="Data progressivo invio">
+                                <form:fields>
+                                   <m:Text  text="{path:'detailData>/DettaglioMaster3/DelforTestata/data_progressivo_invio', formatter: '.formatDate'}" />
+                                </form:fields>
+                            </form:FormElement> 
+                            <form:FormElement label="Codice buyer">
+                                <form:fields>
+                                   <m:Text  text="{detailData>/DettaglioMaster3/DelforTestata/codice_buyer}" />
+                                </form:fields>
+                            </form:FormElement> 
+                            <form:FormElement label="Codice seller">
+                                <form:fields>
+                                   <m:Text  text="{detailData>/DettaglioMaster3/DelforTestata/codice_seller}" />
+                                </form:fields>
+                            </form:FormElement> 
+                            <form:FormElement label="Numero segmenti tracciato">
+                                <form:fields>
+                                   <m:Text  text="{detailData>/DettaglioMaster3/DelforTestata/numero_segmenti_tracciato}" />
+                                </form:fields>
+                            </form:FormElement> 
+                            <form:FormElement label="UNH+">
+                                <form:fields>
+                                   <m:Text  text="{detailData>/DettaglioMaster3/DelforTestata/unh}" />
+                                </form:fields>
+                            </form:FormElement> 
+                            <form:FormElement label="Numero messaggi inviati">
+                                <form:fields>
+                                   <m:Text  text="{detailData>/DettaglioMaster3/DelforTestata/numero_messaggi_inviati}" />
+                                </form:fields>
+                            </form:FormElement>
+                            <form:FormElement label="Numero messaggi inviati">
+                                <form:fields>
+                                   <m:Text  text="{detailData>/DettaglioMaster3/DelforTestata/numero_messaggi_inviati}" />
+                                </form:fields>
+                            </form:FormElement>
+                            <form:FormElement label="Stato">
+                                <form:fields>
+                                   <m:Text  text="{detailData>/DettaglioMaster3/DelforTestata/stato}" />
+                                </form:fields>
+                            </form:FormElement>
+                            <form:FormElement label="Status Message">
+                                <form:fields>
+                                   <m:Text  text="{detailData>/DettaglioMaster3/DelforTestata/status_message}" />
+                                </form:fields>
+                            </form:FormElement>
+                            
+                        </form:formElements>
+                    </form:FormContainer>
+                </form:formContainers>
+            
+                </form:Form>
+            </m:VBox>
+           
         </headerContent>
 
         <sections>

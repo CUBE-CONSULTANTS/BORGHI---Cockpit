@@ -213,11 +213,17 @@
                <!-- <Text text="X"/> -->
           </ui:template>
       </ui:Column>
-          <ui:Column hAlign="Center" tooltip="Dettaglio">
-            <Label text="Dettaglio" />
+          <ui:Column hAlign="Center" tooltip="">
+            <Label text="" />
             <ui:template>
-             <Button text="Espandi" type="Emphasized" press="dettaglioNav"></Button>
+                <HBox>
+                    <Button icon="sap-icon://display" type="Emphasized" press="dettaglioNav" tooltip="Dettaglio"></Button>
+                    <Button text="navToApp" type="Unstyled" class="sapUiTinyMarginBegin"></Button>
+                    <Button text="navToApp" type="Unstyled" class="sapUiTinyMarginBegin"></Button>
+                </HBox>
+             
             </ui:template>
+          
         </ui:Column>
     </ui:columns>
 </ui:TreeTable>

@@ -99,6 +99,14 @@
 						"master3",
 						"Detail2Master3"
 					]
+				},
+				{
+					"pattern": "prova/{product}/{layout}",
+					"name": "prova",
+					"target": [
+						"master3",
+						"prova"
+					]
 				}
 				
 			],
@@ -134,6 +142,11 @@
 					"viewLevel": 2
 				},
 				"Detail2Master3": {
+					"viewName": "Detail2Master3",
+					"controlAggregation": "endColumnPages",
+					"viewLevel": 2
+				},
+				"prova": {
 					"viewName": "Detail2Master3",
 					"controlAggregation": "midColumnPages",
 					"viewLevel": 2
