@@ -246,17 +246,14 @@
                                 <m:OverflowToolbar style="Clear">
                                     <m:Title />
                                     <m:ToolbarSpacer/>
-                                    <m:Button text="Collapse all" press="onCollapseAll"/>
-                                    <m:Button text="Collapse selection" press="onCollapseSelection"/>
-                                    <m:Button text="Expand first level" press="onExpandFirstLevel"/>
-                                    <m:Button text="Expand selection" press="onExpandSelection"/>
+                                    
                                     <m:Button
                                         icon="sap-icon://sort"
                                         text="Ordinamento"
                                         press="sortCategories"/>
                                     <m:Button
                                         icon="sap-icon://excel-attachment"
-                                        text="Import excel"
+                                        text="Importa excel"
                                         press="importaPress"/>
                                     <m:Button
                                         text="Esportazione in excel"
