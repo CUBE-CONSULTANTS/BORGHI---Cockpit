@@ -166,6 +166,32 @@ sap.ui.define(
             }
           }
         },
+
+        buttonDetailSched: function (oEvent) {
+          debugger;
+          let detailPath = oEvent
+            .getSource()
+            .getParent()
+            .getBindingContext("detailData")
+            .getPath();
+
+          let detail = this.getView()
+            .getModel("detailData")
+            .getProperty(`${detailPath}`);
+
+          let oNextUIState;
+          this.getOwnerComponent()
+            .getHelper()
+            .then(
+              function (oHelper) {
+                oNextUIState = oHelper.getNextUIState(1);
+                this.oRouter.navTo("Detail2Master3", {
+                  product: JSON.stringify(detail),
+                  layout: oNextUIState.layout,
+                });
+              }.bind(this)
+            );
+        },
       }
     );
   }
