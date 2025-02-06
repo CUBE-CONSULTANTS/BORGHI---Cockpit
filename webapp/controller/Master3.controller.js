@@ -270,6 +270,20 @@ sap.ui.define(
         oTreeTable.expand(oTreeTable.getSelectedIndices());
       },
 
+      navToAPP: function (oEvent) {
+        debugger;
+        let level = oEvent
+          .getSource()
+          .getParent()
+          .getParent()
+          .getBindingContext("master3")
+          .getPath();
+        if (level.includes("DelforPosizioni")) {
+          console.log("naviga a 2");
+        } else {
+          console.log("naviga a 1");
+        }
+      },
       // loadFragment: function (oEvent) {
       //   if (!this._oMyFragment) {
       //     this._oMyFragment = sap.ui.xmlfragment(

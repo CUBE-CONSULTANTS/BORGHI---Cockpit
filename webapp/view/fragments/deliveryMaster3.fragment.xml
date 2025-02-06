@@ -122,25 +122,20 @@
                 press="sortCategories"/>
                 <Button
                 icon="sap-icon://excel-attachment"
-                text="Importa excel"
+                text="Caricamento Manuale"
                 press="importaPress"/>
                 <Button
                
-                text="Esportazione in excel"
+                text="Esporta Template Manuale"
                 icon="sap-icon://excel-attachment"
                 press="deletePress"/>
                 <Button
                
-                text="Processa"
+                text="Elabora"
                 icon="sap-icon://process"
                 press="onProcessaButton"
                 type="Emphasized"/>
-                <Button
-                
-                text="Rielabora"
-                icon="sap-icon://synchronize"
-                press=""
-                type="Attention"/>
+              
                 <Button
                 
                 text="Elimina"
@@ -218,8 +213,8 @@
             <ui:template>
                 <HBox>
                     <Button icon="sap-icon://display" type="Emphasized" press="dettaglioNav" tooltip="Dettaglio"></Button>
-                    <Button text="navToApp" type="Unstyled" class="sapUiTinyMarginBegin"></Button>
-                    <Button text="navToApp" type="Unstyled" class="sapUiTinyMarginBegin"></Button>
+                    <Button text="navToApp" type="Unstyled" class="sapUiTinyMarginBegin" press="navToAPP"></Button>
+                    
                 </HBox>
              
             </ui:template>
