@@ -302,7 +302,7 @@
                                         <ui:Column width="10rem"  >
                                             <m:Label text="Dettaglio" />
                                             <ui:template>
-                                                <m:Button text="Espandi" press="buttonDetailSched"/>
+                                                <m:Button text="Visualizza" press="buttonDetailSched"/>
                                             </ui:template>
                                         </ui:Column>
                                         <ui:Column width="10rem"  sortProperty="Cliente">
