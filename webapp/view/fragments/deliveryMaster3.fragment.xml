@@ -249,7 +249,7 @@
     <ui:Column width="5.2rem" hAlign="Center" tooltip="Download file edi">
         <Label text="File" />
         <ui:template>
-        <Button icon="sap-icon://download" type="Unstyled" class="sapUiTinyMarginBegin" press="downloadEdi" visible="{= ${master3>nome_file} &amp;&amp; !${master3>numero_progressivo_invio} ? true : false }"></Button>
+        <Button icon="sap-icon://download" type="Unstyled" class="sapUiTinyMarginBegin" press="downloadEdi" visible="{= ${master3>DelforTestata/codice_seller} ? true : false}"></Button>
       </ui:template>
     </ui:Column>
 

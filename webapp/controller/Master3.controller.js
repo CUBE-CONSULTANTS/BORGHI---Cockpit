@@ -33,7 +33,7 @@ sap.ui.define(
       _onObjectMatched: function (oEvent) {
         this.onFilterSelect(null, "01");
       },
-      onFilterSelect: function (oEvent, key) {
+      onFilterSelect: async function (oEvent, key) {
         this.showBusy(0);
         var selectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
         !selectedKey ? (selectedKey = key) : (selectedKey = selectedKey);
@@ -42,12 +42,13 @@ sap.ui.define(
         switch (selectedKey) {
           case "01":
             var oMaster3Model = new JSONModel(
-              sap.ui.require.toUrl(
+              await sap.ui.require.toUrl(
                 "sap/ui/demo/fiori2/mockdata/dataMaster3.json"
               )
             );
-
             this.getOwnerComponent().setModel(oMaster3Model, "master3");
+            // this.getOwnerComponent().getModel("master3").getProperty("/Master3").map(x=> x = x.DelforTestata).forEach(element=> {element.isVisible = true})
+            // this.getOwnerComponent().getModel("master3").getProperty("/Master3").map(x=> x = x.DelforPosizioni).forEach(ar=>{ ar.forEach(el=>{el.isVisible = false})})
 
             break;
           case "02":
