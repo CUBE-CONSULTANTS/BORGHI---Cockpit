@@ -1,4 +1,5 @@
-<mvc:View controllerName="sap.ui.demo.fiori2.controller.DetailMaster3"
+<mvc:View
+    controllerName="sap.ui.demo.fiori2.controller.DetailMaster3"
     xmlns="sap.uxap"
     xmlns:m="sap.m"
     xmlns:f="sap.f"
@@ -11,149 +12,217 @@
     xmlns:layout="sap.ui.layout"
     xmlns:commons="sap.suite.ui.commons"
     xmlns:columnmenu="sap.m.table.columnmenu"
-     xmlns:sap.ui.fl="sap.ui.fl"
+    xmlns:sap.ui.fl="sap.ui.fl"
     xmlns:sap.ui.dt="sap.ui.dt"
-    xmlns:ui="sap.ui.table">
-
-    <ObjectPageLayout showTitleInHeaderContent="true" alwaysShowContentHeader="true" preserveHeaderStateOnScroll="false" headerContentPinnable="true" isChildPage="true" showFooter="true" upperCaseAnchorBar="false">
-
+    xmlns:ui="sap.ui.table"
+>
+    <ObjectPageLayout
+        showTitleInHeaderContent="true"
+        alwaysShowContentHeader="true"
+        preserveHeaderStateOnScroll="false"
+        headerContentPinnable="true"
+        isChildPage="true"
+        showFooter="true"
+        upperCaseAnchorBar="false"
+    >
         <headerTitle>
             <ObjectPageDynamicHeaderTitle>
                 <expandedHeading>
-                    <m:Title text="{detailData>/DettaglioMaster3/DelforTestata/template}  {detailData>/DettaglioMaster3/DelforTestata/numero_progressivo_invio}" wrapping="true" class="sapUiSmallMarginEnd" />
+                    <m:Title
+                        text="{detailData>/DettaglioMaster3/DelforTestata/template}  {detailData>/DettaglioMaster3/DelforTestata/numero_progressivo_invio}"
+                        wrapping="true"
+                        class="sapUiSmallMarginEnd"
+                    />
                 </expandedHeading>
 
                 <snappedHeading>
-                    <m:FlexBox wrap="Wrap" fitContainer="true" alignItems="Center">
-                        <m:FlexBox wrap="NoWrap" fitContainer="true" alignItems="Center" class="sapUiTinyMarginEnd">
-                            <m:Title text="{detailData>/DettaglioMaster3/DelforTestata/template}" wrapping="true" />
+                    <m:FlexBox
+                        wrap="Wrap"
+                        fitContainer="true"
+                        alignItems="Center"
+                    >
+                        <m:FlexBox
+                            wrap="NoWrap"
+                            fitContainer="true"
+                            alignItems="Center"
+                            class="sapUiTinyMarginEnd"
+                        >
+                            <m:Title
+                                text="{detailData>/DettaglioMaster3/DelforTestata/template}"
+                                wrapping="true"
+                            />
                         </m:FlexBox>
                     </m:FlexBox>
                 </snappedHeading>
 
                 <navigationActions>
-                    <m:OverflowToolbarButton type="Transparent" icon="sap-icon://full-screen" press=".handleFullScreen" tooltip="Enter Full Screen Mode" visible="{= ${/actionButtonsInfo/midColumn/fullScreen} !== null }" />
-                    <m:OverflowToolbarButton type="Transparent" icon="sap-icon://exit-full-screen" press=".handleExitFullScreen" tooltip="Exit Full Screen Mode" visible="{= ${/actionButtonsInfo/midColumn/exitFullScreen} !== null }" />
-                    <m:OverflowToolbarButton type="Transparent" icon="sap-icon://decline" press=".handleClose" tooltip="Close column" visible="{= ${/actionButtonsInfo/midColumn/closeColumn} !== null }" />
+                    <m:OverflowToolbarButton
+                        type="Transparent"
+                        icon="sap-icon://full-screen"
+                        press=".handleFullScreen"
+                        tooltip="Enter Full Screen Mode"
+                        visible="{= ${/actionButtonsInfo/midColumn/fullScreen} !== null }"
+                    />
+                    <m:OverflowToolbarButton
+                        type="Transparent"
+                        icon="sap-icon://exit-full-screen"
+                        press=".handleExitFullScreen"
+                        tooltip="Exit Full Screen Mode"
+                        visible="{= ${/actionButtonsInfo/midColumn/exitFullScreen} !== null }"
+                    />
+                    <m:OverflowToolbarButton
+                        type="Transparent"
+                        icon="sap-icon://decline"
+                        press=".handleClose"
+                        tooltip="Close column"
+                        visible="{= ${/actionButtonsInfo/midColumn/closeColumn} !== null }"
+                    />
                 </navigationActions>
             </ObjectPageDynamicHeaderTitle>
         </headerTitle>
 
         <headerContent>
-
-            <m:VBox >
-                <m:ScrollContainer horizontal="true" vertical="true" height="50%">
-                    <form:Form id="SimpleFormDisplayColumn_threeGroups346" editable="false" layout="ColumnLayout">
-                    <form:layout>
-                        <form:ColumnLayout columnsM="2" columnsL="3" columnsXL="4" />
-                    </form:layout>
-                    <form:formContainers>
-                        <form:FormContainer >
-                            <form:formElements>
-                                <form:FormElement label="Cliente">
-                                    <form:fields>
-                                        <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/template}" />
-                                    </form:fields>
-                                </form:FormElement>
-                                <form:FormElement label="Nome file">
-                                    <form:fields>
-                                        <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/nome_file}" />
-                                    </form:fields>
-                                </form:FormElement>
-                                <form:FormElement label="Data Ricezione">
-                                    <form:fields>
-                                        <m:Text text="{path:'detailData>/DettaglioMaster3/DelforTestata/data_ricezione', formatter: '.formatDate'}" />
-                                    </form:fields>
-                                </form:FormElement>
-                                <form:FormElement label="Numero progressivo invio">
-                                    <form:fields>
-                                        <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/numero_progressivo_invio}" />
-                                    </form:fields>
-                                </form:FormElement>
-                                <form:FormElement label="Data progressivo invio">
-                                    <form:fields>
-                                        <m:Text text="{path:'detailData>/DettaglioMaster3/DelforTestata/data_progressivo_invio', formatter: '.formatDate'}" />
-                                    </form:fields>
-                                </form:FormElement>
-                                <form:FormElement label="Codice buyer">
-                                    <form:fields>
-                                        <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/codice_buyer}" />
-                                    </form:fields>
-                                </form:FormElement>
-                                <form:FormElement label="Codice seller">
-                                    <form:fields>
-                                        <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/codice_seller}" />
-                                    </form:fields>
-                                </form:FormElement>
-                                <form:FormElement label="Numero segmenti tracciato">
-                                    <form:fields>
-                                        <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/numero_segmenti_tracciato}" />
-                                    </form:fields>
-                                </form:FormElement>
-                                <form:FormElement label="UNH+">
-                                    <form:fields>
-                                        <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/unh}" />
-                                    </form:fields>
-                                </form:FormElement>
-                                <form:FormElement label="Numero messaggi inviati">
-                                    <form:fields>
-                                        <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/numero_messaggi_inviati}" />
-                                    </form:fields>
-                                </form:FormElement>
-                                <form:FormElement label="Numero messaggi inviati">
-                                    <form:fields>
-                                        <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/numero_messaggi_inviati}" />
-                                    </form:fields>
-                                </form:FormElement>
-                                <form:FormElement label="Stato">
-                                    <form:fields>
-                                        <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/stato}" />
-                                    </form:fields>
-                                </form:FormElement>
-                                <form:FormElement label="Status Message">
-                                    <form:fields>
-                                        <m:Text text="{detailData>/DettaglioMaster3/DelforTestata/status_message}" />
-                                    </form:fields>
-                                </form:FormElement>
-
-                            </form:formElements>
-                        </form:FormContainer>
-                    </form:formContainers>
-
-                </form:Form>
-                </m:ScrollContainer>
-                
-            </m:VBox>
-
+            <m:HBox  justifyContent="SpaceBetween" fitContainer="true">
+                <m:VBox class="sapUiSmallMarginEnd"  >
+                  <m:VBox class="sapUiTinyMarginBottom" width="7rem"
+                  >
+                  <m:Label text="Cliente" design="Bold" />
+                  <m:Text
+                      text="{detailData>/DettaglioMaster3/DelforTestata/template}"
+                  />  
+                  </m:VBox>
+                   <m:VBox class="sapUiTinyMarginBottom"
+                   >
+                   <m:Label text="Nome file" design="Bold" />
+                   <m:Text
+                       text="{detailData>/DettaglioMaster3/DelforTestata/nome_file}"
+                   />   
+                   </m:VBox> 
+                    <m:VBox
+                    >
+                    <m:Label text="Data Ricezione" design="Bold" />
+                    <m:Text
+                        text="{path:'detailData>/DettaglioMaster3/DelforTestata/data_ricezione', formatter: '.formatDate'}"
+                    />    
+                    </m:VBox>
+                    
+                </m:VBox>
+                <m:VBox class="sapUiSmallMarginEnd">
+                  <m:VBox class="sapUiTinyMarginBottom"
+                  >
+                  <m:Label text="Num. progressivo invio" design="Bold" />
+                  <m:Text
+                      text="{detailData>/DettaglioMaster3/DelforTestata/numero_progressivo_invio}"
+                  />  
+                  </m:VBox>
+                    <m:VBox class="sapUiTinyMarginBottom"
+                    >
+                    <m:Label text="Data progressivo invio" design="Bold" />
+                    <m:Text
+                        text="{path:'detailData>/DettaglioMaster3/DelforTestata/data_progressivo_invio', formatter: '.formatDate'}"
+                    />    
+                    </m:VBox>
+                    <m:VBox
+                    >
+                    <m:Label text="Codice Buyer" design="Bold" />
+                    <m:Text
+                        text="{detailData>/DettaglioMaster3/DelforTestata/codice_buyer}"
+                    />    
+                    </m:VBox>
+                    
+                </m:VBox>
+                <m:VBox class="sapUiSmallMarginEnd" >
+                  <m:VBox class="sapUiTinyMarginBottom" >
+                  
+                  <m:Label text="Codice Seller" design="Bold" />
+                  <m:Text
+                      text="{detailData>/DettaglioMaster3/DelforTestata/codice_seller}"
+                  />  
+                  </m:VBox>
+                    <m:VBox class="sapUiTinyMarginBottom"
+                    >
+                    <m:Label text="Num Segmenti Tracciato" design="Bold" />
+                    <m:Text
+                        text="{detailData>/DettaglioMaster3/DelforTestata/numero_segmenti_tracciato}"
+                    />    
+                    </m:VBox>
+                    <m:VBox
+                    >
+                    <m:Label text="Stato" design="Bold" />
+                    <m:Text
+                        text="{detailData>/DettaglioMaster3/DelforTestata/stato}"
+                    />     
+                    </m:VBox>
+                   
+                </m:VBox>
+            </m:HBox>
         </headerContent>
 
         <sections>
-
-
             <ObjectPageSection title="Posizione">
                 <subSections>
-                    <ObjectPageSubSection >
+                    <ObjectPageSubSection>
                         <blocks>
                             <m:VBox height="90%">
                                 <m:OverflowToolbar style="Clear">
                                     <m:Title />
-                                    <m:ToolbarSpacer/>
+                                    <m:ToolbarSpacer />
 
-                                    <m:Button icon="sap-icon://sort" text="Ordinamento" press="sortCategories"/>
-                                    <m:Button icon="sap-icon://excel-attachment" text="Caricamento Manuale" press="importaPress"/>
-                                    <m:Button text="Esporta Template Manuale" icon="sap-icon://excel-attachment" press="deletePress"/>
-                                    <m:Button text="Elabora" icon="sap-icon://process" press="onProcessaButton" type="Emphasized"/>
+                                    <m:Button
+                                        icon="sap-icon://sort"
+                                        text="Ordinamento"
+                                        press="sortCategories"
+                                    />
+                                    <m:Button
+                                        icon="sap-icon://excel-attachment"
+                                        text="Caricamento Manuale"
+                                        press="importaPress"
+                                    />
+                                    <m:Button
+                                        text="Esporta Template Manuale"
+                                        icon="sap-icon://excel-attachment"
+                                        press="deletePress"
+                                    />
+                                    <m:Button
+                                        text="Elabora"
+                                        icon="sap-icon://process"
+                                        press="onProcessaButton"
+                                        type="Emphasized"
+                                    />
 
-                                    <m:Button text="Elimina" icon="sap-icon://delete" press="" type="Reject"/>
+                                    <m:Button
+                                        text="Elimina"
+                                        icon="sap-icon://delete"
+                                        press=""
+                                        type="Reject"
+                                    />
                                 </m:OverflowToolbar>
-                                <m:ScrollContainer height="100%" width="100%" vertical="true" horizontal="true">
-                                    <ui:Table id="tablePos" selectionMode="None" rows="{detailData>/DettaglioMaster3/DelforPosizioni}" cellClick=".rowDetailPress" autoPopinMode="true" fixedLayout="false" sort="sortDeliveryDate" ariaLabelledBy="title" showColumnVisibilityMenu="true">
+                                <m:ScrollContainer
+                                    height="100%"
+                                    width="100%"
+                                    vertical="true"
+                                    horizontal="true"
+                                >
+                                    <ui:Table
+                                        id="tablePos"
+                                        selectionMode="MultiToggle"
+                                        rows="{detailData>/DettaglioMaster3/DelforPosizioni}"
+                                        cellClick=".rowDetailPress"
+                                        autoPopinMode="true"
+                                        fixedLayout="false"
+                                        sort="sortDeliveryDate"
+                                        ariaLabelledBy="title"
+                                        showColumnVisibilityMenu="true"
+                                    >
                                         <!--try-->
 
                                         <ui:extension>
                                             <m:OverflowToolbar>
-                                                <m:ToolbarSpacer/>
-                                                <m:Button icon="sap-icon://action-settings" press="onColumnHeaderItemPress" />
+                                                <m:ToolbarSpacer />
+                                                <m:Button
+                                                    icon="sap-icon://action-settings"
+                                                    press="onColumnHeaderItemPress"
+                                                />
                                             </m:OverflowToolbar>
                                         </ui:extension>
                                         <!-- <ui:dependents>
@@ -167,180 +236,303 @@
                                         <!---->
 
                                         <ui:columns>
-                                            <ui:Column width="10rem">
+                                            <ui:Column width="10rem" hAlign="Center">
                                                 <m:Label text="Dettaglio" />
                                                 <ui:template>
-                                                    <m:Button text="Visualizza" press="buttonDetailSched"/>
+                                                    <m:Button
+                                                        text="Visualizza"
+                                                        press="buttonDetailSched"
+                                                    />
                                                 </ui:template>
                                             </ui:Column>
-                                            <ui:Column width="10rem" sortProperty="Cliente">
-                                                <m:Label text="Id Posizione" />
-                                                <ui:template>
-                                                    <m:ObjectIdentifier text="{detailData>id}" />
-                                                </ui:template>
-                                            </ui:Column>
-                                            <ui:Column width="10rem" showSortMenuEntry="false">
+                                        
+                                            <ui:Column
+                                                width="10rem"
+                                                showSortMenuEntry="false"
+                                            >
                                                 <m:Label text="Destinatario" />
                                                 <ui:template>
-                                                    <m:ObjectIdentifier text="{detailData>destinatario}" />
+                                                    <m:ObjectIdentifier
+                                                        text="{detailData>destinatario}"
+                                                    />
                                                 </ui:template>
                                             </ui:Column>
                                             <ui:Column width="10rem">
-                                                <m:Label text="Cod. Cliente Materiale" />
+                                                <m:Label
+                                                    text="Cod. Cliente Materiale"
+                                                />
                                                 <ui:template>
-                                                    <m:ObjectIdentifier text="{detailData>codice_cliente_materiale}" />
+                                                    <m:ObjectIdentifier
+                                                        text="{detailData>codice_cliente_materiale}"
+                                                    />
                                                 </ui:template>
                                             </ui:Column>
                                             <ui:Column width="12rem">
-                                                <m:Label text="Cod. Materiale Fornitore" />
+                                                <m:Label
+                                                    text="Cod. Materiale Fornitore"
+                                                />
                                                 <ui:template>
-                                                    <m:ObjectIdentifier text="{detailData>codice_materiale_fornitore}" />
+                                                    <m:ObjectIdentifier
+                                                        text="{detailData>codice_materiale_fornitore}"
+                                                    />
                                                 </ui:template>
                                             </ui:Column>
                                             <ui:Column width="10rem">
-                                                <m:Label text="Descr. Materiale" />
+                                                <m:Label
+                                                    text="Descr. Materiale"
+                                                />
                                                 <ui:template>
-                                                    <m:ObjectIdentifier text="{detailData>descrizione_materiale}" />
+                                                    <m:ObjectIdentifier
+                                                        text="{detailData>descrizione_materiale}"
+                                                    />
                                                 </ui:template>
                                             </ui:Column>
-                                            <ui:Column width="10rem" sortProperty="Punto di scarico">
-                                                <m:Label text="Punto di scarico" />
+                                            <ui:Column
+                                                width="10rem"
+                                                sortProperty="Punto di scarico"
+                                            >
+                                                <m:Label
+                                                    text="Punto di scarico"
+                                                />
                                                 <ui:template>
-                                                    <m:ObjectIdentifier text="{detailData>punto_scarico}" />
+                                                    <m:ObjectIdentifier
+                                                        text="{detailData>punto_scarico}"
+                                                    />
                                                 </ui:template>
                                             </ui:Column>
-                                            <ui:Column width="10rem" showSortMenuEntry="false">
-                                                <m:Label text="Destinazione Interna" />
+                                            <ui:Column
+                                                width="10rem"
+                                                showSortMenuEntry="false"
+                                            >
+                                                <m:Label
+                                                    text="Destinazione Interna"
+                                                />
                                                 <ui:template>
-                                                    <m:ObjectIdentifier text="{detailData>destinazione_interna}" />
+                                                    <m:ObjectIdentifier
+                                                        text="{detailData>destinazione_interna}"
+                                                    />
                                                 </ui:template>
                                             </ui:Column>
                                             <ui:Column width="10rem">
                                                 <m:Label text="Testo riga" />
                                                 <ui:template>
-                                                    <m:ObjectIdentifier text="{detailData>testo_riga}" />
+                                                    <m:ObjectIdentifier
+                                                        text="{detailData>testo_riga}"
+                                                    />
                                                 </ui:template>
                                             </ui:Column>
                                             <ui:Column width="15rem">
-                                                <m:Label text="Data inizio calc. quantità cumulata" />
+                                                <m:Label
+                                                    text="Data inizio calc. quantità cumulata"
+                                                />
                                                 <ui:template>
-                                                    <m:ObjectIdentifier text="{path:'detailData>data_inizio_calc_quantita_cumulata', formatter: '.formatDate'}" />
+                                                    <m:ObjectIdentifier
+                                                        text="{path:'detailData>data_inizio_calc_quantita_cumulata', formatter: '.formatDate'}"
+                                                    />
                                                 </ui:template>
                                             </ui:Column>
                                             <ui:Column width="10rem">
-                                                <m:Label text="Progressivo invio" />
+                                                <m:Label
+                                                    text="Progressivo invio"
+                                                />
                                                 <ui:template>
-                                                    <m:ObjectIdentifier text="{detailData>progressivo_invio}" />
+                                                    <m:ObjectIdentifier
+                                                        text="{detailData>progressivo_invio}"
+                                                    />
                                                 </ui:template>
                                             </ui:Column>
-                                            <ui:Column width="10rem" sortProperty="Cliente">
-                                                <m:Label text="Data progressivo invio" />
+                                            <ui:Column
+                                                width="10rem"
+                                                sortProperty="Cliente"
+                                            >
+                                                <m:Label
+                                                    text="Data progressivo invio"
+                                                />
                                                 <ui:template>
-                                                    <m:ObjectIdentifier text="{path:'detailData>data_progressivo_invio', formatter: '.formatDate'}" />
+                                                    <m:ObjectIdentifier
+                                                        text="{path:'detailData>data_progressivo_invio', formatter: '.formatDate'}"
+                                                    />
                                                 </ui:template>
                                             </ui:Column>
-                                            <ui:Column width="10rem" showSortMenuEntry="false">
-                                                <m:Label text="Numero Ultima Schedulazione Ricevuta" />
+                                            <ui:Column
+                                                width="10rem"
+                                                showSortMenuEntry="false"
+                                            >
+                                                <m:Label
+                                                    text="Numero Ultima Schedulazione Ricevuta"
+                                                />
                                                 <ui:template>
-                                                    <m:ObjectIdentifier text="{detailData>numero_ultima_schedulazione_ricevuta}" />
+                                                    <m:ObjectIdentifier
+                                                        text="{detailData>numero_ultima_schedulazione_ricevuta}"
+                                                    />
                                                 </ui:template>
                                             </ui:Column>
                                             <ui:Column width="10rem">
-                                                <m:Label text="Data Numero Ultima Schedulazione Ricevuta" />
+                                                <m:Label
+                                                    text="Data Numero Ultima Schedulazione Ricevuta"
+                                                />
                                                 <ui:template>
-                                                    <m:ObjectIdentifier text="{path:'detailData>data_numero_ultima_schedulazione_ricevuta', formatter: '.formatDate'}" />
+                                                    <m:ObjectIdentifier
+                                                        text="{path:'detailData>data_numero_ultima_schedulazione_ricevuta', formatter: '.formatDate'}"
+                                                    />
                                                 </ui:template>
                                             </ui:Column>
                                             <ui:Column width="12rem">
-                                                <m:Label text="Numero ordine di acquisto" />
+                                                <m:Label
+                                                    text="Numero ordine di acquisto"
+                                                />
                                                 <ui:template>
-                                                    <m:ObjectIdentifier text="{detailData>numero_ordine_acquisto}" />
+                                                    <m:ObjectIdentifier
+                                                        text="{detailData>numero_ordine_acquisto}"
+                                                    />
                                                 </ui:template>
                                             </ui:Column>
                                             <ui:Column width="10rem">
-                                                <m:Label text="Ultima quantità spedita" />
+                                                <m:Label
+                                                    text="Ultima quantità spedita"
+                                                />
                                                 <ui:template>
-                                                    <m:ObjectIdentifier text="{detailData>ultima_quantita_spedita}" />
+                                                    <m:ObjectIdentifier
+                                                        text="{detailData>ultima_quantita_spedita}"
+                                                    />
                                                 </ui:template>
                                             </ui:Column>
-                                            <ui:Column width="17rem" sortProperty="Cliente">
-                                                <m:Label text="Numero Ultima bolla ricevuta dal cliente" />
+                                            <ui:Column
+                                                width="17rem"
+                                                sortProperty="Cliente"
+                                            >
+                                                <m:Label
+                                                    text="Numero Ultima bolla ricevuta dal cliente"
+                                                />
                                                 <ui:template>
-                                                    <m:ObjectIdentifier text="{detailData>numero_ultima_bolla_ricevuta_cliente}" />
+                                                    <m:ObjectIdentifier
+                                                        text="{detailData>numero_ultima_bolla_ricevuta_cliente}"
+                                                    />
                                                 </ui:template>
                                             </ui:Column>
-                                            <ui:Column width="13rem" showSortMenuEntry="false">
-                                                <m:Label text="Data ultima bolla ricevuta" />
+                                            <ui:Column
+                                                width="13rem"
+                                                showSortMenuEntry="false"
+                                            >
+                                                <m:Label
+                                                    text="Data ultima bolla ricevuta"
+                                                />
                                                 <ui:template>
-                                                    <m:ObjectIdentifier text="{path:'detailData>data_ultima_bolla_ricevuta',formatter: '.formatDate'}" />
+                                                    <m:ObjectIdentifier
+                                                        text="{path:'detailData>data_ultima_bolla_ricevuta',formatter: '.formatDate'}"
+                                                    />
                                                 </ui:template>
                                             </ui:Column>
                                             <ui:Column width="13rem">
-                                                <m:Label text="Quantità cumulativa ricevuta" />
+                                                <m:Label
+                                                    text="Quantità cumulativa ricevuta"
+                                                />
                                                 <ui:template>
-                                                    <m:ObjectIdentifier text="detailData>quantita_cumulativa_ricevuta" />
+                                                    <m:ObjectIdentifier
+                                                        text="detailData>quantita_cumulativa_ricevuta"
+                                                    />
                                                 </ui:template>
                                             </ui:Column>
                                             <ui:Column width="11rem">
-                                                <m:Label text="Ultima quantità ordinata" />
+                                                <m:Label
+                                                    text="Ultima quantità ordinata"
+                                                />
                                                 <ui:template>
-                                                    <m:ObjectIdentifier text="" />
+                                                    <m:ObjectIdentifier
+                                                        text=""
+                                                    />
                                                 </ui:template>
                                             </ui:Column>
                                             <ui:Column width="10rem">
-                                                <m:Label text="Release number" />
+                                                <m:Label
+                                                    text="Release number"
+                                                />
                                                 <ui:template>
-                                                    <m:ObjectIdentifier text="" />
+                                                    <m:ObjectIdentifier
+                                                        text=""
+                                                    />
                                                 </ui:template>
                                             </ui:Column>
-                                            <ui:Column width="15rem" sortProperty="Cliente">
-                                                <m:Label text="Quantità cumulativa precedente" />
+                                            <ui:Column
+                                                width="15rem"
+                                                sortProperty="Cliente"
+                                            >
+                                                <m:Label
+                                                    text="Quantità cumulativa precedente"
+                                                />
                                                 <ui:template>
-                                                    <m:ObjectIdentifier text="" />
+                                                    <m:ObjectIdentifier
+                                                        text=""
+                                                    />
                                                 </ui:template>
                                             </ui:Column>
-                                            <ui:Column width="10rem" showSortMenuEntry="false">
-                                                <m:Label text="Quantità in backorder " />
+                                            <ui:Column
+                                                width="10rem"
+                                                showSortMenuEntry="false"
+                                            >
+                                                <m:Label
+                                                    text="Quantità in backorder "
+                                                />
                                                 <ui:template>
-                                                    <m:ObjectIdentifier text="" />
+                                                    <m:ObjectIdentifier
+                                                        text=""
+                                                    />
                                                 </ui:template>
                                             </ui:Column>
                                             <ui:Column width="13rem">
-                                                <m:Label text="Quantità ricevuta e accettata" />
+                                                <m:Label
+                                                    text="Quantità ricevuta e accettata"
+                                                />
                                                 <ui:template>
-                                                    <m:ObjectIdentifier text="" />
+                                                    <m:ObjectIdentifier
+                                                        text=""
+                                                    />
                                                 </ui:template>
                                             </ui:Column>
                                             <ui:Column width="10rem">
-                                                <m:Label text="Contatto cliente" />
+                                                <m:Label
+                                                    text="Contatto cliente"
+                                                />
                                                 <ui:template>
-                                                    <m:ObjectIdentifier text="{detailData>contatto_cliente}" />
+                                                    <m:ObjectIdentifier
+                                                        text="{detailData>contatto_cliente}"
+                                                    />
                                                 </ui:template>
                                             </ui:Column>
                                             <ui:Column width="10rem">
-                                                <m:Label text="Info contatto email" />
+                                                <m:Label
+                                                    text="Info contatto email"
+                                                />
                                                 <ui:template>
-                                                    <m:ObjectIdentifier text="{detailData>informazioni_contatto_email}" />
+                                                    <m:ObjectIdentifier
+                                                        text="{detailData>informazioni_contatto_email}"
+                                                    />
                                                 </ui:template>
                                             </ui:Column>
                                             <ui:Column width="10rem">
-                                                <m:Label text="Info contatto telefonico" />
+                                                <m:Label
+                                                    text="Info contatto telefonico"
+                                                />
                                                 <ui:template>
-                                                    <m:ObjectIdentifier text="{detailData>informazioni_contatto_telefonico}" />
+                                                    <m:ObjectIdentifier
+                                                        text="{detailData>informazioni_contatto_telefonico}"
+                                                    />
                                                 </ui:template>
                                             </ui:Column>
                                             <ui:Column width="10rem">
-                                                <m:Label text="Info contatto fax" />
+                                                <m:Label
+                                                    text="Info contatto fax"
+                                                />
                                                 <ui:template>
-                                                    <m:ObjectIdentifier text="{detailData>informazioni_contatto_fax}" />
+                                                    <m:ObjectIdentifier
+                                                        text="{detailData>informazioni_contatto_fax}"
+                                                    />
                                                 </ui:template>
                                             </ui:Column>
                                         </ui:columns>
                                     </ui:Table>
                                 </m:ScrollContainer>
                             </m:VBox>
-
-
                         </blocks>
                     </ObjectPageSubSection>
                 </subSections>

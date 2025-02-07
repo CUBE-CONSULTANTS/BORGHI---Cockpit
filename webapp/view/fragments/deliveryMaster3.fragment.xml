@@ -162,7 +162,7 @@
     </ui:extension>
     <ui:columns>
        
-        <ui:Column tooltip="Cliente">
+        <ui:Column width="11rem" tooltip="Cliente">
             <Label text="Cliente"/>
             <ui:template>
                 <!-- <ObjectIdentifier
@@ -171,7 +171,7 @@
                       <Text text="{master3>DelforTestata/codice_seller}"/>
             </ui:template>
         </ui:Column>
-        <ui:Column tooltip="Template" width="35px">
+        <ui:Column hAlign="Center" tooltip="Template" width="4.5rem">
             <Label text="T"/>
             <ui:template>
                <!-- <Button icon="{=${master3>DelforTestata/template} === 'MAN' ? 'sap-icon://attachment' : 'sap-icon://cloud'}"></Button> -->
@@ -179,15 +179,15 @@
                 size="1rem"  />
             </ui:template>
         </ui:Column>
-        <ui:Column tooltip="Numero progressivo invio">
-            <Label text="Numero progressivo invio"/>
+        <ui:Column width="11rem" tooltip="Num progressivo invio">
+            <Label text="Num progressivo invio"/>
             <ui:template>
                 <ObjectIdentifier
                         title="{master3>DelforTestata/numero_progressivo_invio}"
                     />
             </ui:template>
         </ui:Column>
-        <ui:Column tooltip="Data ricezione">
+        <ui:Column width="11rem" tooltip="Data ricezione">
             <Label text="Data ricezione" />
             <ui:template>
                  <ObjectIdentifier
@@ -197,16 +197,16 @@
             </ui:template>
         </ui:Column>
         <!-- posizioni -->
-        <ui:Column tooltip="Codice materiale fornitore">
-            <Label text="Codice materiale fornitore" />
+        <ui:Column width="11rem" tooltip="Cod. Mat. fornitore">
+            <Label text="Cod. Mat. fornitore" />
             <ui:template>
              <ObjectIdentifier
                         title="{master3>codice_materiale_fornitore}"
                     />
             </ui:template>
         </ui:Column>
-          <ui:Column tooltip="Numero ordine acquisto">
-            <Label text="Numero ordine acquisto" />
+          <ui:Column width="11rem" tooltip="Num. Ordine Acquisto">
+            <Label text="Num. Ordine Acquisto" />
             <ui:template>
              <ObjectIdentifier
                         title="{master3>numero_ordine_acquisto}"
@@ -214,7 +214,7 @@
             </ui:template>
         </ui:Column>
       
-          <ui:Column tooltip="Numero idoc">
+          <ui:Column width="11rem" tooltip="Numero idoc">
             <Label text="Numero idoc" />
             <ui:template>
              <ObjectIdentifier
@@ -222,7 +222,7 @@
                     />
             </ui:template>
         </ui:Column>
-        <ui:Column hAlign="Center" tooltip="Stato">
+        <ui:Column width="4rem" hAlign="Center" tooltip="Stato">
           <Label text="Stato"/>
           <ui:template>
               <Button icon="{= ${master3>Stato} === 'OK' ? 'sap-icon://accept' : ${master3>Stato} === 'KO' ? 'sap-icon://decline' : 'sap-icon://warning'}" 
@@ -232,19 +232,21 @@
                <!-- <Text text="X"/> -->
           </ui:template>
       </ui:Column>
-          <ui:Column hAlign="Center" tooltip="">
+          <ui:Column width="5.25rem" hAlign="Center" tooltip="Dettaglio">
             <Label text="" />
             <ui:template>
-                <HBox>
-                    <Button icon="sap-icon://display" type="Emphasized" press="dettaglioNav" tooltip="Dettaglio"></Button>
-                    <Button icon="sap-icon://commission-check" type="Unstyled" class="sapUiTinyMarginBegin" press="navToAPP"></Button>
-                    
-                </HBox>
-             
+                    <Button icon="sap-icon://display" type="Emphasized" press="dettaglioNav" ></Button>
             </ui:template>
-          
         </ui:Column>
+      <ui:Column width="5.2rem" hAlign="Center" tooltip="">
+        <Label text="" />
+        <ui:template>
+        <Button icon="sap-icon://commission-check" type="Unstyled" class="sapUiTinyMarginBegin" press="navToAPP"></Button>
+      </ui:template>
+    </ui:Column>
+
     </ui:columns>
+    
 </ui:TreeTable>
     
 </core:FragmentDefinition>
