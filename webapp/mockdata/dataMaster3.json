@@ -486,7 +486,7 @@
           {
             "DelforTestata": {
               "id":2,
-              "template": "MAN",
+              "template": "",
               "nome_file": "MAN_DELFOR_D97A_20250122_123255.edi",
               "data_ricezione": "20250122",
               "numero_progressivo_invio": "0000040886",

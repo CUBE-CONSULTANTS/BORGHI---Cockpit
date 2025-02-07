@@ -164,21 +164,21 @@
     </ui:extension>
     <ui:columns>
        
-        <ui:Column width="11rem" tooltip="Cliente">
-            <Label text="Cliente"/>
-            <ui:template>
-                <!-- <ObjectIdentifier
-                        title="{master3>CompanyName}"
-                    /> -->
-                      <Text text="{master3>DelforTestata/codice_seller}"/>
-            </ui:template>
-        </ui:Column>
-        <ui:Column hAlign="Center" tooltip="Template" width="4.5rem">
-            <Label text="T"/>
+       
+        <ui:Column hAlign="Center" tooltip="Template" width="4.5rem" >
+            <Label text=" "/>
             <ui:template>
                <!-- <Button icon="{=${master3>DelforTestata/template} === 'MAN' ? 'sap-icon://attachment' : 'sap-icon://cloud'}"></Button> -->
                <core:Icon src="{=${master3>DelforTestata/template} === 'MAN' ? 'sap-icon://attachment' : 'sap-icon://cloud'}" 
-                size="1rem"  />
+                size="1rem" 
+                visible="{= ${master3>DelforTestata/codice_seller} ? true : false}" />
+            </ui:template>
+        </ui:Column>
+        <ui:Column width="11rem" tooltip="Cliente" >
+            <Label text="Cliente"/>
+            <ui:template>
+               
+                      <Text text="{master3>DelforTestata/codice_seller}"/>
             </ui:template>
         </ui:Column>
         <ui:Column width="11rem" tooltip="Numero progressivo invio">
@@ -199,11 +199,12 @@
             </ui:template>
         </ui:Column>
         <!-- posizioni -->
-        <ui:Column width="11rem" tooltip="Codice Matateriale fornitore">
-            <Label text="Cod. Mat. fornitore" />
+        <ui:Column width="11rem" tooltip="Matateriale fornitore">
+            <Label text="Mat. fornitore" />
             <ui:template>
              <ObjectIdentifier
                         title="{master3>codice_materiale_fornitore}"
+                        text="{master3>descrizione_materiale}"
                     />
             </ui:template>
         </ui:Column>
@@ -216,8 +217,8 @@
             </ui:template>
         </ui:Column>
       
-          <ui:Column width="11rem" tooltip="Numero idoc">
-            <Label text="idoc" />
+          <ui:Column width="11rem" tooltip="Numero IDoc">
+            <Label text="N. IDoc" />
             <ui:template>
              <ObjectIdentifier
                         title="{master3>numero_idoc}"
@@ -234,24 +235,29 @@
                <!-- <Text text="X"/> -->
           </ui:template>
       </ui:Column>
-          <ui:Column width="5.25rem" hAlign="Center" tooltip="Dettaglio">
+          <ui:Column width="8rem" hAlign="Center" tooltip="Dettaglio">
             <Label text="" />
             <ui:template>
-                    <Button icon="sap-icon://display" type="Emphasized" press="dettaglioNav" ></Button>
+                    <HBox>
+                        <Button icon="sap-icon://display" type="Emphasized" press="dettaglioNav" tooltip="{= ${master3>DelforTestata/codice_seller} ? 'Dettaglio posizioni' : 'Dettaglio schedulazioni'}"></Button>
+                        <Button icon="sap-icon://commission-check" type="Emphasized" class="sapUiTinyMarginBegin" press="navToAPP" tooltip="Naviga a APP"></Button>
+                        <Button icon="sap-icon://download" tooltip="Dowload file edi" type="Default" class="sapUiTinyMarginBegin" press="downloadEdi" visible="{= ${master3>DelforTestata/codice_seller} ? true : false}"></Button>
+                    </HBox>
+                    
             </ui:template>
         </ui:Column>
-      <ui:Column width="5.2rem" hAlign="Center" tooltip=" Naviga a sezione">
+      <!-- <ui:Column width="5.2rem" hAlign="Center" tooltip=" Naviga a sezione">
         <Label text="" />
         <ui:template>
-        <Button icon="sap-icon://commission-check" type="Unstyled" class="sapUiTinyMarginBegin" press="navToAPP"></Button>
+       
       </ui:template>
     </ui:Column>
     <ui:Column width="5.2rem" hAlign="Center" tooltip="Download file edi">
         <Label text="File" />
         <ui:template>
-        <Button icon="sap-icon://download" type="Unstyled" class="sapUiTinyMarginBegin" press="downloadEdi" visible="{= ${master3>DelforTestata/codice_seller} ? true : false}"></Button>
+       
       </ui:template>
-    </ui:Column>
+    </ui:Column> -->
 
     </ui:columns>
     
