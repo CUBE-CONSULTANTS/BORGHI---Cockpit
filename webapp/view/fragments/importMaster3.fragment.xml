@@ -11,7 +11,7 @@
             </VBox>
         </content>
         <buttons>
-          <Button type="Emphasized" icon="sap-icon://download" text="Scarica template"/>
+          <Button type="Emphasized" icon="sap-icon://download" text="Esporta Template Manuale"/>
           
             <Button icon="sap-icon://decline"  text="Chiudi" press="onclose"/> 
         </buttons>

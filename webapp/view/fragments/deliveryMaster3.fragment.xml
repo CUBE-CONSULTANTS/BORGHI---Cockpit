@@ -20,8 +20,8 @@
         >
             <fb:filterGroupItems>
                 <fb:FilterGroupItem
-                    name="Date Processamento EDI"
-                    label="Date Processamento EDI"
+                    name="Data ricezione"
+                    label="Data ricezione"
                     groupName="Group1"
                     visibleInFilterBar="true"
                 >
@@ -31,6 +31,16 @@
         secondaryCalendarType="Gregorian"
         change="handleChange"
         />
+                    </fb:control>
+                </fb:FilterGroupItem>
+                <fb:FilterGroupItem
+                    name="Numero progressivo invio"
+                    label="Numero progressivo invio"
+                    groupName="Group1"
+                    visibleInFilterBar="true"
+                >
+                    <fb:control>
+                        <Input type="Number"></Input>
                     </fb:control>
                 </fb:FilterGroupItem>
                 <fb:FilterGroupItem
@@ -55,7 +65,14 @@
                     visibleInFilterBar="true"
                 >
                     <fb:control>
-                       <Input/>
+                       <ComboBox showSecondaryValues= "true"  
+                       items="{
+                        path: 'master3>/Master3',
+                        sorter: { path: 'text' }
+                    }">
+                       
+                        <core:ListItem key="{master3>DelforTestata/codice_seller}" text="{master3>DelforTestata/codice_seller}" additionalText = "{master3>DelforTestata/id}"/>
+                       </ComboBox>
                     </fb:control>
                 </fb:FilterGroupItem>
                  <fb:FilterGroupItem
@@ -125,7 +142,7 @@
                 press="importaPress"/>
                 <Button
                
-                text="Esporta Template Manuale"
+                text="Esporta excel"
                 icon="sap-icon://excel-attachment"
                 press="deletePress"/>
                 <Button
@@ -151,7 +168,7 @@
                 <!-- <ObjectIdentifier
                         title="{master3>CompanyName}"
                     /> -->
-                      <Text text="{master3>DelforTestata/template}"/>
+                      <Text text="{master3>DelforTestata/codice_seller}"/>
             </ui:template>
         </ui:Column>
         <ui:Column tooltip="Template" width="35px">
@@ -220,7 +237,7 @@
             <ui:template>
                 <HBox>
                     <Button icon="sap-icon://display" type="Emphasized" press="dettaglioNav" tooltip="Dettaglio"></Button>
-                    <Button text="navToApp" type="Unstyled" class="sapUiTinyMarginBegin" press="navToAPP"></Button>
+                    <Button icon="sap-icon://commission-check" type="Unstyled" class="sapUiTinyMarginBegin" press="navToAPP"></Button>
                     
                 </HBox>
              

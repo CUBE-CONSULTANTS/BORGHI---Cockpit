@@ -42,7 +42,8 @@
         <headerContent>
 
             <m:VBox >
-                <form:Form id="SimpleFormDisplayColumn_threeGroups346" editable="false" layout="ColumnLayout">
+                <m:ScrollContainer horizontal="true" vertical="true" height="50%">
+                    <form:Form id="SimpleFormDisplayColumn_threeGroups346" editable="false" layout="ColumnLayout">
                     <form:layout>
                         <form:ColumnLayout columnsM="2" columnsL="3" columnsXL="4" />
                     </form:layout>
@@ -120,6 +121,8 @@
                     </form:formContainers>
 
                 </form:Form>
+                </m:ScrollContainer>
+                
             </m:VBox>
 
         </headerContent>
