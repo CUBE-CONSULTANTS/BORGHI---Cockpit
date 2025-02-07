@@ -236,11 +236,13 @@
                                         <!---->
 
                                         <ui:columns>
-                                            <ui:Column width="10rem" hAlign="Center">
+                                            <ui:Column width="5rem" hAlign="Center">
                                                 <m:Label text="Dettaglio" />
                                                 <ui:template>
                                                     <m:Button
-                                                        text="Visualizza"
+                                                        icon="sap-icon://search"
+                                                        tooltip="Schedulazioni"
+                                                        type="Emphasized"
                                                         press="buttonDetailSched"
                                                     />
                                                 </ui:template>
