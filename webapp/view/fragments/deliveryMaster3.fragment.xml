@@ -240,10 +240,16 @@
                     <Button icon="sap-icon://display" type="Emphasized" press="dettaglioNav" ></Button>
             </ui:template>
         </ui:Column>
-      <ui:Column width="5.2rem" hAlign="Center" tooltip="">
+      <ui:Column width="5.2rem" hAlign="Center" tooltip=" Naviga a sezione">
         <Label text="" />
         <ui:template>
         <Button icon="sap-icon://commission-check" type="Unstyled" class="sapUiTinyMarginBegin" press="navToAPP"></Button>
+      </ui:template>
+    </ui:Column>
+    <ui:Column width="5.2rem" hAlign="Center" tooltip="Download file edi">
+        <Label text="File" />
+        <ui:template>
+        <Button icon="sap-icon://download" type="Unstyled" class="sapUiTinyMarginBegin" press="downloadEdi" visible="{= ${master3>nome_file} &amp;&amp; !${master3>numero_progressivo_invio} ? true : false }"></Button>
       </ui:template>
     </ui:Column>
 
