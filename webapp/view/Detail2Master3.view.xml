@@ -5,6 +5,7 @@
     xmlns:m="sap.m"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:commons="sap.suite.ui.commons"
+    height="100%"
 >
     <f:DynamicPage fitContent="true" >
         <f:title>
