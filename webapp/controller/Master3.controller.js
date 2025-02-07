@@ -26,8 +26,11 @@ sap.ui.define(
         this.oRouter = this.getOwnerComponent().getRouter();
         this.onFilterSelect(null, "01");
         // this.onFilterSelect();
+        this.getRouter().getRoute("Detail2Master3").attachPatternMatched(this._onObjectMatched, this);  
       },
-
+      _onObjectMatched: function (oEvent) {
+        this.onFilterSelect(null, "01");
+      },
       onFilterSelect: function (oEvent, key) {
         this.showBusy(0);
         var selectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
