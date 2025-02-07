@@ -239,8 +239,8 @@
                                         <!---->
 
                                         <ui:columns>
-                                            <ui:Column width="5rem" hAlign="Center">
-                                                <m:Label text="Dettaglio" />
+                                            <ui:Column width="5rem" hAlign="Center" tooltip="Dettaglio" >
+                                                <m:Label text=" " />
                                                 <ui:template>
                                                     <m:Button
                                                         icon="sap-icon://search"
@@ -254,6 +254,7 @@
                                             <ui:Column
                                                 width="10rem"
                                                 showSortMenuEntry="false"
+                                                tooltip="Destinatario"
                                             >
                                                 <m:Label text="Destinatario" />
                                                 <ui:template>
@@ -262,9 +263,9 @@
                                                     />
                                                 </ui:template>
                                             </ui:Column>
-                                            <ui:Column width="10rem">
+                                            <ui:Column width="10rem" tooltip="Codice cliente materiale">
                                                 <m:Label
-                                                    text="Cod. Cliente Materiale"
+                                                    text="Cod. Cliente Mat."
                                                 />
                                                 <ui:template>
                                                     <m:ObjectIdentifier
@@ -272,9 +273,9 @@
                                                     />
                                                 </ui:template>
                                             </ui:Column>
-                                            <ui:Column width="12rem">
+                                            <ui:Column width="12rem" tooltip="Codice materiale fornitore">
                                                 <m:Label
-                                                    text="Cod. Materiale Fornitore"
+                                                    text="Cod. Mat. Fornitore"
                                                 />
                                                 <ui:template>
                                                     <m:ObjectIdentifier
@@ -282,9 +283,9 @@
                                                     />
                                                 </ui:template>
                                             </ui:Column>
-                                            <ui:Column width="10rem">
+                                            <ui:Column width="10rem" tooltip="Descrizione materiale">
                                                 <m:Label
-                                                    text="Descr. Materiale"
+                                                    text="Descr. Mat."
                                                 />
                                                 <ui:template>
                                                     <m:ObjectIdentifier
@@ -295,9 +296,10 @@
                                             <ui:Column
                                                 width="10rem"
                                                 sortProperty="Punto di scarico"
+                                                tooltip="Punto di scarico"
                                             >
                                                 <m:Label
-                                                    text="Punto di scarico"
+                                                    text="P. scarico"
                                                 />
                                                 <ui:template>
                                                     <m:ObjectIdentifier
@@ -308,9 +310,11 @@
                                             <ui:Column
                                                 width="10rem"
                                                 showSortMenuEntry="false"
+                                                tooltip="Destinazione interna"
+                                                
                                             >
                                                 <m:Label
-                                                    text="Destinazione Interna"
+                                                    text="Dest. Interna"
                                                 />
                                                 <ui:template>
                                                     <m:ObjectIdentifier
@@ -318,7 +322,7 @@
                                                     />
                                                 </ui:template>
                                             </ui:Column>
-                                            <ui:Column width="10rem">
+                                            <ui:Column width="10rem" tooltip="Testo riga">
                                                 <m:Label text="Testo riga" />
                                                 <ui:template>
                                                     <m:ObjectIdentifier
@@ -326,9 +330,9 @@
                                                     />
                                                 </ui:template>
                                             </ui:Column>
-                                            <ui:Column width="15rem">
+                                            <ui:Column width="15rem" tooltip="Data inizio calcolo quantità cumulata">
                                                 <m:Label
-                                                    text="Data inizio calc. quantità cumulata"
+                                                    text="Data inizio calc. q. cumulata"
                                                 />
                                                 <ui:template>
                                                     <m:ObjectIdentifier
@@ -336,9 +340,9 @@
                                                     />
                                                 </ui:template>
                                             </ui:Column>
-                                            <ui:Column width="10rem">
+                                            <ui:Column width="10rem" tooltip="Progressivo invio">
                                                 <m:Label
-                                                    text="Progressivo invio"
+                                                    text="P. invio"
                                                 />
                                                 <ui:template>
                                                     <m:ObjectIdentifier
@@ -349,9 +353,10 @@
                                             <ui:Column
                                                 width="10rem"
                                                 sortProperty="Cliente"
+                                                tooltip="Data progressivo invio"
                                             >
                                                 <m:Label
-                                                    text="Data progressivo invio"
+                                                    text="Data p. invio"
                                                 />
                                                 <ui:template>
                                                     <m:ObjectIdentifier
@@ -362,9 +367,10 @@
                                             <ui:Column
                                                 width="10rem"
                                                 showSortMenuEntry="false"
+                                                tooltip="Numero Ultima Schedulazione Ricevuta"
                                             >
                                                 <m:Label
-                                                    text="Numero Ultima Schedulazione Ricevuta"
+                                                    text="Schedulazione"
                                                 />
                                                 <ui:template>
                                                     <m:ObjectIdentifier
@@ -372,9 +378,9 @@
                                                     />
                                                 </ui:template>
                                             </ui:Column>
-                                            <ui:Column width="10rem">
+                                            <ui:Column width="10rem"  tooltip="Data Numero Ultima Schedulazione Ricevuta">
                                                 <m:Label
-                                                    text="Data Numero Ultima Schedulazione Ricevuta"
+                                                    text="Data N. Schedulazione"
                                                 />
                                                 <ui:template>
                                                     <m:ObjectIdentifier
@@ -382,9 +388,9 @@
                                                     />
                                                 </ui:template>
                                             </ui:Column>
-                                            <ui:Column width="12rem">
+                                            <ui:Column width="12rem"  tooltip="Numero ordine di acquisto">
                                                 <m:Label
-                                                    text="Numero ordine di acquisto"
+                                                    text="N. ordine di acquisto"
                                                 />
                                                 <ui:template>
                                                     <m:ObjectIdentifier
@@ -392,9 +398,9 @@
                                                     />
                                                 </ui:template>
                                             </ui:Column>
-                                            <ui:Column width="10rem">
+                                            <ui:Column width="10rem"  tooltip="Ultima quantità spedita">
                                                 <m:Label
-                                                    text="Ultima quantità spedita"
+                                                    text="Ultima q. spedita"
                                                 />
                                                 <ui:template>
                                                     <m:ObjectIdentifier
@@ -405,9 +411,10 @@
                                             <ui:Column
                                                 width="17rem"
                                                 sortProperty="Cliente"
+                                                tooltip="Numero Ultima bolla ricevuta dal cliente"
                                             >
                                                 <m:Label
-                                                    text="Numero Ultima bolla ricevuta dal cliente"
+                                                    text="N. bolla ricevuta cliente"
                                                 />
                                                 <ui:template>
                                                     <m:ObjectIdentifier
@@ -418,9 +425,10 @@
                                             <ui:Column
                                                 width="13rem"
                                                 showSortMenuEntry="false"
+                                                tooltip="Data ultima bolla ricevuta"
                                             >
                                                 <m:Label
-                                                    text="Data ultima bolla ricevuta"
+                                                    text="Data bolla ricevuta"
                                                 />
                                                 <ui:template>
                                                     <m:ObjectIdentifier
@@ -428,9 +436,9 @@
                                                     />
                                                 </ui:template>
                                             </ui:Column>
-                                            <ui:Column width="13rem">
+                                            <ui:Column width="13rem" tooltip="Quantità cumulativa ricevuta">
                                                 <m:Label
-                                                    text="Quantità cumulativa ricevuta"
+                                                    text="Q. cumulativa ricevuta"
                                                 />
                                                 <ui:template>
                                                     <m:ObjectIdentifier
@@ -438,9 +446,9 @@
                                                     />
                                                 </ui:template>
                                             </ui:Column>
-                                            <ui:Column width="11rem">
+                                            <ui:Column width="11rem" tooltip="Ultima quantità ordinata">
                                                 <m:Label
-                                                    text="Ultima quantità ordinata"
+                                                    text="Ultima q. ordinata"
                                                 />
                                                 <ui:template>
                                                     <m:ObjectIdentifier
@@ -448,7 +456,7 @@
                                                     />
                                                 </ui:template>
                                             </ui:Column>
-                                            <ui:Column width="10rem">
+                                            <ui:Column width="10rem" tooltip="Release number">
                                                 <m:Label
                                                     text="Release number"
                                                 />
@@ -461,9 +469,10 @@
                                             <ui:Column
                                                 width="15rem"
                                                 sortProperty="Cliente"
+                                                tooltip="Quantità cumulativa precedente"
                                             >
                                                 <m:Label
-                                                    text="Quantità cumulativa precedente"
+                                                    text="Q. cumulativa precedente"
                                                 />
                                                 <ui:template>
                                                     <m:ObjectIdentifier
@@ -474,9 +483,10 @@
                                             <ui:Column
                                                 width="10rem"
                                                 showSortMenuEntry="false"
+                                                tooltip="Quantità in backorder"
                                             >
                                                 <m:Label
-                                                    text="Quantità in backorder "
+                                                    text="Q. in backorder"
                                                 />
                                                 <ui:template>
                                                     <m:ObjectIdentifier
@@ -484,9 +494,9 @@
                                                     />
                                                 </ui:template>
                                             </ui:Column>
-                                            <ui:Column width="13rem">
+                                            <ui:Column width="13rem" tooltip="Quantità ricevuta e accettata">
                                                 <m:Label
-                                                    text="Quantità ricevuta e accettata"
+                                                    text="Q. ricevuta e accettata"
                                                 />
                                                 <ui:template>
                                                     <m:ObjectIdentifier
@@ -494,7 +504,7 @@
                                                     />
                                                 </ui:template>
                                             </ui:Column>
-                                            <ui:Column width="10rem">
+                                            <ui:Column width="10rem" tooltip="Contatto cliente">
                                                 <m:Label
                                                     text="Contatto cliente"
                                                 />
@@ -504,7 +514,7 @@
                                                     />
                                                 </ui:template>
                                             </ui:Column>
-                                            <ui:Column width="10rem">
+                                            <ui:Column width="10rem" tooltip="Info contatto email">
                                                 <m:Label
                                                     text="Info contatto email"
                                                 />
@@ -514,7 +524,7 @@
                                                     />
                                                 </ui:template>
                                             </ui:Column>
-                                            <ui:Column width="10rem">
+                                            <ui:Column width="10rem" tooltip="Info contatto telefonico">
                                                 <m:Label
                                                     text="Info contatto telefonico"
                                                 />
@@ -524,7 +534,7 @@
                                                     />
                                                 </ui:template>
                                             </ui:Column>
-                                            <ui:Column width="10rem">
+                                            <ui:Column width="10rem" tooltip="Info contatto fax">
                                                 <m:Label
                                                     text="Info contatto fax"
                                                 />

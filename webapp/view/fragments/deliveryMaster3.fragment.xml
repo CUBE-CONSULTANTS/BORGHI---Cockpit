@@ -179,8 +179,8 @@
                 size="1rem"  />
             </ui:template>
         </ui:Column>
-        <ui:Column width="11rem" tooltip="Num progressivo invio">
-            <Label text="Num progressivo invio"/>
+        <ui:Column width="11rem" tooltip="Numero progressivo invio">
+            <Label text="N. prog. invio"/>
             <ui:template>
                 <ObjectIdentifier
                         title="{master3>DelforTestata/numero_progressivo_invio}"
@@ -197,7 +197,7 @@
             </ui:template>
         </ui:Column>
         <!-- posizioni -->
-        <ui:Column width="11rem" tooltip="Cod. Mat. fornitore">
+        <ui:Column width="11rem" tooltip="Codice Matateriale fornitore">
             <Label text="Cod. Mat. fornitore" />
             <ui:template>
              <ObjectIdentifier
@@ -205,8 +205,8 @@
                     />
             </ui:template>
         </ui:Column>
-          <ui:Column width="11rem" tooltip="Num. Ordine Acquisto">
-            <Label text="Num. Ordine Acquisto" />
+          <ui:Column width="11rem" tooltip="Numero Ordine Acquisto">
+            <Label text="N. Ordine Acquisto" />
             <ui:template>
              <ObjectIdentifier
                         title="{master3>numero_ordine_acquisto}"
@@ -215,7 +215,7 @@
         </ui:Column>
       
           <ui:Column width="11rem" tooltip="Numero idoc">
-            <Label text="Numero idoc" />
+            <Label text="idoc" />
             <ui:template>
              <ObjectIdentifier
                         title="{master3>numero_idoc}"
