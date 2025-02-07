@@ -1,12 +1,13 @@
 sap.ui.define(
   ["./BaseController", "sap/ui/model/json/JSONModel"],
-  function (BaseController,JSONModel) {
+  function (BaseController, JSONModel) {
     "use strict";
 
     return BaseController.extend(
       "sap.ui.demo.fiori2.controller.Detail2Master3",
       {
         onInit: function () {
+          debugger;
           this.oOwnerComponent = this.getOwnerComponent();
           this.oRouter = this.oOwnerComponent.getRouter();
           this.oModel = this.oOwnerComponent.getModel();
@@ -21,25 +22,34 @@ sap.ui.define(
 
         _onProductMatched: function (oEvent) {
           debugger;
-          this._product =oEvent.getParameter("arguments").product || this._product || "0";
-          let productData = JSON.parse(this._product)
+          this._product =
+            oEvent.getParameter("arguments").product || this._product || "0";
+          let productData = JSON.parse(this._product);
           let codiceClienteMateriale = productData.codice_cliente_materiale;
           let numeroOrdineAcquisto = productData.numero_ordine_acquisto;
           let datiElementoSelect = productData.DelforSchedulazioni;
-       
-          datiElementoSelect = datiElementoSelect.map(item => {
-            if (item.data_spedizione_richiesta_effettiva) {
-                item.data_spedizione_richiesta_effettiva = this.formatDate(item.data_spedizione_richiesta_effettiva);
-            }
-            return item;
-          }).sort((a, b) => {
-            let dateA = this.parseDate(a.data_spedizione_richiesta_effettiva);
-            let dateB = this.parseDate(b.data_spedizione_richiesta_effettiva);
-            return dateA - dateB; 
-        });
+
+          datiElementoSelect = datiElementoSelect
+            .map((item) => {
+              if (item.data_spedizione_richiesta_effettiva) {
+                item.data_spedizione_richiesta_effettiva = this.formatDate(
+                  item.data_spedizione_richiesta_effettiva
+                );
+              }
+              return item;
+            })
+            .sort((a, b) => {
+              let dateA = this.parseDate(a.data_spedizione_richiesta_effettiva);
+              let dateB = this.parseDate(b.data_spedizione_richiesta_effettiva);
+              return dateA - dateB;
+            });
 
           this.getView().setModel(
-            new JSONModel({ datiElementoSelect,codiceClienteMateriale,numeroOrdineAcquisto  }),
+            new JSONModel({
+              datiElementoSelect,
+              codiceClienteMateriale,
+              numeroOrdineAcquisto,
+            }),
             "detailSched"
           );
         },

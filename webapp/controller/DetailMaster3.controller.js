@@ -184,7 +184,7 @@ sap.ui.define(
             .getHelper()
             .then(
               function (oHelper) {
-                oNextUIState = oHelper.getNextUIState(2);
+                oNextUIState = oHelper.getNextUIState(1);
                 this.oRouter.navTo("Detail2Master3", {
                   product: JSON.stringify(detail),
                   layout: oNextUIState.layout,

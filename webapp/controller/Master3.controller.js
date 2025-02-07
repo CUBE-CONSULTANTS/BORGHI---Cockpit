@@ -26,7 +26,9 @@ sap.ui.define(
         this.oRouter = this.getOwnerComponent().getRouter();
         this.onFilterSelect(null, "01");
         // this.onFilterSelect();
-        this.getRouter().getRoute("Detail2Master3").attachPatternMatched(this._onObjectMatched, this);  
+        // this.getRouter()
+        //   .getRoute("Detail2Master3")
+        //   .attachPatternMatched(this._onObjectMatched, this);
       },
       _onObjectMatched: function (oEvent) {
         this.onFilterSelect(null, "01");
@@ -174,7 +176,7 @@ sap.ui.define(
             }.bind(this)
           );
         } else {
-          this._oDialog.open();
+          this._oDialog2.open();
         }
       },
       rowDetailPress: function (detailPath) {
@@ -234,7 +236,10 @@ sap.ui.define(
             .getParent()
             .getBindingContext("master3")
             .getPath();
-          this.rowDetailPress(path);
+          this.oRouter.navTo("detailMaster3", {
+            product: JSON.stringify(detail),
+            layout: "OneColumn",
+          });
         }
       },
 
