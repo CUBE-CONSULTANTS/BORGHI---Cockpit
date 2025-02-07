@@ -27,10 +27,11 @@
                 >
                     <fb:control>
                     <DatePicker
-                    tooltip="..."
-        secondaryCalendarType="Gregorian"
-        change="handleChange"
-        />
+                    tooltip="Data di ricezione"
+                    secondaryCalendarType="Gregorian"
+                    change="handleChange"
+                    displayFormat="dd.MM.yyyy"
+                    />
                     </fb:control>
                 </fb:FilterGroupItem>
                 <fb:FilterGroupItem
@@ -49,13 +50,14 @@
                     label="Date di consegna"
                     groupName="Group1"
                     visibleInFilterBar="true"
+                    
                 >
                     <fb:control>
                      <DatePicker
-                      tooltip="..."
-        secondaryCalendarType="Gregorian"
-        change="handleChange"
-        />
+                      tooltip="Date di consegna"
+                        secondaryCalendarType="Gregorian"
+                        change="handleChange"
+                        displayFormat="dd.MM.yyyy" />
                     </fb:control>
                 </fb:FilterGroupItem>
                 <fb:FilterGroupItem
