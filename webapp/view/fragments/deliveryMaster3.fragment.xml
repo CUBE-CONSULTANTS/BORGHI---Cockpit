@@ -154,6 +154,14 @@
                       <Text text="{master3>DelforTestata/template}"/>
             </ui:template>
         </ui:Column>
+        <ui:Column tooltip="Template" width="35px">
+            <Label text="T"/>
+            <ui:template>
+               <!-- <Button icon="{=${master3>DelforTestata/template} === 'MAN' ? 'sap-icon://attachment' : 'sap-icon://cloud'}"></Button> -->
+               <core:Icon src="{=${master3>DelforTestata/template} === 'MAN' ? 'sap-icon://attachment' : 'sap-icon://cloud'}" 
+                size="1rem"  />
+            </ui:template>
+        </ui:Column>
         <ui:Column tooltip="Numero progressivo invio">
             <Label text="Numero progressivo invio"/>
             <ui:template>
