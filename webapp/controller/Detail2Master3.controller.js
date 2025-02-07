@@ -84,7 +84,10 @@ sap.ui.define(
           var sNextLayout = this.oModel.getProperty(
             "/actionButtonsInfo/midColumn/closeColumn"
           );
-          this.oRouter.navTo("master3", { layout: sNextLayout });
+          this.oRouter.navTo("detailMaster3", {
+            layout: sNextLayout,
+            product: this._product,
+          });
         },
 
         onExit: function () {
