@@ -84,7 +84,7 @@
         <headerContent>
             <m:HBox  justifyContent="SpaceBetween" fitContainer="true">
                 <m:VBox class="sapUiSmallMarginEnd"  >
-                  <m:VBox class="sapUiTinyMarginBottom" width="7rem"
+                  <m:VBox class="sapUiTinyMarginBottom" 
                   >
                   <m:Label text="Cliente" design="Bold" />
                   <m:Text
@@ -107,7 +107,7 @@
                     </m:VBox>
                     
                 </m:VBox>
-                <m:VBox class="sapUiSmallMarginEnd">
+                <m:VBox class="sapUiSmallMarginEnd" >
                   <m:VBox class="sapUiTinyMarginBottom"
                   >
                   <m:Label text="Num. progressivo invio" design="Bold" />
