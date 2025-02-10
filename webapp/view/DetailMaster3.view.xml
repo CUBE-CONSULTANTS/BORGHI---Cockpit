@@ -149,13 +149,7 @@
                         text="{detailData>/DettaglioMaster3/DelforTestata/numero_segmenti_tracciato}"
                     />    
                     </m:VBox>
-                    <m:VBox
-                    >
-                    <m:Label text="Stato" design="Bold" />
-                    <m:Text
-                        text="{detailData>/DettaglioMaster3/DelforTestata/stato}"
-                    />     
-                    </m:VBox>
+                   
                    
                 </m:VBox>
             </m:HBox>
@@ -176,11 +170,11 @@
                                         text="Ordinamento"
                                         press="sortCategories"
                                     />
-                                    <m:Button
+                                    <!-- <m:Button
                                         icon="sap-icon://excel-attachment"
                                         text="Caricamento Manuale"
                                         press="importaPress"
-                                    />
+                                    /> -->
                                     <m:Button
                                         text="Esporta Template Manuale"
                                         icon="sap-icon://excel-attachment"
@@ -251,6 +245,18 @@
                                                 </ui:template>
                                             </ui:Column>
                                         
+                                            <ui:Column
+                                                width="10rem"
+                                                showSortMenuEntry="false"
+                                                tooltip="Stato"
+                                            >
+                                                <m:Label text="Stato" />
+                                                <ui:template>
+                                                    <m:ObjectIdentifier
+                                                        text="{detailData>Stato}"
+                                                    />
+                                                </ui:template>
+                                            </ui:Column>
                                             <ui:Column
                                                 width="10rem"
                                                 showSortMenuEntry="false"
@@ -442,7 +448,7 @@
                                                 />
                                                 <ui:template>
                                                     <m:ObjectIdentifier
-                                                        text="detailData>quantita_cumulativa_ricevuta"
+                                                        text="{detailData>quantita_cumulativa_ricevuta}"
                                                     />
                                                 </ui:template>
                                             </ui:Column>

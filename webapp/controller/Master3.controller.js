@@ -122,40 +122,98 @@ sap.ui.define(
 
       onProcessaButton: function (oEvent) {
         debugger;
-        let indici = oEvent
-          .getSource()
-          .getParent()
-          .getParent()
-          .getSelectedIndices();
-        let data = this.getView().getModel("master3").getData().Master3;
-        let selected = [];
-        indici.forEach((x) => {
-          selected.push(data[x]);
-        });
-        let flag = 0;
-        selected.forEach((y) => {
-          if (y.Stato == "KO") {
-            flag++;
-          }
-        });
-        if (flag > 0) {
-          console.log("errori nel processo");
+        // let indici = oEvent
+        //   .getSource()
+        //   .getParent()
+        //   .getParent()
+        //   .getSelectedIndices();
+        // let data = this.getView().getModel("master3").getData().Master3;
+        // let selected = [];
+        // indici.forEach((x) => {
+        //   selected.push(data[x]);
+        // });
+        // let flag = 0;
+        // selected.forEach((y) => {
+        //   if (y.Stato == "KO") {
+        //     flag++;
+        //   }
+        // });
+        // if (flag > 0) {
+        //   console.log("errori nel processo");
+        // } else {
+        //   if (!this._oDialog) {
+        //     Fragment.load({
+        //       id: this.getView().getId(),
+        //       name: "sap.ui.demo.fiori2.view.fragments.linkDialogMaster3",
+        //       controller: this,
+        //     }).then(
+        //       function (oDialog) {
+        //         this._oDialog = oDialog;
+        //         this.getView().addDependent(this._oDialog);
+        //         this._oDialog.open();
+        //       }.bind(this)
+        //     );
+        //   } else {
+        //     this._oDialog.open();
+        //   }
+        // }
+
+        let table = this.getView().byId("treetableMain");
+        let indices = this.getView().byId("treetableMain").getSelectedIndices();
+        let selectedOBJS = [];
+        let self = this;
+
+        if (indices) {
+          indices.forEach((element) => {
+            debugger;
+            let obj = self
+              .getView()
+              .byId("treetableMain")
+              .getContextByIndex(element)
+              .getObject();
+
+            if (obj.hasOwnProperty("DelforTestata")) {
+              MessageBox.alert(
+                "Essendo stata selezionata una riga di testata verranno processate tutte le posizioni collegate"
+              );
+              selectedOBJS = obj.DelforPosizioni;
+            } else {
+              selectedOBJS.push(obj);
+            }
+          });
+
+          debugger;
+          let textMessage = "";
+          selectedOBJS.forEach((item) => {
+            textMessage += `Progressivo invio: ${item.progressivo_invio}; Codice cliente: ${item.codice_cliente_materiale}; Materiale: ${item.descrizione_materiale}; Destinatario: ${item.destinatario} \n`;
+          });
+
+          MessageBox.confirm(textMessage, {
+            title: "Riepilogo",
+            onClose: (oAction) => {
+              if (oAction === sap.m.MessageBox.Action.OK) {
+                if (!this._oDialog) {
+                  Fragment.load({
+                    id: this.getView().getId(),
+                    name: "sap.ui.demo.fiori2.view.fragments.linkDialogMaster3",
+                    controller: this,
+                  }).then(
+                    function (oDialog) {
+                      this._oDialog = oDialog;
+                      this.getView().addDependent(this._oDialog);
+                      this._oDialog.open();
+                    }.bind(this)
+                  );
+                } else {
+                  this._oDialog.open();
+                }
+              } else {
+                console.log("Annullato");
+              }
+            },
+          });
         } else {
-          if (!this._oDialog) {
-            Fragment.load({
-              id: this.getView().getId(),
-              name: "sap.ui.demo.fiori2.view.fragments.linkDialogMaster3",
-              controller: this,
-            }).then(
-              function (oDialog) {
-                this._oDialog = oDialog;
-                this.getView().addDependent(this._oDialog);
-                this._oDialog.open();
-              }.bind(this)
-            );
-          } else {
-            this._oDialog.open();
-          }
+          MessageBox.alert("Si prega di selezionare almeno una posizione");
         }
       },
 
