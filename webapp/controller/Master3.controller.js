@@ -351,6 +351,10 @@ sap.ui.define(
           console.log("naviga a 1");
         }
       },
+
+      prova2: function (oEvent) {
+        debugger;
+      },
       // loadFragment: function (oEvent) {
       //   if (!this._oMyFragment) {
       //     this._oMyFragment = sap.ui.xmlfragment(

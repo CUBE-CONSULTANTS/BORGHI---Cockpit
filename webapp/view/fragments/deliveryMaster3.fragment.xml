@@ -125,6 +125,7 @@
         selectionMode="MultiToggle"
         enableSelectAll="false"
         ariaLabelledBy="title"
+        rowSelectionChange="prova2"
         >
         <!-- cellClick=".rowDetailPress" -->
     <ui:extension>
