@@ -31,6 +31,22 @@ sap.ui.define(
           let idoc = productData.numero_idoc;
           let datiElementoSelect = productData.DelforSchedulazioni;
 
+          //prova per testata info
+          let datiElementoSelect2 = this.getOwnerComponent()
+            .getModel("master3")
+            .getProperty("/Master3")
+            .find((x) => (x.DelforPosizioni.id = this._product));
+          datiElementoSelect2.DelforPosizioni =
+            datiElementoSelect2.DelforPosizioni.flat();
+          this.getView().setModel(
+            new sap.ui.model.json.JSONModel(),
+            "detailData2"
+          );
+          this.getView()
+            .getModel("detailData2")
+            .setProperty("/DettaglioMaster3", datiElementoSelect2);
+
+          // fine prova
           datiElementoSelect = datiElementoSelect
             .map((item) => {
               if (item.data_spedizione_richiesta_effettiva) {

@@ -91,7 +91,7 @@
                   >
                   <m:Label text="Cliente" design="Bold" />
                   <m:Text
-                      text="{detailData>/DettaglioMaster3/DelforTestata/template}"
+                      text="{detailData>/DettaglioMaster3/DelforTestata/codice_buyer}"
                   />  
                   </m:VBox>
                    <m:VBox class="sapUiTinyMarginBottom"

@@ -84,7 +84,14 @@
                     visibleInFilterBar="true"
                 >
                     <fb:control>
-                    <Input/>
+                        <ComboBox showSecondaryValues= "true"  
+                        items="{
+                         path: 'master3>/Master3',
+                         sorter: { path: 'text' }
+                     }">
+                        
+                         <core:ListItem key="{master3>/DelforPosizioni/codice_cliente_materiale}" text="{master3>/DelforPosizioni/codice_cliente_materiale}" additionalText = "{master3>DelforPosizioni/descrizione_materiale}"/>
+                        </ComboBox>
                     </fb:control>
                 </fb:FilterGroupItem>
                 
@@ -172,7 +179,8 @@
                <!-- <Button icon="{=${master3>DelforTestata/template} === 'MAN' ? 'sap-icon://attachment' : 'sap-icon://cloud'}"></Button> -->
                <core:Icon src="{=${master3>DelforTestata/template} === 'MAN' ? 'sap-icon://attachment' : 'sap-icon://cloud'}" 
                 size="1rem" 
-                visible="{= ${master3>DelforTestata/codice_seller} ? true : false}" />
+                visible="{= ${master3>DelforTestata/codice_seller} ? true : false}" 
+                tooltip="{=${master3>DelforTestata/template} === 'MAN' ? 'Caricamento manuale' : 'Caricamento in cloud'}"/>
             </ui:template>
         </ui:Column>
         <ui:Column width="11rem" tooltip="Cliente" >

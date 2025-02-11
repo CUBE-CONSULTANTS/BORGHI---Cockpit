@@ -145,9 +145,10 @@
 
                         icon="sap-icon://shipping-status"
                         iconColor="Default"
-                        count="{/ProductCollectionStats/Counts/Weight/Ok}"
+                        count="2"
                         text="Delivery Forecast"
                         key="01"
+                        design="Horizontal"
                     >
                         <core:Fragment
                             fragmentName="sap.ui.demo.fiori2.view.fragments.deliveryMaster3"
@@ -160,6 +161,7 @@
                         count="{/ProductCollectionStats/Counts/Weight/Heavy}"
                         text="Call-Off"
                         key="02"
+                        design="Horizontal"
                     >
                         <core:Fragment
                             fragmentName="sap.ui.demo.fiori2.view.fragments.calloffMaster3"
@@ -172,6 +174,7 @@
                         count="{/ProductCollectionStats/Counts/Weight/Overweight}"
                         text="Self Billing"
                         key="03"
+                        design="Horizontal"
                     >
                         <core:Fragment
                             fragmentName="sap.ui.demo.fiori2.view.fragments.selfBillingMaster3"
@@ -184,6 +187,7 @@
                         count="{/ProductCollectionStats/Counts/Weight/Overweight}"
                         text="Despatch Advice"
                         key="04"
+                        design="Horizontal"
                     >
                         <!-- <core:Fragment fragmentName="sap.ui.demo.fiori2.view.fragments.linkDialogMaster3"
                     type="XML" /> -->
@@ -194,6 +198,7 @@
                         count="{/ProductCollectionStats/Counts/Weight/Overweight}"
                         text="Invoice"
                         key="05"
+                        design="Horizontal"
                     >
                         <!-- <core:Fragment fragmentName="sap.ui.demo.fiori2.view.fragments.linkDialogMaster3"
                     type="XML" /> -->
