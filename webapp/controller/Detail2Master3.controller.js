@@ -27,6 +27,8 @@ sap.ui.define(
           let productData = JSON.parse(this._product);
           let codiceClienteMateriale = productData.codice_cliente_materiale;
           let numeroOrdineAcquisto = productData.numero_ordine_acquisto;
+          let materiale = productData.descrizione_materiale;
+          let idoc = productData.numero_idoc;
           let datiElementoSelect = productData.DelforSchedulazioni;
 
           datiElementoSelect = datiElementoSelect
@@ -49,6 +51,8 @@ sap.ui.define(
               datiElementoSelect,
               codiceClienteMateriale,
               numeroOrdineAcquisto,
+              materiale,
+              idoc,
             }),
             "detailSched"
           );

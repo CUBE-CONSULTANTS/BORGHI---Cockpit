@@ -43,9 +43,8 @@
             <f:DynamicPageHeader pinnable="true">
 					<layout:HorizontalLayout allowWrapping="true">
 						<layout:VerticalLayout class="sapUiMediumMarginEnd">
-							<m:ObjectAttribute title="Materiale " text=""/>
-							<m:ObjectAttribute title="Cliente " text=""/>
-							<m:ObjectAttribute title="Idoc" text=""/>
+							<m:ObjectAttribute title="Materiale " text="{detailSched>/materiale}"/>
+							<m:ObjectAttribute title="Idoc" text="{detailSched>/idoc}"/>
 						</layout:VerticalLayout>
 
 						
