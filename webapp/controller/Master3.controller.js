@@ -283,7 +283,7 @@ sap.ui.define(
             .then(
               function (oHelper) {
                 oNextUIState = oHelper.getNextUIState(1);
-                this.oRouter.navTo("prova", {
+                this.oRouter.navTo("Detail2Master3", {
                   product: JSON.stringify(detail),
                   layout: oNextUIState.layout,
                 });

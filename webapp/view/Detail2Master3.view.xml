@@ -5,13 +5,16 @@
     xmlns:m="sap.m"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:commons="sap.suite.ui.commons"
+    xmlns:layout="sap.ui.layout"
     height="100%"
 >
     <f:DynamicPage fitContent="true" >
+        
         <f:title>
             <f:DynamicPageTitle >
               <f:heading>
                 <m:Title text="Schedulazioni {detailSched>/numeroOrdineAcquisto} / {detailSched>/codiceClienteMateriale}" />
+                
               </f:heading>
                 <f:actions>
             <m:Button
@@ -36,7 +39,19 @@
         </f:actions>
             </f:DynamicPageTitle>
         </f:title>
-        
+        <f:header>
+            <f:DynamicPageHeader pinnable="true">
+					<layout:HorizontalLayout allowWrapping="true">
+						<layout:VerticalLayout class="sapUiMediumMarginEnd">
+							<m:ObjectAttribute title="Materiale " text=""/>
+							<m:ObjectAttribute title="Cliente " text=""/>
+							<m:ObjectAttribute title="Idoc" text=""/>
+						</layout:VerticalLayout>
+
+						
+					</layout:HorizontalLayout>
+				</f:DynamicPageHeader>
+        </f:header>
         <f:content>
           
             <commons:Timeline

@@ -176,7 +176,7 @@
                                         press="importaPress"
                                     /> -->
                                     <m:Button
-                                        text="Esporta Template Manuale"
+                                        text="Esporta excel"
                                         icon="sap-icon://excel-attachment"
                                         press="deletePress"
                                     />
