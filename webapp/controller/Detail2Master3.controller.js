@@ -103,7 +103,7 @@ sap.ui.define(
             "/actionButtonsInfo/midColumn/closeColumn"
           );
           //
-          this.oRouter.navTo("detailMaster3", {
+          this.oRouter.navTo("master3", {
             layout: sNextLayout,
             product: this._product,
           });
