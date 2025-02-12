@@ -13,9 +13,6 @@ sap.ui.define(
           this.oModel = this.oOwnerComponent.getModel();
 
           this.oRouter
-            .getRoute("master3")
-            .attachPatternMatched(this._onProductMatched, this);
-          this.oRouter
             .getRoute("Detail2Master3")
             .attachPatternMatched(this._onProductMatched, this);
         },
@@ -101,9 +98,11 @@ sap.ui.define(
         },
 
         handleClose: function () {
+          debugger
           var sNextLayout = this.oModel.getProperty(
             "/actionButtonsInfo/midColumn/closeColumn"
           );
+          //
           this.oRouter.navTo("detailMaster3", {
             layout: sNextLayout,
             product: this._product,

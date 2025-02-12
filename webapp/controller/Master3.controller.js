@@ -265,22 +265,10 @@ sap.ui.define(
       },
       dettaglioNav: function (oEvent) {
         debugger;
-        let level = oEvent
-          .getSource()
-          .getParent()
-          .getBindingContext("master3")
-          .getPath()
-          .includes("DelforPosizioni");
+        let level = oEvent.getSource().getParent().getBindingContext("master3").getPath().includes("DelforPosizioni");
         // let detailSched = oEvent.getSource().getParent().getBindingContext("master3").getObject().DelforSchedulazioni
-        let detailPath = oEvent
-          .getSource()
-          .getParent()
-          .getBindingContext("master3")
-          .getPath();
-
-        let detail = this.getView()
-          .getModel("master3")
-          .getProperty(`${detailPath}`);
+        let detailPath = oEvent.getSource().getParent().getBindingContext("master3").getPath();
+        let detail = this.getView().getModel("master3").getProperty(`${detailPath}`);
         if (level) {
           debugger;
           let oNextUIState;
