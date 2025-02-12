@@ -12,7 +12,12 @@
     font-weight: bold;
     color: #333;
 }
-
+.sapMITBTab{
+  width: 130px!important;
+}
+.sapMITBFilterDefault .sapMITBFilterWrapper .sapMITBText {
+  width: 130px!important;
+}
 .customAvatar {
     border: 2px solid #ccc;
     border-radius: 50%;

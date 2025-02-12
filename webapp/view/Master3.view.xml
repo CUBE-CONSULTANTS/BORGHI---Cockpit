@@ -138,30 +138,31 @@
                 select=".onFilterSelect"
                 selectedKey="01"
                 expandable="false"
-                width="100%"
             >
                 <items>
                     <IconTabFilter
-
+                        class="prova"
                         icon="sap-icon://shipping-status"
                         iconColor="Default"
+                        
                         count="2"
                         text="Delivery Forecast"
                         key="01"
-                        design="Horizontal"
+                        
                     >
                         <core:Fragment
                             fragmentName="sap.ui.demo.fiori2.view.fragments.deliveryMaster3"
                             type="XML"
                         />
                     </IconTabFilter>
+                    
                     <IconTabFilter
                         icon="sap-icon://time-off"
                         iconColor="Default"
                         count="{/ProductCollectionStats/Counts/Weight/Heavy}"
                         text="Call-Off"
                         key="02"
-                        design="Horizontal"
+                        
                     >
                         <core:Fragment
                             fragmentName="sap.ui.demo.fiori2.view.fragments.calloffMaster3"
@@ -174,7 +175,7 @@
                         count="{/ProductCollectionStats/Counts/Weight/Overweight}"
                         text="Self Billing"
                         key="03"
-                        design="Horizontal"
+                       
                     >
                         <core:Fragment
                             fragmentName="sap.ui.demo.fiori2.view.fragments.selfBillingMaster3"
@@ -187,7 +188,7 @@
                         count="{/ProductCollectionStats/Counts/Weight/Overweight}"
                         text="Despatch Advice"
                         key="04"
-                        design="Horizontal"
+                        
                     >
                         <!-- <core:Fragment fragmentName="sap.ui.demo.fiori2.view.fragments.linkDialogMaster3"
                     type="XML" /> -->
@@ -198,7 +199,7 @@
                         count="{/ProductCollectionStats/Counts/Weight/Overweight}"
                         text="Invoice"
                         key="05"
-                        design="Horizontal"
+                       
                     >
                         <!-- <core:Fragment fragmentName="sap.ui.demo.fiori2.view.fragments.linkDialogMaster3"
                     type="XML" /> -->
@@ -209,7 +210,7 @@
                     count="{/ProductCollectionStats/Counts/Weight/Overweight}"
                     text="File Scartati"
                     key="06"
-                    design="Horizontal"
+                    
                     >
                     <!-- <core:Fragment fragmentName="sap.ui.demo.fiori2.view.fragments.linkDialogMaster3"
                 type="XML" /> -->
@@ -220,9 +221,8 @@
                 count="{/ProductCollectionStats/Counts/Weight/Overweight}"
                 text="Caricamento Manuale"
                 key="07"
-                design="Horizontal"
                 
-            >
+              >
            <!-- importaPress-->
                 <core:Fragment fragmentName="sap.ui.demo.fiori2.view.fragments.importMaster3"
             type="XML" />
