@@ -35,26 +35,27 @@
       class="sapUiResponsiveMargin"
       height="70%">
       <items>
-          <GenericTile    
-              width="250px"              
-              header="CONFRONTO ULTIME DUE PROGRAMMAZIONI"
-              subheader="Dettaglio codice articolo"
-              press="onNavigateToPage1"
-              class="tileMargin">
-              <TileContent>
-                  <ImageContent src="sap-icon://bbyd-dashboard" />
-              </TileContent>
-          </GenericTile>
-          <GenericTile
+        <GenericTile
               width="250px"     
-              header="CONFRONTO ULTIME DUE PROGRAMMAZIONI"
-              subheader="Dettaglio percentuale"
+              header="VARIAZIONE ULTIME DUE SCHEDULAZIONI"
+              subheader="Confronto per Cliente"
               press="onNavigateToPage2"
               class="tileMargin">
               <TileContent>
                   <ImageContent src="sap-icon://business-objects-experience" />
               </TileContent>
           </GenericTile>
+          <GenericTile    
+              width="250px"              
+              header="VARIAZIONE ULTIME DUE SCHEDULAZION"
+              subheader="Confronto per Codice Articolo"
+              press="onNavigateToPage1"
+              class="tileMargin">
+              <TileContent>
+                  <ImageContent src="sap-icon://bbyd-dashboard" />
+              </TileContent>
+          </GenericTile>
+          
           <GenericTile
               width="250px"     
               header="Monitoraggio EDI"
@@ -65,6 +66,16 @@
                   <ImageContent src="sap-icon://history" />
               </TileContent>
           </GenericTile>
+          <GenericTile
+          width="250px"     
+          header="Archivio EDI"
+          
+          press=""
+          class="tileMargin">
+          <TileContent>
+              <ImageContent src="sap-icon://folder" />
+          </TileContent>
+      </GenericTile>
       </items>
   </FlexBox>
     </f:content>
