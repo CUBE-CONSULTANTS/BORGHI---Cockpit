@@ -1,6 +1,23 @@
 sap.ui.define(
-  ["./BaseController", "sap/ui/model/json/JSONModel", "sap/ui/core/Fragment"],
-  function (BaseController, JSONModel, Fragment) {
+  [
+    "./BaseController",
+    "sap/ui/model/json/JSONModel",
+    "sap/ui/core/Fragment",
+    "sap/m/p13n/Engine",
+    "sap/m/p13n/SelectionController",
+    "sap/m/p13n/SortController",
+
+    "sap/m/p13n/MetadataHelper",
+  ],
+  function (
+    BaseController,
+    JSONModel,
+    Fragment,
+    Engine,
+    SelectionController,
+    SortController,
+    MetadataHelper
+  ) {
     "use strict";
 
     return BaseController.extend(
@@ -43,6 +60,8 @@ sap.ui.define(
           // 	path: "/ProductCollection/" + this._product,
           // 	model: "products"
           // });
+
+          // this._registerForP13n();
         },
 
         onEditToggleButtonPress: function () {
@@ -192,6 +211,95 @@ sap.ui.define(
                 });
               }.bind(this)
             );
+        },
+
+        // _registerForP13n: function () {
+        //   const oTable = this.byId("persoTable");
+
+        //   this.oMetadataHelper = new MetadataHelper([
+        //     {
+        //       key: "firstName_col",
+        //       label: "First Name",
+        //       path: "firstName",
+        //     },
+        //     {
+        //       key: "lastName_col",
+        //       label: "Last Name",
+        //       path: "lastName",
+        //     },
+        //     {
+        //       key: "city_col",
+        //       label: "City",
+        //       path: "city",
+        //     },
+        //     {
+        //       key: "size_col",
+        //       label: "Size",
+        //       path: "size",
+        //     },
+        //   ]);
+
+        //   this._mIntialWidth = {
+        //     firstName_col: "11rem",
+        //     lastName_col: "11rem",
+        //     city_col: "11rem",
+        //     size_col: "11rem",
+        //   };
+
+        //   Engine.getInstance().register(oTable, {
+        //     helper: this.oMetadataHelper,
+        //     controller: {
+        //       Columns: new SelectionController({
+        //         targetAggregation: "columns",
+        //         control: oTable,
+        //       }),
+        //       Sorter: new SortController({
+        //         control: oTable,
+        //       }),
+        //       Groups: new GroupController({
+        //         control: oTable,
+        //       }),
+        //       ColumnWidth: new ColumnWidthController({
+        //         control: oTable,
+        //       }),
+        //     },
+        //   });
+
+        //   Engine.getInstance().attachStateChange(
+        //     this.handleStateChange.bind(this)
+        //   );
+        // },
+
+        // openPosizioniDialog: function (oEvt) {
+        //   const oTable = this.byId("tablePos");
+
+        //   Engine.getInstance().show(oTable, ["Columns", "Sorter"], {
+        //     contentHeight: "35rem",
+        //     contentWidth: "32rem",
+        //     source: oEvt.getSource(),
+        //   });
+        // },
+
+        openPosizioniDialog: function (oEvt) {
+          const oTable = this.byId("tablePos");
+
+          // Crea un'istanza di SelectionController
+          var oSelectionController = new sap.m.p13n.SelectionController({
+            control: oTable,
+          });
+
+          // Usa MetadataHelper per ottenere le colonne e fare ulteriori operazioni
+          var oMetadataHelper = new sap.m.p13n.MetadataHelper();
+          var aColumns = oTable.getColumns();
+
+          // Puoi usare aColumns per personalizzare ulteriormente le colonne
+
+          // Apri la dialog per la selezione delle colonne
+          oSelectionController.open({
+            source: oEvt.getSource(),
+            contentHeight: "35rem",
+            contentWidth: "32rem",
+          });
         },
       }
     );
