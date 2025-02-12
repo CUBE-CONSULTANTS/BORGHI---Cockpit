@@ -1,19 +1,24 @@
-<core:FragmentDefinition xmlns:unified="sap.ui.unified" xmlns="sap.m" xmlns:core="sap.ui.core">
-    <Dialog title="Caricamento file Excel">
-        <content>
-            <VBox class= "sapUiMediumMargin">
-                
-                <HBox class="sapUiMediumMarginBottom">
-                    <unified:FileUploader ></unified:FileUploader>
-                    <Button type="Emphasized" icon="sap-icon://upload" text="Upload" class="sapUiSmallMarginBegin"></Button>
-                </HBox>
-                
-            </VBox>
-        </content>
-        <buttons>
-          <Button type="Emphasized" icon="sap-icon://download" text="Esporta Template Manuale"/>
-          
-            <Button icon="sap-icon://decline"  text="Chiudi" press="onclose"/> 
-        </buttons>
-    </Dialog>
+<core:FragmentDefinition
+    xmlns:unified="sap.ui.unified"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+>
+    <VBox class="sapUiSmallMarginTop sapUiResponsiveContentPadding" backgroundDesign="Solid">
+        <HBox class="sapUiSmallMarginTopBottom sapUiSmallMarginBegin">
+            <Button
+                type="Emphasized"
+                icon="sap-icon://download"
+                text="Esporta Template Manuale"
+            />
+        </HBox>
+        <HBox class="sapUiMediumMarginBottom sapUiSmallMarginBegin">
+            <unified:FileUploader width="350px" />
+            <Button
+                type="Emphasized"
+                icon="sap-icon://upload"
+                text="Upload"
+                class="sapUiSmallMarginBeginEnd"
+            />
+        </HBox>
+    </VBox>
 </core:FragmentDefinition>

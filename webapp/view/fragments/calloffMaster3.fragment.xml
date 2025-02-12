@@ -34,8 +34,8 @@
                 </fb:FilterGroupItem>
                 <fb:FilterGroupItem
                 id="gne"
-                    name="Date di consegna"
-                    label="Date di consegna"
+                    name="Data di Fatturazione"
+                    label="Data di Fatturazione"
                     groupName="Group1"
                     visibleInFilterBar="true"
                 >

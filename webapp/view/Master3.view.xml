@@ -203,6 +203,30 @@
                         <!-- <core:Fragment fragmentName="sap.ui.demo.fiori2.view.fragments.linkDialogMaster3"
                     type="XML" /> -->
                     </IconTabFilter>
+                    <IconTabFilter
+                    icon="sap-icon://delete"
+                    iconColor="Default"
+                    count="{/ProductCollectionStats/Counts/Weight/Overweight}"
+                    text="File Scartati"
+                    key="06"
+                    design="Horizontal"
+                    >
+                    <!-- <core:Fragment fragmentName="sap.ui.demo.fiori2.view.fragments.linkDialogMaster3"
+                type="XML" /> -->
+                </IconTabFilter>
+                <IconTabFilter
+                icon="sap-icon://excel-attachment"
+                iconColor="Default"
+                count="{/ProductCollectionStats/Counts/Weight/Overweight}"
+                text="Caricamento Manuale"
+                key="07"
+                design="Horizontal"
+                
+            >
+           <!-- importaPress-->
+                <core:Fragment fragmentName="sap.ui.demo.fiori2.view.fragments.importMaster3"
+            type="XML" />
+            </IconTabFilter>
                 </items>
 
                 <content />

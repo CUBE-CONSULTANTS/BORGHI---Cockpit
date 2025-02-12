@@ -78,6 +78,12 @@ sap.ui.define(
           case "05":
             this.getOwnerComponent().setModel(new JSONModel({}), "master3");
             break;
+          case "06":
+            this.getOwnerComponent().setModel(new JSONModel({}), "master3");
+            break;
+          case "07":
+            this.getOwnerComponent().setModel(new JSONModel({}), "master3");
+            break;
         }
         this.hideBusy(0);
       },
@@ -339,16 +345,11 @@ sap.ui.define(
 
       navToAPP: function (oEvent) {
         debugger;
-        let level = oEvent
-          .getSource()
-          .getParent()
-          .getParent()
-          .getBindingContext("master3")
-          .getPath();
+        let level = oEvent.getSource().getParent().getParent().getBindingContext("master3").getPath();
         if (level.includes("DelforPosizioni")) {
-          console.log("naviga a 2");
+          this.getRouter().navTo("master")
         } else {
-          console.log("naviga a 1");
+          this.getRouter().navTo("master2")
         }
       },
 
