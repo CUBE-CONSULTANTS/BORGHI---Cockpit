@@ -83,6 +83,29 @@ sap.ui.define([
           }
         });
       });
+    },
+
+    //esempio batchOP: const batchOperations = [
+    //   { path: "/Products", method: "GET" }, 
+    //   { path: "/Products", method: "POST", data: { ID: 1003, Name: "Smartphone", Price: 800 }}, 
+    //   { path: "/Products(1003)", method: "PATCH", data: { Price: 850 } }, 
+    //   { path: "/Products(1002)", method: "DELETE" }
+    // ];
+    sendBatchRequest: function (oModel, batchOperations) {
+      return new Promise((resolve, reject) => {
+        let mRequests = [];
+        
+        batchOperations.forEach(op => {
+          mRequests.push(oModel.createBatchOperation(op.path, op.method, op.data));
+        });
+        
+        oModel.addBatchChangeOperations(mRequests);
+        
+        oModel.submitBatch(
+          (oData, oResponse) => resolve(oData), 
+          (oError) => reject(oError) 
+        );
+      });
     }
   };
 });
