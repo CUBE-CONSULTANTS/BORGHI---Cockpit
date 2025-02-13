@@ -377,9 +377,9 @@ sap.ui.define(
             },
           });
 
-          // Engine.getInstance().attachStateChange(
-          //   this.handleStateChange.bind(this)
-          // );
+          Engine.getInstance().attachStateChange(
+            this.handleStateChange.bind(this)
+          );
         },
 
         openPosizioniDialog: function (oEvt) {
@@ -390,6 +390,66 @@ sap.ui.define(
             contentWidth: "32rem",
             source: oEvt.getSource(),
           });
+        },
+
+        _getKey: function (oControl) {
+          return oControl.data("p13nKey");
+        },
+
+        handleStateChange: function (oEvt) {
+          const oTable = this.byId("tablePos");
+          const oState = oEvt.getParameter("state");
+
+          if (!oState) {
+            return;
+          }
+
+          oTable.getColumns().forEach(
+            function (oColumn) {
+              const sKey = this._getKey(oColumn);
+              const sColumnWidth = oState.ColumnWidth[sKey];
+
+              oColumn.setWidth(sColumnWidth || this._mIntialWidth[sKey]);
+
+              oColumn.setVisible(false);
+              oColumn.setSortOrder(CoreLibrary.SortOrder.None);
+            }.bind(this)
+          );
+
+          oState.Columns.forEach(
+            function (oProp, iIndex) {
+              const oCol = this.byId("tablePos")
+                .getColumns()
+                .find((oColumn) => oColumn.data("p13nKey") === oProp.key);
+              oCol.setVisible(true);
+
+              oTable.removeColumn(oCol);
+              oTable.insertColumn(oCol, iIndex);
+            }.bind(this)
+          );
+
+          const aSorter = [];
+          oState.Sorter.forEach(
+            function (oSorter) {
+              const oColumn = this.byId("tablePos")
+                .getColumns()
+                .find((oColumn) => oColumn.data("p13nKey") === oSorter.key);
+
+              oColumn.setSorted(true);
+              oColumn.setSortOrder(
+                oSorter.descending
+                  ? CoreLibrary.SortOrder.Descending
+                  : CoreLibrary.SortOrder.Ascending
+              );
+              aSorter.push(
+                new Sorter(
+                  this.oMetadataHelper.getProperty(oSorter.key).path,
+                  oSorter.descending
+                )
+              );
+            }.bind(this)
+          );
+          oTable.getBinding("rows").sort(aSorter);
         },
 
         // openPosizioniDialog: function (oEvt) {
