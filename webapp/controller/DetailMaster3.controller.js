@@ -374,6 +374,7 @@ sap.ui.define(
               Groups: new GroupController({
                 control: oTable,
               }),
+              
             },
           });
 
