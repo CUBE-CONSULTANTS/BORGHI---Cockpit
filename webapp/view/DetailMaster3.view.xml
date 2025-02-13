@@ -273,7 +273,8 @@
                                                     />
                                                 </ui:template>
                                             </ui:Column>
-                                            <ui:Column width="10rem" tooltip="Codice cliente materiale">
+                                            <ui:Column width="10rem" tooltip="Codice cliente materiale"
+                                            app:p13nKey="codice_cliente_materiale_col" sortProperty="Cod. Cliente Mat.">
                                                 <m:Label
                                                     text="Cod. Cliente Mat."
                                                 />

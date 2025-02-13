@@ -6,8 +6,10 @@ sap.ui.define(
     "sap/m/p13n/Engine",
     "sap/m/p13n/SelectionController",
     "sap/m/p13n/SortController",
-
+    "sap/m/p13n/GroupController",
     "sap/m/p13n/MetadataHelper",
+    "sap/ui/model/Sorter",
+    "sap/ui/core/library",
   ],
   function (
     BaseController,
@@ -16,7 +18,10 @@ sap.ui.define(
     Engine,
     SelectionController,
     SortController,
-    MetadataHelper
+    GroupController,
+    MetadataHelper,
+    Sorter,
+    CoreLibrary
   ) {
     "use strict";
 
@@ -61,7 +66,7 @@ sap.ui.define(
           // 	model: "products"
           // });
 
-          // this._registerForP13n();
+          this._registerForP13n();
         },
 
         onEditToggleButtonPress: function () {
@@ -213,94 +218,201 @@ sap.ui.define(
             );
         },
 
-        // _registerForP13n: function () {
-        //   const oTable = this.byId("persoTable");
+        _registerForP13n: function () {
+          const oTable = this.byId("tablePos");
 
-        //   this.oMetadataHelper = new MetadataHelper([
-        //     {
-        //       key: "firstName_col",
-        //       label: "First Name",
-        //       path: "firstName",
-        //     },
-        //     {
-        //       key: "lastName_col",
-        //       label: "Last Name",
-        //       path: "lastName",
-        //     },
-        //     {
-        //       key: "city_col",
-        //       label: "City",
-        //       path: "city",
-        //     },
-        //     {
-        //       key: "size_col",
-        //       label: "Size",
-        //       path: "size",
-        //     },
-        //   ]);
+          this.oMetadataHelper = new MetadataHelper([
+            {
+              key: "destinatario_col",
+              label: "Destinatario",
+              path: "destinatario",
+            },
+            {
+              key: "codice_cliente_materiale_col",
+              label: "Codice cliente materiale",
+              path: "codice_cliente_materiale",
+            },
+            {
+              key: "city_col",
+              label: "Codice materiale fornitore",
+              path: "codice_materiale_fornitore",
+            },
+            {
+              key: "size_col",
+              label: "Descrizione materiale",
+              path: "descrizione_materiale",
+            },
+            {
+              key: "size_col",
+              label: "Punto di scarico",
+              path: "punto_scarico",
+            },
+            {
+              key: "size_col",
+              label: "Destinazione interna",
+              path: "destinazione_interna",
+            },
+            {
+              key: "size_col",
+              label: "Testo riga",
+              path: "testo_riga",
+            },
+            {
+              key: "size_col",
+              label: "Data inizio calcolo quantità cumulata",
+              path: "data_inizio_calc_quantita_cumulata",
+            },
+            {
+              key: "size_col",
+              label: "Progressivo invio",
+              path: "progressivo_invio",
+            },
+            {
+              key: "size_col",
+              label: "Data progressivo invio",
+              path: "data_progressivo_invio",
+            },
+            {
+              key: "size_col",
+              label: "Numero Ultima Schedulazione Ricevuta",
+              path: "numero_ultima_schedulazione_ricevuta",
+            },
+            {
+              key: "size_col",
+              label: "Data Numero Ultima Schedulazione Ricevuta",
+              path: "data_numero_ultima_schedulazione_ricevuta",
+            },
+            {
+              key: "size_col",
+              label: "Numero ordine di acquisto",
+              path: "numero_ordine_acquisto",
+            },
+            {
+              key: "size_col",
+              label: "Ultima quantità spedita",
+              path: "ultima_quantita_spedita",
+            },
+            {
+              key: "size_col",
+              label: "Numero Ultima bolla ricevuta dal cliente",
+              path: "numero_ultima_bolla_ricevuta_cliente",
+            },
+            {
+              key: "size_col",
+              label: "Data ultima bolla ricevuta",
+              path: "data_ultima_bolla_ricevuta",
+            },
+            {
+              key: "size_col",
+              label: "Quantità cumulativa ricevuta",
+              path: "quantita_cumulativa_ricevuta",
+            },
+            {
+              key: "size_col",
+              label: "Ultima quantità ordinata",
+              path: "",
+            },
+            {
+              key: "size_col",
+              label: "Release number",
+              path: "",
+            },
+            {
+              key: "size_col",
+              label: "Quantità cumulativa precedente",
+              path: "",
+            },
+            {
+              key: "size_col",
+              label: "Quantità in backorder",
+              path: "",
+            },
+            {
+              key: "size_col",
+              label: "Quantità ricevuta e accettata",
+              path: "",
+            },
+            {
+              key: "size_col",
+              label: "Contatto cliente",
+              path: "contatto_cliente",
+            },
+            {
+              key: "size_col",
+              label: "Info contatto email",
+              path: "informazioni_contatto_email",
+            },
+            {
+              key: "size_col",
+              label: "Info contatto telefonico",
+              path: "informazioni_contatto_telefonico",
+            },
+            {
+              key: "size_col",
+              label: "Info contatto fax",
+              path: "informazioni_contatto_fax",
+            },
+          ]);
+          debugger;
+          this._mIntialWidth = {
+            firstName_col: "11rem",
+            lastName_col: "11rem",
+            city_col: "11rem",
+            size_col: "11rem",
+          };
 
-        //   this._mIntialWidth = {
-        //     firstName_col: "11rem",
-        //     lastName_col: "11rem",
-        //     city_col: "11rem",
-        //     size_col: "11rem",
-        //   };
+          Engine.getInstance().register(oTable, {
+            helper: this.oMetadataHelper,
+            controller: {
+              Columns: new SelectionController({
+                targetAggregation: "columns",
+                control: oTable,
+              }),
+              Sorter: new SortController({
+                control: oTable,
+              }),
+              Groups: new GroupController({
+                control: oTable,
+              }),
+            },
+          });
 
-        //   Engine.getInstance().register(oTable, {
-        //     helper: this.oMetadataHelper,
-        //     controller: {
-        //       Columns: new SelectionController({
-        //         targetAggregation: "columns",
-        //         control: oTable,
-        //       }),
-        //       Sorter: new SortController({
-        //         control: oTable,
-        //       }),
-        //       Groups: new GroupController({
-        //         control: oTable,
-        //       }),
-        //       ColumnWidth: new ColumnWidthController({
-        //         control: oTable,
-        //       }),
-        //     },
-        //   });
-
-        //   Engine.getInstance().attachStateChange(
-        //     this.handleStateChange.bind(this)
-        //   );
-        // },
-
-        // openPosizioniDialog: function (oEvt) {
-        //   const oTable = this.byId("tablePos");
-
-        //   Engine.getInstance().show(oTable, ["Columns", "Sorter"], {
-        //     contentHeight: "35rem",
-        //     contentWidth: "32rem",
-        //     source: oEvt.getSource(),
-        //   });
-        // },
+          // Engine.getInstance().attachStateChange(
+          //   this.handleStateChange.bind(this)
+          // );
+        },
 
         openPosizioniDialog: function (oEvt) {
           const oTable = this.byId("tablePos");
 
-          // Crea un'istanza di SelectionController
-          var oSelectionController = new sap.m.p13n.SelectionController({
-            control: oTable,
-          });
-
-          // Usa MetadataHelper per ottenere le colonne e fare ulteriori operazioni
-          var oMetadataHelper = new sap.m.p13n.MetadataHelper();
-          var aColumns = oTable.getColumns();
-
-          // Puoi usare aColumns per personalizzare ulteriormente le colonne
-
-          // Apri la dialog per la selezione delle colonne
-          oSelectionController.open({
-            source: oEvt.getSource(),
+          Engine.getInstance().show(oTable, ["Columns", "Sorter"], {
             contentHeight: "35rem",
             contentWidth: "32rem",
+            source: oEvt.getSource(),
           });
         },
+
+        // openPosizioniDialog: function (oEvt) {
+        //   const oTable = this.byId("tablePos");
+
+        //   // Crea un'istanza di SelectionController
+        //   var oSelectionController = new sap.m.p13n.SelectionController({
+        //     control: oTable,
+        //   });
+
+        //   // Usa MetadataHelper per ottenere le colonne e fare ulteriori operazioni
+        //   var oMetadataHelper = new sap.m.p13n.MetadataHelper();
+        //   var aColumns = oTable.getColumns();
+
+        //   // Puoi usare aColumns per personalizzare ulteriormente le colonne
+
+        //   // Apri la dialog per la selezione delle colonne
+        //   oSelectionController.open({
+        //     source: oEvt.getSource(),
+        //     contentHeight: "35rem",
+        //     contentWidth: "32rem",
+        //   });
+        // },
       }
     );
   }

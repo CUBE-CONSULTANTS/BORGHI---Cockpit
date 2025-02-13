@@ -3,6 +3,9 @@
 specVersion: "3.1"
 metadata:
   name: programmiconsegneedi
+framework:
+  name: SAPUI5
+  version: 1.132.1
 type: application
 server:
   customMiddleware:
