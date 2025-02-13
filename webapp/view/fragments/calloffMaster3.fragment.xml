@@ -55,8 +55,8 @@ xmlns:mvc="sap.ui.core.mvc">
                 </fb:FilterGroupItem>
                 
                  <fb:FilterGroupItem
-                    name="Reasaon"
-                    label="Reasaon"
+                    name="Reason"
+                    label="Reason"
                     groupName="Group1"
                     visibleInFilterBar="true"
                 >
