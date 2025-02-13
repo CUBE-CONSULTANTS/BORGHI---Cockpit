@@ -1,0 +1,89 @@
+<core:FragmentDefinition   xmlns="sap.m"
+xmlns:core="sap.ui.core"
+xmlns:f="sap.f"
+xmlns:fb="sap.ui.comp.filterbar"
+xmlns:ui="sap.ui.table"
+xmlns:mvc="sap.ui.core.mvc">
+<fb:FilterBar        
+useToolbar="false"
+
+class="sapUiSmallMarginBottom"
+>
+<fb:filterGroupItems>
+  <fb:FilterGroupItem
+        name="Nome File"
+        label="Nome File"
+        groupName="gr1"
+        visibleInFilterBar="true"
+    >
+        <fb:control>
+           <Input/>
+        </fb:control>
+    </fb:FilterGroupItem>
+   
+    <fb:FilterGroupItem
+        name="Data Ricezione"
+        label="Data Ricezione"
+        groupName="gr1"
+        visibleInFilterBar="true"
+    >
+        <fb:control>
+        <DatePicker
+        tooltip="..."
+        secondaryCalendarType="Gregorian"
+        change="handleChange"
+        />
+        </fb:control>
+    </fb:FilterGroupItem>                
+
+    
+</fb:filterGroupItems>
+</fb:FilterBar>
+
+
+
+
+<ui:Table
+rows="{/ProductCollection}"
+selectionMode="MultiToggle"
+paste="onPaste"
+ariaLabelledBy="title">
+<ui:extension>
+  <OverflowToolbar style="Clear">
+    
+  </OverflowToolbar>
+</ui:extension>
+<ui:columns>
+  <ui:Column width="7rem">
+    <Label text="Nome File" />
+    <ui:template>
+      <Text text="{Name}" wrapping="false" />
+    </ui:template>
+  </ui:Column>
+  
+  
+  <ui:Column width="15rem">
+    <Label text="Data Ricezione" />
+    <ui:template>
+      <Text text="{Name}" wrapping="false" />
+    </ui:template>
+  </ui:Column>
+
+  
+ 
+  <ui:Column width="11rem">
+    
+    <ui:template>
+      <HBox
+      >
+      <Button  icon="sap-icon://delete"/>
+      <Button icon="sap-icon://download"/>
+      <Button icon="sap-icon://action"/>
+      </HBox>
+      
+    </ui:template>
+  </ui:Column>
+
+</ui:columns>
+</ui:Table>
+</core:FragmentDefinition>
