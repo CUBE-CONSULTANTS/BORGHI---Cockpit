@@ -18,6 +18,7 @@
     xmlns:p13n="sap.m.p13n"
     xmlns:ce="sap.ui.codeeditor"
     xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+    xmlns:vm="sap.ui.fl.variants"
 >
     <ObjectPageLayout
         showTitleInHeaderContent="true"
@@ -27,6 +28,7 @@
         isChildPage="true"
         showFooter="true"
         upperCaseAnchorBar="false"
+        id="prova"
     >
         <headerTitle>
             <ObjectPageDynamicHeaderTitle>
@@ -210,18 +212,21 @@
                                         cellClick=".rowDetailPress"
                                         autoPopinMode="true"
                                         fixedLayout="false"
-                                        sort="sortDeliveryDate"
+                                        sort="onSort"
                                         ariaLabelledBy="title"
                                         showColumnVisibilityMenu="true"
+                                        sap.ui.fl:flexibility="sap/m/flexibility/EngineFlex"
                                     >
                                         <!--try-->
 
                                         <ui:extension>
-                                            <m:OverflowToolbar>
+                                            <m:OverflowToolbar id="prova2">
                                                 <m:ToolbarSpacer />
+                                                <!-- <vm:VariantManagement id="p13nVm" for="tablePos"/> -->
                                                 <m:Button
                                                     icon="sap-icon://action-settings"
                                                     press="openPosizioniDialog"
+                                                    id="p13n"
                                                 />
                                             </m:OverflowToolbar>
                                         </ui:extension>
@@ -610,13 +615,5 @@
 
         
     </ObjectPageLayout>
-    <!-- <p13n:Popup id="p13nPopup" title="My Custom View Settings" close="onClose" warningText="Are you sure?" reset="">
-        <p13n:panels>
-            <p13n:SelectionPanel id="columnsPanel" title="Columns" enableCount="true" showHeader="true" change="parseP13nState"/>
-            <p13n:SortPanel id="sortPanel" title="Sort" change="parseP13nState"/>
-            <p13n:GroupPanel id="groupPanel" title="Group" change="parseP13nState"/>
-        </p13n:panels>
-    </p13n:Popup>
-
-    <ce:CodeEditor id="p13nEditor" class="sapUiSmallMargin" height="50rem"/> -->
+    
 </mvc:View>

@@ -374,7 +374,6 @@ sap.ui.define(
               Groups: new GroupController({
                 control: oTable,
               }),
-              
             },
           });
 
@@ -398,6 +397,7 @@ sap.ui.define(
         },
 
         handleStateChange: function (oEvt) {
+          debugger;
           const oTable = this.byId("tablePos");
           const oState = oEvt.getParameter("state");
 
