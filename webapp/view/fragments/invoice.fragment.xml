@@ -1,0 +1,152 @@
+<core:FragmentDefinition   xmlns="sap.m"
+xmlns:core="sap.ui.core"
+xmlns:f="sap.f"
+xmlns:fb="sap.ui.comp.filterbar"
+xmlns:ui="sap.ui.table"
+xmlns:mvc="sap.ui.core.mvc">
+<fb:FilterBar        
+useToolbar="false"
+
+class="sapUiSmallMarginBottom"
+>
+<fb:filterGroupItems>
+  <fb:FilterGroupItem
+        name="Num iDoc"
+        label="Num iDoc"
+        groupName="gr1"
+        visibleInFilterBar="true"
+    >
+        <fb:control>
+           <Input/>
+        </fb:control>
+    </fb:FilterGroupItem>
+    <fb:FilterGroupItem
+        name="Num Fattura di Vendita"
+        label="Num Fattura di Vendita"
+        groupName="gr1"
+        visibleInFilterBar="true"
+    >
+        <fb:control>
+           <Input/>
+        </fb:control>
+    </fb:FilterGroupItem>
+    <fb:FilterGroupItem
+        name="Num Doc Contabile"
+        label="Num Doc Contabile"
+        groupName="gr2"
+        visibleInFilterBar="true"
+    >
+        <fb:control>
+           <Input/>
+        </fb:control>
+    </fb:FilterGroupItem>
+    <fb:FilterGroupItem
+    name="BP (Destinatario fattura)"
+    label="BP (Destinatario fattura)"
+    groupName="gr1"
+    visibleInFilterBar="true"
+>
+    <fb:control>
+       <Input/>
+    </fb:control>
+</fb:FilterGroupItem>
+<fb:FilterGroupItem
+name="Num BP"
+label="Num BP"
+groupName="gr1"
+visibleInFilterBar="true"
+>
+<fb:control>
+   <Input/>
+</fb:control>
+</fb:FilterGroupItem>
+    <fb:FilterGroupItem
+        name="Data Creazione Doc Contabile"
+        label="Data Creazione Doc"
+        groupName="gr1"
+        visibleInFilterBar="true"
+    >
+        <fb:control>
+        <DatePicker
+        tooltip="..."
+        secondaryCalendarType="Gregorian"
+        change="handleChange"
+        />
+        </fb:control>
+    </fb:FilterGroupItem>                
+
+    
+</fb:filterGroupItems>
+</fb:FilterBar>
+
+
+
+
+<ui:Table
+rows="{/ProductCollection}"
+selectionMode="MultiToggle"
+paste="onPaste"
+ariaLabelledBy="title">
+<ui:extension>
+  <OverflowToolbar style="Clear">
+    
+  </OverflowToolbar>
+</ui:extension>
+<ui:columns>
+  <ui:Column width="7rem">
+    <Label text="Num iDoc" />
+    <ui:template>
+      <Text text="{Name}" wrapping="false" />
+    </ui:template>
+  </ui:Column>
+  
+  <ui:Column width="12rem">
+    <Label text="Num Fattura Vendita" />
+    <ui:template>
+      <Text text="{Name}" wrapping="false" />
+    </ui:template>
+  </ui:Column>
+  <ui:Column width="12rem">
+    <Label text="Num. Doc Contabile" />
+    <ui:template>
+      <Text text="{Name}" wrapping="false" />
+    </ui:template>
+  </ui:Column>
+  <ui:Column width="9rem">
+    <Label text="Num. DDT" />
+    <ui:template>
+      <Text text="{Name}" wrapping="false" />
+    </ui:template>
+  </ui:Column>
+  
+  <ui:Column width="11rem">
+    <Label text="BP (Destinatario Fattura)" />
+    <ui:template>
+      <Text text="{Name}" wrapping="false" />
+    </ui:template>
+  </ui:Column>
+
+  <ui:Column width="15rem">
+    <Label text="Data Creazione Doc Contabile" />
+    <ui:template>
+      <Text text="{Name}" wrapping="false" />
+    </ui:template>
+  </ui:Column>
+
+  <ui:Column width="11rem">
+    <Label text="Stato" />
+    <ui:template>
+      <Text text="{Name}" wrapping="false" />
+    </ui:template>
+  </ui:Column>
+ 
+  <ui:Column width="11rem">
+    
+    <ui:template>
+      
+    </ui:template>
+  </ui:Column>
+
+</ui:columns>
+</ui:Table>
+</core:FragmentDefinition>

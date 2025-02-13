@@ -47,7 +47,7 @@
           </GenericTile>
           <GenericTile    
               width="250px"              
-              header="VARIAZIONE ULTIME DUE SCHEDULAZION"
+              header="VARIAZIONE ULTIME DUE SCHEDULAZIONI"
               subheader="Confronto per Codice Articolo"
               press="onNavigateToPage1"
               class="tileMargin">

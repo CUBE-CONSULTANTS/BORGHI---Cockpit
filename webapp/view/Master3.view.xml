@@ -201,8 +201,8 @@
                         key="05"
                        
                     >
-                        <!-- <core:Fragment fragmentName="sap.ui.demo.fiori2.view.fragments.linkDialogMaster3"
-                    type="XML" /> -->
+                        <core:Fragment fragmentName="sap.ui.demo.fiori2.view.fragments.invoice"
+                    type="XML" />
                     </IconTabFilter>
                     <IconTabFilter
                     icon="sap-icon://delete"
