@@ -1,9 +1,9 @@
-<core:FragmentDefinition xmlns="sap.m" 
-    xmlns:core="sap.ui.core" 
-    xmlns:f="sap.f" 
-    xmlns:fb="sap.ui.comp.filterbar" 
-    xmlns:ui="sap.ui.table" 
-    xmlns:mvc="sap.ui.core.mvc">
+<core:FragmentDefinition   xmlns="sap.m"
+xmlns:core="sap.ui.core"
+xmlns:f="sap.f"
+xmlns:fb="sap.ui.comp.filterbar"
+xmlns:ui="sap.ui.table"
+xmlns:mvc="sap.ui.core.mvc">
 
    
             <fb:FilterBar
@@ -13,40 +13,26 @@
             search=".onSearch"
             filterChange=".onFilterChange"
             afterVariantLoad=".onAfterVariantLoad"
-            showGoOnFB="false"
-            showFilterConfiguration="false"
-            width="100%"
+            showGoOnFB="true"
+            showFilterConfiguration="true"
+            class="sapUiSmallMarginBottom"
         >
             <fb:filterGroupItems>
                 <fb:FilterGroupItem
-                    name="Date Processamento EDI"
-                    label="Date Processamento EDI"
+                    name="Data Ricezione EDI"
+                    label="Data Ricezione EDI"
                     groupName="Group1"
                     visibleInFilterBar="true"
                 >
                     <fb:control>
                     <DatePicker
                     tooltip="..."
-        secondaryCalendarType="Gregorian"
-        change="handleChange"
-        />
+                    secondaryCalendarType="Gregorian"
+                    change="handleChange"
+                    />
                     </fb:control>
                 </fb:FilterGroupItem>
-                <fb:FilterGroupItem
-                id="gne"
-                    name="Data di Fatturazione"
-                    label="Data di Fatturazione"
-                    groupName="Group1"
-                    visibleInFilterBar="true"
-                >
-                    <fb:control>
-                     <DatePicker
-                      tooltip="..."
-        secondaryCalendarType="Gregorian"
-        change="handleChange"
-        />
-                    </fb:control>
-                </fb:FilterGroupItem>
+                
                 <fb:FilterGroupItem
                     name="Cliente"
                     label="Cliente"
@@ -69,29 +55,13 @@
                 </fb:FilterGroupItem>
                 
                  <fb:FilterGroupItem
-                    name="Stato"
-                    label="Stato"
+                    name="Reasaon"
+                    label="Reasaon"
                     groupName="Group1"
                     visibleInFilterBar="true"
                 >
                     <fb:control>
-                        <ComboBox
-                            name=""
-                            selectionChange=".onSelectionChange"
-                        >
-                            <core:Item
-                                key="{key}"
-                                text="OK"
-                            />
-                            <core:Item
-                                key="{key}"
-                                text="KO"
-                            />
-                            <core:Item
-                                key="{key}"
-                                text="WARNING"
-                            />
-                        </ComboBox>
+                       <Input/>
                     </fb:control>
                 </fb:FilterGroupItem>
                 
@@ -99,5 +69,85 @@
         </fb:FilterBar>
         
 
+
+
+
+        <ui:Table
+				rows="{/ProductCollection}"
+				selectionMode="MultiToggle"
+				paste="onPaste"
+				ariaLabelledBy="title">
+				<ui:extension>
+					<OverflowToolbar style="Clear">
+						
+					</OverflowToolbar>
+				</ui:extension>
+				<ui:columns>
+					<ui:Column width="7rem">
+						<Label text="Cliente" />
+						<ui:template>
+							<Text text="{Name}" wrapping="false" />
+						</ui:template>
+					</ui:Column>
+          <ui:Column width="11rem">
+						<Label text="Progr. Invio" />
+						<ui:template>
+							<Text text="{Name}" wrapping="false" />
+						</ui:template>
+					</ui:Column>
+          <ui:Column width="11rem">
+						<Label text="Data Ricezione" />
+						<ui:template>
+							<Text text="{Name}" wrapping="false" />
+						</ui:template>
+					</ui:Column>
+          <ui:Column width="9rem">
+						<Label text="Mat. Fornitore" />
+						<ui:template>
+							<Text text="{Name}" wrapping="false" />
+						</ui:template>
+					</ui:Column>
+          <ui:Column width="9rem">
+						<Label text="Reason" />
+						<ui:template>
+							<Text text="{Name}" wrapping="false" />
+						</ui:template>
+					</ui:Column>
+          <ui:Column width="11rem">
+						<Label text="DDT" />
+						<ui:template>
+							<Text text="{Name}" wrapping="false" />
+						</ui:template>
+					</ui:Column>
+          <ui:Column width="6rem">
+						<Label text="Num. iDoc" />
+						<ui:template>
+							<Text text="{Name}" wrapping="false" />
+						</ui:template>
+					</ui:Column>
+          <ui:Column width="14rem">
+						<Label text="Ordine Emissione Spedizione" />
+						<ui:template>
+							<Text text="{Name}" wrapping="false" />
+						</ui:template>
+					</ui:Column>
+          <ui:Column width="11rem">
+						<Label text="Stato" />
+						<ui:template>
+							<Text text="{Name}" wrapping="false" />
+						</ui:template>
+					</ui:Column>
+          <ui:Column width="11rem">
+						
+						<ui:template>
+							<Button
+                  tooltip="Stock Level"
+                  icon="sap-icon://doc-attachment"
+                  />
+						</ui:template>
+					</ui:Column>
+				
+				</ui:columns>
+			</ui:Table>
    
 </core:FragmentDefinition>
