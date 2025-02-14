@@ -1,10 +1,10 @@
 sap.ui.define([
-    "sap/ui/core/mvc/Controller",
+    "./BaseController",
     "sap/ui/model/json/JSONModel"
-], function (Controller, JSONModel) {
+], function (BaseController, JSONModel) {
     "use strict";
 
-    return Controller.extend("sap.ui.demo.fiori2.controller.Master2", {
+    return BaseController.extend("sap.ui.demo.fiori2.controller.Master2", {
 
         onInit: function () {
             // Carica i dati dei clienti

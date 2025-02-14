@@ -11,6 +11,8 @@
   "main": "webapp/index.html",
   "dependencies": {},
   "devDependencies": {
+    "@sap/ui5-builder-webide-extension": "^1.1.8",
+    "ui5-task-zipper": "^0.5.0",
     "@ui5/cli": "^3.0.0",
     "@sap/ux-ui5-tooling": "1"
   },
@@ -18,6 +20,7 @@
     "start": "fiori run --open \"test/flpSandbox.html?sap-ui-xx-viewCache=false#programmiconsegneedi-display\"",
     "start-local": "fiori run --config ./ui5-local.yaml --open \"test/flpSandbox.html?sap-ui-xx-viewCache=false#programmiconsegneedi-display\"",
     "build": "ui5 build --config=ui5.yaml --clean-dest --dest dist",
+    "build:cf": "ui5 build preload --clean-dest --config ui5-deploy.yaml --include-task=generateCachebusterInfo",
     "deploy": "fiori verify",
     "deploy-config": "fiori add deploy-config",
     "start-noflp": "fiori run --open \"index.html?sap-ui-xx-viewCache=false\"",

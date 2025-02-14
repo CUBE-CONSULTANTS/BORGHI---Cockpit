@@ -5,10 +5,12 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:fb="sap.ui.comp.filterbar"
     xmlns:core="sap.ui.core"
+    xmlns:layout="sap.ui.layout"
 >
     <f:DynamicPage
         id="dynamicPageId"
         toggleHeaderOnTitleClick="false"
+        showFooter="true"
     >
         <!-- DynamicPage Title -->
         <f:title>
@@ -18,18 +20,23 @@
                         text="Prodotti ({products>/ProductCollectionStats/Counts/Total})"
                     />
                 </f:heading>
+                <f:actions>
+					<layout:HorizontalLayout allowWrapping="true">
+						<layout:VerticalLayout>
+							<Image 
+								src="public/images/borghiLogo2.png"
+								height="35.00000000px"
+								width="100%"
+							/>
+						</layout:VerticalLayout>
+					</layout:HorizontalLayout>
+				</f:actions>
             </f:DynamicPageTitle>
         </f:title>
         <f:header>
             <f:DynamicPageHeader pinnable="true">
                 <f:content>
-                    <Toolbar>
-                        <Button
-                            press="navToHome"
-                            type="Back"
-                            text="Torna alla Home"
-                        />
-                    </Toolbar>
+                    
 
                     <fb:FilterBar
                         id="filterbar"
@@ -250,6 +257,13 @@
         <!-- DynamicPage Footer -->
         <f:footer>
             <OverflowToolbar>
+              
+                <Button
+                    press="navToHome"
+                    type="Back"
+                    text="Torna alla Home"
+                />
+            
                 <ToolbarSpacer />
                 <Button
                     type="Accept"

@@ -4,13 +4,20 @@
     padding: 10px;
     border-radius: 5px;
 }
-
+.custTest{
+  background-color: #333!important;
+}
 .customTitle {
     font-size: 1.5em;
     font-weight: bold;
     color: #333;
 }
-
+.sapMITBTab{
+  width: 130px!important;
+}
+.sapMITBFilterDefault .sapMITBFilterWrapper .sapMITBText {
+  width: 130px!important;
+}
 .customAvatar {
     border: 2px solid #ccc;
     border-radius: 50%;
@@ -80,4 +87,8 @@
 
 .tileMargin {
     margin: 0 20px;
+}
+
+.sapUiTableRowHdr, .sapUiTableSelCol {
+    display: table-cell !important;
 }

@@ -1,10 +1,10 @@
 sap.ui.define([
-	"sap/ui/core/mvc/Controller",
+	"./BaseController",
 	"sap/ui/model/json/JSONModel"
-], function (Controller) {
+], function (BaseController) {
 	"use strict";
 
-	return Controller.extend("sap.ui.demo.fiori2.controller.Detail", {
+	return BaseController.extend("sap.ui.demo.fiori2.controller.Detail", {
 		onInit: function () {
 			this.oOwnerComponent = this.getOwnerComponent();
 
@@ -13,23 +13,9 @@ sap.ui.define([
 
 			this.oRouter.getRoute("master").attachPatternMatched(this._onProductMatched, this);
 			this.oRouter.getRoute("detail").attachPatternMatched(this._onProductMatched, this);
-			this.oRouter.getRoute("detailDetail").attachPatternMatched(this._onProductMatched, this);
 		},
 
-		onSupplierPress: function (oEvent) {
-			var supplierPath = oEvent.getSource().getBindingContext("products").getPath(),
-				supplier = supplierPath.split("/").slice(-1).pop(),
-				oNextUIState;
 
-			this.oOwnerComponent.getHelper().then(function (oHelper) {
-				oNextUIState = oHelper.getNextUIState(2);
-				this.oRouter.navTo("detailDetail", {
-					layout: oNextUIState.layout,
-					supplier: supplier,
-					product: this._product
-				});
-			}.bind(this));
-		},
 
 		_onProductMatched: function (oEvent) {
 			debugger

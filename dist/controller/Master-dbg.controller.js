@@ -1,13 +1,13 @@
 sap.ui.define([
-	"sap/ui/core/mvc/Controller",
+	"./BaseController",
 	"sap/ui/model/Filter",
 	"sap/ui/model/FilterOperator",
 	"sap/ui/model/Sorter",
 	"sap/m/MessageBox"
-], function (Controller, Filter, FilterOperator, Sorter, MessageBox) {
+], function (BaseController, Filter, FilterOperator, Sorter, MessageBox) {
 	"use strict";
 
-	return Controller.extend("sap.ui.demo.fiori2.controller.Master", {
+	return BaseController.extend("sap.ui.demo.fiori2.controller.Master", {
 		onInit: function () {
 			this.oView = this.getView();
 			this._bDescendingSort = false;
