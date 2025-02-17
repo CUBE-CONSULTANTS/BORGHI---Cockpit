@@ -42,6 +42,11 @@ sap.ui.define(
         oRouter = this.getRouter();
         oRouter.attachBeforeRouteMatched(this._onBeforeRouteMatched, this);
         oRouter.initialize();
+
+        this.setModel(
+          new JSONModel({ testata: "", posizioni: "", schedulazioni: "" }),
+          "datiAppoggio"
+        );
       },
 
       getHelper: function () {

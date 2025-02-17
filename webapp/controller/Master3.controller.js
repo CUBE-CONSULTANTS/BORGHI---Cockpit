@@ -265,10 +265,28 @@ sap.ui.define(
       },
       dettaglioNav: function (oEvent) {
         debugger;
-        let level = oEvent.getSource().getParent().getBindingContext("master3").getPath().includes("DelforPosizioni");
+        let level = oEvent
+          .getSource()
+          .getParent()
+          .getBindingContext("master3")
+          .getPath()
+          .includes("DelforPosizioni");
         // let detailSched = oEvent.getSource().getParent().getBindingContext("master3").getObject().DelforSchedulazioni
-        let detailPath = oEvent.getSource().getParent().getBindingContext("master3").getPath();
-        let detail = this.getView().getModel("master3").getProperty(`${detailPath}`);
+        let detailPath = oEvent
+          .getSource()
+          .getParent()
+          .getBindingContext("master3")
+          .getPath();
+        let detail = this.getView()
+          .getModel("master3")
+          .getProperty(`${detailPath}`);
+
+        this.getOwnerComponent()
+          .getModel("datiAppoggio")
+          .setProperty("/testata", detail.DelforTestata);
+        this.getOwnerComponent()
+          .getModel("datiAppoggio")
+          .setProperty("/posizioni", detail.DelforPosizioni);
         if (level) {
           debugger;
           let oNextUIState;
@@ -278,7 +296,7 @@ sap.ui.define(
               function (oHelper) {
                 oNextUIState = oHelper.getNextUIState(1);
                 this.oRouter.navTo("Detail2Master3", {
-                  product: JSON.stringify(detail),
+                  product: detail.id,
                   layout: oNextUIState.layout,
                 });
               }.bind(this)
@@ -290,7 +308,7 @@ sap.ui.define(
             .getBindingContext("master3")
             .getPath();
           this.oRouter.navTo("detailMaster3", {
-            product: JSON.stringify(detail),
+            product: detail.DelforTestata.id,
             layout: "OneColumn",
           });
         }
@@ -333,11 +351,16 @@ sap.ui.define(
 
       navToAPP: function (oEvent) {
         debugger;
-        let level = oEvent.getSource().getParent().getParent().getBindingContext("master3").getPath();
+        let level = oEvent
+          .getSource()
+          .getParent()
+          .getParent()
+          .getBindingContext("master3")
+          .getPath();
         if (level.includes("DelforPosizioni")) {
-          this.getRouter().navTo("master")
+          this.getRouter().navTo("master");
         } else {
-          this.getRouter().navTo("master2")
+          this.getRouter().navTo("master2");
         }
       },
 

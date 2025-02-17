@@ -98,20 +98,34 @@ sap.ui.define(
         },
 
         handleClose: function (oEvent) {
-          debugger
-          let currentBegColViewName = oEvent.getSource().getParent().getParent().getParent().getParent().getParent().getCurrentBeginColumnPage().getProperty('viewName')
+          debugger;
+          let currentBegColViewName = oEvent
+            .getSource()
+            .getParent()
+            .getParent()
+            .getParent()
+            .getViewName();
+          // oEvent.getSource().getParent().getParent().getParent().getParent().getParent().getCurrentBeginColumnPage().getProperty('viewName')
           var sNextLayout = this.oModel.getProperty(
             "/actionButtonsInfo/midColumn/closeColumn"
           );
           //prova chiusura colonna e nav
-          if(currentBegColViewName !== "sap.ui.demo.fiori2.view.DetailMaster3") {
-            sNextLayout = 
-            this.oRouter.navTo("master3", {
+          if (
+            currentBegColViewName !== "sap.ui.demo.fiori2.view.DetailMaster3"
+          ) {
+            sNextLayout = this.oRouter.navTo("master3", {
               layout: sNextLayout,
               product: this._product,
             });
-          }else{
-            oEvent.getSource().getParent().getParent().getParent().getParent().getParent().setLayout()
+          } else {
+            oEvent
+              .getSource()
+              .getParent()
+              .getParent()
+              .getParent()
+              .getParent()
+              .getParent()
+              .setLayout();
           }
         },
 
