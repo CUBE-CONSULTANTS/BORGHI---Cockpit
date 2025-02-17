@@ -366,6 +366,8 @@ sap.ui.define(
 
       prova2: function (oEvent) {
         debugger;
+        let table = this.byId("treetableMain");
+        let row = oEvent.getParameter("rowContext").getObject();
       },
       // loadFragment: function (oEvent) {
       //   if (!this._oMyFragment) {
