@@ -19,9 +19,9 @@ sap.ui.define(
 
     const SortOrder = CoreLibrary.SortOrder;
 
-    return BaseController.extend("sap.ui.demo.fiori2.controller.Master3", {
+    return BaseController.extend("programmi.consegne.edi.controller.Master3", {
       onInit: function () {
-        // var oMaster3Model = new JSONModel(sap.ui.require.toUrl('sap/ui/demo/fiori2/mockdata/master3.json'));
+        // var oMaster3Model = new JSONModel(sap.ui.require.toUrl('programmi/consegne/edi/mockdata/master3.json'));
         // this.getView().setModel(oMaster3Model, 'master3');
         this.oRouter = this.getOwnerComponent().getRouter();
         this.onFilterSelect(null, "01");
@@ -43,7 +43,7 @@ sap.ui.define(
           case "01":
             var oMaster3Model = new JSONModel(
               await sap.ui.require.toUrl(
-                "sap/ui/demo/fiori2/mockdata/dataMaster3.json"
+                "programmi/consegne/edi/mockdata/dataMaster3.json"
               )
             );
             this.getOwnerComponent().setModel(oMaster3Model, "master3");
@@ -58,7 +58,7 @@ sap.ui.define(
           case "03":
             var oMaster3Model = new JSONModel(
               sap.ui.require.toUrl(
-                "sap/ui/demo/fiori2/mockdata/dataMaster3.json"
+                "programmi/consegne/edi/mockdata/dataMaster3.json"
               )
             );
             this.getOwnerComponent().setModel(oMaster3Model, "master3");
@@ -150,7 +150,7 @@ sap.ui.define(
         //   if (!this._oDialog) {
         //     Fragment.load({
         //       id: this.getView().getId(),
-        //       name: "sap.ui.demo.fiori2.view.fragments.linkDialogMaster3",
+        //       name: "programmi.consegne.edi.view.fragments.linkDialogMaster3",
         //       controller: this,
         //     }).then(
         //       function (oDialog) {
@@ -201,7 +201,7 @@ sap.ui.define(
                 if (!this._oDialog) {
                   Fragment.load({
                     id: this.getView().getId(),
-                    name: "sap.ui.demo.fiori2.view.fragments.linkDialogMaster3",
+                    name: "programmi.consegne.edi.view.fragments.linkDialogMaster3",
                     controller: this,
                   }).then(
                     function (oDialog) {
@@ -231,7 +231,7 @@ sap.ui.define(
         if (!this._oDialog2) {
           Fragment.load({
             id: this.getView().getId(),
-            name: "sap.ui.demo.fiori2.view.fragments.importMaster3",
+            name: "programmi.consegne.edi.view.fragments.importMaster3",
             controller: this,
           }).then(
             function (oDialog2) {
@@ -373,7 +373,7 @@ sap.ui.define(
       //   if (!this._oMyFragment) {
       //     this._oMyFragment = sap.ui.xmlfragment(
       //       // this.getView().getId(),
-      //       "sap.ui.demo.fiori2.view.fragments.deliveryMaster3",
+      //       "programmi.consegne.edi.view.fragments.deliveryMaster3",
       //       this
       //     );
 

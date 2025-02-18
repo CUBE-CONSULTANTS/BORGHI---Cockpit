@@ -2,7 +2,7 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:layout="sap.ui.layout"
-    controllerName="sap.ui.demo.fiori2.controller.Home"
+    controllerName="programmi.consegne.edi.controller.Home"
     xmlns:f="sap.f">
     <f:DynamicPage title="Cockpit Flussi EDI"  showFooter="true">
       <f:title>

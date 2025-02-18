@@ -1,5 +1,5 @@
 <mvc:View
-    controllerName="sap.ui.demo.fiori2.controller.Master3"
+    controllerName="programmi.consegne.edi.controller.Master3"
     xmlns="sap.m"
     xmlns:f="sap.f"
     xmlns:mvc="sap.ui.core.mvc"
@@ -9,7 +9,7 @@
     xmlns:layout="sap.ui.layout"
 >
     <f:DynamicPage
-        id="dynamicPageId"
+        
         fitContent="true"
         toggleHeaderOnTitleClick="false"
         showFooter="true"
@@ -151,7 +151,7 @@
                         
                     >
                         <core:Fragment
-                            fragmentName="sap.ui.demo.fiori2.view.fragments.deliveryMaster3"
+                            fragmentName="programmi.consegne.edi.view.fragments.deliveryMaster3"
                             type="XML"
                         />
                     </IconTabFilter>
@@ -165,7 +165,7 @@
                         
                     >
                         <core:Fragment
-                            fragmentName="sap.ui.demo.fiori2.view.fragments.calloffMaster3"
+                            fragmentName="programmi.consegne.edi.view.fragments.calloffMaster3"
                             type="XML"
                         />
                     </IconTabFilter>
@@ -178,7 +178,7 @@
                        
                     >
                         <core:Fragment
-                            fragmentName="sap.ui.demo.fiori2.view.fragments.selfBillingMaster3"
+                            fragmentName="programmi.consegne.edi.view.fragments.selfBillingMaster3"
                             type="XML"
                         />
                     </IconTabFilter>
@@ -190,7 +190,7 @@
                         key="04"
                         
                     >
-                        <core:Fragment fragmentName="sap.ui.demo.fiori2.view.fragments.despatchAdvise"
+                        <core:Fragment fragmentName="programmi.consegne.edi.view.fragments.despatchAdvise"
                     type="XML" />
                     </IconTabFilter>
                     <IconTabFilter
@@ -201,7 +201,7 @@
                         key="05"
                        
                     >
-                        <core:Fragment fragmentName="sap.ui.demo.fiori2.view.fragments.invoice"
+                        <core:Fragment fragmentName="programmi.consegne.edi.view.fragments.invoice"
                     type="XML" />
                     </IconTabFilter>
                     <IconTabFilter
@@ -212,7 +212,7 @@
                     key="06"
                     
                     >
-                    <core:Fragment fragmentName="sap.ui.demo.fiori2.view.fragments.fileScartati"
+                    <core:Fragment fragmentName="programmi.consegne.edi.view.fragments.fileScartati"
                 type="XML" />
                 </IconTabFilter>
                 <IconTabFilter
@@ -224,7 +224,7 @@
                 
               >
            <!-- importaPress-->
-                <core:Fragment fragmentName="sap.ui.demo.fiori2.view.fragments.importMaster3"
+                <core:Fragment fragmentName="programmi.consegne.edi.view.fragments.importMaster3"
             type="XML" />
             </IconTabFilter>
                 </items>

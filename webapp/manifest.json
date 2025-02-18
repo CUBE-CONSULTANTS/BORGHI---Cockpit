@@ -1,16 +1,34 @@
 {
 	"_version": "1.66.0",
 	"sap.app": {
-		"id": "sap.ui.demo.fiori2",
+		"id": "programmi.consegne.edi",
 		"type": "application",
 		"applicationVersion": {
 			"version": "1.0.0"
-		}
+		},
+		"dataSources": {
+			"mainService": {
+				"uri": "/odata/v4/delivery-forecast/",
+				"type": "OData",
+				"settings": {
+				"annotations": [],
+				"odataVersion": "4.0"
+				}
+			},
+			"mainServiceV2": {
+				"uri": "/odata/v2/delivery-forecast/",
+				"type": "OData",
+				"settings": {
+				"annotations": [],
+				"odataVersion": "2.0"
+				}
+			}
+	}
 	},
-
 	"sap.ui5": {
+		
 		"rootView": {
-			"viewName": "sap.ui.demo.fiori2.view.App",
+			"viewName": "programmi.consegne.edi.view.App",
 			"type": "XML",
 			"async": true,
 			"id": "fcl"
@@ -26,6 +44,34 @@
 
             }
         },
+		"models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "cruscottopassivo.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "synchronizationMode": "None",
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      },
+      "modelloV2": {
+        "dataSource": "mainServiceV2",
+        "preload": true,
+        "settings": {
+          "synchronizationMode": "None",
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      }
+    },
 		"resources": {
 			"css": [
 			  {
@@ -47,7 +93,7 @@
 				"routerClass": "sap.f.routing.Router",
 				"type": "View",
 				"viewType": "XML",
-				"path": "sap.ui.demo.fiori2.view",
+				"path": "programmi.consegne.edi.view",
 				"controlId": "flexibleColumnLayout",
 				"transition": "slide",
 				"bypassed": {

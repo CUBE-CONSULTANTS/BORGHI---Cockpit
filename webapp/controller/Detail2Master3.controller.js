@@ -4,7 +4,7 @@ sap.ui.define(
     "use strict";
 
     return BaseController.extend(
-      "sap.ui.demo.fiori2.controller.Detail2Master3",
+      "programmi.consegne.edi.controller.Detail2Master3",
       {
         onInit: function () {
           debugger;
@@ -111,7 +111,8 @@ sap.ui.define(
           );
           //prova chiusura colonna e nav
           if (
-            currentBegColViewName !== "sap.ui.demo.fiori2.view.DetailMaster3"
+            currentBegColViewName !==
+            "programmi.consegne.edi.view.DetailMaster3"
           ) {
             sNextLayout = this.oRouter.navTo("master3", {
               layout: sNextLayout,

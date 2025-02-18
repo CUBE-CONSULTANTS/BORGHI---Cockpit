@@ -111,7 +111,7 @@
         name="Stato"
         label="Stato"
         groupName="Group1"
-        visibleInFilterBar="true"
+        visibleInFilterBar="false"
       >
         <fb:control>
           <ComboBox

@@ -13,7 +13,7 @@ sap.ui.define(
   ) {
     "use strict";
 
-    return UIComponent.extend("sap.ui.demo.fiori2.Component", {
+    return UIComponent.extend("programmi.consegne.edi.Component", {
       metadata: {
         manifest: "json",
       },
@@ -31,12 +31,12 @@ sap.ui.define(
 
         // set products demo model on this sample
         oProductsModel = new JSONModel(
-          sap.ui.require.toUrl("sap/ui/demo/fiori2/mockdata/products.json")
+          sap.ui.require.toUrl("programmi/consegne/edi/mockdata/products.json")
         );
         oProductsModel.setSizeLimit(1000);
         this.setModel(oProductsModel, "products");
 
-        // oMaster3Model = new JSONModel(sap.ui.require.toUrl('sap/ui/demo/fiori2/mockdata/master3.json'));
+        // oMaster3Model = new JSONModel(sap.ui.require.toUrl('programmi/consegne/edi/mockdata/master3.json'));
         // this.setModel(oMaster3Model, 'master3');
 
         oRouter = this.getRouter();

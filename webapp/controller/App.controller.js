@@ -1,7 +1,7 @@
 sap.ui.define(["./BaseController"], function (BaseController) {
   "use strict";
 
-  return BaseController.extend("sap.ui.demo.fiori2.controller.App", {
+  return BaseController.extend("programmi.consegne.edi.controller.App", {
     onInit: function () {
       this.oOwnerComponent = this.getOwnerComponent();
       this.oRouter = this.oOwnerComponent.getRouter();

@@ -1,5 +1,5 @@
 <mvc:View
-    controllerName="sap.ui.demo.fiori2.controller.Master2"
+    controllerName="programmi.consegne.edi.controller.Master2"
     xmlns="sap.m"
     xmlns:f="sap.f"
     xmlns:mvc="sap.ui.core.mvc"

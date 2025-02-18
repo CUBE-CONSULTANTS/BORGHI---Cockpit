@@ -26,7 +26,7 @@ sap.ui.define(
     "use strict";
 
     return BaseController.extend(
-      "sap.ui.demo.fiori2.controller.DetailMaster3",
+      "programmi.consegne.edi.controller.DetailMaster3",
       {
         onInit: function () {
           this.oOwnerComponent = this.getOwnerComponent();
@@ -137,7 +137,7 @@ sap.ui.define(
           if (!this._oDialog2) {
             Fragment.load({
               id: this.getView().getId(),
-              name: "sap.ui.demo.fiori2.view.fragments.importMaster3",
+              name: "programmi.consegne.edi.view.fragments.importMaster3",
               controller: this,
             }).then(
               function (oDialog2) {
@@ -177,7 +177,7 @@ sap.ui.define(
             if (!this._oDialog) {
               Fragment.load({
                 id: this.getView().getId(),
-                name: "sap.ui.demo.fiori2.view.fragments.linkDialogMaster3",
+                name: "programmi.consegne.edi.view.fragments.linkDialogMaster3",
                 controller: this,
               }).then(
                 function (oDialog) {
