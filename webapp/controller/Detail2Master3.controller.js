@@ -104,16 +104,16 @@ sap.ui.define(
             .getParent()
             .getParent()
             .getParent()
-            .getViewName();
-          // oEvent.getSource().getParent().getParent().getParent().getParent().getParent().getCurrentBeginColumnPage().getProperty('viewName')
+            .getParent()
+            .getParent()
+            .getCurrentBeginColumnPage()
+            .getProperty("viewName");
+
           var sNextLayout = this.oModel.getProperty(
             "/actionButtonsInfo/midColumn/closeColumn"
           );
           //prova chiusura colonna e nav
-          if (
-            currentBegColViewName !==
-            "programmi.consegne.edi.view.DetailMaster3"
-          ) {
+          if (currentBegColViewName === undefined) {
             sNextLayout = this.oRouter.navTo("master3", {
               layout: sNextLayout,
               product: this._product,
