@@ -44,319 +44,104 @@
         </f:header>
         <!-- DynamicPage Content -->
         <f:content>
-            <VBox>
-                <fb:FilterBar
-            
-                persistencyKey="myPersKey"
-                useToolbar="false"
-                search=".onSearch"
-                filterChange=".onFilterChange"
-                afterVariantLoad=".onAfterVariantLoad"
-                showGoOnFB="true"
-                showFilterConfiguration="true"
-                class="sapUiSmallMarginBottom"
-              >
-                <fb:filterGroupItems>
-                  <fb:FilterGroupItem
-                    name="Data ricezione"
-                    label="Data ricezione"
-                    groupName="Group1"
-                    visibleInFilterBar="true"
-                  >
-                    <fb:control>
-                      <DatePicker
-                        tooltip="Data di ricezione"
-                        secondaryCalendarType="Gregorian"
-                        change="handleChange"
-                        displayFormat="dd.MM.yyyy"
-                      />
-                    </fb:control>
-                  </fb:FilterGroupItem>
-                  <fb:FilterGroupItem
-                    name="Numero progressivo invio"
-                    label="Numero progressivo invio"
-                    groupName="Group1"
-                    visibleInFilterBar="true"
-                  >
-                    <fb:control>
-                      <Input type="Number"/>
-                    </fb:control>
-                  </fb:FilterGroupItem>
-                  <fb:FilterGroupItem
+            <IconTabBar
+                id="idIconTabBar"
+                select=".onFilterSelect"
+                selectedKey="01"
+                expandable="false"
+            >
+                <items>
+                    <IconTabFilter
+                        class="prova"
+                        icon="sap-icon://shipping-status"
+                        iconColor="Default"
+                        
+                        count="2"
+                        text="Delivery Forecast"
+                        key="01"
+                        
+                    >
+                        <core:Fragment
+                            fragmentName="programmi.consegne.edi.view.fragments.deliveryMaster3"
+                            type="XML"
+                        />
+                    </IconTabFilter>
                     
-                    name="Date di consegna"
-                    label="Date di consegna"
-                    groupName="Group1"
-                    visibleInFilterBar="true"
-                  >
-                    <fb:control>
-                      <DatePicker
-                        tooltip="Date di consegna"
-                        secondaryCalendarType="Gregorian"
-                        change="handleChange"
-                        displayFormat="dd.MM.yyyy"
-                      />
-                    </fb:control>
-                  </fb:FilterGroupItem>
-                  <fb:FilterGroupItem
-                    name="Cliente"
-                    label="Cliente"
-                    groupName="Group1"
-                    visibleInFilterBar="true"
-                  >
-                    <fb:control>
-                      <ComboBox
-                        showSecondaryValues="true"
-                        items="{
-                          path: 'master3>/Master3',
-                          sorter: {
-                            path: 'text'
-                          }
-                        }"
-                      >
-                        <core:ListItem
-                          key="{master3>DelforTestata/codice_seller}"
-                          text="{master3>DelforTestata/codice_seller}"
-                          additionalText="{master3>DelforTestata/id}"
+                    <IconTabFilter
+                        icon="sap-icon://time-off"
+                        iconColor="Default"
+                        count="{/ProductCollectionStats/Counts/Weight/Heavy}"
+                        text="Call-Off"
+                        key="02"
+                        
+                    >
+                        <core:Fragment
+                            fragmentName="programmi.consegne.edi.view.fragments.calloffMaster3"
+                            type="XML"
                         />
-                      </ComboBox>
-                    </fb:control>
-                  </fb:FilterGroupItem>
-                  <fb:FilterGroupItem
-                    name="Materiale"
-                    label="Materiale"
-                    groupName="Group1"
-                    visibleInFilterBar="true"
-                  >
-                    <fb:control>
-                      <ComboBox
-                        showSecondaryValues="true"
-                        items="{
-                          path: 'master3>/Master3',
-                          sorter: {
-                            path: 'text'
-                          }
-                        }"
-                      >
-                        <core:ListItem
-                          key="{master3>/DelforPosizioni/codice_cliente_materiale}"
-                          text="{master3>/DelforPosizioni/codice_cliente_materiale}"
-                          additionalText="{master3>DelforPosizioni/descrizione_materiale}"
+                    </IconTabFilter>
+                    <IconTabFilter
+                        icon="sap-icon://monitor-payments"
+                        iconColor="Default"
+                        count="{/ProductCollectionStats/Counts/Weight/Overweight}"
+                        text="Self Billing"
+                        key="03"
+                       
+                    >
+                        <core:Fragment
+                            fragmentName="programmi.consegne.edi.view.fragments.selfBillingMaster3"
+                            type="XML"
                         />
-                      </ComboBox>
-                    </fb:control>
-                  </fb:FilterGroupItem>
-                  <fb:FilterGroupItem
-                    name="Stato"
-                    label="Stato"
-                    groupName="Group1"
-                    visibleInFilterBar="false"
-                  >
-                    <fb:control>
-                      <ComboBox
-                        name=""
-                        selectionChange=".onSelectionChange"
-                      >
-                        <core:Item
-                          key="{key}"
-                          text="OK"
-                        />
-                        <core:Item
-                          key="{key}"
-                          text="KO"
-                        />
-                        <core:Item
-                          key="{key}"
-                          text="WARNING"
-                        />
-                      </ComboBox>
-                    </fb:control>
-                  </fb:FilterGroupItem>
-                </fb:filterGroupItems>
-              </fb:FilterBar>
-              <ui:TreeTable
-                id="treetableArch"
-                rows="{
-                  path: 'master3>/Master3',
-                  parameters: {
-                    arrayNames: ['DelforPosizioni']
-                  }
-                }"
-                selectionMode="MultiToggle"
-                enableSelectAll="false"
-                ariaLabelledBy="title"
-                rowSelectionChange="prova2"
-                selectionBehavior="Row"
+                    </IconTabFilter>
+                    <IconTabFilter
+                        icon="sap-icon://letter"
+                        iconColor="Default"
+                        count="{/ProductCollectionStats/Counts/Weight/Overweight}"
+                        text="Despatch Advice"
+                        key="04"
+                        
+                    >
+                        <core:Fragment fragmentName="programmi.consegne.edi.view.fragments.despatchAdvise"
+                    type="XML" />
+                    </IconTabFilter>
+                    <IconTabFilter
+                        icon="sap-icon://sales-order"
+                        iconColor="Default"
+                        count="{/ProductCollectionStats/Counts/Weight/Overweight}"
+                        text="Invoice"
+                        key="05"
+                       
+                    >
+                        <core:Fragment fragmentName="programmi.consegne.edi.view.fragments.invoice"
+                    type="XML" />
+                    </IconTabFilter>
+                    <IconTabFilter
+                    icon="sap-icon://delete"
+                    iconColor="Default"
+                    count="{/ProductCollectionStats/Counts/Weight/Overweight}"
+                    text="File Scartati"
+                    key="06"
+                    
+                    >
+                    <core:Fragment fragmentName="programmi.consegne.edi.view.fragments.fileScartati"
+                type="XML" />
+                </IconTabFilter>
+                <IconTabFilter
+                icon="sap-icon://excel-attachment"
+                iconColor="Default"
+                count="{/ProductCollectionStats/Counts/Weight/Overweight}"
+                text="Caricamento Manuale"
+                key="07"
                 
               >
-                <!-- cellClick=".rowDetailPress" -->
-                <ui:extension>
-                  <OverflowToolbar style="Clear">
-                    <Title />
-                    <ToolbarSpacer />
-                    <Button
-                      text="Collassa tutti"
-                      press="onCollapseAll"
-                    />
-                    <Button
-                      text="Espandi tutti"
-                      press="onExpandFirstLevel"
-                    />
-                    <Button
-                      icon="sap-icon://sort"
-                      text="Ordinamento"
-                      press="sortCategories"
-                    />
-                    <Button
-                      text="Esporta excel"
-                      icon="sap-icon://excel-attachment"
-                      press="deletePress"
-                    />
-                    <!-- <Button
-                      text="Elabora"
-                      icon="sap-icon://process"
-                      press="onProcessaButton"
-                      type="Emphasized"
-                    />
-                    <Button
-                      text="Elimina"
-                      icon="sap-icon://delete"
-                      press=""
-                      type="Reject"
-                    /> -->
-                  </OverflowToolbar>
-                </ui:extension>
-                <ui:columns>
-                  <ui:Column
-                    hAlign="Center"
-                    tooltip="Template"
-                    width="4.5rem"
-                  >
-                    <Label text=" " />
-                    <ui:template>
-                      <!-- <Button icon="{=${master3>DelforTestata/template} === 'MAN' ? 'sap-icon://attachment' : 'sap-icon://cloud'}"></Button> -->
-                      <core:Icon
-                        src="{=${master3>DelforTestata/template} === 'MAN' ? 'sap-icon://attachment' : 'sap-icon://cloud'}"
-                        size="1rem"
-                        visible="{= ${master3>DelforTestata/codice_seller} ? true : false}"
-                        tooltip="{=${master3>DelforTestata/template} === 'MAN' ? 'Caricamento manuale' : 'Caricamento in cloud'}"
-                      />
-                    </ui:template>
-                  </ui:Column>
-                  <ui:Column
-                    width="11rem"
-                    tooltip="Cliente"
-                  >
-                    <Label text="Cliente" />
-                    <ui:template>
-                      <Text text="{master3>DelforTestata/codice_seller}" />
-                    </ui:template>
-                  </ui:Column>
-                  <ui:Column
-                    width="11rem"
-                    tooltip="Numero progressivo invio"
-                  >
-                    <Label text="N. prog. invio" />
-                    <ui:template>
-                      <ObjectIdentifier title="{master3>DelforTestata/numero_progressivo_invio}" />
-                    </ui:template>
-                  </ui:Column>
-                  <ui:Column
-                    width="11rem"
-                    tooltip="Data ricezione"
-                  >
-                    <Label text="Data ricezione" />
-                    <ui:template>
-                      <ObjectIdentifier title="{
-                        path: 'master3>DelforTestata/data_ricezione',
-                        formatter: '.formatDate'
-                      }" />
-                    </ui:template>
-                  </ui:Column>
-                  <!-- posizioni -->
-                  <ui:Column
-                    width="11rem"
-                    tooltip="Matateriale fornitore"
-                  >
-                    <Label text="Mat. fornitore" />
-                    <ui:template>
-                      <ObjectIdentifier
-                        title="{master3>codice_materiale_fornitore}"
-                        text="{master3>descrizione_materiale}"
-                      />
-                    </ui:template>
-                  </ui:Column>
-                  <ui:Column
-                    width="11rem"
-                    tooltip="Numero Ordine Acquisto"
-                  >
-                    <Label text="N. Ordine Acquisto" />
-                    <ui:template>
-                      <ObjectIdentifier title="{master3>numero_ordine_acquisto}" />
-                    </ui:template>
-                  </ui:Column>
-                  <ui:Column
-                    width="11rem"
-                    tooltip="Numero IDoc"
-                  >
-                    <Label text="N. IDoc" />
-                    <ui:template>
-                      <ObjectIdentifier title="{master3>numero_idoc}" />
-                    </ui:template>
-                  </ui:Column>
-                  <ui:Column
-                    width="4rem"
-                    hAlign="Center"
-                    tooltip="Stato"
-                  >
-                    <Label text="Stato" />
-                    <ui:template>
-                      <Button
-                        icon="{= ${master3>Stato} === 'OK' ? 'sap-icon://accept' : ${master3>Stato} === 'KO' ? 'sap-icon://decline' : 'sap-icon://warning'}"
-                        type="{= ${master3>Stato} === 'OK' ? 'Accept' : ${master3>Stato} === 'KO' ? 'Negative' : 'Critical'}"
-                        tooltip="{master3>Stato}"
-                        press="statoButtonPress"
-                      />
-                      <!-- <Button text="{master3>template}"></Button> -->
-                      <!-- <Text text="X"/> -->
-                    </ui:template>
-                  </ui:Column>
-                  <ui:Column
-                    width="11rem"
-                    hAlign="Center"
-                    tooltip="Dettaglio"
-                  >
-                    <ui:template>
-                      <HBox >
-                        <!-- confronto programmazione cliente x testata master2 / confronto programmazione materiale master 1-->
-                        <Button
-                          icon="sap-icon://display"
-                          type="Emphasized"
-                          press="dettaglioNav"
-                          tooltip="{= ${master3>DelforTestata/codice_seller} ? 'Dettaglio posizioni' : 'Dettaglio schedulazioni'}"
-                        />
-                        <Button
-                          icon="sap-icon://commission-check"
-                          type="Emphasized"
-                          class="sapUiTinyMarginBegin"
-                          press="navToAPP"
-                          tooltip="{= ${master3>DelforTestata/codice_seller} ? 'Confronto Programmazione Cliente' : 'Confronto Programmazione Materiale'}"
-                        />
-                        <Button
-                          icon="sap-icon://download"
-                          tooltip="Dowload file edi"
-                          type="Default"
-                          class="sapUiTinyMarginBegin"
-                          press="downloadEdi"
-                          visible="{= ${master3>DelforTestata/codice_seller} ? true : false}"
-                        />
-                      </HBox>
-                    </ui:template>
-                  </ui:Column>
-                </ui:columns>
-              </ui:TreeTable>
-            </VBox>
-           
+           <!-- importaPress-->
+                <core:Fragment fragmentName="programmi.consegne.edi.view.fragments.importMaster3"
+            type="XML" />
+            </IconTabFilter>
+                </items>
+
+                <content />
+            </IconTabBar>
         </f:content>
 
         <!-- DynamicPage Footer -->

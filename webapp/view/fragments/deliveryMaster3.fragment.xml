@@ -143,7 +143,7 @@
         arrayNames: ['DelforPosizioni']
       }
     }"
-    selectionMode="MultiToggle"
+    selectionMode="{=${datiAppoggio>/currentPage} === 'archivio' ? 'Single':'MultiToggle'}"
     enableSelectAll="false"
     ariaLabelledBy="title"
     rowSelectionChange="prova2"
@@ -172,18 +172,21 @@
           text="Esporta excel"
           icon="sap-icon://excel-attachment"
           press="deletePress"
+          visible="{=${datiAppoggio>/currentPage} === 'archivio' ? false:true}"
         />
         <Button
           text="Elabora"
           icon="sap-icon://process"
           press="onProcessaButton"
           type="Emphasized"
+          visible="{=${datiAppoggio>/currentPage} === 'archivio' ? false:true}"
         />
         <Button
           text="Elimina"
           icon="sap-icon://delete"
           press=""
           type="Reject"
+          visible="{=${datiAppoggio>/currentPage} === 'archivio' ? false:true}"
         />
       </OverflowToolbar>
     </ui:extension>

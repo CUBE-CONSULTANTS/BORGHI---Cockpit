@@ -49,6 +49,7 @@ sap.ui.define(
             posizioni: "",
             schedulazioni: "",
             posizioneCorrente: "",
+            currentPage: "",
           }),
           "datiAppoggio"
         );
