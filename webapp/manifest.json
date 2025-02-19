@@ -145,6 +145,11 @@
 						
 						"Detail2Master3"
 					]
+				},
+				{
+					"pattern": "archivio",
+					"name": "archivio",
+					"target": "archivio"
 				}
 		
 				
@@ -183,6 +188,11 @@
 				"Detail2Master3": {
 					"viewName": "Detail2Master3",
 					"controlAggregation": "midColumnPages",
+					"viewLevel": 2
+				},
+				"archivio": {
+					"viewName": "archivio",
+					"controlAggregation": "beginColumnPages",
 					"viewLevel": 2
 				}
 			

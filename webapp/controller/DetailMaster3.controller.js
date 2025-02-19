@@ -204,6 +204,14 @@ sap.ui.define(
             .getModel("detailData")
             .getProperty(`${detailPath}`);
 
+          this.getOwnerComponent()
+            .getModel("datiAppoggio")
+            .setProperty("/schedulazioni", detail.DelforSchedulazioni);
+
+          this.getOwnerComponent()
+            .getModel("datiAppoggio")
+            .setProperty("/posizioneCorrente", detail);
+
           let oNextUIState;
           this.getOwnerComponent()
             .getHelper()

@@ -73,7 +73,7 @@ xmlns:mvc="sap.ui.core.mvc">
 
 
         <ui:Table
-				rows="{/ProductCollection}"
+				rows="{master3>/ProductCollection}"
 				selectionMode="MultiToggle"
 				paste="onPaste"
 				ariaLabelledBy="title">
@@ -83,56 +83,122 @@ xmlns:mvc="sap.ui.core.mvc">
 					</OverflowToolbar>
 				</ui:extension>
 				<ui:columns>
-					<ui:Column width="7rem">
-						<Label text="Cliente" />
+					<ui:Column width="11rem">
+						<Label text="Progressivo trasmissione precedente" />
 						<ui:template>
-							<Text text="{Name}" wrapping="false" />
+							<Text text="{master3>Name}" wrapping="false" />
 						</ui:template>
 					</ui:Column>
           <ui:Column width="11rem">
-						<Label text="Progr. Invio" />
+						<Label text="Progressivo trasmissione" />
 						<ui:template>
-							<Text text="{Name}" wrapping="false" />
+							<Text text="{master3>codice_articolo}" wrapping="false" />
 						</ui:template>
 					</ui:Column>
           <ui:Column width="11rem">
-						<Label text="Data Ricezione" />
+						<Label text="Data trasmissione" />
 						<ui:template>
 							<Text text="{Name}" wrapping="false" />
 						</ui:template>
 					</ui:Column>
           <ui:Column width="9rem">
-						<Label text="Mat. Fornitore" />
+						<Label text="Codice DDT" />
 						<ui:template>
 							<Text text="{Name}" wrapping="false" />
 						</ui:template>
 					</ui:Column>
           <ui:Column width="9rem">
-						<Label text="Reason" />
+						<Label text="Data di spedizione" />
 						<ui:template>
 							<Text text="{Name}" wrapping="false" />
 						</ui:template>
 					</ui:Column>
           <ui:Column width="11rem">
-						<Label text="DDT" />
+						<Label text="Punto di scarico" />
 						<ui:template>
 							<Text text="{Name}" wrapping="false" />
 						</ui:template>
 					</ui:Column>
           <ui:Column width="6rem">
-						<Label text="Num. iDoc" />
+						<Label text="Tipo di invio" />
 						<ui:template>
 							<Text text="{Name}" wrapping="false" />
 						</ui:template>
 					</ui:Column>
           <ui:Column width="14rem">
-						<Label text="Ordine Emissione Spedizione" />
+						<Label text="Numero cliente" />
 						<ui:template>
 							<Text text="{Name}" wrapping="false" />
 						</ui:template>
 					</ui:Column>
           <ui:Column width="11rem">
-						<Label text="Stato" />
+						<Label text="Numero contratto" />
+						<ui:template>
+							<Text text="{Name}" wrapping="false" />
+						</ui:template>
+					</ui:Column>
+          <ui:Column width="11rem">
+						<Label text="Codice processo" />
+						<ui:template>
+							<Text text="{Name}" wrapping="false" />
+						</ui:template>
+					</ui:Column>
+          <ui:Column width="11rem">
+						<Label text="Stabilimento cliente" />
+						<ui:template>
+							<Text text="{Name}" wrapping="false" />
+						</ui:template>
+					</ui:Column>
+          <ui:Column width="11rem">
+						<Label text="Consigment reference" />
+						<ui:template>
+							<Text text="{Name}" wrapping="false" />
+						</ui:template>
+					</ui:Column>
+          <ui:Column width="11rem">
+						<Label text="ID del ricevente" />
+						<ui:template>
+							<Text text="{Name}" wrapping="false" />
+						</ui:template>
+					</ui:Column>
+          <ui:Column width="11rem">
+						<Label text="Magazzino cliente" />
+						<ui:template>
+							<Text text="{Name}" wrapping="false" />
+						</ui:template>
+					</ui:Column>
+          <ui:Column width="11rem">
+						<Label text="ID fornitore" />
+						<ui:template>
+							<Text text="{Name}" wrapping="false" />
+						</ui:template>
+					</ui:Column>
+          <ui:Column width="11rem">
+						<Label text="Punto di consumo" />
+						<ui:template>
+							<Text text="{Name}" wrapping="false" />
+						</ui:template>
+					</ui:Column>
+          <ui:Column width="11rem">
+						<Label text="Riferimento cliente" />
+						<ui:template>
+							<Text text="{Name}" wrapping="false" />
+						</ui:template>
+					</ui:Column>
+          <ui:Column width="11rem">
+						<Label text="Quantità spedita" />
+						<ui:template>
+							<Text text="{Name}" wrapping="false" />
+						</ui:template>
+					</ui:Column>
+          <ui:Column width="11rem">
+						<Label text="Unità di misura" />
+						<ui:template>
+							<Text text="{Name}" wrapping="false" />
+						</ui:template>
+					</ui:Column>
+          <ui:Column width="11rem">
+						<Label text="Consegna originale" />
 						<ui:template>
 							<Text text="{Name}" wrapping="false" />
 						</ui:template>

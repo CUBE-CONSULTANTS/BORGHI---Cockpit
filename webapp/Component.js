@@ -44,7 +44,12 @@ sap.ui.define(
         oRouter.initialize();
 
         this.setModel(
-          new JSONModel({ testata: "", posizioni: "", schedulazioni: "" }),
+          new JSONModel({
+            testata: "",
+            posizioni: "",
+            schedulazioni: "",
+            posizioneCorrente: "",
+          }),
           "datiAppoggio"
         );
       },

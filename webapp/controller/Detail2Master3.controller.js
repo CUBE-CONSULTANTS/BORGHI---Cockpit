@@ -21,27 +21,43 @@ sap.ui.define(
           debugger;
           this._product =
             oEvent.getParameter("arguments").product || this._product || "0";
-          let productData = JSON.parse(this._product);
-          let codiceClienteMateriale = productData.codice_cliente_materiale;
-          let numeroOrdineAcquisto = productData.numero_ordine_acquisto;
-          let materiale = productData.descrizione_materiale;
-          let idoc = productData.numero_idoc;
-          let datiElementoSelect = productData.DelforSchedulazioni;
+          let productData = this.getModel("datiAppoggio").getData();
+          let codiceClienteMateriale =
+            productData.posizioneCorrente.codice_cliente_materiale;
+          let numeroOrdineAcquisto =
+            productData.posizioneCorrente.numero_ordine_acquisto;
+          let materiale = productData.posizioneCorrente.descrizione_materiale;
+          let idoc = productData.posizioneCorrente.numero_idoc;
+          let datiElementoSelect =
+            productData.posizioneCorrente.DelforSchedulazioni;
+          let numeroProgressivoInvio =
+            this.getModel("datiAppoggio").getProperty(
+              "/testata"
+            ).numero_progressivo_invio;
+          let cliente =
+            this.getModel("datiAppoggio").getProperty("/testata").codice_buyer;
 
           //prova per testata info
-          let datiElementoSelect2 = this.getOwnerComponent()
-            .getModel("master3")
-            .getProperty("/Master3")
-            .find((x) => (x.DelforPosizioni.id = this._product));
-          datiElementoSelect2.DelforPosizioni =
-            datiElementoSelect2.DelforPosizioni.flat();
+          // let datiElementoSelect2 = this.getOwnerComponent()
+          //   .getModel("master3")
+          //   .getProperty("/Master3")
+          //   .find((x) => (x.DelforPosizioni.id = this._product));
+          // datiElementoSelect2.DelforPosizioni =
+          //   datiElementoSelect2.DelforPosizioni.flat();
           this.getView().setModel(
             new sap.ui.model.json.JSONModel(),
             "detailData2"
           );
           this.getView()
             .getModel("detailData2")
-            .setProperty("/DettaglioMaster3", datiElementoSelect2);
+            .setProperty("/DettaglioMaster3", {
+              codiceClienteMateriale: codiceClienteMateriale,
+              numeroOrdineAcquisto: numeroOrdineAcquisto,
+              materiale: materiale,
+              idoc: idoc,
+              numeroProgressivoInvio: numeroProgressivoInvio,
+              cliente: cliente,
+            });
 
           // fine prova
           datiElementoSelect = datiElementoSelect
