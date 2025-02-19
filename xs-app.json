@@ -1,0 +1,27 @@
+{
+  "welcomeFile": "/index.html",
+  "authenticationMethod": "route",
+  "routes": [
+    {
+      "source": "^/odata/v4/(.*)$",
+      "target": "/odata/v4/$1",
+      "destination": "borghi-edi-cap",
+      "authenticationType": "xsuaa",
+      "csrfProtection": false
+    },
+    {
+      "source": "^/odata/v2/(.*)$",
+      "target": "/odata/v2/$1",
+      "destination": "borghi-edi-cap",
+      "authenticationType": "xsuaa",
+      "csrfProtection": false
+    },
+    {
+      "source": "^(.*)$",
+      "localDir": "./webapp",
+      "target": "$1",
+      "cacheControl": "no-store",
+      "authenticationType": "xsuaa"
+    }
+  ]
+}
