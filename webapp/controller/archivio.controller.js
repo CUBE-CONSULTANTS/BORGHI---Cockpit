@@ -19,19 +19,19 @@ sap.ui.define(
 
     const SortOrder = CoreLibrary.SortOrder;
 
-    return BaseController.extend("programmi.consegne.edi.controller.Master3", {
+    return BaseController.extend("programmi.consegne.edi.controller.archivio", {
       onInit: function () {
         // var oMaster3Model = new JSONModel(sap.ui.require.toUrl('programmi/consegne/edi/mockdata/master3.json'));
         // this.getView().setModel(oMaster3Model, 'master3');
         this.oRouter = this.getOwnerComponent().getRouter();
-        this.onFilterSelect(null, "01");
+        // this.onFilterSelect(null, "01");
         // this.onFilterSelect();
         // this.getRouter()
         //   .getRoute("Detail2Master3")
         //   .attachPatternMatched(this._onObjectMatched, this);
       },
       _onObjectMatched: function (oEvent) {
-        this.onFilterSelect(null, "01");
+        // this.onFilterSelect(null, "01");
       },
       onFilterSelect: async function (oEvent, key) {
         this.showBusy(0);
@@ -52,12 +52,7 @@ sap.ui.define(
 
             break;
           case "02":
-            var oMaster3Model = new JSONModel(
-              await sap.ui.require.toUrl(
-                "programmi/consegne/edi/mockdata/products.json"
-              )
-            );
-            this.getOwnerComponent().setModel(oMaster3Model, "master3");
+            this.getOwnerComponent().setModel(new JSONModel({}), "master3");
 
             break;
           case "03":

@@ -16,6 +16,10 @@ sap.ui.define(
         var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
         oRouter.navTo("master3");
       },
+      onNavigateToPage4: function () {
+        var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+        oRouter.navTo("archivio");
+      },
     });
   }
 );
