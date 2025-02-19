@@ -1,2 +1,0 @@
-sap.ui.define(["./BaseController","sap/f/library"],function(o,e){"use strict";return o.extend("sap.ui.demo.fiori2.controller.Home",{onNavigateToPage1:function(){var o=sap.ui.core.UIComponent.getRouterFor(this);o.navTo("master")},onNavigateToPage2:function(){var o=sap.ui.core.UIComponent.getRouterFor(this);o.navTo("master2")},onNavigateToPage3:function(){var o=sap.ui.core.UIComponent.getRouterFor(this);o.navTo("master3")}})});
-//# sourceMappingURL=Home.controller.js.map
