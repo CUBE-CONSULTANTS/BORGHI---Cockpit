@@ -138,9 +138,9 @@
   <ui:TreeTable
     id="treetableMain"
     rows="{
-      path: 'master3>/Master3',
+      path: 'master3>/',
       parameters: {
-        arrayNames: ['DelforPosizioni']
+        arrayNames: ['posizioni']
       }
     }"
     selectionMode="{=${datiAppoggio>/currentPage} === 'archivio' ? 'Single':'MultiToggle'}"
@@ -200,10 +200,10 @@
         <ui:template>
           <!-- <Button icon="{=${master3>DelforTestata/template} === 'MAN' ? 'sap-icon://attachment' : 'sap-icon://cloud'}"></Button> -->
           <core:Icon
-            src="{=${master3>DelforTestata/template} === 'MAN' ? 'sap-icon://attachment' : 'sap-icon://cloud'}"
+            src="{=${master3>template} === 'MAN' ? 'sap-icon://attachment' : 'sap-icon://cloud'}"
             size="1rem"
-            visible="{= ${master3>DelforTestata/codice_seller} ? true : false}"
-            tooltip="{=${master3>DelforTestata/template} === 'MAN' ? 'Caricamento manuale' : 'Caricamento in cloud'}"
+            visible="{= ${master3>codice_seller} ? true : false}"
+            tooltip="{=${master3>template} === 'MAN' ? 'Caricamento manuale' : 'Caricamento in cloud'}"
           />
         </ui:template>
       </ui:Column>
@@ -213,7 +213,7 @@
       >
         <Label text="Cliente" />
         <ui:template>
-          <Text text="{master3>DelforTestata/codice_seller}" />
+          <Text text="{master3>codice_seller}" />
         </ui:template>
       </ui:Column>
       <ui:Column
@@ -222,7 +222,7 @@
       >
         <Label text="N. prog. invio" />
         <ui:template>
-          <ObjectIdentifier title="{master3>DelforTestata/numero_progressivo_invio}" />
+          <ObjectIdentifier title="{master3>numero_progressivo_invio}" />
         </ui:template>
       </ui:Column>
       <ui:Column
@@ -232,9 +232,10 @@
         <Label text="Data ricezione" />
         <ui:template>
           <ObjectIdentifier title="{
-            path: 'master3>DelforTestata/data_ricezione',
-            formatter: '.formatDate'
+            path: 'master3>data_ricezione',
+            formatter: '.formatData'
           }" />
+
         </ui:template>
       </ui:Column>
       <!-- posizioni -->

@@ -6,6 +6,8 @@ sap.ui.define(
     "sap/ui/core/library",
     "sap/ui/core/Fragment",
     "sap/m/MessageBox",
+    "../model/API",
+    "sap/ui/core/format/DateFormat",
   ],
   function (
     BaseController,
@@ -13,7 +15,9 @@ sap.ui.define(
     Sorter,
     CoreLibrary,
     Fragment,
-    MessageBox
+    MessageBox,
+    API,
+    DateFormat
   ) {
     "use strict";
 
@@ -46,7 +50,12 @@ sap.ui.define(
                 "programmi/consegne/edi/mockdata/dataMaster3.json"
               )
             );
-            this.getOwnerComponent().setModel(oMaster3Model, "master3");
+            // this.getOwnerComponent().setModel(oMaster3Model, "master3");
+            let oModel = this.getOwnerComponent().getModel("modelloV2");
+            let metadata = await API.getEntity(oModel, "/Testata");
+            debugger;
+            let modelMeta = new JSONModel(metadata.results);
+            this.getOwnerComponent().setModel(modelMeta, "master3");
             // this.getOwnerComponent().getModel("master3").getProperty("/Master3").map(x=> x = x.DelforTestata).forEach(element=> {element.isVisible = true})
             // this.getOwnerComponent().getModel("master3").getProperty("/Master3").map(x=> x = x.DelforPosizioni).forEach(ar=>{ ar.forEach(el=>{el.isVisible = false})})
 
@@ -330,8 +339,15 @@ sap.ui.define(
         });
       },
 
-      formatData: function (data) {
+      formatData: function (date) {
         debugger;
+        if (date) {
+          var oDateFormat = DateFormat.getDateTimeInstance({
+            pattern: "dd/MM/yyyy",
+          });
+          return oDateFormat.format(new Date(date));
+        }
+        return "";
       },
 
       onCollapseAll: function () {
