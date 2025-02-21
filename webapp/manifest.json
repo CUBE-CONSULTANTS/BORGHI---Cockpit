@@ -22,6 +22,38 @@
 				"annotations": [],
 				"odataVersion": "2.0"
 				}
+			},
+			"calloffService": {
+				"uri": "/odata/v4/calloff/",
+				"type": "OData",
+				"settings": {
+				"annotations": [],
+				"odataVersion": "4.0"
+				}
+			},
+			"calloffService2": {
+				"uri": "/odata/v2/calloff/",
+				"type": "OData",
+				"settings": {
+				"annotations": [],
+				"odataVersion": "2.0"
+				}
+			},
+			"selfBillingService": {
+				"uri": "/odata/v4/self-billing/",
+				"type": "OData",
+				"settings": {
+				"annotations": [],
+				"odataVersion": "4.0"
+				}
+			},
+			"selfBillingService2": {
+				"uri": "/odata/v2/self-billing/",
+				"type": "OData",
+				"settings": {
+				"annotations": [],
+				"odataVersion": "2.0"
+				}
 			}
 	}
 	},
@@ -70,7 +102,47 @@
           "autoExpandSelect": true,
           "earlyRequests": true
         }
-      }
+      },
+	  "calloffV4": {
+        "dataSource": "calloffService",
+        "preload": true,
+        "settings": {
+          "synchronizationMode": "None",
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      },
+      "calloffV2": {
+        "dataSource": "calloffService2",
+        "preload": true,
+        "settings": {
+          "synchronizationMode": "None",
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      },
+	  "selfBillingV4": {
+        "dataSource": "selfBillingService",
+        "preload": true,
+        "settings": {
+          "synchronizationMode": "None",
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      },
+      "selfBillingV2": {
+        "dataSource": "selfBillingService2",
+        "preload": true,
+        "settings": {
+          "synchronizationMode": "None",
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+	  }
     },
 		"resources": {
 			"css": [
