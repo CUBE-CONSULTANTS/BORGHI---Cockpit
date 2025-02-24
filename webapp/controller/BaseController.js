@@ -127,6 +127,14 @@ sap.ui.define(
             self.dialName.open();
           }
         },
+        onFiltersBuilding: function (oEvent,key){
+          debugger
+          //chiamo metadata x costruzione filtri 
+          //creo set di filtri distinti x tab
+        },
+        onSearchData:function (filters) {
+          //ricerca filtrata
+        },
         parseDate: function (dateStr) {
           let parts = dateStr.split("/");
           return new Date(parts[2], parts[1] - 1, parts[0]);

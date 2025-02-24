@@ -6,15 +6,16 @@ sap.ui.define([
   
   return {
     getEntity: function (oModel, Entity, aFilters = [], Expands = []) {
-      let parameters = {};
+      let urlParameters = {};
       if (Expands.length > 0) {
-        parameters["$expand"] = Expands.join(",");
+        debugger
+        urlParameters.$expand = Expands.join(",");
       }
       
       return new Promise((resolve, reject) => {
         oModel.read(Entity, {
           filters: aFilters.length > 0 ? aFilters : undefined,
-          parameters: parameters,
+          urlParameters: urlParameters,
           success: (odata) => {
             resolve({
               "results": odata.results || odata,

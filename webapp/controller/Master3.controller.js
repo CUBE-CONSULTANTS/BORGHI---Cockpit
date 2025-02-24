@@ -45,19 +45,12 @@ sap.ui.define(
 
         switch (selectedKey) {
           case "01":
-            var oMaster3Model = new JSONModel(
-              await sap.ui.require.toUrl(
-                "programmi/consegne/edi/mockdata/dataMaster3.json"
-              )
-            );
-            // this.getOwnerComponent().setModel(oMaster3Model, "master3");
             let oModel = this.getOwnerComponent().getModel("modelloV2");
-            let metadata = await API.getEntity(oModel, "/Testata");
+            let metadata = await API.getEntity(oModel, "/Testata",[],["posizioni"]);
             debugger;
             let modelMeta = new JSONModel(metadata.results);
             this.getOwnerComponent().setModel(modelMeta, "master3");
-            // this.getOwnerComponent().getModel("master3").getProperty("/Master3").map(x=> x = x.DelforTestata).forEach(element=> {element.isVisible = true})
-            // this.getOwnerComponent().getModel("master3").getProperty("/Master3").map(x=> x = x.DelforPosizioni).forEach(ar=>{ ar.forEach(el=>{el.isVisible = false})})
+            this.onFiltersBuilding(oEvent,key)
 
             break;
           case "02":
