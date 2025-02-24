@@ -11,6 +11,7 @@ sap.ui.define(
     "sap/m/PDFViewer",
     "sap/ui/export/Spreadsheet",
     "sap/ui/core/format/DateFormat",
+    "../model/API",
   ],
   function (
     Controller,
@@ -23,7 +24,8 @@ sap.ui.define(
     Sorter,
     PDFViewer,
     Spreadsheet,
-    DateFormat
+    DateFormat,
+    API
   ) {
     "use strict";
 
@@ -162,7 +164,7 @@ sap.ui.define(
             );
           }
         },
-        onFilterBarClear: function (oEvent) {
+        onFilterBarClear: async function (oEvent) {
           let oFilterData = this.getModel("filtersModel").getData();
           for (let sView in oFilterData) {
             if (oFilterData.hasOwnProperty(sView)) {
@@ -186,17 +188,14 @@ sap.ui.define(
           this.getModel("filtersModel").refresh(true);
           let oBinding;
           if (
-            oEvent
-              .getParameters()
-              .selectionSet[0].getBindingInfo("value")
-              .parts[0].path.includes("delivery")
+            oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("delivery")
           ) {
-            oBinding = this.getView().byId("treetableMain").getBinding("rows");
+            let modelMeta = await this.callData(this.getOwnerComponent().getModel("modelloV2"), "/Testata", [], ["posizioni,posizioni/schedulazioni,posizioni/log"],"01")
           }
           oBinding.filter([]);
           oBinding.sort([]);
         },
-        onSearchData: function (oEvent) {
+        onSearchData: async function (oEvent) {
           //ricerca filtrata
           let aFilters = [];
           let oFilterSet;
@@ -208,22 +207,13 @@ sap.ui.define(
           ) {
             oFilterSet = this.getModel("filtersModel").getProperty("/delivery");
             if (oFilterSet.dataRic) {
-              let oDate = oFilterSet.dataRic;
-              let dateString;
-
-              if (oDate instanceof Date) {
-                let day = oDate.getDate().toString().padStart(2, "0");
-                let month = (oDate.getMonth() + 1).toString().padStart(2, "0");
-                let year = oDate.getFullYear();
-                dateString = day + "/" + month + "/" + year;
-              } else {
-                dateString = oDate;
-              }
+              let oDataRic = this.parseDate(oFilterSet.dataRic)
+              oDataRic.setHours(1, 0, 0, 0);
               aFilters.push(
                 new sap.ui.model.Filter(
                   "data_ricezione",
                   sap.ui.model.FilterOperator.EQ,
-                  dateString
+                  oDataRic
                 )
               );
             }
@@ -255,9 +245,38 @@ sap.ui.define(
               );
             }
             let oTreeTable = this.getView().byId("treetableMain");
-            let oBinding = oTreeTable.getBinding("rows");
-            oBinding.filter(aFilters, sap.ui.model.FilterType.Application);
+            let aModelFilter = await API.getEntity(
+              this.getOwnerComponent().getModel("modelloV2"),
+              "/Testata",
+              aFilters,
+              ["posizioni,posizioni/schedulazioni,posizioni/log"]
+            ) 
+            let filteredMeta = aModelFilter.results.map((testata) => {
+              return {
+                ...testata,
+                posizioni: testata.posizioni?.results ? Object.values(testata.posizioni.results) : [],
+              };
+            })
+            this.getOwnerComponent().getModel("master3").setData(filteredMeta);
+            this.getModel("master3").refresh(true);
           }
+        },
+        callData : async function(oModel,entity,aFilters,Expands, key){
+          debugger
+          if(key === '01'){
+            let metadata = await API.getEntity(
+              oModel,
+              entity,
+              aFilters,
+              Expands
+            );
+            let modelMeta = new JSONModel(metadata.results);
+            modelMeta.getProperty("/").forEach((testata) => {
+              testata.posizioni = Object.values(testata.posizioni.results);
+            });
+            this.getOwnerComponent().setModel(modelMeta, "master3");
+          }
+          
         },
         formatData: function (date) {
           debugger;

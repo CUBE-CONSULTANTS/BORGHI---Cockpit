@@ -40,21 +40,11 @@ sap.ui.define(
         !selectedKey ? (selectedKey = key) : (selectedKey = selectedKey);
         let oModel;
         let metadata;
-        let modelMeta;
         switch (selectedKey) {
           case "01":
-            let oModel = this.getOwnerComponent().getModel("modelloV2");
-            let metadata = await API.getEntity(
-              oModel,
-              "/Testata",
-              [],
-              ["posizioni,posizioni/schedulazioni,posizioni/log"]
-            );
-            let modelMeta = new JSONModel(metadata.results);
-            modelMeta.getProperty("/").forEach((testata) => {
-              testata.posizioni = Object.values(testata.posizioni.results);
-            });
-            this.getOwnerComponent().setModel(modelMeta, "master3");
+            oModel = this.getOwnerComponent().getModel("modelloV2");
+            await this.callData(oModel, "/Testata", [], ["posizioni,posizioni/schedulazioni,posizioni/log"],key)
+            
             this.onFiltersBuilding(oEvent, key);
             break;
           case "02":
