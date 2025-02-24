@@ -12,6 +12,7 @@ sap.ui.define(
     "sap/ui/export/Spreadsheet",
     "sap/ui/core/format/DateFormat",
     "../model/API",
+    "../model/mapper"
   ],
   function (
     Controller,
@@ -25,7 +26,8 @@ sap.ui.define(
     PDFViewer,
     Spreadsheet,
     DateFormat,
-    API
+    API,
+    mapper
   ) {
     "use strict";
 
@@ -200,56 +202,15 @@ sap.ui.define(
           let aFilters = [];
           let oFilterSet;
           if (
-            oEvent
-              .getParameters()
-              .selectionSet[0].getBindingInfo("value")
-              .parts[0].path.includes("delivery")
+            oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("delivery")
           ) {
             oFilterSet = this.getModel("filtersModel").getProperty("/delivery");
-            if (oFilterSet.dataRic) {
-              let oDataRic = this.parseDate(oFilterSet.dataRic)
-              oDataRic.setHours(1, 0, 0, 0);
-              aFilters.push(
-                new sap.ui.model.Filter(
-                  "data_ricezione",
-                  sap.ui.model.FilterOperator.EQ,
-                  oDataRic
-                )
-              );
-            }
-            if (oFilterSet.numProg && oFilterSet.numProg.value) {
-              aFilters.push(
-                new sap.ui.model.Filter(
-                  "numero_progressivo_invio",
-                  sap.ui.model.FilterOperator.EQ,
-                  oFilterSet.numProg.value
-                )
-              );
-            }
-            if (oFilterSet.cliente && oFilterSet.cliente.value) {
-              aFilters.push(
-                new sap.ui.model.Filter(
-                  "codice_seller",
-                  sap.ui.model.FilterOperator.EQ,
-                  oFilterSet.cliente.value
-                )
-              );
-            }
-            if (oFilterSet.materiale && oFilterSet.materiale.value) {
-              aFilters.push(
-                new sap.ui.model.Filter(
-                  "codice_materiale_fornitore",
-                  sap.ui.model.FilterOperator.EQ,
-                  oFilterSet.materiale.value
-                )
-              );
-            }
-            let oTreeTable = this.getView().byId("treetableMain");
+            let aFilters = mapper.buildFilters(oFilterSet)
             let aModelFilter = await API.getEntity(
               this.getOwnerComponent().getModel("modelloV2"),
               "/Testata",
               aFilters,
-              ["posizioni,posizioni/schedulazioni,posizioni/log"]
+              ["posizioni","posizioni/schedulazioni","posizioni/log"]
             ) 
             let filteredMeta = aModelFilter.results.map((testata) => {
               return {

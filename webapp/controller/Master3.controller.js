@@ -30,6 +30,7 @@ sap.ui.define(
         this.oRouter = this.getOwnerComponent().getRouter();
         this.onFilterSelect(null, "01");
         this.setModel(models.createEdiFiltersModel(), "filtersModel");
+        this._bAscendente 
       },
       _onObjectMatched: function (oEvent) {
         this.onFilterSelect(null, "01");
@@ -94,6 +95,7 @@ sap.ui.define(
         let oTable;
         let oBinding;
         let aSorters = [];
+        let bAscendente = this._bAscendente || true;
         if (this.getView().byId("idIconTabBar").getSelectedKey() === "01") {
           let oSorterSeller = new sap.ui.model.Sorter("codice_seller", false);
           let oSorterNumProg = new sap.ui.model.Sorter(
@@ -101,9 +103,10 @@ sap.ui.define(
             false
           );
           aSorters = [oSorterSeller, oSorterNumProg];
-          oTable = this.getView().byId("treetableMain");
-          oBinding = oTreeTable.getBinding("rows");
+          oTable = this.byId("treetableMain");
+          oBinding = oTable.getBinding("rows");
           oBinding.sort(aSorters);
+          this._bAscendente = !bAscendente;
         }
       },
       deletePress: function (oEvent) {
