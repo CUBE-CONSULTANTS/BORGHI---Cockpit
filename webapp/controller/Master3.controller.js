@@ -43,8 +43,14 @@ sap.ui.define(
         switch (selectedKey) {
           case "01":
             oModel = this.getOwnerComponent().getModel("modelloV2");
-            await this.callData(oModel, "/Testata", [], ["posizioni,posizioni/schedulazioni,posizioni/log"],key)
-            
+            await this.callData(
+              oModel,
+              "/Testata",
+              [],
+              ["posizioni,posizioni/schedulazioni,posizioni/log"],
+              key
+            );
+
             this.onFiltersBuilding(oEvent, key);
             break;
           case "02":
@@ -124,96 +130,50 @@ sap.ui.define(
 
       onProcessaButton: function (oEvent) {
         debugger;
-        // let indici = oEvent
-        //   .getSource()
-        //   .getParent()
-        //   .getParent()
-        //   .getSelectedIndices();
-        // let data = this.getView().getModel("master3").getData().Master3;
-        // let selected = [];
-        // indici.forEach((x) => {
-        //   selected.push(data[x]);
-        // });
-        // let flag = 0;
-        // selected.forEach((y) => {
-        //   if (y.Stato == "KO") {
-        //     flag++;
-        //   }
-        // });
-        // if (flag > 0) {
-        //   console.log("errori nel processo");
-        // } else {
-        //   if (!this._oDialog) {
-        //     Fragment.load({
-        //       id: this.getView().getId(),
-        //       name: "programmi.consegne.edi.view.fragments.linkDialogMaster3",
-        //       controller: this,
-        //     }).then(
-        //       function (oDialog) {
-        //         this._oDialog = oDialog;
-        //         this.getView().addDependent(this._oDialog);
-        //         this._oDialog.open();
-        //       }.bind(this)
-        //     );
-        //   } else {
-        //     this._oDialog.open();
-        //   }
-        // }
 
         let table = this.getView().byId("treetableMain");
         let indices = this.getView().byId("treetableMain").getSelectedIndices();
-        let selectedOBJS = [];
+        let testate = [];
+        let selectedPos = [];
         let self = this;
+        let flag = false;
 
         if (indices) {
-          indices.forEach((element) => {
-            debugger;
-            let obj = self
-              .getView()
-              .byId("treetableMain")
-              .getContextByIndex(element)
-              .getObject();
+          let aSelectedItems = indices.map(function (iIndex) {
+            return table.getContextByIndex(iIndex).getObject();
+          });
 
-            if (obj.hasOwnProperty("DelforTestata")) {
-              MessageBox.alert(
-                "Essendo stata selezionata una riga di testata verranno processate tutte le posizioni collegate"
-              );
-              selectedOBJS = obj.DelforPosizioni;
+          aSelectedItems.forEach((element) => {
+            if (element.hasOwnProperty("posizioni")) {
+              testate.push(element);
+              flag = true;
             } else {
-              selectedOBJS.push(obj);
+              selectedPos.push(element);
             }
           });
 
-          debugger;
-          let textMessage = "";
-          selectedOBJS.forEach((item) => {
-            textMessage += `Progressivo invio: ${item.progressivo_invio}; Codice cliente: ${item.codice_cliente_materiale}; Materiale: ${item.descrizione_materiale}; Destinatario: ${item.destinatario} \n`;
-          });
-
-          MessageBox.confirm(textMessage, {
-            title: "Riepilogo",
-            onClose: (oAction) => {
-              if (oAction === sap.m.MessageBox.Action.OK) {
-                if (!this._oDialog) {
-                  Fragment.load({
-                    id: this.getView().getId(),
-                    name: "programmi.consegne.edi.view.fragments.linkDialogMaster3",
-                    controller: this,
-                  }).then(
-                    function (oDialog) {
-                      this._oDialog = oDialog;
-                      this.getView().addDependent(this._oDialog);
-                      this._oDialog.open();
-                    }.bind(this)
-                  );
-                } else {
-                  this._oDialog.open();
-                }
-              } else {
-                console.log("Annullato");
+          if (flag) {
+            //selezionata testata
+            MessageBox.confirm(
+              "Essendo stata selezionata una testata verranno processate tutte le posizioni al suo interno, continuare?",
+              {
+                title: "Continuare?",
+                onClose: (oAction) => {
+                  if (oAction === sap.m.MessageBox.Action.OK) {
+                    debugger;
+                    testate.forEach((x) => {
+                      debugger;
+                      selectedPos = selectedPos.concat(x.posizioni);
+                    });
+                    debugger;
+                  }
+                },
               }
-            },
-          });
+            );
+          } else {
+            //selezionate solo posizioni
+            debugger;
+          }
         } else {
           MessageBox.alert("Si prega di selezionare almeno una posizione");
         }
@@ -360,6 +320,10 @@ sap.ui.define(
         debugger;
         let table = this.byId("treetableMain");
         let row = oEvent.getParameter("rowContext").getObject();
+      },
+
+      processaItems: function (items) {
+        debugger;
       },
       // loadFragment: function (oEvent) {
       //   if (!this._oMyFragment) {
