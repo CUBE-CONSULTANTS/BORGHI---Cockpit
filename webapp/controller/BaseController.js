@@ -128,7 +128,6 @@ sap.ui.define(
           }
         },
         onFiltersBuilding: function (oEvent, key) {
-          debugger;
           if (key === "01") {
             //clienti/materiali/num Progr invio
             let aData = this.getModel("master3").getProperty("/");
@@ -185,7 +184,6 @@ sap.ui.define(
             }
           }
           this.getModel("filtersModel").refresh(true);
-          debugger;
           let oBinding;
           if (
             oEvent
@@ -196,6 +194,7 @@ sap.ui.define(
             oBinding = this.getView().byId("treetableMain").getBinding("rows");
           }
           oBinding.filter([]);
+          oBinding.sort([]);
         },
         onSearchData: function (oEvent) {
           //ricerca filtrata
@@ -223,15 +222,6 @@ sap.ui.define(
                   "numero_progressivo_invio",
                   sap.ui.model.FilterOperator.EQ,
                   oFilterSet.numProg.value
-                )
-              );
-            }
-            if (oFilterSet.dataCons) {
-              aFilters.push(
-                new sap.ui.model.Filter(
-                  "data_consegna",
-                  sap.ui.model.FilterOperator.EQ,
-                  oFilterSet.dataCons
                 )
               );
             }

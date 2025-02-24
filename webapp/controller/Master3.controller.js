@@ -38,7 +38,9 @@ sap.ui.define(
         this.showBusy(0);
         var selectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
         !selectedKey ? (selectedKey = key) : (selectedKey = selectedKey);
-
+        let oModel;
+        let metadata;
+        let modelMeta;
         switch (selectedKey) {
           case "01":
             let oModel = this.getOwnerComponent().getModel("modelloV2");
@@ -54,15 +56,15 @@ sap.ui.define(
             });
             this.getOwnerComponent().setModel(modelMeta, "master3");
             this.onFiltersBuilding(oEvent, key);
-
             break;
           case "02":
-            var oMaster3Model = new JSONModel(
-              await sap.ui.require.toUrl(
-                "programmi/consegne/edi/mockdata/products.json"
-              )
+            oModel = this.getOwnerComponent().getModel("calloffV2");
+            metadata = await API.getEntity(
+              oModel,
+              "/Testata",
+              [],
+              ["posizioni"]
             );
-            this.getOwnerComponent().setModel(oMaster3Model, "master3");
 
             break;
           case "03":
@@ -98,31 +100,25 @@ sap.ui.define(
         this.hideBusy(0);
       },
 
-      sortCategoriesAndName: function (oEvent) {
-        const oView = this.getView();
-        const oTable = oView.byId("table");
-        oTable.sort(oView.byId("cliente"), SortOrder.Ascending, false);
-        oTable.sort(oView.byId("dataRicezione"), SortOrder.Ascending, true);
-      },
       sortCategories: function (oEvent) {
-        const oView = this.getView();
-        const oTable = oView.byId("table");
-        const oCategoriesColumn = oView.byId("cliente");
-
-        oTable.sort(
-          oCategoriesColumn,
-          this._bSortColumnDescending
-            ? SortOrder.Descending
-            : SortOrder.Ascending,
-          /*extend existing sorting*/ true
-        );
-        this._bSortColumnDescending = !this._bSortColumnDescending;
+        let oTable;
+        let oBinding;
+        let aSorters = [];
+        if (this.getView().byId("idIconTabBar").getSelectedKey() === "01") {
+          let oSorterSeller = new sap.ui.model.Sorter("codice_seller", false);
+          let oSorterNumProg = new sap.ui.model.Sorter(
+            "numero_progressivo_invio",
+            false
+          );
+          aSorters = [oSorterSeller, oSorterNumProg];
+          oTable = this.getView().byId("treetableMain");
+          oBinding = oTreeTable.getBinding("rows");
+          oBinding.sort(aSorters);
+        }
       },
-
       deletePress: function (oEvent) {
         this.getView().byId("table");
       },
-
       onPressRow: function (oEvent) {
         var index = oEvent.getParameter("rowIndex");
         if (index === 0) {
