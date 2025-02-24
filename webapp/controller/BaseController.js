@@ -186,9 +186,6 @@ sap.ui.define(
             if(oFilterSet.numProg && oFilterSet.numProg.value) {
                 aFilters.push(new sap.ui.model.Filter("numero_progressivo_invio", sap.ui.model.FilterOperator.EQ, oFilterSet.numProg.value));
             }
-            if(oFilterSet.dataCons) {
-                aFilters.push(new sap.ui.model.Filter("data_consegna", sap.ui.model.FilterOperator.EQ, oFilterSet.dataCons));
-            }
             if(oFilterSet.cliente && oFilterSet.cliente.value) {
                 aFilters.push(new sap.ui.model.Filter("codice_seller", sap.ui.model.FilterOperator.EQ, oFilterSet.cliente.value));
             }

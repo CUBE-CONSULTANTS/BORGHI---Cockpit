@@ -30,7 +30,8 @@
             secondaryCalendarType="Gregorian"
             change="handleChange"
             value="{filtersModel>/delivery/dataRic}" 
-            displayFormat="dd.MM.yyyy"
+            valueFormat="dd/MM/yyyy"
+            displayFormat="dd/MM/yyyy"
           />
         </fb:control>
       </fb:FilterGroupItem>
@@ -48,7 +49,7 @@
         </ComboBox>
      </fb:control>
       </fb:FilterGroupItem>
-      <fb:FilterGroupItem
+      <!-- <fb:FilterGroupItem
         id="idDataConsegna"
         name="Date di consegna"
         label="Date di consegna"
@@ -64,7 +65,7 @@
             displayFormat="dd.MM.yyyy"
           />
         </fb:control>
-      </fb:FilterGroupItem>
+      </fb:FilterGroupItem> -->
       <fb:FilterGroupItem
         name="Cliente"
         label="Cliente"

@@ -38,24 +38,21 @@ sap.ui.define(
         this.showBusy(0);
         var selectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
         !selectedKey ? (selectedKey = key) : (selectedKey = selectedKey);
-        
+        let oModel
+        let metadata
+        let modelMeta
         switch (selectedKey) {
           case "01":
-            let oModel = this.getOwnerComponent().getModel("modelloV2");
-            let metadata = await API.getEntity(oModel, "/Testata",[],["posizioni"]);
-            let modelMeta = new JSONModel(metadata.results);   
+            oModel = this.getOwnerComponent().getModel("modelloV2");
+            metadata = await API.getEntity(oModel, "/Testata",[],["posizioni"]);
+            modelMeta = new JSONModel(metadata.results);   
             modelMeta.getProperty("/").forEach(testata=>{testata.posizioni = Object.values(testata.posizioni.results)})
             this.getOwnerComponent().setModel(modelMeta, "master3");
             this.onFiltersBuilding(oEvent,key)
-
             break;
           case "02":
-            var oMaster3Model = new JSONModel(
-              await sap.ui.require.toUrl(
-                "programmi/consegne/edi/mockdata/products.json"
-              )
-            );
-            this.getOwnerComponent().setModel(oMaster3Model, "master3");
+             oModel = this.getOwnerComponent().getModel("calloffV2")
+             metadata =  await API.getEntity(oModel, "/Testata",[],["posizioni"]);
 
             break;
           case "03":
@@ -103,7 +100,6 @@ sap.ui.define(
           oBinding = oTreeTable.getBinding("rows");
           oBinding.sort(aSorters);
         }
-        
       },
       deletePress: function (oEvent) {
         this.getView().byId("table");
