@@ -34,7 +34,7 @@
             <ObjectPageDynamicHeaderTitle>
                 <expandedHeading>
                     <m:Title
-                        text="{detailData>/DettaglioMaster3/DelforTestata/template}  {detailData>/DettaglioMaster3/DelforTestata/numero_progressivo_invio}"
+                        text="{detailData>/DettaglioMaster3/template}  {detailData>/DettaglioMaster3/numero_progressivo_invio}"
                         wrapping="true"
                         class="sapUiSmallMarginEnd"
                     />
@@ -53,7 +53,7 @@
                             class="sapUiTinyMarginEnd"
                         >
                             <m:Title
-                                text="{detailData>/DettaglioMaster3/DelforTestata/template}"
+                                text="{detailData>/DettaglioMaster3/template}"
                                 wrapping="true"
                             />
                         </m:FlexBox>
@@ -96,21 +96,21 @@
                   >
                   <m:Label text="Cliente" design="Bold" />
                   <m:Text
-                      text="{detailData>/DettaglioMaster3/DelforTestata/codice_buyer}"
+                      text="{detailData>/DettaglioMaster3/codice_buyer}"
                   />  
                   </m:VBox>
                    <m:VBox class="sapUiTinyMarginBottom"
                    >
                    <m:Label text="Nome file" design="Bold" />
                    <m:Text
-                       text="{detailData>/DettaglioMaster3/DelforTestata/nome_file}"
+                       text="{detailData>/DettaglioMaster3/nome_file}"
                    />   
                    </m:VBox> 
                     <m:VBox
                     >
                     <m:Label text="Data Ricezione" design="Bold" />
                     <m:Text
-                        text="{path:'detailData>/DettaglioMaster3/DelforTestata/data_ricezione', formatter: '.formatDate'}"
+                        text="{path:'detailData>/DettaglioMaster3/data_ricezione', formatter: '.formatDate'}"
                     />    
                     </m:VBox>
                     
@@ -120,21 +120,21 @@
                   >
                   <m:Label text="Num. progressivo invio" design="Bold" />
                   <m:Text
-                      text="{detailData>/DettaglioMaster3/DelforTestata/numero_progressivo_invio}"
+                      text="{detailData>/DettaglioMaster3/numero_progressivo_invio}"
                   />  
                   </m:VBox>
                     <m:VBox class="sapUiTinyMarginBottom"
                     >
                     <m:Label text="Data progressivo invio" design="Bold" />
                     <m:Text
-                        text="{path:'detailData>/DettaglioMaster3/DelforTestata/data_progressivo_invio', formatter: '.formatDate'}"
+                        text="{path:'detailData>/DettaglioMaster3/data_progressivo_invio', formatter: '.formatDate'}"
                     />    
                     </m:VBox>
                     <m:VBox
                     >
                     <m:Label text="Codice Buyer" design="Bold" />
                     <m:Text
-                        text="{detailData>/DettaglioMaster3/DelforTestata/codice_buyer}"
+                        text="{detailData>/DettaglioMaster3/codice_buyer}"
                     />    
                     </m:VBox>
                     
@@ -144,14 +144,14 @@
                   
                   <m:Label text="Codice Seller" design="Bold" />
                   <m:Text
-                      text="{detailData>/DettaglioMaster3/DelforTestata/codice_seller}"
+                      text="{detailData>/DettaglioMaster3/codice_seller}"
                   />  
                   </m:VBox>
                     <m:VBox class="sapUiTinyMarginBottom"
                     >
                     <m:Label text="Num Segmenti Tracciato" design="Bold" />
                     <m:Text
-                        text="{detailData>/DettaglioMaster3/DelforTestata/numero_segmenti_tracciato}"
+                        text="{detailData>/DettaglioMaster3/numero_segmenti_tracciato}"
                     />    
                     </m:VBox>
                    
@@ -208,7 +208,7 @@
                                     <ui:Table
                                         id="tablePos"
                                         selectionMode="MultiToggle"
-                                        rows="{detailData>/DettaglioMaster3/DelforPosizioni}"
+                                        rows="{detailData>/DettaglioMaster3/posizioni}"
                                         cellClick=".rowDetailPress"
                                         autoPopinMode="true"
                                         fixedLayout="false"

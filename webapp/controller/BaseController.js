@@ -127,77 +127,134 @@ sap.ui.define(
             self.dialName.open();
           }
         },
-        onFiltersBuilding: function (oEvent,key){
-          debugger
-          if (key === '01'){
+        onFiltersBuilding: function (oEvent, key) {
+          debugger;
+          if (key === "01") {
             //clienti/materiali/num Progr invio
-            let aData = this.getModel("master3").getProperty("/")
-            let aClienti = [...new Set(aData.map(item => item.codice_seller))];
-            let aNumProgInvio = [...new Set(aData.map(item => item.numero_progressivo_invio))];
+            let aData = this.getModel("master3").getProperty("/");
+            let aClienti = [
+              ...new Set(aData.map((item) => item.codice_seller)),
+            ];
+            let aNumProgInvio = [
+              ...new Set(aData.map((item) => item.numero_progressivo_invio)),
+            ];
             let aMateriali = [];
-            aData.forEach(item => {
-                if (item.posizioni) {
-                    item.posizioni.forEach(pos => {
-                        if (pos.codice_materiale_fornitore) {
-                            aMateriali.push(pos.codice_materiale_fornitore);
-                        }
-                    });
-                }
+            aData.forEach((item) => {
+              if (item.posizioni) {
+                item.posizioni.forEach((pos) => {
+                  if (pos.codice_materiale_fornitore) {
+                    aMateriali.push(pos.codice_materiale_fornitore);
+                  }
+                });
+              }
             });
             aMateriali = [...new Set(aMateriali)];
-            this.getModel("filtersModel").setProperty("/delivery/cliente/items", aClienti.map(c => ({ Key: c, Text: c })));
-            this.getModel("filtersModel").setProperty("/delivery/materiale/items", aMateriali.map(m => ({ Key: m, Text: m })));
-            this.getModel("filtersModel").setProperty("/delivery/numProg/items", aNumProgInvio.map(n => ({ Key: n, Text: n })));
+            this.getModel("filtersModel").setProperty(
+              "/delivery/cliente/items",
+              aClienti.map((c) => ({ Key: c, Text: c }))
+            );
+            this.getModel("filtersModel").setProperty(
+              "/delivery/materiale/items",
+              aMateriali.map((m) => ({ Key: m, Text: m }))
+            );
+            this.getModel("filtersModel").setProperty(
+              "/delivery/numProg/items",
+              aNumProgInvio.map((n) => ({ Key: n, Text: n }))
+            );
           }
         },
-        onFilterBarClear:function(oEvent){
-          let oFilterData = this.getModel("filtersModel").getData()
+        onFilterBarClear: function (oEvent) {
+          let oFilterData = this.getModel("filtersModel").getData();
           for (let sView in oFilterData) {
-              if (oFilterData.hasOwnProperty(sView)) {
-                  let oFilters = oFilterData[sView];
-                  for (let sKey in oFilters) {
-                      if (oFilters.hasOwnProperty(sKey)) {
-                          let oFilter = oFilters[sKey];
-                          if (oFilter && typeof oFilter === "object" && oFilter.hasOwnProperty("value")) {
-                              oFilters[sKey].value = null;
-                          } else {
-                              oFilters[sKey] = null;
-                          }
-                      }
+            if (oFilterData.hasOwnProperty(sView)) {
+              let oFilters = oFilterData[sView];
+              for (let sKey in oFilters) {
+                if (oFilters.hasOwnProperty(sKey)) {
+                  let oFilter = oFilters[sKey];
+                  if (
+                    oFilter &&
+                    typeof oFilter === "object" &&
+                    oFilter.hasOwnProperty("value")
+                  ) {
+                    oFilters[sKey].value = null;
+                  } else {
+                    oFilters[sKey] = null;
                   }
+                }
               }
+            }
           }
           this.getModel("filtersModel").refresh(true);
-          debugger
-          let oBinding
-          if(oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("delivery")){
-            oBinding = this.getView().byId("treetableMain").getBinding("rows") 
+          debugger;
+          let oBinding;
+          if (
+            oEvent
+              .getParameters()
+              .selectionSet[0].getBindingInfo("value")
+              .parts[0].path.includes("delivery")
+          ) {
+            oBinding = this.getView().byId("treetableMain").getBinding("rows");
           }
           oBinding.filter([]);
         },
-        onSearchData:function (oEvent) {
+        onSearchData: function (oEvent) {
           //ricerca filtrata
-          let aFilters = []
-          let oFilterSet 
-          if(oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("delivery")){
-            oFilterSet = this.getModel("filtersModel").getProperty("/delivery")
-              if(oFilterSet.dataRic) {
-                aFilters.push(new sap.ui.model.Filter("data_ricezione", sap.ui.model.FilterOperator.EQ, oFilterSet.dataRic));
+          let aFilters = [];
+          let oFilterSet;
+          if (
+            oEvent
+              .getParameters()
+              .selectionSet[0].getBindingInfo("value")
+              .parts[0].path.includes("delivery")
+          ) {
+            oFilterSet = this.getModel("filtersModel").getProperty("/delivery");
+            if (oFilterSet.dataRic) {
+              aFilters.push(
+                new sap.ui.model.Filter(
+                  "data_ricezione",
+                  sap.ui.model.FilterOperator.EQ,
+                  oFilterSet.dataRic
+                )
+              );
             }
-            if(oFilterSet.numProg && oFilterSet.numProg.value) {
-                aFilters.push(new sap.ui.model.Filter("numero_progressivo_invio", sap.ui.model.FilterOperator.EQ, oFilterSet.numProg.value));
+            if (oFilterSet.numProg && oFilterSet.numProg.value) {
+              aFilters.push(
+                new sap.ui.model.Filter(
+                  "numero_progressivo_invio",
+                  sap.ui.model.FilterOperator.EQ,
+                  oFilterSet.numProg.value
+                )
+              );
             }
-            if(oFilterSet.dataCons) {
-                aFilters.push(new sap.ui.model.Filter("data_consegna", sap.ui.model.FilterOperator.EQ, oFilterSet.dataCons));
+            if (oFilterSet.dataCons) {
+              aFilters.push(
+                new sap.ui.model.Filter(
+                  "data_consegna",
+                  sap.ui.model.FilterOperator.EQ,
+                  oFilterSet.dataCons
+                )
+              );
             }
-            if(oFilterSet.cliente && oFilterSet.cliente.value) {
-                aFilters.push(new sap.ui.model.Filter("codice_seller", sap.ui.model.FilterOperator.EQ, oFilterSet.cliente.value));
+            if (oFilterSet.cliente && oFilterSet.cliente.value) {
+              aFilters.push(
+                new sap.ui.model.Filter(
+                  "codice_seller",
+                  sap.ui.model.FilterOperator.EQ,
+                  oFilterSet.cliente.value
+                )
+              );
             }
-            if(oFilterSet.materiale && oFilterSet.materiale.value) {
-                aFilters.push(new sap.ui.model.Filter("codice_materiale_fornitore", sap.ui.model.FilterOperator.EQ, oFilterSet.materiale.value));
+            if (oFilterSet.materiale && oFilterSet.materiale.value) {
+              aFilters.push(
+                new sap.ui.model.Filter(
+                  "codice_materiale_fornitore",
+                  sap.ui.model.FilterOperator.EQ,
+                  oFilterSet.materiale.value
+                )
+              );
             }
-           let oTreeTable = this.getView().byId("treetableMain");
-           let oBinding = oTreeTable.getBinding("rows"); 
+            let oTreeTable = this.getView().byId("treetableMain");
+            let oBinding = oTreeTable.getBinding("rows");
             oBinding.filter(aFilters, sap.ui.model.FilterType.Application);
           }
         },
@@ -205,20 +262,31 @@ sap.ui.define(
           let parts = dateStr.split("/");
           return new Date(parts[2], parts[1] - 1, parts[0]);
         },
-        formatDate: function (dateString) {
-          if (!dateString) return "";
-          let match = dateString.match(/^(\d{4})(\d{2})(\d{2})$/);
-          if (!match) {
-            console.log("Formato data non valido:", dateString);
-            return "";
-          }
-          let [, year, month, day] = match;
-          let oDate = new Date(year, month - 1, day);
-          let oDateFormat = DateFormat.getInstance({
-            pattern: "dd/MM/yyyy",
-          });
+        // formatDate: function (dateString) {
+        //   if (!dateString) return "";
+        //   let match = dateString.match(/^(\d{4})(\d{2})(\d{2})$/);
+        //   if (!match) {
+        //     console.log("Formato data non valido:", dateString);
+        //     return "";
+        //   }
+        //   let [, year, month, day] = match;
+        //   let oDate = new Date(year, month - 1, day);
+        //   let oDateFormat = DateFormat.getInstance({
+        //     pattern: "dd/MM/yyyy",
+        //   });
 
-          return oDateFormat.format(oDate);
+        //   return oDateFormat.format(oDate);
+        // },
+
+        formatDate: function (date) {
+          debugger;
+          if (date) {
+            var oDateFormat = DateFormat.getDateTimeInstance({
+              pattern: "dd/MM/yyyy",
+            });
+            return oDateFormat.format(new Date(date));
+          }
+          return "";
         },
       }
     );

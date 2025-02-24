@@ -38,15 +38,22 @@ sap.ui.define(
         this.showBusy(0);
         var selectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
         !selectedKey ? (selectedKey = key) : (selectedKey = selectedKey);
-        
+
         switch (selectedKey) {
           case "01":
             let oModel = this.getOwnerComponent().getModel("modelloV2");
-            let metadata = await API.getEntity(oModel, "/Testata",[],["posizioni"]);
-            let modelMeta = new JSONModel(metadata.results);   
-            modelMeta.getProperty("/").forEach(testata=>{testata.posizioni = Object.values(testata.posizioni.results)})
+            let metadata = await API.getEntity(
+              oModel,
+              "/Testata",
+              [],
+              ["posizioni,posizioni/schedulazioni,posizioni/log"]
+            );
+            let modelMeta = new JSONModel(metadata.results);
+            modelMeta.getProperty("/").forEach((testata) => {
+              testata.posizioni = Object.values(testata.posizioni.results);
+            });
             this.getOwnerComponent().setModel(modelMeta, "master3");
-            this.onFiltersBuilding(oEvent,key)
+            this.onFiltersBuilding(oEvent, key);
 
             break;
           case "02":
@@ -273,7 +280,7 @@ sap.ui.define(
           .getParent()
           .getBindingContext("master3")
           .getPath()
-          .includes("DelforPosizioni");
+          .includes("posizioni");
         // let detailSched = oEvent.getSource().getParent().getBindingContext("master3").getObject().DelforSchedulazioni
         let detailPath = oEvent
           .getSource()
@@ -286,10 +293,10 @@ sap.ui.define(
 
         this.getOwnerComponent()
           .getModel("datiAppoggio")
-          .setProperty("/testata", detail.DelforTestata);
+          .setProperty("/testata", detail);
         this.getOwnerComponent()
           .getModel("datiAppoggio")
-          .setProperty("/posizioni", detail.DelforPosizioni);
+          .setProperty("/posizioni", detail.posizioni);
         if (level) {
           debugger;
           let oNextUIState;
@@ -311,7 +318,7 @@ sap.ui.define(
             .getBindingContext("master3")
             .getPath();
           this.oRouter.navTo("detailMaster3", {
-            product: detail.DelforTestata.id,
+            product: detail.id,
             layout: "OneColumn",
           });
         }

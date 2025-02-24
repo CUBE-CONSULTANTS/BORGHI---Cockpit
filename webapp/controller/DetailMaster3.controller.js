@@ -50,10 +50,10 @@ sap.ui.define(
           // let datiElementoSelect=this.getOwnerComponent().getModel("master3").getProperty(`/Master3/${this._product}`)
           let datiElementoSelect = this.getOwnerComponent()
             .getModel("master3")
-            .getProperty("/Master3")
-            .find((x) => (x.DelforTestata.id = this._product));
-          datiElementoSelect.DelforPosizioni =
-            datiElementoSelect.DelforPosizioni.flat();
+            .getProperty("/")
+            .find((x) => (x.id = this._product));
+          // datiElementoSelect.DelforPosizioni =
+          //   datiElementoSelect.DelforPosizioni.flat();
           this.getView().setModel(
             new sap.ui.model.json.JSONModel(),
             "detailData"
