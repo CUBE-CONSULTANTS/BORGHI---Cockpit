@@ -129,8 +129,23 @@ sap.ui.define(
         },
         onFiltersBuilding: function (oEvent,key){
           debugger
-          //chiamo metadata x costruzione filtri 
-          //creo set di filtri distinti x tab
+          if (key === '01'){
+            //clienti/materiali/num Progr invio
+            let aData = this.getModel("master3").getProperty("/")
+            // let aClienti = [...new Set(aData.map(item => item.codice_cliente))];
+            // let aNumProgInvio = [...new Set(aData.map(item => item.NumeroProgressivoInvio))];
+            // let aMateriali = [];
+            // aData.forEach(item => {
+            //     if (item.posizioni && item.posizioni.results) {
+            //         item.posizioni.results.forEach(pos => {
+            //             if (pos.Materiale) {
+            //                 aMateriali.push(pos.Materiale);
+            //             }
+            //         });
+            //     }
+            // });
+            // aMateriali = [...new Set(aMateriali)];
+          }
         },
         onSearchData:function (filters) {
           //ricerca filtrata

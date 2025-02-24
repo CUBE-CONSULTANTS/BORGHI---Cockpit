@@ -47,8 +47,8 @@ sap.ui.define(
           case "01":
             let oModel = this.getOwnerComponent().getModel("modelloV2");
             let metadata = await API.getEntity(oModel, "/Testata",[],["posizioni"]);
-            debugger;
-            let modelMeta = new JSONModel(metadata.results);
+            let modelMeta = new JSONModel(metadata.results);   
+            modelMeta.getProperty("/").forEach(testata=>{testata.posizioni = Object.values(testata.posizioni.results)})
             this.getOwnerComponent().setModel(modelMeta, "master3");
             this.onFiltersBuilding(oEvent,key)
 
