@@ -128,7 +128,6 @@ sap.ui.define(
           }
         },
         onFiltersBuilding: function (oEvent,key){
-          debugger
           if (key === '01'){
             //clienti/materiali/num Progr invio
             let aData = this.getModel("master3").getProperty("/")
@@ -168,12 +167,12 @@ sap.ui.define(
               }
           }
           this.getModel("filtersModel").refresh(true);
-          debugger
           let oBinding
           if(oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("delivery")){
             oBinding = this.getView().byId("treetableMain").getBinding("rows") 
           }
           oBinding.filter([]);
+          oBinding.sort([])
         },
         onSearchData:function (oEvent) {
           //ricerca filtrata
