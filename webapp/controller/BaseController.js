@@ -150,8 +150,56 @@ sap.ui.define(
             this.getModel("filtersModel").setProperty("/delivery/numProg/items", aNumProgInvio.map(n => ({ Key: n, Text: n })));
           }
         },
-        onSearchData:function (filters) {
+        onFilterBarClear:function(oEvent){
+          let oFilterData = this.getModel("filtersModel").getData()
+          for (let sView in oFilterData) {
+              if (oFilterData.hasOwnProperty(sView)) {
+                  let oFilters = oFilterData[sView];
+                  for (let sKey in oFilters) {
+                      if (oFilters.hasOwnProperty(sKey)) {
+                          let oFilter = oFilters[sKey];
+                          if (oFilter && typeof oFilter === "object" && oFilter.hasOwnProperty("value")) {
+                              oFilters[sKey].value = null;
+                          } else {
+                              oFilters[sKey] = null;
+                          }
+                      }
+                  }
+              }
+          }
+          this.getModel("filtersModel").refresh(true);
+          debugger
+          let oBinding
+          if(oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("delivery")){
+            oBinding = this.getView().byId("treetableMain").getBinding("rows") 
+          }
+          oBinding.filter([]);
+        },
+        onSearchData:function (oEvent) {
           //ricerca filtrata
+          let aFilters = []
+          let oFilterSet 
+          if(oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("delivery")){
+            oFilterSet = this.getModel("filtersModel").getProperty("/delivery")
+              if(oFilterSet.dataRic) {
+                aFilters.push(new sap.ui.model.Filter("data_ricezione", sap.ui.model.FilterOperator.EQ, oFilterSet.dataRic));
+            }
+            if(oFilterSet.numProg && oFilterSet.numProg.value) {
+                aFilters.push(new sap.ui.model.Filter("numero_progressivo_invio", sap.ui.model.FilterOperator.EQ, oFilterSet.numProg.value));
+            }
+            if(oFilterSet.dataCons) {
+                aFilters.push(new sap.ui.model.Filter("data_consegna", sap.ui.model.FilterOperator.EQ, oFilterSet.dataCons));
+            }
+            if(oFilterSet.cliente && oFilterSet.cliente.value) {
+                aFilters.push(new sap.ui.model.Filter("codice_seller", sap.ui.model.FilterOperator.EQ, oFilterSet.cliente.value));
+            }
+            if(oFilterSet.materiale && oFilterSet.materiale.value) {
+                aFilters.push(new sap.ui.model.Filter("codice_materiale_fornitore", sap.ui.model.FilterOperator.EQ, oFilterSet.materiale.value));
+            }
+           let oTreeTable = this.getView().byId("treetableMain");
+           let oBinding = oTreeTable.getBinding("rows"); 
+            oBinding.filter(aFilters, sap.ui.model.FilterType.Application);
+          }
         },
         parseDate: function (dateStr) {
           let parts = dateStr.split("/");

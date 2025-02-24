@@ -10,11 +10,11 @@
     id="filterbar"
     persistencyKey="myPersKey"
     useToolbar="false"
-    search=".onSearch"
-    filterChange=".onFilterChange"
-    afterVariantLoad=".onAfterVariantLoad"
+    search=".onSearchData"
+    showFilterConfiguration="false"
     showGoOnFB="true"
-    showFilterConfiguration="true"
+    showClearOnFB="true"
+    clear="onFilterBarClear"
     class="sapUiSmallMarginBottom"
   >
     <fb:filterGroupItems>
