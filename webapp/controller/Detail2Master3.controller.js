@@ -29,7 +29,7 @@ sap.ui.define(
           let materiale = productData.posizioneCorrente.descrizione_materiale;
           let idoc = productData.posizioneCorrente.numero_idoc;
           let datiElementoSelect =
-            productData.posizioneCorrente.DelforSchedulazioni;
+            productData.posizioneCorrente.schedulazioni.results;
           let numeroProgressivoInvio =
             this.getModel("datiAppoggio").getProperty(
               "/testata"
@@ -62,16 +62,21 @@ sap.ui.define(
           // fine prova
           datiElementoSelect = datiElementoSelect
             .map((item) => {
-              if (item.data_spedizione_richiesta_effettiva) {
-                item.data_spedizione_richiesta_effettiva = this.formatDate(
-                  item.data_spedizione_richiesta_effettiva
+              if (item.data_spedizione_richiesta_da) {
+                item.data_spedizione_richiesta_da = this.formatDate(
+                  item.data_spedizione_richiesta_da
+                );
+              }
+              if (item.data_spedizione_richiesta_a) {
+                item.data_spedizione_richiesta_a = this.formatDate(
+                  item.data_spedizione_richiesta_a
                 );
               }
               return item;
             })
             .sort((a, b) => {
-              let dateA = this.parseDate(a.data_spedizione_richiesta_effettiva);
-              let dateB = this.parseDate(b.data_spedizione_richiesta_effettiva);
+              let dateA = this.parseDate(a.data_spedizione_richiesta_da);
+              let dateB = this.parseDate(b.data_spedizione_richiesta_da);
               return dateA - dateB;
             });
 

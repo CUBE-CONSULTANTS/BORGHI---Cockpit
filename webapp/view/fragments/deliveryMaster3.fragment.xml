@@ -195,10 +195,20 @@
       >
         <Label text="Data ricezione" />
         <ui:template>
-          <ObjectIdentifier title="{
-            path: 'master3>data_ricezione',
-            formatter: '.formatData'
-          }" />
+          <DatePicker
+            editable="false"
+            value="{
+              path: 'master3>data_ricezione',
+              type: 'sap.ui.model.type.Date',
+              formatOptions: {
+                pattern: 'dd/MM/yyyy'
+              }
+            }"
+            dateValue=""
+            secondaryCalendarType="Gregorian"
+            valueFormat="dd/MM/yyyy"
+            displayFormat="dd/MM/yyyy"
+          />
 
         </ui:template>
       </ui:Column>

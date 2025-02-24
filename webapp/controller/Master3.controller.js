@@ -331,17 +331,6 @@ sap.ui.define(
         });
       },
 
-      formatData: function (date) {
-        debugger;
-        if (date) {
-          var oDateFormat = DateFormat.getDateTimeInstance({
-            pattern: "dd/MM/yyyy",
-          });
-          return oDateFormat.format(new Date(date));
-        }
-        return "";
-      },
-
       onCollapseAll: function () {
         const oTreeTable = this.byId("treetableMain");
         oTreeTable.collapseAll();

@@ -208,11 +208,22 @@ sap.ui.define(
           ) {
             oFilterSet = this.getModel("filtersModel").getProperty("/delivery");
             if (oFilterSet.dataRic) {
+              let oDate = oFilterSet.dataRic;
+              let dateString;
+
+              if (oDate instanceof Date) {
+                let day = oDate.getDate().toString().padStart(2, "0");
+                let month = (oDate.getMonth() + 1).toString().padStart(2, "0");
+                let year = oDate.getFullYear();
+                dateString = day + "/" + month + "/" + year;
+              } else {
+                dateString = oDate;
+              }
               aFilters.push(
                 new sap.ui.model.Filter(
                   "data_ricezione",
                   sap.ui.model.FilterOperator.EQ,
-                  oFilterSet.dataRic
+                  dateString
                 )
               );
             }
@@ -247,6 +258,16 @@ sap.ui.define(
             let oBinding = oTreeTable.getBinding("rows");
             oBinding.filter(aFilters, sap.ui.model.FilterType.Application);
           }
+        },
+        formatData: function (date) {
+          debugger;
+          if (date) {
+            var oDateFormat = DateFormat.getDateTimeInstance({
+              pattern: "dd/MM/yyyy",
+            });
+            return oDateFormat.format(new Date(date));
+          }
+          return "";
         },
         parseDate: function (dateStr) {
           let parts = dateStr.split("/");

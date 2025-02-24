@@ -206,7 +206,7 @@ sap.ui.define(
 
           this.getOwnerComponent()
             .getModel("datiAppoggio")
-            .setProperty("/schedulazioni", detail.DelforSchedulazioni);
+            .setProperty("/schedulazioni", detail.schedulazioni.results);
 
           this.getOwnerComponent()
             .getModel("datiAppoggio")
