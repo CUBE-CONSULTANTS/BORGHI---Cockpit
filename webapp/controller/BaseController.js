@@ -132,19 +132,22 @@ sap.ui.define(
           if (key === '01'){
             //clienti/materiali/num Progr invio
             let aData = this.getModel("master3").getProperty("/")
-            // let aClienti = [...new Set(aData.map(item => item.codice_cliente))];
-            // let aNumProgInvio = [...new Set(aData.map(item => item.NumeroProgressivoInvio))];
-            // let aMateriali = [];
-            // aData.forEach(item => {
-            //     if (item.posizioni && item.posizioni.results) {
-            //         item.posizioni.results.forEach(pos => {
-            //             if (pos.Materiale) {
-            //                 aMateriali.push(pos.Materiale);
-            //             }
-            //         });
-            //     }
-            // });
-            // aMateriali = [...new Set(aMateriali)];
+            let aClienti = [...new Set(aData.map(item => item.codice_seller))];
+            let aNumProgInvio = [...new Set(aData.map(item => item.numero_progressivo_invio))];
+            let aMateriali = [];
+            aData.forEach(item => {
+                if (item.posizioni) {
+                    item.posizioni.forEach(pos => {
+                        if (pos.codice_materiale_fornitore) {
+                            aMateriali.push(pos.codice_materiale_fornitore);
+                        }
+                    });
+                }
+            });
+            aMateriali = [...new Set(aMateriali)];
+            this.getModel("filtersModel").setProperty("/delivery/cliente/items", aClienti.map(c => ({ Key: c, Text: c })));
+            this.getModel("filtersModel").setProperty("/delivery/materiale/items", aMateriali.map(m => ({ Key: m, Text: m })));
+            this.getModel("filtersModel").setProperty("/delivery/numProg/items", aNumProgInvio.map(n => ({ Key: n, Text: n })));
           }
         },
         onSearchData:function (filters) {

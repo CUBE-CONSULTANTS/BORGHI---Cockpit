@@ -29,6 +29,7 @@
             tooltip="Data di ricezione"
             secondaryCalendarType="Gregorian"
             change="handleChange"
+            value="{filtersModel>/delivery/dataRic}" 
             displayFormat="dd.MM.yyyy"
           />
         </fb:control>
@@ -39,9 +40,13 @@
         groupName="Group1"
         visibleInFilterBar="true"
       >
-        <fb:control>
-          <Input type="Number"/>
-        </fb:control>
+     <fb:control>
+      <ComboBox 
+        items="{filtersModel>/delivery/numProg/items}" 
+        value="{filtersModel>/delivery/numProg/value}">
+        <core:ListItem key="{filtersModel>Key}" text="{filtersModel>Text}" />
+        </ComboBox>
+     </fb:control>
       </fb:FilterGroupItem>
       <fb:FilterGroupItem
         id="idDataConsegna"
@@ -53,6 +58,7 @@
         <fb:control>
           <DatePicker
             tooltip="Date di consegna"
+            value="{filtersModel>/delivery/dataCons}" 
             secondaryCalendarType="Gregorian"
             change="handleChange"
             displayFormat="dd.MM.yyyy"
@@ -66,22 +72,14 @@
         visibleInFilterBar="true"
       >
         <fb:control>
-          <ComboBox
-            showSecondaryValues="true"
-            items="{
-              path: 'master3>/Master3',
-              sorter: {
-                path: 'text'
-              }
-            }"
-          >
-            <core:ListItem
-              key="{master3>DelforTestata/codice_seller}"
-              text="{master3>DelforTestata/codice_seller}"
-              additionalText="{master3>DelforTestata/id}"
-            />
-          </ComboBox>
-        </fb:control>
+
+        <ComboBox 
+            items="{filtersModel>/delivery/cliente/items}" 
+            value="{filtersModel>/delivery/cliente/value}">
+            <core:ListItem key="{filtersModel>Key}" text="{filtersModel>Text}" />
+        </ComboBox>
+
+     </fb:control>
       </fb:FilterGroupItem>
       <fb:FilterGroupItem
         name="Materiale"
@@ -90,49 +88,14 @@
         visibleInFilterBar="true"
       >
         <fb:control>
-          <ComboBox
-            showSecondaryValues="true"
-            items="{
-              path: 'master3>/Master3',
-              sorter: {
-                path: 'text'
-              }
-            }"
-          >
-            <core:ListItem
-              key="{master3>/DelforPosizioni/codice_cliente_materiale}"
-              text="{master3>/DelforPosizioni/codice_cliente_materiale}"
-              additionalText="{master3>DelforPosizioni/descrizione_materiale}"
-            />
-          </ComboBox>
+          <ComboBox 
+          items="{filtersModel>/delivery/materiale/items}" 
+          value="{filtersModel>/delivery/materiale/value}">
+          <core:ListItem key="{filtersModel>Key}" text="{filtersModel>Text}" />
+      </ComboBox>
         </fb:control>
       </fb:FilterGroupItem>
-      <fb:FilterGroupItem
-        name="Stato"
-        label="Stato"
-        groupName="Group1"
-        visibleInFilterBar="false"
-      >
-        <fb:control>
-          <ComboBox
-            name=""
-            selectionChange=".onSelectionChange"
-          >
-            <core:Item
-              key="{key}"
-              text="OK"
-            />
-            <core:Item
-              key="{key}"
-              text="KO"
-            />
-            <core:Item
-              key="{key}"
-              text="WARNING"
-            />
-          </ComboBox>
-        </fb:control>
-      </fb:FilterGroupItem>
+     
     </fb:filterGroupItems>
   </fb:FilterBar>
   <ui:TreeTable

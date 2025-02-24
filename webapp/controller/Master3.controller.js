@@ -7,6 +7,7 @@ sap.ui.define(
     "sap/ui/core/Fragment",
     "sap/m/MessageBox",
     "../model/API",
+    "../model/models",
     "sap/ui/core/format/DateFormat",
   ],
   function (
@@ -17,6 +18,7 @@ sap.ui.define(
     Fragment,
     MessageBox,
     API,
+    models,
     DateFormat
   ) {
     "use strict";
@@ -25,14 +27,9 @@ sap.ui.define(
 
     return BaseController.extend("programmi.consegne.edi.controller.Master3", {
       onInit: function () {
-        // var oMaster3Model = new JSONModel(sap.ui.require.toUrl('programmi/consegne/edi/mockdata/master3.json'));
-        // this.getView().setModel(oMaster3Model, 'master3');
         this.oRouter = this.getOwnerComponent().getRouter();
         this.onFilterSelect(null, "01");
-        // this.onFilterSelect();
-        // this.getRouter()
-        //   .getRoute("Detail2Master3")
-        //   .attachPatternMatched(this._onObjectMatched, this);
+        this.setModel(models.createEdiFiltersModel(), "filtersModel");
       },
       _onObjectMatched: function (oEvent) {
         this.onFilterSelect(null, "01");
@@ -41,8 +38,7 @@ sap.ui.define(
         this.showBusy(0);
         var selectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
         !selectedKey ? (selectedKey = key) : (selectedKey = selectedKey);
-        // this.getView().getContent()[0].getContent().getContent()[0].destroy();
-
+        
         switch (selectedKey) {
           case "01":
             let oModel = this.getOwnerComponent().getModel("modelloV2");
