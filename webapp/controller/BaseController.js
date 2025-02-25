@@ -12,7 +12,8 @@ sap.ui.define(
     "sap/ui/export/Spreadsheet",
     "sap/ui/core/format/DateFormat",
     "../model/API",
-    "../model/mapper"
+    "../model/mapper",
+    "../model/formatter"
   ],
   function (
     Controller,
@@ -27,7 +28,8 @@ sap.ui.define(
     Spreadsheet,
     DateFormat,
     API,
-    mapper
+    mapper,
+    formatter
   ) {
     "use strict";
 
@@ -135,12 +137,8 @@ sap.ui.define(
           if (key === "01") {
             //clienti/materiali/num Progr invio
             let aData = this.getModel("master3").getProperty("/");
-            let aClienti = [
-              ...new Set(aData.map((item) => item.codice_seller)),
-            ];
-            let aNumProgInvio = [
-              ...new Set(aData.map((item) => item.numero_progressivo_invio)),
-            ];
+            let aClienti = [...new Set(aData.map((item) => item.codice_seller))];
+            let aNumProgInvio = [...new Set(aData.map((item) => item.numero_progressivo_invio))];
             let aMateriali = [];
             aData.forEach((item) => {
               if (item.posizioni) {
@@ -189,9 +187,7 @@ sap.ui.define(
           }
           this.getModel("filtersModel").refresh(true);
           let oBinding;
-          if (
-            oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("delivery")
-          ) {
+          if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("delivery")) {
             let modelMeta = await this.callData(this.getOwnerComponent().getModel("modelloV2"), "/Testata", [], ["posizioni,posizioni/schedulazioni,posizioni/log"],"01")
           }
           oBinding.filter([]);
@@ -201,17 +197,10 @@ sap.ui.define(
           //ricerca filtrata
           let aFilters = [];
           let oFilterSet;
-          if (
-            oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("delivery")
-          ) {
+          if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("delivery")) {
             oFilterSet = this.getModel("filtersModel").getProperty("/delivery");
             let aFilters = mapper.buildFilters(oFilterSet)
-            let aModelFilter = await API.getEntity(
-              this.getOwnerComponent().getModel("modelloV2"),
-              "/Testata",
-              aFilters,
-              ["posizioni","posizioni/schedulazioni","posizioni/log"]
-            ) 
+            let aModelFilter = await API.getEntity(this.getOwnerComponent().getModel("modelloV2"),"/Testata",aFilters,["posizioni","posizioni/schedulazioni","posizioni/log"]) 
             let filteredMeta = aModelFilter.results.map((testata) => {
               return {
                 ...testata,
@@ -225,60 +214,22 @@ sap.ui.define(
         callData : async function(oModel,entity,aFilters,Expands, key){
           debugger
           if(key === '01'){
-            let metadata = await API.getEntity(
-              oModel,
-              entity,
-              aFilters,
-              Expands
-            );
+            let metadata = await API.getEntity(oModel,entity,aFilters,Expands);
             let modelMeta = new JSONModel(metadata.results);
             modelMeta.getProperty("/").forEach((testata) => {
               testata.posizioni = Object.values(testata.posizioni.results);
             });
             this.getOwnerComponent().setModel(modelMeta, "master3");
           }
-          
         },
-        formatData: function (date) {
-          debugger;
-          if (date) {
-            var oDateFormat = DateFormat.getDateTimeInstance({
-              pattern: "dd/MM/yyyy",
-            });
-            return oDateFormat.format(new Date(date));
-          }
-          return "";
+        sortTables: function(table,aSortFields) {
+          let oBinding = table.getBinding("rows");
+          let aCurrentSorters = oBinding.aSorters || [];
+          let bDescending = aCurrentSorters.length > 0 ? !aCurrentSorters[0].bDescending : false;
+          let aSorters = aSortFields.map(field => new sap.ui.model.Sorter(field, bDescending));
+          oBinding.sort(aSorters)
         },
-        parseDate: function (dateStr) {
-          let parts = dateStr.split("/");
-          return new Date(parts[2], parts[1] - 1, parts[0]);
-        },
-        // formatDate: function (dateString) {
-        //   if (!dateString) return "";
-        //   let match = dateString.match(/^(\d{4})(\d{2})(\d{2})$/);
-        //   if (!match) {
-        //     console.log("Formato data non valido:", dateString);
-        //     return "";
-        //   }
-        //   let [, year, month, day] = match;
-        //   let oDate = new Date(year, month - 1, day);
-        //   let oDateFormat = DateFormat.getInstance({
-        //     pattern: "dd/MM/yyyy",
-        //   });
-
-        //   return oDateFormat.format(oDate);
-        // },
-
-        formatDate: function (date) {
-          debugger;
-          if (date) {
-            var oDateFormat = DateFormat.getDateTimeInstance({
-              pattern: "dd/MM/yyyy",
-            });
-            return oDateFormat.format(new Date(date));
-          }
-          return "";
-        },
+       
       }
     );
   }

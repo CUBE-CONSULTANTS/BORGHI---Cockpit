@@ -10,6 +10,7 @@ sap.ui.define(
     "sap/m/p13n/MetadataHelper",
     "sap/ui/model/Sorter",
     "sap/ui/core/library",
+    "../model/formatter"
   ],
   function (
     BaseController,
@@ -21,13 +22,15 @@ sap.ui.define(
     GroupController,
     MetadataHelper,
     Sorter,
-    CoreLibrary
+    CoreLibrary,
+    formatter
   ) {
     "use strict";
 
     return BaseController.extend(
       "programmi.consegne.edi.controller.DetailMaster3",
       {
+        formatter: formatter,
         onInit: function () {
           this.oOwnerComponent = this.getOwnerComponent();
 

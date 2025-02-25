@@ -110,7 +110,7 @@
                     >
                     <m:Label text="Data Ricezione" design="Bold" />
                     <m:Text
-                        text="{path:'detailData>/DettaglioMaster3/data_ricezione', formatter: '.formatDate'}"
+                        text="{path:'detailData>/DettaglioMaster3/data_ricezione', formatter: '.formatter.formatDate'}"
                     />    
                     </m:VBox>
                     
@@ -127,7 +127,7 @@
                     >
                     <m:Label text="Data progressivo invio" design="Bold" />
                     <m:Text
-                        text="{path:'detailData>/DettaglioMaster3/data_progressivo_invio', formatter: '.formatDate'}"
+                        text="{path:'detailData>/DettaglioMaster3/data_progressivo_invio', formatter: '.formatter.formatDate'}"
                     />    
                     </m:VBox>
                     <m:VBox
@@ -357,7 +357,7 @@
                                                 />
                                                 <ui:template>
                                                     <m:ObjectIdentifier
-                                                        text="{path:'detailData>data_inizio_calc_quantita_cumulata', formatter: '.formatDate'}"
+                                                        text="{path:'detailData>data_inizio_calc_quantita_cumulata', formatter: '.formatter.formatDate'}"
                                                     />
                                                 </ui:template>
                                             </ui:Column>
@@ -383,7 +383,7 @@
                                                 />
                                                 <ui:template>
                                                     <m:ObjectIdentifier
-                                                        text="{path:'detailData>data_progressivo_invio', formatter: '.formatDate'}"
+                                                        text="{path:'detailData>data_progressivo_invio', formatter: '.formatter.formatDate'}"
                                                     />
                                                 </ui:template>
                                             </ui:Column>
@@ -409,7 +409,7 @@
                                                 />
                                                 <ui:template>
                                                     <m:ObjectIdentifier
-                                                        text="{path:'detailData>data_numero_ultima_schedulazione_ricevuta', formatter: '.formatDate'}"
+                                                        text="{path:'detailData>data_numero_ultima_schedulazione_ricevuta', formatter: '.formatter.formatDate'}"
                                                     />
                                                 </ui:template>
                                             </ui:Column>
@@ -460,7 +460,7 @@
                                                 />
                                                 <ui:template>
                                                     <m:ObjectIdentifier
-                                                        text="{path:'detailData>data_ultima_bolla_ricevuta',formatter: '.formatDate'}"
+                                                        text="{path:'detailData>data_ultima_bolla_ricevuta',formatter: '.formatter.formatDate'}"
                                                     />
                                                 </ui:template>
                                             </ui:Column>

@@ -8,7 +8,7 @@ sap.ui.define(
     "sap/m/MessageBox",
     "../model/API",
     "../model/models",
-    "sap/ui/core/format/DateFormat",
+    "../model/formatter"
   ],
   function (
     BaseController,
@@ -19,7 +19,7 @@ sap.ui.define(
     MessageBox,
     API,
     models,
-    DateFormat
+    formatter
   ) {
     "use strict";
 
@@ -30,7 +30,6 @@ sap.ui.define(
         this.oRouter = this.getOwnerComponent().getRouter();
         this.onFilterSelect(null, "01");
         this.setModel(models.createEdiFiltersModel(), "filtersModel");
-        this._bAscendente 
       },
       _onObjectMatched: function (oEvent) {
         this.onFilterSelect(null, "01");
@@ -45,18 +44,11 @@ sap.ui.define(
           case "01":
             oModel = this.getOwnerComponent().getModel("modelloV2");
             await this.callData(oModel, "/Testata", [], ["posizioni,posizioni/schedulazioni,posizioni/log"],key)
-            
             this.onFiltersBuilding(oEvent, key);
             break;
           case "02":
             oModel = this.getOwnerComponent().getModel("calloffV2");
-            metadata = await API.getEntity(
-              oModel,
-              "/Testata",
-              [],
-              ["posizioni"]
-            );
-
+            metadata = await API.getEntity(oModel,"/Testata",[],["posizioni"]);
             break;
           case "03":
             var oMaster3Model = new JSONModel(
@@ -93,20 +85,18 @@ sap.ui.define(
 
       sortCategories: function (oEvent) {
         let oTable;
-        let oBinding;
         let aSorters = [];
-        let bAscendente = this._bAscendente || true;
-        if (this.getView().byId("idIconTabBar").getSelectedKey() === "01") {
-          let oSorterSeller = new sap.ui.model.Sorter("codice_seller", false);
-          let oSorterNumProg = new sap.ui.model.Sorter(
-            "numero_progressivo_invio",
-            false
-          );
-          aSorters = [oSorterSeller, oSorterNumProg];
-          oTable = this.byId("treetableMain");
-          oBinding = oTable.getBinding("rows");
-          oBinding.sort(aSorters);
-          this._bAscendente = !bAscendente;
+        
+        switch (this.getView().byId("idIconTabBar").getSelectedKey()) {
+          case "01":
+              oTable = this.byId("treetableMain");
+              aSorters = this.sortTables(oTable, ["codice_seller", "numero_progressivo_invio"]);
+              break;
+          case "02":
+ 
+              break;
+          default:
+              return; 
         }
       },
       deletePress: function (oEvent) {

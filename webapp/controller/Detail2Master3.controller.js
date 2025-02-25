@@ -1,6 +1,6 @@
 sap.ui.define(
-  ["./BaseController", "sap/ui/model/json/JSONModel"],
-  function (BaseController, JSONModel) {
+  ["./BaseController", "sap/ui/model/json/JSONModel", "../model/formatter"],
+  function (BaseController, JSONModel, formatter) {
     "use strict";
 
     return BaseController.extend(
@@ -63,12 +63,12 @@ sap.ui.define(
           datiElementoSelect = datiElementoSelect
             .map((item) => {
               if (item.data_spedizione_richiesta_da) {
-                item.data_spedizione_richiesta_da = this.formatDate(
+                item.data_spedizione_richiesta_da = formatter.formatDate(
                   item.data_spedizione_richiesta_da
                 );
               }
               if (item.data_spedizione_richiesta_a) {
-                item.data_spedizione_richiesta_a = this.formatDate(
+                item.data_spedizione_richiesta_a = formatter.formatDate(
                   item.data_spedizione_richiesta_a
                 );
               }

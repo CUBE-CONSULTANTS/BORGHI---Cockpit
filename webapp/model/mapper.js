@@ -1,12 +1,12 @@
 sap.ui.define(
-	["../model/API"],
+	["../model/API", "../model/formatter"],
 	function (API, formatter) {
 		"use strict";
 		return {
       buildFilters: function(oFilterSet) {
         let aFilters = [];
         if (oFilterSet.dataRic) {
-          let oDataRic = this.parseDate(oFilterSet.dataRic)
+          let oDataRic = formatter.parseDate(oFilterSet.dataRic)
           oDataRic.setHours(1, 0, 0, 0);
           aFilters.push(
             new sap.ui.model.Filter(
@@ -43,13 +43,9 @@ sap.ui.define(
             )
           );
         }
-
         return aFilters;
         },
-        parseDate: function (dateStr) {
-          let parts = dateStr.split("/");
-          return new Date(parts[2], parts[1] - 1, parts[0]);
-        },
+
 	  }
   }
 );
