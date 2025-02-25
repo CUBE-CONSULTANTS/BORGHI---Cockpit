@@ -1,0 +1,336 @@
+<mvc:View
+    controllerName="programmi.consegne.edi.controller.DettCallOff"
+    xmlns:f="sap.f"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns="sap.m"
+    xmlns:ui="sap.ui.table"
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:commons="sap.suite.ui.commons"
+    xmlns:layout="sap.ui.layout"
+    height="100%"
+> 
+<f:DynamicPage fitContent="true" showFooter="true" >
+        
+<f:title>
+    <f:DynamicPageTitle >
+      <f:heading>
+        <Title text="Dettaglio" />
+        
+      </f:heading>
+    </f:DynamicPageTitle>
+</f:title>
+<f:header>
+    <f:DynamicPageHeader pinnable="true">
+  <layout:HorizontalLayout allowWrapping="true">
+    <layout:VerticalLayout class="sapUiMediumMarginEnd">
+      <ObjectAttribute title="Nome File" text="{detailData2>/DettaglioMaster3/materiale}"/>
+      <ObjectAttribute title="Data Ricezione" text="{detailData2>/DettaglioMaster3/idoc}"/>      
+    </layout:VerticalLayout>
+  </layout:HorizontalLayout>
+</f:DynamicPageHeader>
+</f:header>
+<f:content>
+  <fb:FilterBar
+    persistencyKey="myPersKey"
+    useToolbar="false"
+    search=".onSearchData"
+    showFilterConfiguration="false"
+    showGoOnFB="true"
+    showClearOnFB="true"
+    clear="onFilterBarClear"
+    class="sapUiSmallMarginBottom"
+  >
+    <fb:filterGroupItems>
+      <fb:FilterGroupItem
+        name="Data ricezione"
+        label="Data ricezione"
+        groupName="Group1"
+        visibleInFilterBar="true"
+      >
+        <fb:control>
+          <DatePicker
+            tooltip="Data di ricezione"
+            secondaryCalendarType="Gregorian"
+            change="handleChange"
+            value="{filtersModel>/delivery/dataRic}" 
+            valueFormat="dd/MM/yyyy"
+            displayFormat="dd/MM/yyyy"
+          />
+        </fb:control>
+      </fb:FilterGroupItem>
+      <fb:FilterGroupItem
+        name="Numero progressivo invio"
+        label="Numero progressivo invio"
+        groupName="Group1"
+        visibleInFilterBar="true"
+      >
+     <fb:control>
+      <ComboBox 
+        items="{filtersModel>/delivery/numProg/items}" 
+        value="{filtersModel>/delivery/numProg/value}">
+        <core:ListItem key="{filtersModel>Key}" text="{filtersModel>Text}" />
+        </ComboBox>
+     </fb:control>
+      </fb:FilterGroupItem>
+      <!-- <fb:FilterGroupItem
+        id="idDataConsegna"
+        name="Date di consegna"
+        label="Date di consegna"
+        groupName="Group1"
+        visibleInFilterBar="true"
+      >
+        <fb:control>
+          <DatePicker
+            tooltip="Date di consegna"
+            value="{filtersModel>/delivery/dataCons}" 
+            secondaryCalendarType="Gregorian"
+            change="handleChange"
+            displayFormat="dd.MM.yyyy"
+          />
+        </fb:control>
+      </fb:FilterGroupItem> -->
+      <fb:FilterGroupItem
+        name="Cliente"
+        label="Cliente"
+        groupName="Group1"
+        visibleInFilterBar="true"
+      >
+        <fb:control>
+
+        <ComboBox 
+            items="{filtersModel>/delivery/cliente/items}" 
+            value="{filtersModel>/delivery/cliente/value}">
+            <core:ListItem key="{filtersModel>Key}" text="{filtersModel>Text}" />
+        </ComboBox>
+
+     </fb:control>
+      </fb:FilterGroupItem>
+      <fb:FilterGroupItem
+        name="Materiale"
+        label="Materiale"
+        groupName="Group1"
+        visibleInFilterBar="true"
+      >
+        <fb:control>
+          <ComboBox 
+          items="{filtersModel>/delivery/materiale/items}" 
+          value="{filtersModel>/delivery/materiale/value}">
+          <core:ListItem key="{filtersModel>Key}" text="{filtersModel>Text}" />
+      </ComboBox>
+        </fb:control>
+      </fb:FilterGroupItem>
+     
+    </fb:filterGroupItems>
+  </fb:FilterBar>
+  <ui:TreeTable
+    id="treetableCallOff"
+    rows="{
+      path: 'master3CO>/',
+      parameters: {
+        arrayNames: ['posizioni']
+      }
+    }"
+    
+    enableSelectAll="false"
+    ariaLabelledBy="title"
+    selectionBehavior="Row"
+    
+  >
+    <ui:extension>
+      <OverflowToolbar style="Clear">
+        <Title />
+        <ToolbarSpacer />
+        <Button
+          text="Espandi tutti"
+          icon="sap-icon://expand-all"
+          press="onExpandFirstLevel"
+        />
+        <Button
+          icon="sap-icon://collapse-all"
+          text="Collassa tutti"
+          press="onCollapseAll"
+        />
+       
+        <Button
+          icon="sap-icon://sort"
+          text="Ordinamento"
+          press="sortCategories"
+        />
+       
+        <Button
+          text="Esporta excel"
+          icon="sap-icon://excel-attachment"
+          press="downloadExcelFile"
+          visible="{=${datiAppoggio>/currentPage} === 'archivio' ? false:true}"
+        />
+        <Button icon="sap-icon://upload"
+        type="Emphasized"
+        text="Caricamento Manuale"
+        press="importaPress" />
+        <Button
+          text="Elabora"
+          icon="sap-icon://process"
+          press="onProcessaButton"
+          type="Emphasized"
+          visible="{=${datiAppoggio>/currentPage} === 'archivio' ? false:true}"
+        />
+        <Button
+          text="Elimina"
+          icon="sap-icon://delete"
+          press=""
+          type="Reject"
+          visible="{=${datiAppoggio>/currentPage} === 'archivio' ? false:true}"
+        />
+      </OverflowToolbar>
+    </ui:extension>
+    <ui:columns>
+					<ui:Column width="11rem">
+						<Label text="Progressivo trasmissione precedente" />
+						<ui:template>
+							<Text text="{master3>progressivo_ultimo_invio}" wrapping="false" />
+						</ui:template>
+					</ui:Column>
+          <ui:Column width="11rem">
+						<Label text="Progressivo trasmissione" />
+						<ui:template>
+							<Text text="{master3>codice_articolo}" wrapping="false" />
+						</ui:template>
+					</ui:Column>
+          <ui:Column width="11rem">
+						<Label text="Data trasmissione" />
+						<ui:template>
+							<Text text="{Name}" wrapping="false" />
+						</ui:template>
+					</ui:Column>
+          <ui:Column width="9rem">
+						<Label text="Codice DDT" />
+						<ui:template>
+							<Text text="{Name}" wrapping="false" />
+						</ui:template>
+					</ui:Column>
+          <ui:Column width="9rem">
+						<Label text="Data di spedizione" />
+						<ui:template>
+							<Text text="{Name}" wrapping="false" />
+						</ui:template>
+					</ui:Column>
+          <ui:Column width="11rem">
+						<Label text="Punto di scarico" />
+						<ui:template>
+							<Text text="{Name}" wrapping="false" />
+						</ui:template>
+					</ui:Column>
+          <ui:Column width="6rem">
+						<Label text="Tipo di invio" />
+						<ui:template>
+							<Text text="{Name}" wrapping="false" />
+						</ui:template>
+					</ui:Column>
+          <ui:Column width="14rem">
+						<Label text="Numero cliente" />
+						<ui:template>
+							<Text text="{Name}" wrapping="false" />
+						</ui:template>
+					</ui:Column>
+          <ui:Column width="11rem">
+						<Label text="Numero contratto" />
+						<ui:template>
+							<Text text="{Name}" wrapping="false" />
+						</ui:template>
+					</ui:Column>
+          <ui:Column width="11rem">
+						<Label text="Codice processo" />
+						<ui:template>
+							<Text text="{Name}" wrapping="false" />
+						</ui:template>
+					</ui:Column>
+          <ui:Column width="11rem">
+						<Label text="Stabilimento cliente" />
+						<ui:template>
+							<Text text="{Name}" wrapping="false" />
+						</ui:template>
+					</ui:Column>
+          <ui:Column width="11rem">
+						<Label text="Consigment reference" />
+						<ui:template>
+							<Text text="{Name}" wrapping="false" />
+						</ui:template>
+					</ui:Column>
+          <ui:Column width="11rem">
+						<Label text="ID del ricevente" />
+						<ui:template>
+							<Text text="{Name}" wrapping="false" />
+						</ui:template>
+					</ui:Column>
+          <ui:Column width="11rem">
+						<Label text="Magazzino cliente" />
+						<ui:template>
+							<Text text="{Name}" wrapping="false" />
+						</ui:template>
+					</ui:Column>
+          <ui:Column width="11rem">
+						<Label text="ID fornitore" />
+						<ui:template>
+							<Text text="{Name}" wrapping="false" />
+						</ui:template>
+					</ui:Column>
+          <ui:Column width="11rem">
+						<Label text="Punto di consumo" />
+						<ui:template>
+							<Text text="{Name}" wrapping="false" />
+						</ui:template>
+					</ui:Column>
+          <ui:Column width="11rem">
+						<Label text="Riferimento cliente" />
+						<ui:template>
+							<Text text="{Name}" wrapping="false" />
+						</ui:template>
+					</ui:Column>
+          <ui:Column width="11rem">
+						<Label text="Quantità spedita" />
+						<ui:template>
+							<Text text="{Name}" wrapping="false" />
+						</ui:template>
+					</ui:Column>
+          <ui:Column width="11rem">
+						<Label text="Unità di misura" />
+						<ui:template>
+							<Text text="{Name}" wrapping="false" />
+						</ui:template>
+					</ui:Column>
+          <ui:Column width="11rem">
+						<Label text="Consegna originale" />
+						<ui:template>
+							<Text text="{Name}" wrapping="false" />
+						</ui:template>
+					</ui:Column>
+          <ui:Column width="11rem">
+						
+						<ui:template>
+							<Button
+                tooltip="Stock Level"
+                icon="sap-icon://doc-attachment"
+                />
+						</ui:template>
+					</ui:Column>
+				
+				</ui:columns>
+  </ui:TreeTable>
+  
+</f:content>
+<f:footer>
+  <OverflowToolbar>
+
+      <Button
+          press="onNavBack"
+          type="Back"
+          text="Indietro"
+      />
+
+      <ToolbarSpacer />
+
+  </OverflowToolbar>
+</f:footer>
+</f:DynamicPage>
+</mvc:View>

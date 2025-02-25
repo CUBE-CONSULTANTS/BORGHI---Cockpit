@@ -10,11 +10,11 @@
         id="rthr"
         persistencyKey="myPersKey"
         useToolbar="false"
-        search=".onSearch"
-        filterChange=".onFilterChange"
-        afterVariantLoad=".onAfterVariantLoad"
+        search=".onSearchData"
+        showFilterConfiguration="false"
         showGoOnFB="true"
-        showFilterConfiguration="true"
+        showClearOnFB="true"
+        clear="onFilterBarClear"
         class="sapUiSmallMarginBottom"
     >
         <fb:filterGroupItems>
@@ -76,10 +76,10 @@
 			path: 'master3CO>/'
 		}" >
 		<StandardListItem
-      navigated="true"
+      type="Navigation"
+      press="onListItemPress"
 			title="Nome File: {master3CO>nome_file}"
-			description="Data Ricezione: {master3CO>data_ricezione}"/>
-
+			description="Data Ricezione: {path: 'master3CO>data_ricezione', formatter: '.formatter.formatDate'}"/>     
 	  </List>
 
     <!-- 
@@ -218,9 +218,9 @@
 						
 						<ui:template>
 							<Button
-                  tooltip="Stock Level"
-                  icon="sap-icon://doc-attachment"
-                  />
+                tooltip="Stock Level"
+                icon="sap-icon://doc-attachment"
+                />
 						</ui:template>
 					</ui:Column>
 				

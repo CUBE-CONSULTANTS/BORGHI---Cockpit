@@ -98,11 +98,12 @@ sap.ui.define(
          * If not, it will replace the current entry of the browser history with the main route.
          */
         onNavBack: function () {
+          debugger
           var sPreviousHash = History.getInstance().getPreviousHash();
           if (sPreviousHash !== undefined) {
             window.history.go(-1);
           } else {
-            this.getRouter().navTo("main", {}, undefined, true);
+            this.getRouter().navTo("home", {}, undefined, true);
           }
         },
         showBusy: function (delay) {
@@ -223,7 +224,6 @@ sap.ui.define(
               });
               this.getOwnerComponent().setModel(modelMeta, "master3");
             }else if(key === "02"){
-              
               modelMeta = new JSONModel(metadata.results);
               this.getOwnerComponent().setModel(modelMeta, "master3CO");
             }
