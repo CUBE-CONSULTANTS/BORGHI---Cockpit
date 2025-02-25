@@ -279,7 +279,8 @@ sap.ui.define(
           fields.forEach(field => {
               columns.push({
                   label: field.replace(/_/g, " "), 
-                  property: field
+                  property: field,  
+                  type: "Edm.String"
               });
           });
           return columns;

@@ -48,10 +48,18 @@ sap.ui.define(
       flatData: function (data) {
         debugger;
         const flatData = [];
-
-        data.forEach((item) => {
+        let dataArray = Array.isArray(data) ? data : [data];
+        dataArray.forEach((item) => {
           let testataRow = { ...item };
           delete testataRow.posizioni;
+          delete testataRow.id;
+          delete testataRow.edi;
+          delete testataRow.payload_db;
+          delete testataRow.template;
+          delete testataRow.tipo;
+          delete testataRow.versione;
+          delete testataRow.numero_idoc;
+          debugger
           Object.keys(testataRow).forEach(key => {
             if (key.toLowerCase().includes("data")) {
                 testataRow[key] = formatter.formatDate(testataRow[key]);
@@ -62,6 +70,12 @@ sap.ui.define(
           if (Array.isArray(item.posizioni) && item.posizioni.length > 0) {
             item.posizioni.forEach((posizione) => {
               let posizioneRow = { ...posizione };
+              delete posizioneRow.id;
+              delete posizioneRow.id_testata;
+              delete posizioneRow.idoc_payload;
+              delete posizioneRow.num_idoc;
+              delete posizioneRow.log;
+              delete posizioneRow.testata;
               delete posizioneRow.schedulazioni;
               Object.keys(posizioneRow).forEach(key => {
                 if (key.toLowerCase().includes("data")) {
@@ -76,6 +90,9 @@ sap.ui.define(
               ) {
                 posizione.schedulazioni.results.forEach((schedulazione) => {
                   let schedulazioneRow = { ...schedulazione };
+                  delete schedulazioneRow.id;
+                  delete schedulazioneRow.id_posizione;
+                  delete schedulazioneRow.posizione;
                   Object.keys(schedulazioneRow).forEach(key => {
                     if (key.toLowerCase().includes("data")) {
                         schedulazioneRow[key] = formatter.formatDate(schedulazioneRow[key]);
