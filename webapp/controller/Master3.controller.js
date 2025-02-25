@@ -48,7 +48,8 @@ sap.ui.define(
             break;
           case "02":
             oModel = this.getOwnerComponent().getModel("calloffV2");
-            metadata = await API.getEntity(oModel,"/Testata",[],["posizioni"]);
+            await this.callData(oModel,"/Master",[],["testata_master,testata_master/posizioni_testata,testata_master/log_testata"],key);
+            this.onFiltersBuilding(oEvent, key);
             break;
           case "03":
             var oMaster3Model = new JSONModel(

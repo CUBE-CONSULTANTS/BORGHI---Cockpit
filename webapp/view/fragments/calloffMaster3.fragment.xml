@@ -73,7 +73,7 @@ xmlns:mvc="sap.ui.core.mvc">
 
 
         <ui:Table
-				rows="{master3>/ProductCollection}"
+				rows="{master3>/}"
 				selectionMode="MultiToggle"
 				paste="onPaste"
 				ariaLabelledBy="title">
@@ -86,7 +86,7 @@ xmlns:mvc="sap.ui.core.mvc">
 					<ui:Column width="11rem">
 						<Label text="Progressivo trasmissione precedente" />
 						<ui:template>
-							<Text text="{master3>Name}" wrapping="false" />
+							<Text text="{master3>progressivo_ultimo_invio}" wrapping="false" />
 						</ui:template>
 					</ui:Column>
           <ui:Column width="11rem">

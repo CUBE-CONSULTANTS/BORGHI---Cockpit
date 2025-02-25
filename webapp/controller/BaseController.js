@@ -213,13 +213,21 @@ sap.ui.define(
         },
         callData : async function(oModel,entity,aFilters,Expands, key){
           debugger
-          if(key === '01'){
-            let metadata = await API.getEntity(oModel,entity,aFilters,Expands);
-            let modelMeta = new JSONModel(metadata.results);
-            modelMeta.getProperty("/").forEach((testata) => {
-              testata.posizioni = Object.values(testata.posizioni.results);
-            });
-            this.getOwnerComponent().setModel(modelMeta, "master3");
+          let metadata, modelMeta
+          try {
+            metadata = await API.getEntity(oModel,entity,aFilters,Expands);
+            if(key === '01'){
+              modelMeta = new JSONModel(metadata.results);
+              modelMeta.getProperty("/").forEach((testata) => {
+                testata.posizioni = Object.values(testata.posizioni.results);
+              });
+              this.getOwnerComponent().setModel(modelMeta, "master3");
+            }else if(key === "02"){
+              modelMeta = new JSONModel(metadata.results[0].testata_master.results);
+              this.getOwnerComponent().setModel(modelMeta, "master3");
+            }
+          } catch (error) {
+            MessageBox.error("Errore durante la ricezione dei dati")
           }
         },
         sortTables: function(table,aSortFields) {
