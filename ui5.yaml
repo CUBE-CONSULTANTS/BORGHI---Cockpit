@@ -13,7 +13,7 @@ server:
       afterMiddleware: compression
       configuration:
         authenticationMethod: "route" # "none" || "route", default: "none"
-        allowServices: true # allows BTP services like SAP IoT to be used 
+        allowServices: true # allows BTP services like SAP IoT to be used
         allowLocalDir: true
         appendAuthRoute: true
         debug: true
