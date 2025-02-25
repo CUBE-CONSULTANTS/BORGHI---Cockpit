@@ -22,7 +22,7 @@ server:
         destinations:
           # check that the destination name (here: "backend") matches your router in xs-app.json
           - name: "borghi-edi-cap"
-            url: "https://cube-consultants-srl----build-automation-dev-cap-cockpit-srv.cfapps.eu10-004.hana.ondemand.com"
+            url: "https://edi-cockpit-dev-org-edicockpit-cap-edi-cockpit-srv.cfapps.eu10-004.hana.ondemand.com"
             forwardAuthToken: true
     - name: fiori-tools-proxy
       afterMiddleware: compression
