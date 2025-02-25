@@ -193,7 +193,7 @@
 					"pattern": "master3",
 					"name": "master3",
 					"target": "master3"
-				},
+				},       
 				{
 					"pattern": "detail/{product}/{layout}",
 					"name": "detail",
@@ -222,8 +222,12 @@
 					"pattern": "archivio",
 					"name": "archivio",
 					"target": "archivio"
-				}
-		
+				},
+        {
+					"pattern": "dettCallOff/{id}",
+					"name": "dettCallOff",
+					"target": "dettCallOff"
+        }
 				
 			],
 			"targets": {
@@ -264,6 +268,11 @@
 				},
 				"archivio": {
 					"viewName": "archivio",
+					"controlAggregation": "beginColumnPages",
+					"viewLevel": 2
+				},
+        "dettCallOff": {
+					"viewName": "dettCallOff",
 					"controlAggregation": "beginColumnPages",
 					"viewLevel": 2
 				}

@@ -26,6 +26,7 @@ sap.ui.define(
     const SortOrder = CoreLibrary.SortOrder;
 
     return BaseController.extend("programmi.consegne.edi.controller.Master3", {
+      formatter: formatter,
       onInit: function () {
         this.oRouter = this.getOwnerComponent().getRouter();
         this.onFilterSelect(null, "01");
@@ -139,7 +140,6 @@ sap.ui.define(
 
       onProcessaButton: function (oEvent) {
         debugger;
-
         let table = this.getView().byId("treetableMain");
         let indices = this.getView().byId("treetableMain").getSelectedIndices();
         let testate = [];
@@ -240,21 +240,10 @@ sap.ui.define(
       },
       dettaglioNav: function (oEvent) {
         debugger;
-        let level = oEvent
-          .getSource()
-          .getParent()
-          .getBindingContext("master3")
-          .getPath()
-          .includes("posizioni");
+        let level = oEvent.getSource().getParent().getBindingContext("master3").getPath().includes("posizioni");
         // let detailSched = oEvent.getSource().getParent().getBindingContext("master3").getObject().DelforSchedulazioni
-        let detailPath = oEvent
-          .getSource()
-          .getParent()
-          .getBindingContext("master3")
-          .getPath();
-        let detail = this.getView()
-          .getModel("master3")
-          .getProperty(`${detailPath}`);
+        let detailPath = oEvent.getSource().getParent().getBindingContext("master3").getPath();
+        let detail = this.getView().getModel("master3").getProperty(`${detailPath}`);
 
         this.getOwnerComponent()
           .getModel("datiAppoggio")
@@ -307,7 +296,6 @@ sap.ui.define(
         debugger;
         MessageBox.error("Errori nel processamento delle posizioni.", {
           title: "Error",
-
           details: "<p><strong>This can happen if:</strong></p>",
           contentWidth: "100px",
           dependentOn: this.getView(),
@@ -333,7 +321,7 @@ sap.ui.define(
         const oTreeTable = this.byId("treetableMain");
         oTreeTable.expand(oTreeTable.getSelectedIndices());
       },
-
+      
       navToAPP: function (oEvent) {
         debugger;
         let level = oEvent
@@ -376,31 +364,14 @@ sap.ui.define(
           },
         });
       },
-      // loadFragment: function (oEvent) {
-      //   if (!this._oMyFragment) {
-      //     this._oMyFragment = sap.ui.xmlfragment(
-      //       // this.getView().getId(),
-      //       "programmi.consegne.edi.view.fragments.deliveryMaster3",
-      //       this
-      //     );
+       //FUNZIONI CALLOFF
+      onListItemPress: function (oEvent){
+        debugger
+        let idMaster = oEvent.getSource().getBindingContext("master3CO").getObject().id
+        this.getRouter().navTo("dettCallOff", {id: idMaster})
 
-      //     // this.getView()
-      //     //   .getContent()[0]
-      //     //   .getContent()
-      //     //   .getContent()[0]
-      //     //   .addContent(this._oMyFragment.oFragment);
-      //     // this.getView()
-      //     //   .getContent()[0]
-      //     //   .getContent()
-      //     //   .getContent()
-      //     //   .addContent(this._oMyFragment.oFragment);
-
-      //     this.getView()
-      //       .getContent()[0]
-      //       .getContent()
-      //       .addDependent(this._oMyFragment.oFragment);
-      //   }
-      // },
+      },
     });
   }
+ 
 );

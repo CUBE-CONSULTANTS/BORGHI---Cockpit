@@ -1,20 +1,20 @@
 <core:FragmentDefinition
-    xmlns="sap.m"
-    xmlns:core="sap.ui.core"
-    xmlns:f="sap.f"
-    xmlns:fb="sap.ui.comp.filterbar"
-    xmlns:ui="sap.ui.table"
-    xmlns:mvc="sap.ui.core.mvc"
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:f="sap.f"
+  xmlns:fb="sap.ui.comp.filterbar"
+  xmlns:ui="sap.ui.table"
+  xmlns:mvc="sap.ui.core.mvc"
 >
     <fb:FilterBar
         id="rthr"
         persistencyKey="myPersKey"
         useToolbar="false"
-        search=".onSearch"
-        filterChange=".onFilterChange"
-        afterVariantLoad=".onAfterVariantLoad"
+        search=".onSearchData"
+        showFilterConfiguration="false"
         showGoOnFB="true"
-        showFilterConfiguration="true"
+        showClearOnFB="true"
+        clear="onFilterBarClear"
         class="sapUiSmallMarginBottom"
     >
         <fb:filterGroupItems>
@@ -42,9 +42,13 @@
                 groupName="Group1"
                 visibleInFilterBar="true"
             >
-                <fb:control>
-                    <Input value="{filtersModel>/callOff/nomeFile}" />
-                </fb:control>
+            <fb:control>
+              <ComboBox 
+                items="{filtersModel>/callOff/nomeFile/items}" 
+                value="{filtersModel>/callOff/nomeFile/value}">
+                <core:ListItem key="{filtersModel>Key}" text="{filtersModel>Text}" />
+              </ComboBox> 
+            </fb:control>
             </fb:FilterGroupItem>
             <!-- <fb:FilterGroupItem
                     name="Materiale"
@@ -76,10 +80,10 @@
 			path: 'master3CO>/'
 		}" >
 		<StandardListItem
-      navigated="true"
+      type="Navigation"
+      press="onListItemPress"
 			title="Nome File: {master3CO>nome_file}"
-			description="Data Ricezione: {master3CO>data_ricezione}"/>
-
+			description="Data Ricezione: {path: 'master3CO>data_ricezione', formatter: '.formatter.formatDate'}"/>     
 	  </List>
 
     <!-- 
@@ -218,9 +222,9 @@
 						
 						<ui:template>
 							<Button
-                  tooltip="Stock Level"
-                  icon="sap-icon://doc-attachment"
-                  />
+                tooltip="Stock Level"
+                icon="sap-icon://doc-attachment"
+                />
 						</ui:template>
 					</ui:Column>
 				
