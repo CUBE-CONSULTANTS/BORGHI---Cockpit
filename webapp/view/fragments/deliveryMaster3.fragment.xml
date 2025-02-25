@@ -135,7 +135,7 @@
         <Button
           text="Esporta excel"
           icon="sap-icon://excel-attachment"
-          press="deletePress"
+          press="downloadExcelAllFiles"
           visible="{=${datiAppoggio>/currentPage} === 'archivio' ? false:true}"
         />
         <Button

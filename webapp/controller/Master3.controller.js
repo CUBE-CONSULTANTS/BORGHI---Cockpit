@@ -116,8 +116,15 @@ sap.ui.define(
             return;
         }
       },
-      deletePress: function (oEvent) {
-        this.getView().byId("table");
+      downloadExcelAllFiles: function (oEvent){
+        debugger
+        let oModel = this.getModel("master3")
+        let aData = oModel.getProperty("/"); 
+          if (!aData || aData.length === 0) {
+            MessageToast.show("Nessun dato disponibile per l'esportazione");
+            return;
+          }
+        this.buildSpreadSheet(aData)
       },
       onPressRow: function (oEvent) {
         var index = oEvent.getParameter("rowIndex");

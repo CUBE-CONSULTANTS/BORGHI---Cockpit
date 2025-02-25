@@ -45,6 +45,39 @@ sap.ui.define(
         }
         return aFilters;
         },
+        flatData: function (data) {
+          debugger
+          const flatData = []
+            data.forEach(item => {
+              let flatItem = { ...item };
+              // if (flatItem.stato) {
+              //   switch (flatItem.stato) {
+              //     case "sap-icon://status-negative":
+              //       flatItem.stato = "Rifiutato";
+              //       break;
+              //     case "sap-icon://status-positive":
+              //       flatItem.stato = "Validato";
+              //       break;
+              //     case "sap-icon://status-in-process":
+              //       flatItem.stato = "In Attesa";
+              //       break;
+              //     default:
+              //       flatItem.stato = "Non compilato";
+              //       break;
+              //   }
+              // }
+                flatData.push(flatItem);
+                if (Array.isArray(item.posizioni) && item.posizioni.length > 0) {
+                  item.posizioni.forEach(posizione => {
+                      flatData.push({
+                          ...posizione,
+                          isPosition: true
+                      });
+                  });
+              }
+          });
+          return flatData;
+        },
 
 	  }
   }
