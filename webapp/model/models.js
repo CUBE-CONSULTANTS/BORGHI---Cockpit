@@ -48,7 +48,10 @@ sap.ui.define(
           },
           callOff : {
             dataRic : null,
-            nomeFile : null,
+            nomeFile : {
+							value: null,
+							items: [],
+						},
           },
           selfbilling: {},
           despatch: {},

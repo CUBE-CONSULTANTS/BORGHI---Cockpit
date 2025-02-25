@@ -163,6 +163,14 @@ sap.ui.define(
               "/delivery/numProg/items",
               aNumProgInvio.map((n) => ({ Key: n, Text: n }))
             );
+          }else if(key === "02"){
+
+            let aData = this.getModel("master3CO").getProperty("/");
+            let aNomeFiles = [...new Set(aData.map((item) => item.nome_file))];
+            this.getModel("filtersModel").setProperty(
+              "/callOff/nomeFile/items",
+              aNomeFiles.map((c) => ({ Key: c, Text: c }))
+            );
           }
         },
         onFilterBarClear: async function (oEvent) {
@@ -196,7 +204,6 @@ sap.ui.define(
         },
         onSearchData: async function (oEvent) {
           //ricerca filtrata
-          let aFilters = [];
           let oFilterSet;
           if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("delivery")) {
             oFilterSet = this.getModel("filtersModel").getProperty("/delivery");
@@ -210,6 +217,8 @@ sap.ui.define(
             })
             this.getOwnerComponent().getModel("master3").setData(filteredMeta);
             this.getModel("master3").refresh(true);
+          }else if(oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("callOff")){
+            debugger
           }
         },
         callData : async function(oModel,entity,aFilters,Expands, key){
