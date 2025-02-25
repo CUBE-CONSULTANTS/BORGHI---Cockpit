@@ -8,7 +8,7 @@ sap.ui.define(
     "sap/m/MessageBox",
     "../model/API",
     "../model/models",
-    "../model/formatter"
+    "../model/formatter",
   ],
   function (
     BaseController,
@@ -43,12 +43,26 @@ sap.ui.define(
         switch (selectedKey) {
           case "01":
             oModel = this.getOwnerComponent().getModel("modelloV2");
-            await this.callData(oModel, "/Testata", [], ["posizioni,posizioni/schedulazioni,posizioni/log"],key)
+            await this.callData(
+              oModel,
+              "/Testata",
+              [],
+              ["posizioni,posizioni/schedulazioni,posizioni/log"],
+              key
+            );
             this.onFiltersBuilding(oEvent, key);
             break;
           case "02":
             oModel = this.getOwnerComponent().getModel("calloffV2");
-            await this.callData(oModel,"/Master",[],["testata_master,testata_master/posizioni_testata,testata_master/log_testata"],key);
+            await this.callData(
+              oModel,
+              "/Master",
+              [],
+              [
+                "testata_master,testata_master/posizioni_testata,testata_master/log_testata",
+              ],
+              key
+            );
             this.onFiltersBuilding(oEvent, key);
             break;
           case "03":
@@ -87,17 +101,19 @@ sap.ui.define(
       sortCategories: function (oEvent) {
         let oTable;
         let aSorters = [];
-        
+
         switch (this.getView().byId("idIconTabBar").getSelectedKey()) {
           case "01":
-              oTable = this.byId("treetableMain");
-              aSorters = this.sortTables(oTable, ["codice_seller", "numero_progressivo_invio"]);
-              break;
+            oTable = this.byId("treetableMain");
+            aSorters = this.sortTables(oTable, [
+              "codice_seller",
+              "numero_progressivo_invio",
+            ]);
+            break;
           case "02":
- 
-              break;
+            break;
           default:
-              return; 
+            return;
         }
       },
       downloadExcelAllFiles: function (oEvent){
@@ -233,6 +249,20 @@ sap.ui.define(
           .getModel("datiAppoggio")
           .setProperty("/posizioni", detail.posizioni);
         if (level) {
+          this.getOwnerComponent()
+            .getModel("datiAppoggio")
+            .setProperty("/posizioneCorrente", detail);
+          this.getOwnerComponent()
+            .getModel("datiAppoggio")
+            .setProperty("/schedulazioni", detail.schedulazioni.results);
+          this.getOwnerComponent()
+            .getModel("datiAppoggio")
+            .setProperty(
+              "/testata",
+              this.getView()
+                .getModel("master3")
+                .getProperty(`${detailPath[0] + detailPath[1]}`)
+            );
           debugger;
           let oNextUIState;
           this.getOwnerComponent()

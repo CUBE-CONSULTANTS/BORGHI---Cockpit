@@ -271,14 +271,14 @@
               icon="sap-icon://display"
               type="Emphasized"
               press="dettaglioNav"
-              tooltip="{= ${master3>DelforTestata/codice_seller} ? 'Dettaglio posizioni' : 'Dettaglio schedulazioni'}"
+              tooltip="{= ${master3>codice_seller} ? 'Dettaglio posizioni' : 'Dettaglio schedulazioni'}"
             />
             <Button
               icon="sap-icon://commission-check"
               type="Emphasized"
               class="sapUiTinyMarginBegin"
               press="navToAPP"
-              tooltip="{= ${master3>DelforTestata/codice_seller} ? 'Confronto Programmazione Cliente' : 'Confronto Programmazione Materiale'}"
+              tooltip="{= ${master3>codice_seller} ? 'Confronto Programmazione Cliente' : 'Confronto Programmazione Materiale'}"
             />
             <Button
               icon="sap-icon://download"
@@ -286,7 +286,7 @@
               type="Default"
               class="sapUiTinyMarginBegin"
               press="downloadEdi"
-              visible="{= ${master3>DelforTestata/codice_seller} ? true : false}"
+              visible="{= ${master3>codice_seller} ? true : false}"
             />
           </HBox>
         </ui:template>
