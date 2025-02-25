@@ -15,7 +15,7 @@
 <f:title>
     <f:DynamicPageTitle >
       <f:heading>
-        <Title text="Dettaglio" />
+        <Title text="Dettaglio nome File Data Ricezione" />
         
       </f:heading>
     </f:DynamicPageTitle>
@@ -24,14 +24,8 @@
     <f:DynamicPageHeader pinnable="true">
   <layout:HorizontalLayout allowWrapping="true">
     <layout:VerticalLayout class="sapUiMediumMarginEnd">
-      <ObjectAttribute title="Nome File" text="{detailData2>/DettaglioMaster3/materiale}"/>
-      <ObjectAttribute title="Data Ricezione" text="{detailData2>/DettaglioMaster3/idoc}"/>      
-    </layout:VerticalLayout>
-  </layout:HorizontalLayout>
-</f:DynamicPageHeader>
-</f:header>
-<f:content>
-  <fb:FilterBar
+     
+        <fb:FilterBar
     persistencyKey="myPersKey"
     useToolbar="false"
     search=".onSearchData"
@@ -122,7 +116,13 @@
       </fb:FilterGroupItem>
      
     </fb:filterGroupItems>
-  </fb:FilterBar>
+  </fb:FilterBar>    
+    </layout:VerticalLayout>
+  </layout:HorizontalLayout>
+</f:DynamicPageHeader>
+</f:header>
+<f:content>
+  
   <ui:TreeTable
     id="treetableCallOff"
     rows="{
