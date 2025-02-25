@@ -237,7 +237,84 @@ sap.ui.define(
           let aSorters = aSortFields.map(field => new sap.ui.model.Sorter(field, bDescending));
           oBinding.sort(aSorters)
         },
-       
+        buildSpreadSheet: function(aExportData){
+          debugger
+          let oSpreadsheet = new Spreadsheet({
+            dataSource: this._formatExcelData(aExportData),
+            workbook: {
+            columns: this._getExcelColumns(aExportData),
+            hierarchyLevel: 'Level'
+            },
+            fileName: "Export",
+            showProgress: true,
+            worker: true
+          });
+          oSpreadsheet.build().then(function () {
+            MessageToast.show("Esportazione completata!");
+          });  
+        },
+        _getExcelColumns: function(aExportData) {
+        debugger;
+        let columns = [];
+        let fields = new Set();  
+        aExportData.forEach(item => {
+          Object.keys(item).forEach(field => fields.add(field));
+        });
+        aExportData.forEach(item => {
+          let positions = item.posizioni || [];
+          positions.forEach(position => {
+          Object.keys(position).forEach(field => fields.add(field));
+          });
+        });
+        aExportData.forEach(item => {
+          let positions = item.posizioni || [];
+            positions.forEach(position => {
+              let schedules = position.schedulazioni.results || [];
+              schedules.forEach(schedule => {
+                Object.keys(schedule).forEach(field => fields.add(field));
+              });
+            });
+          });
+          fields.forEach(field => {
+              columns.push({
+                  label: field.replace(/_/g, " "), 
+                  property: field
+              });
+          });
+          return columns;
+      },
+        _formatExcelData: function(aData) {
+          debugger;
+          let aExportData = [];
+            aData.forEach(item => {
+                let row = {};
+                Object.keys(item).forEach(key => {
+                    row[key] = item[key];  
+                });
+                let positions = item.posizioni || [];
+                positions.forEach(position => {
+                    let positionRow = { ...row }; 
+                    Object.keys(position).forEach(key => {
+                        positionRow[key] = position[key];  
+                    });
+
+                    let schedules = position.schedulazioni.results || [];
+                    schedules.forEach(schedule => {
+                        let scheduleRow = { ...positionRow }; 
+                        Object.keys(schedule).forEach(key => {
+                            scheduleRow[key] = schedule[key];  
+                        });
+                        aExportData.push(scheduleRow); 
+                    });
+
+                    aExportData.push(positionRow); 
+                });
+
+                aExportData.push(row); 
+            });
+
+            return aExportData;
+        },
       }
     );
   }
