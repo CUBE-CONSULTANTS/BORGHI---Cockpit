@@ -52,19 +52,35 @@ sap.ui.define(
         data.forEach((item) => {
           let testataRow = { ...item };
           delete testataRow.posizioni;
+          Object.keys(testataRow).forEach(key => {
+            if (key.toLowerCase().includes("data")) {
+                testataRow[key] = formatter.formatDate(testataRow[key]);
+            }
+          });
           flatData.push(testataRow);
+
           if (Array.isArray(item.posizioni) && item.posizioni.length > 0) {
             item.posizioni.forEach((posizione) => {
               let posizioneRow = { ...posizione };
-
               delete posizioneRow.schedulazioni;
+              Object.keys(posizioneRow).forEach(key => {
+                if (key.toLowerCase().includes("data")) {
+                    posizioneRow[key] = formatter.formatDate(posizioneRow[key]);
+                }
+              });
               flatData.push(posizioneRow);
+
               if (
                 posizione.schedulazioni?.results &&
                 posizione.schedulazioni.results.length > 0
               ) {
                 posizione.schedulazioni.results.forEach((schedulazione) => {
                   let schedulazioneRow = { ...schedulazione };
+                  Object.keys(schedulazioneRow).forEach(key => {
+                    if (key.toLowerCase().includes("data")) {
+                        schedulazioneRow[key] = formatter.formatDate(schedulazioneRow[key]);
+                    }
+                  });
                   flatData.push(schedulazioneRow);
                 });
               }
