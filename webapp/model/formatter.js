@@ -8,6 +8,7 @@ sap.ui.define([
 			return value && value.toUpperCase();
 		},
     formatDate: function (date) {
+      debugger
       if (date) {
         var oDateFormat = DateFormat.getDateTimeInstance({
           pattern: "dd/MM/yyyy",

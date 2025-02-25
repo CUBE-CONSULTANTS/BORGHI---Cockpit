@@ -2,10 +2,11 @@ sap.ui.define(
   ["./BaseController", "sap/ui/model/json/JSONModel", "../model/formatter"],
   function (BaseController, JSONModel, formatter) {
     "use strict";
-
+    
     return BaseController.extend(
       "programmi.consegne.edi.controller.Detail2Master3",
       {
+        formatter: formatter,
         onInit: function () {
           debugger;
           this.oOwnerComponent = this.getOwnerComponent();
@@ -75,8 +76,8 @@ sap.ui.define(
               return item;
             })
             .sort((a, b) => {
-              let dateA = this.parseDate(a.data_spedizione_richiesta_da);
-              let dateB = this.parseDate(b.data_spedizione_richiesta_da);
+              let dateA = formatter.parseDate(a.data_spedizione_richiesta_da);
+              let dateB = formatter.parseDate(b.data_spedizione_richiesta_da);
               return dateA - dateB;
             });
 
