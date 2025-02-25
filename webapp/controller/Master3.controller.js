@@ -149,7 +149,7 @@ sap.ui.define(
         let self = this;
         let flag = false;
 
-        if (indices) {
+        if (indices.length != 0) {
           let aSelectedItems = indices.map(function (iIndex) {
             return table.getContextByIndex(iIndex).getObject();
           });
@@ -177,6 +177,17 @@ sap.ui.define(
                       selectedPos = selectedPos.concat(x.posizioni);
                     });
                     debugger;
+                    let uniqueArray = selectedPos.reduce(
+                      (acc, currentValue) => {
+                        if (!acc.some((item) => item.id === currentValue.id)) {
+                          acc.push(currentValue);
+                        }
+                        return acc;
+                      },
+                      []
+                    );
+
+                    console.log(uniqueArray);
                   }
                 },
               }
