@@ -42,12 +42,26 @@ sap.ui.define(
         switch (selectedKey) {
           case "01":
             oModel = this.getOwnerComponent().getModel("modelloV2");
-            await this.callData(oModel,"/Testata",[],["posizioni,posizioni/schedulazioni,posizioni/log"],selectedKey);
+            await this.callData(
+              oModel,
+              "/Testata",
+              [],
+              ["posizioni,posizioni/schedulazioni,posizioni/log"],
+              selectedKey
+            );
             this.onFiltersBuilding(oEvent, selectedKey);
             break;
           case "02":
             oModel = this.getOwnerComponent().getModel("calloffV2");
-            await this.callData(oModel,"/Master",[],[ "testata_master,testata_master/posizioni_testata,testata_master/log_testata",],selectedKey);
+            await this.callData(
+              oModel,
+              "/Master",
+              [],
+              [
+                "testata_master,testata_master/posizioni_testata,testata_master/log_testata",
+              ],
+              selectedKey
+            );
             this.onFiltersBuilding(oEvent, selectedKey);
             break;
           case "03":
@@ -100,15 +114,15 @@ sap.ui.define(
             return;
         }
       },
-      downloadExcelFile: function (oEvent){
-        debugger
-        let oModel = this.getModel("master3")
-        let aData = oModel.getProperty("/"); 
-          if (!aData || aData.length === 0) {
-            MessageToast.show("Nessun dato disponibile per l'esportazione");
-            return;
-          }
-        this.buildSpreadSheet(aData)
+      downloadExcelFile: function (oEvent) {
+        debugger;
+        let oModel = this.getModel("master3");
+        let aData = oModel.getProperty("/");
+        if (!aData || aData.length === 0) {
+          MessageToast.show("Nessun dato disponibile per l'esportazione");
+          return;
+        }
+        this.buildSpreadSheet(aData);
       },
       onPressRow: function (oEvent) {
         var index = oEvent.getParameter("rowIndex");
@@ -172,6 +186,7 @@ sap.ui.define(
                     );
 
                     console.log(uniqueArray);
+                    this.processaItems(uniqueArray);
                   }
                 },
               }
@@ -179,6 +194,7 @@ sap.ui.define(
           } else {
             //selezionate solo posizioni
             debugger;
+            this.processaItems(selectedPos);
           }
         } else {
           MessageBox.alert("Si prega di selezionare almeno una posizione");
@@ -186,7 +202,7 @@ sap.ui.define(
       },
 
       importaPress: function (oEvent) {
-        debugger
+        debugger;
         if (!this._oDialog2) {
           Fragment.load({
             id: this.getView().getId(),
@@ -341,6 +357,24 @@ sap.ui.define(
 
       processaItems: function (items) {
         debugger;
+
+        let itemList = items
+          .map(
+            (item) =>
+              `Codice cliente materiale: ${item.codice_cliente_materiale} - ID: ${item.id} - Codice materiale fornitore: ${item.codice_materiale_fornitore}\n`
+          )
+          .join("");
+        let message = `Vuoi continuare con questi elementi? \n ${itemList}`;
+
+        MessageBox.confirm(message, {
+          parameters: items,
+          title: "Riepilogo",
+          onClose: (oAction) => {
+            if (oAction === sap.m.MessageBox.Action.OK) {
+              debugger;
+            }
+          },
+        });
       },
       // loadFragment: function (oEvent) {
       //   if (!this._oMyFragment) {
