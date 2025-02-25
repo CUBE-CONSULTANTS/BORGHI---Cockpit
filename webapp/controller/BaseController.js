@@ -223,8 +223,9 @@ sap.ui.define(
               });
               this.getOwnerComponent().setModel(modelMeta, "master3");
             }else if(key === "02"){
-              modelMeta = new JSONModel(metadata.results[0].testata_master.results);
-              this.getOwnerComponent().setModel(modelMeta, "master3");
+              
+              modelMeta = new JSONModel(metadata.results);
+              this.getOwnerComponent().setModel(modelMeta, "master3CO");
             }
           } catch (error) {
             MessageBox.error("Errore durante la ricezione dei dati")

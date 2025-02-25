@@ -173,8 +173,8 @@
           <!-- <Button icon="{=${master3>DelforTestata/template} === 'MAN' ? 'sap-icon://attachment' : 'sap-icon://cloud'}"></Button> -->
           <core:Icon
             src="{=${master3>template} === 'MAN' ? 'sap-icon://attachment' : 'sap-icon://cloud'}"
-            size="1rem"
             visible="{= ${master3>codice_seller} ? true : false}"
+            size="1rem"
             tooltip="{=${master3>template} === 'MAN' ? 'Caricamento manuale' : 'Caricamento in cloud'}"
           />
         </ui:template>

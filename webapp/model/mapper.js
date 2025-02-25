@@ -73,7 +73,6 @@ sap.ui.define(
               delete posizioneRow.id;
               delete posizioneRow.id_testata;
               delete posizioneRow.idoc_payload;
-              delete posizioneRow.num_idoc;
               delete posizioneRow.log;
               delete posizioneRow.testata;
               delete posizioneRow.schedulazioni;

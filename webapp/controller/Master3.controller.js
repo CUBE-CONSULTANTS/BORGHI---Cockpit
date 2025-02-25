@@ -36,34 +36,19 @@ sap.ui.define(
       },
       onFilterSelect: async function (oEvent, key) {
         this.showBusy(0);
-        var selectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
+        let selectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
         !selectedKey ? (selectedKey = key) : (selectedKey = selectedKey);
         let oModel;
-        let metadata;
         switch (selectedKey) {
           case "01":
             oModel = this.getOwnerComponent().getModel("modelloV2");
-            await this.callData(
-              oModel,
-              "/Testata",
-              [],
-              ["posizioni,posizioni/schedulazioni,posizioni/log"],
-              key
-            );
-            this.onFiltersBuilding(oEvent, key);
+            await this.callData(oModel,"/Testata",[],["posizioni,posizioni/schedulazioni,posizioni/log"],selectedKey);
+            this.onFiltersBuilding(oEvent, selectedKey);
             break;
           case "02":
             oModel = this.getOwnerComponent().getModel("calloffV2");
-            await this.callData(
-              oModel,
-              "/Master",
-              [],
-              [
-                "testata_master,testata_master/posizioni_testata,testata_master/log_testata",
-              ],
-              key
-            );
-            this.onFiltersBuilding(oEvent, key);
+            await this.callData(oModel,"/Master",[],[ "testata_master,testata_master/posizioni_testata,testata_master/log_testata",],selectedKey);
+            this.onFiltersBuilding(oEvent, selectedKey);
             break;
           case "03":
             var oMaster3Model = new JSONModel(
@@ -101,7 +86,6 @@ sap.ui.define(
       sortCategories: function (oEvent) {
         let oTable;
         let aSorters = [];
-
         switch (this.getView().byId("idIconTabBar").getSelectedKey()) {
           case "01":
             oTable = this.byId("treetableMain");
