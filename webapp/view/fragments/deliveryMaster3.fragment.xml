@@ -120,24 +120,32 @@
         <Title />
         <ToolbarSpacer />
         <Button
+          text="Espandi tutti"
+          icon="sap-icon://expand-all"
+          press="onExpandFirstLevel"
+        />
+        <Button
+          icon="sap-icon://collapse-all"
           text="Collassa tutti"
           press="onCollapseAll"
         />
-        <Button
-          text="Espandi tutti"
-          press="onExpandFirstLevel"
-        />
+       
         <Button
           icon="sap-icon://sort"
           text="Ordinamento"
           press="sortCategories"
         />
+       
         <Button
           text="Esporta excel"
           icon="sap-icon://excel-attachment"
           press="downloadExcelFile"
           visible="{=${datiAppoggio>/currentPage} === 'archivio' ? false:true}"
         />
+        <Button icon="sap-icon://upload"
+        type="Emphasized"
+        text="Caricamento Manuale"
+        press="importaPress" />
         <Button
           text="Elabora"
           icon="sap-icon://process"

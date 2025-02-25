@@ -215,18 +215,18 @@
                     <core:Fragment fragmentName="programmi.consegne.edi.view.fragments.fileScartati"
                 type="XML" />
                 </IconTabFilter>
-                <IconTabFilter
+                <!-- <IconTabFilter
                 icon="sap-icon://excel-attachment"
                 iconColor="Default"
                 count="{/ProductCollectionStats/Counts/Weight/Overweight}"
                 text="Caricamento Manuale"
                 key="07"
                 
-              >
+              > -->
            <!-- importaPress-->
-                <core:Fragment fragmentName="programmi.consegne.edi.view.fragments.importMaster3"
+                <!-- <core:Fragment fragmentName="programmi.consegne.edi.view.fragments.importMaster3"
             type="XML" />
-            </IconTabFilter>
+            </IconTabFilter> -->
                 </items>
 
                 <content />

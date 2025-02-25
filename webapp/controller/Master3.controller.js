@@ -201,11 +201,8 @@ sap.ui.define(
         }
       },
 
-      onclose: function (oEvent) {
-        oEvent.getSource().getParent().close();
-      },
-
       importaPress: function (oEvent) {
+        debugger
         if (!this._oDialog2) {
           Fragment.load({
             id: this.getView().getId(),

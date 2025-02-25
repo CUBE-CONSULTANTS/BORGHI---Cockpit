@@ -1,24 +1,31 @@
 <core:FragmentDefinition
-    xmlns:unified="sap.ui.unified"
-    xmlns="sap.m"
-    xmlns:core="sap.ui.core"
+xmlns:unified="sap.ui.unified"
+xmlns="sap.m"
+xmlns:core="sap.ui.core"
 >
-    <VBox class="sapUiSmallMarginTop sapUiResponsiveContentPadding" backgroundDesign="Solid">
-        <HBox class="sapUiSmallMarginTopBottom sapUiSmallMarginBegin">
-            <Button
-                type="Emphasized"
-                icon="sap-icon://download"
-                text="Esporta Template Manuale"
-            />
-        </HBox>
-        <HBox class="sapUiMediumMarginBottom sapUiSmallMarginBegin">
-            <unified:FileUploader width="350px" />
-            <Button
-                type="Emphasized"
-                icon="sap-icon://upload"
-                text="Upload"
-                class="sapUiSmallMarginBeginEnd"
-            />
-        </HBox>
-    </VBox>
+<Dialog title="Gestione Template Manuale" draggable="true" resizable="true">
+    <content>
+        <VBox class="sapUiSmallMarginTop sapUiResponsiveContentPadding" backgroundDesign="Solid">
+            <HBox class="sapUiSmallMarginTopBottom sapUiSmallMarginBegin">
+                <Button
+                    type="Emphasized"
+                    icon="sap-icon://download"
+                    text="Esporta Template Manuale"
+                />
+            </HBox>
+            <HBox class="sapUiMediumMarginBottom sapUiSmallMarginBegin">
+                <unified:FileUploader width="350px" />
+                <Button
+                    type="Emphasized"
+                    icon="sap-icon://upload"
+                    text="Upload"
+                    class="sapUiSmallMarginBeginEnd"
+                />
+            </HBox>
+        </VBox>
+    </content>
+    <beginButton>
+        <Button text="Chiudi" press="onClose"/>
+    </beginButton>
+</Dialog>
 </core:FragmentDefinition>

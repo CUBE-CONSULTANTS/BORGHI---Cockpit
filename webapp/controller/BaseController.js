@@ -285,6 +285,11 @@ sap.ui.define(
           });
           return columns;
       },
+      
+      onClose: function (oEvent) {
+        oEvent.getSource().getParent().close();
+      },
+
         // _formatExcelData: function(aData) {
         //   debugger;
         //   let aExportData = [];
