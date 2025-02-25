@@ -100,8 +100,9 @@ sap.ui.define(
               return; 
         }
       },
-      deletePress: function (oEvent) {
-        this.getView().byId("table");
+      downloadExcelAllFiles: function (oEvent){
+        debugger
+        this.getModel("master3")
       },
       onPressRow: function (oEvent) {
         var index = oEvent.getParameter("rowIndex");
