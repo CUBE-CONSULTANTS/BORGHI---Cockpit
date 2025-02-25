@@ -1,12 +1,12 @@
 sap.ui.define(
-	["../model/API", "../model/formatter"],
-	function (API, formatter) {
-		"use strict";
-		return {
-      buildFilters: function(oFilterSet) {
+  ["../model/API", "../model/formatter"],
+  function (API, formatter) {
+    "use strict";
+    return {
+      buildFilters: function (oFilterSet) {
         let aFilters = [];
         if (oFilterSet.dataRic) {
-          let oDataRic = formatter.parseDate(oFilterSet.dataRic)
+          let oDataRic = formatter.parseDate(oFilterSet.dataRic);
           oDataRic.setHours(1, 0, 0, 0);
           aFilters.push(
             new sap.ui.model.Filter(
@@ -44,41 +44,36 @@ sap.ui.define(
           );
         }
         return aFilters;
-        },
-        flatData: function (data) {
-          debugger
-          const flatData = []
-            data.forEach(item => {
-              let flatItem = { ...item };
-              // if (flatItem.stato) {
-              //   switch (flatItem.stato) {
-              //     case "sap-icon://status-negative":
-              //       flatItem.stato = "Rifiutato";
-              //       break;
-              //     case "sap-icon://status-positive":
-              //       flatItem.stato = "Validato";
-              //       break;
-              //     case "sap-icon://status-in-process":
-              //       flatItem.stato = "In Attesa";
-              //       break;
-              //     default:
-              //       flatItem.stato = "Non compilato";
-              //       break;
-              //   }
-              // }
-                flatData.push(flatItem);
-                if (Array.isArray(item.posizioni) && item.posizioni.length > 0) {
-                  item.posizioni.forEach(posizione => {
-                      flatData.push({
-                          ...posizione,
-                          isPosition: true
-                      });
-                  });
-              }
-          });
-          return flatData;
-        },
+      },
+      flatData: function (data) {
+        debugger;
+        const flatData = [];
 
-	  }
+        data.forEach((item) => {
+          let testataRow = { ...item };
+          delete testataRow.posizioni;
+          flatData.push(testataRow);
+          if (Array.isArray(item.posizioni) && item.posizioni.length > 0) {
+            item.posizioni.forEach((posizione) => {
+              let posizioneRow = { ...posizione };
+
+              delete posizioneRow.schedulazioni;
+              flatData.push(posizioneRow);
+              if (
+                posizione.schedulazioni?.results &&
+                posizione.schedulazioni.results.length > 0
+              ) {
+                posizione.schedulazioni.results.forEach((schedulazione) => {
+                  let schedulazioneRow = { ...schedulazione };
+                  flatData.push(schedulazioneRow);
+                });
+              }
+            });
+          }
+        });
+
+        return flatData;
+      },
+    };
   }
 );

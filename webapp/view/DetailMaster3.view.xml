@@ -183,7 +183,7 @@
                                     <m:Button
                                         text="Esporta excel"
                                         icon="sap-icon://excel-attachment"
-                                        press="deletePress"
+                                        press="downloadExcelFile"
                                     />
                                     <m:Button
                                         text="Elabora"

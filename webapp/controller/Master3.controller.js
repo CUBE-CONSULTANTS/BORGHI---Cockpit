@@ -116,7 +116,7 @@ sap.ui.define(
             return;
         }
       },
-      downloadExcelAllFiles: function (oEvent){
+      downloadExcelFile: function (oEvent){
         debugger
         let oModel = this.getModel("master3")
         let aData = oModel.getProperty("/"); 

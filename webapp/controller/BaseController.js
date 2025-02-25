@@ -239,10 +239,11 @@ sap.ui.define(
         },
         buildSpreadSheet: function(aExportData){
           debugger
+          let flatExportData = mapper.flatData(aExportData);
           let oSpreadsheet = new Spreadsheet({
-            dataSource: this._formatExcelData(aExportData),
+            dataSource: flatExportData,
             workbook: {
-            columns: this._getExcelColumns(aExportData),
+            columns: this._getExcelColumns(flatExportData),
             hierarchyLevel: 'Level'
             },
             fileName: "Export",
@@ -283,38 +284,38 @@ sap.ui.define(
           });
           return columns;
       },
-        _formatExcelData: function(aData) {
-          debugger;
-          let aExportData = [];
-            aData.forEach(item => {
-                let row = {};
-                Object.keys(item).forEach(key => {
-                    row[key] = item[key];  
-                });
-                let positions = item.posizioni || [];
-                positions.forEach(position => {
-                    let positionRow = { ...row }; 
-                    Object.keys(position).forEach(key => {
-                        positionRow[key] = position[key];  
-                    });
+        // _formatExcelData: function(aData) {
+        //   debugger;
+        //   let aExportData = [];
+        //     aData.forEach(item => {
+        //         let row = {};
+        //         Object.keys(item).forEach(key => {
+        //             row[key] = item[key];  
+        //         });
+        //         let positions = item.posizioni || [];
+        //         positions.forEach(position => {
+        //             let positionRow = { ...row }; 
+        //             Object.keys(position).forEach(key => {
+        //                 positionRow[key] = position[key];  
+        //             });
 
-                    let schedules = position.schedulazioni.results || [];
-                    schedules.forEach(schedule => {
-                        let scheduleRow = { ...positionRow }; 
-                        Object.keys(schedule).forEach(key => {
-                            scheduleRow[key] = schedule[key];  
-                        });
-                        aExportData.push(scheduleRow); 
-                    });
+        //             let schedules = position.schedulazioni.results || [];
+        //             schedules.forEach(schedule => {
+        //                 let scheduleRow = { ...positionRow }; 
+        //                 Object.keys(schedule).forEach(key => {
+        //                     scheduleRow[key] = schedule[key];  
+        //                 });
+        //                 aExportData.push(scheduleRow); 
+        //             });
 
-                    aExportData.push(positionRow); 
-                });
+        //             aExportData.push(positionRow); 
+        //         });
 
-                aExportData.push(row); 
-            });
+        //         aExportData.push(row); 
+        //     });
 
-            return aExportData;
-        },
+        //     return aExportData;
+        // },
       }
     );
   }
