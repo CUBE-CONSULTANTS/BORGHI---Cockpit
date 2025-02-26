@@ -94,10 +94,20 @@ sap.ui.define(
         let dataArray = Array.isArray(data) ? data : [data];
         dataArray.forEach((item) => {
           let testataRow = { ...item };
-          delete testataRow.posizioni;
-          delete testataRow.id;
-          delete testataRow.edi;
-          delete testataRow.payload_db;
+          delete testataRow.posizioni 
+          delete testataRow.posizioni_testata
+          delete testataRow.id 
+          delete testataRow.id_master
+          delete testataRow.edi 
+          delete testataRow.idoc_paylod
+          delete testataRow.log_testata
+          delete testataRow.master.edi
+          delete testataRow.__metadata
+          delete testataRow.payload_db 
+          delete testataRow.master.payload_db
+          delete testataRow.idoc_payload_db 
+          delete testataRow.master
+          delete testataRow.archiviato
           delete testataRow.template;
           delete testataRow.tipo;
           delete testataRow.versione;
@@ -109,9 +119,10 @@ sap.ui.define(
             }
           });
           flatData.push(testataRow);
-
-          if (Array.isArray(item.posizioni) && item.posizioni.length > 0) {
-            item.posizioni.forEach((posizione) => {
+          let positions
+          item.posizioni ? positions = item.posizioni : positions = item.posizioni_testata
+          if (Array.isArray(positions) && positions.length > 0) {
+            positions.forEach((posizione) => {
               let posizioneRow = { ...posizione };
               delete posizioneRow.id;
               delete posizioneRow.id_testata;
@@ -125,7 +136,6 @@ sap.ui.define(
                 }
               });
               flatData.push(posizioneRow);
-
               if (
                 posizione.schedulazioni?.results &&
                 posizione.schedulazioni.results.length > 0
