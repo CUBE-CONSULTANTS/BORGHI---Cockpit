@@ -35,21 +35,6 @@
                     />
                 </fb:control>
             </fb:FilterGroupItem>
-
-            <!-- <fb:FilterGroupItem
-                name="Nome File"
-                label="Nome File"
-                groupName="Group1"
-                visibleInFilterBar="true"
-            >
-            <fb:control>
-              <ComboBox 
-                items="{filtersModel>/callOff/nomeFile/items}" 
-                value="{filtersModel>/callOff/nomeFile/value}">
-                <core:ListItem key="{filtersModel>Key}" text="{filtersModel>Text}" />
-              </ComboBox> 
-            </fb:control>
-            </fb:FilterGroupItem> -->
             <fb:FilterGroupItem
                     name="Cliente"
                     label="Cliente"
@@ -58,8 +43,8 @@
                 >
                     <fb:control>
                       <ComboBox 
-                      items="{filtersModel>/callOff/cliente/items}" 
-                      value="{filtersModel>/callOff/cliente/value}">
+                      items="{filtersModel>/callOff/clienti/items}" 
+                      value="{filtersModel>/callOff/clienti/value}">
                       <core:ListItem key="{filtersModel>Key}" text="{filtersModel>Text}" />
                     </ComboBox> 
                     </fb:control>

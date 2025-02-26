@@ -252,7 +252,7 @@
                                                 <m:Label text="Data DDT" />
                                                 <ui:template>
                                                     <m:ObjectIdentifier
-                                                        text="{detailData>posizione_14_19}"
+                                                        text="{path:'detailData>posizione_14_19'}"
                                                     />
                                                 </ui:template>
                                             </ui:Column>

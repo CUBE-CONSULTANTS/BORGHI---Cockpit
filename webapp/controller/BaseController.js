@@ -221,29 +221,29 @@ sap.ui.define(
           }
           this.getModel("filtersModel").refresh(true);
           let oBinding;
+          let modelMeta
           if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("delivery")) {
-            let modelMeta = await this.callData(this.getOwnerComponent().getModel("modelloV2"), "/Testata", [], ["posizioni,posizioni/schedulazioni,posizioni/log"],"01")
+            modelMeta = await this.callData(this.getOwnerComponent().getModel("modelloV2"), "/Testata", [], ["posizioni,posizioni/schedulazioni,posizioni/log"],"01")
           }
-          oBinding.filter([]);
-          oBinding.sort([]);
+          if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("callOff")) {
+            modelMeta = await this.callData(this.getOwnerComponent().getModel("calloffV2"), "/Testata", [], ["master,posizioni_testata,log_testata"],"02")
+          }
+          // oBinding.filter([]);
+          // oBinding.sort([]);
         },
         onSearchData: async function (oEvent) {
           //ricerca filtrata
           let oFilterSet;
+          let key
           if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("delivery")) {
             oFilterSet = this.getModel("filtersModel").getProperty("/delivery");
-            let aFilters = mapper.buildFilters(oFilterSet)
-            let aModelFilter = await API.getEntity(this.getOwnerComponent().getModel("modelloV2"),"/Testata",aFilters,["posizioni","posizioni/schedulazioni","posizioni/log"]) 
-            let filteredMeta = aModelFilter.results.map((testata) => {
-              return {
-                ...testata,
-                posizioni: testata.posizioni?.results ? Object.values(testata.posizioni.results) : [],
-              };
-            })
-            this.getOwnerComponent().getModel("master3").setData(filteredMeta);
-            this.getModel("master3").refresh(true);
+            let aFilters = mapper.buildFilters(oFilterSet,key = "01")
+            await this.callData(this.getOwnerComponent().getModel("modelloV2"),"/Testata",aFilters,["posizioni","posizioni/schedulazioni","posizioni/log"],"01") 
           }else if(oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("callOff")){
             debugger
+            oFilterSet = this.getModel("filtersModel").getProperty("/callOff");
+            let aFilters = mapper.buildFilters(oFilterSet,key = "02")
+            await this.callData(this.getOwnerComponent().getModel("calloffV2"), "/Testata", aFilters, ["master,posizioni_testata,log_testata"],"02") 
           }
         },
         

@@ -48,7 +48,7 @@ sap.ui.define(
           },
           callOff : {
             dataRic : null,
-            cliente : {
+            clienti : {
 							value: null,
 							items: [],
 						},

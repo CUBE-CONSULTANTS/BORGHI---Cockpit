@@ -110,6 +110,11 @@ sap.ui.define(
             ]);
             break;
           case "02":
+            oTable = this.byId("treetableCallOff");
+            aSorters = this.sortTables(oTable, [
+              "codice_terre_cliente",
+              "progressivo_invio",
+            ]);
             break;
           default:
             return;
@@ -117,13 +122,25 @@ sap.ui.define(
       },
       downloadExcelFile: function (oEvent) {
         debugger;
-        let oModel = this.getModel("master3");
+        let selectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
+        !selectedKey ? (selectedKey = key) : (selectedKey = selectedKey);
+        let oModel 
+        
+        switch (selectedKey) {
+          case "01":
+            oModel =  this.getModel("master3");
+            break;
+          case "02":
+            oModel = this.getModel("master3CO")
+            break;
+          default:
+        }   
         let aData = oModel.getProperty("/");
         if (!aData || aData.length === 0) {
           MessageToast.show("Nessun dato disponibile per l'esportazione");
           return;
         }
-        this.buildSpreadSheet(aData);
+        this.buildSpreadSheet(aData); 
       },
       onPressRow: function (oEvent) {
         var index = oEvent.getParameter("rowIndex");
@@ -296,23 +313,36 @@ sap.ui.define(
       },
 
       onCollapseAll: function () {
-        const oTreeTable = this.byId("treetableMain");
-        oTreeTable.collapseAll();
+        let oTable
+        let selectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
+        !selectedKey ? (selectedKey = key) : (selectedKey = selectedKey);
+        switch (selectedKey) {
+          case "01":
+            oTable = this.byId("treetableMain");
+            oTable.collapseAll();
+            break;
+          case "02":
+            oTable = this.byId("treetableCallOff");
+            oTable.collapseAll();
+            break;
+          default:
+        }    
       },
-
-      onCollapseSelection: function () {
-        const oTreeTable = this.byId("treetableMain");
-        oTreeTable.collapse(oTreeTable.getSelectedIndices());
-      },
-
       onExpandFirstLevel: function () {
-        const oTreeTable = this.byId("treetableMain");
-        oTreeTable.expandToLevel(1);
-      },
-
-      onExpandSelection: function () {
-        const oTreeTable = this.byId("treetableMain");
-        oTreeTable.expand(oTreeTable.getSelectedIndices());
+        let oTable
+        let selectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
+        !selectedKey ? (selectedKey = key) : (selectedKey = selectedKey);
+        switch (selectedKey) {
+          case "01":
+            oTable = this.byId("treetableMain");
+            oTable.expandToLevel(1);
+            break;
+          case "02":
+            oTable = this.byId("treetableCallOff");
+            oTable.expandToLevel(1);
+            break;
+          default:
+        }    
       },
 
       navToAPP: function (oEvent) {
