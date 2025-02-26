@@ -121,7 +121,7 @@ sap.ui.define(
         }
       },
       downloadExcelFile: function (oEvent) {
-        debugger;
+
         let selectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
         !selectedKey ? (selectedKey = key) : (selectedKey = selectedKey);
         let oModel 

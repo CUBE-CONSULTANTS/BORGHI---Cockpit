@@ -112,6 +112,7 @@ sap.ui.define(
           delete testataRow.tipo;
           delete testataRow.versione;
           delete testataRow.numero_idoc;
+          
           debugger
           Object.keys(testataRow).forEach(key => {
             if (key.toLowerCase().includes("data")) {
@@ -130,9 +131,13 @@ sap.ui.define(
               delete posizioneRow.log;
               delete posizioneRow.testata;
               delete posizioneRow.schedulazioni;
+              delete posizioneRow.__metadata
               Object.keys(posizioneRow).forEach(key => {
                 if (key.toLowerCase().includes("data")) {
                     posizioneRow[key] = formatter.formatDate(posizioneRow[key]);
+                }
+                if(key.toLowerCase().includes("posizione_14_19")){
+                  posizioneRow[key] = formatter.returnDate(posizioneRow[key],"yyyyMMdd","dd/MM/YYYY");
                 }
               });
               flatData.push(posizioneRow);

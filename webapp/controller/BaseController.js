@@ -279,6 +279,16 @@ sap.ui.define(
           let aSorters = aSortFields.map(field => new sap.ui.model.Sorter(field, bDescending));
           oBinding.sort(aSorters)
         },
+        downloadExcelFileDett: function (oEvent){
+          debugger
+          let oModel = this.getModel("detailData")
+          let aData = oModel.getProperty("/DettaglioMaster3"); 
+            if (!aData || aData.length === 0) {
+              MessageToast.show("Nessun dato disponibile per l'esportazione");
+              return;
+            }
+          this.buildSpreadSheet(aData)
+        },
         buildSpreadSheet: function(aExportData){
           debugger
           let flatExportData = mapper.flatData(aExportData);

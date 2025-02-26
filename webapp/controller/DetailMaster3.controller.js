@@ -71,16 +71,7 @@ sap.ui.define(
 
           this._registerForP13n();
         },
-        downloadExcelFile: function (oEvent){
-          debugger
-          let oModel = this.getModel("detailData")
-          let aData = oModel.getProperty("/DettaglioMaster3"); 
-            if (!aData || aData.length === 0) {
-              MessageToast.show("Nessun dato disponibile per l'esportazione");
-              return;
-            }
-          this.buildSpreadSheet(aData)
-        },
+
         onEditToggleButtonPress: function () {
           var oObjectPage = this.getView().byId("ObjectPageLayout"),
             bCurrentShowFooterState = oObjectPage.getShowFooter();

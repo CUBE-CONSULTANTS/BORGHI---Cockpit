@@ -146,7 +146,7 @@
                                     <m:Button
                                         text="Esporta excel"
                                         icon="sap-icon://excel-attachment"
-                                        press="downloadExcelFile"
+                                        press="downloadExcelFileDett"
                                     />
 
                                     <m:Button
@@ -163,10 +163,9 @@
                                     horizontal="true"
                                 >
                                     <ui:Table
-                                        id="tablePos"
+                                        id="tablePosCO"
                                         selectionMode="MultiToggle"
                                         rows="{detailData>/DettaglioMaster3/posizioni_testata}"
-                                        cellClick=".rowDetailPress"
                                         autoPopinMode="true"
                                         fixedLayout="false"
                                         sort="onSort"
