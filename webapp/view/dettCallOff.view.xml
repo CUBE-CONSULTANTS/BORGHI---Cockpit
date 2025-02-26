@@ -33,7 +33,7 @@
             <ObjectPageDynamicHeaderTitle>
                 <expandedHeading>
                     <m:Title
-                        text="{detailData>/DettaglioMaster3/template}  {detailData>/DettaglioMaster3/numero_progressivo_invio}"
+                        text="{detailData>/DettaglioMaster3/sender_id}  {detailData>/DettaglioMaster3/progressivo_invio}"
                         wrapping="true"
                         class="sapUiSmallMarginEnd"
                     />
@@ -52,7 +52,7 @@
                             class="sapUiTinyMarginEnd"
                         >
                             <m:Title
-                                text="{detailData>/DettaglioMaster3/template}"
+                                text="{detailData>/DettaglioMaster3/sender_id}"
                                 wrapping="true"
                             />
                         </m:FlexBox>
@@ -60,9 +60,6 @@
                 </snappedHeading>
 
                 <navigationActions>
-                    
-                   
-                    <!-- {= ${/actionButtonsInfo/midColumn/exitFullScreen} !== null } -->
                     <m:OverflowToolbarButton
                         type="Transparent"
                         icon="sap-icon://decline"
@@ -70,84 +67,69 @@
                         tooltip="Close column"
                         visible="true"
                     />
-                    <!-- {= ${/actionButtonsInfo/midColumn/closeColumn} !== null } -->
                 </navigationActions>
             </ObjectPageDynamicHeaderTitle>
         </headerTitle>
 
         <headerContent>
-            <m:HBox  justifyContent="SpaceBetween" fitContainer="true">
-                <m:VBox class="sapUiSmallMarginEnd"  >
-                  <m:VBox class="sapUiTinyMarginBottom" 
-                  >
-                  <m:Label text="Cliente" design="Bold" />
-                  <m:Text
-                      text="{detailData>/DettaglioMaster3/codice_buyer}"
-                  />  
-                  </m:VBox>
-                   <m:VBox class="sapUiTinyMarginBottom"
-                   >
-                   <m:Label text="Nome file" design="Bold" />
-                   <m:Text
-                       text="{detailData>/DettaglioMaster3/nome_file}"
-                   />   
-                   </m:VBox> 
-                    <m:VBox
-                    >
-                    <m:Label text="Data Ricezione" design="Bold" />
-                    <m:Text
-                        text="{path:'detailData>/DettaglioMaster3/data_ricezione', formatter: '.formatter.formatDate'}"
-                    />    
+            <m:HBox
+                justifyContent="SpaceBetween"
+                fitContainer="true"
+            >
+                <m:VBox class="sapUiSmallMarginEnd">
+                    <m:VBox class="sapUiTinyMarginBottom">
+                        <m:Label
+                            text="Cliente"
+                            design="Bold"
+                        />
+                        <m:Text
+                            text="{detailData>/DettaglioMaster3/codice_terre_cliente}"
+                        />
                     </m:VBox>
-                    
+                    <m:VBox class="sapUiTinyMarginBottom">
+                        <m:Label
+                            text="Nome file"
+                            design="Bold"
+                        />
+                        <m:Text
+                            text="{detailData>/DettaglioMaster3/master/nome_file}"
+                        />
+                    </m:VBox>
+                    <m:VBox>
+                        <m:Label
+                            text="Data Ricezione"
+                            design="Bold"
+                        />
+                        <m:Text
+                            text="{path:'detailData>/DettaglioMaster3/master/data_ricezione', formatter: '.formatter.formatDate'}"
+                        />
+                    </m:VBox>
                 </m:VBox>
-                <m:VBox class="sapUiSmallMarginEnd" >
-                  <m:VBox class="sapUiTinyMarginBottom"
-                  >
-                  <m:Label text="Num. progressivo invio" design="Bold" />
-                  <m:Text
-                      text="{detailData>/DettaglioMaster3/numero_progressivo_invio}"
-                  />  
-                  </m:VBox>
-                    <m:VBox class="sapUiTinyMarginBottom"
-                    >
-                    <m:Label text="Data progressivo invio" design="Bold" />
-                    <m:Text
-                        text="{path:'detailData>/DettaglioMaster3/data_progressivo_invio', formatter: '.formatter.formatDate'}"
-                    />    
+                <m:VBox class="sapUiSmallMarginEnd">
+                    <m:VBox class="sapUiTinyMarginBottom">
+                        <m:Label
+                            text="Num. progressivo invio"
+                            design="Bold"
+                        />
+                        <m:Text
+                            text="{detailData>/DettaglioMaster3/progressivo_invio}"
+                        />
                     </m:VBox>
-                    <m:VBox
-                    >
-                    <m:Label text="Codice Buyer" design="Bold" />
-                    <m:Text
-                        text="{detailData>/DettaglioMaster3/codice_buyer}"
-                    />    
+                    <m:VBox class="sapUiTinyMarginBottom">
+                        <m:Label
+                            text="Data progressivo invio"
+                            design="Bold"
+                        />
+                        <m:Text
+                            text="{path:'detailData>/DettaglioMaster3/data_progressivo_invio', formatter: '.formatter.formatDate'}"
+                        />
                     </m:VBox>
-                    
-                </m:VBox>
-                <m:VBox class="sapUiSmallMarginEnd" >
-                  <m:VBox class="sapUiTinyMarginBottom" >
-                  
-                  <m:Label text="Codice Seller" design="Bold" />
-                  <m:Text
-                      text="{detailData>/DettaglioMaster3/codice_seller}"
-                  />  
-                  </m:VBox>
-                    <m:VBox class="sapUiTinyMarginBottom"
-                    >
-                    <m:Label text="Num Segmenti Tracciato" design="Bold" />
-                    <m:Text
-                        text="{detailData>/DettaglioMaster3/numero_segmenti_tracciato}"
-                    />    
-                    </m:VBox>
-                   
-                   
                 </m:VBox>
             </m:HBox>
         </headerContent>
 
         <sections>
-            <ObjectPageSection title="Posizione">
+            <ObjectPageSection title="Posizioni">
                 <subSections>
                     <ObjectPageSubSection>
                         <blocks>
@@ -161,21 +143,10 @@
                                         text="Ordinamento"
                                         press="sortCategories"
                                     />
-                                    <!-- <m:Button
-                                        icon="sap-icon://excel-attachment"
-                                        text="Caricamento Manuale"
-                                        press="importaPress"
-                                    /> -->
                                     <m:Button
                                         text="Esporta excel"
                                         icon="sap-icon://excel-attachment"
                                         press="downloadExcelFile"
-                                    />
-                                    <m:Button
-                                        text="Elabora"
-                                        icon="sap-icon://process"
-                                        press="onProcessaButton"
-                                        type="Emphasized"
                                     />
 
                                     <m:Button
@@ -194,7 +165,7 @@
                                     <ui:Table
                                         id="tablePos"
                                         selectionMode="MultiToggle"
-                                        rows="{detailData>/DettaglioMaster3/posizioni}"
+                                        rows="{detailData>/DettaglioMaster3/posizioni_testata}"
                                         cellClick=".rowDetailPress"
                                         autoPopinMode="true"
                                         fixedLayout="false"
@@ -203,12 +174,9 @@
                                         showColumnVisibilityMenu="true"
                                         sap.ui.fl:flexibility="sap/m/flexibility/EngineFlex"
                                     >
-                                        <!--try-->
-
                                         <ui:extension>
                                             <m:OverflowToolbar id="prova2">
                                                 <m:ToolbarSpacer />
-                                                <!-- <vm:VariantManagement id="p13nVm" for="tablePos"/> -->
                                                 <m:Button
                                                     icon="sap-icon://action-settings"
                                                     press="openPosizioniDialog"
@@ -216,359 +184,200 @@
                                                 />
                                             </m:OverflowToolbar>
                                         </ui:extension>
-                                        <!-- <ui:dependents>
-                                            <columnmenu:Menu id="menu">
-                                                <columnmenu:items>
-                                                    <columnmenu:ActionItem icon="sap-icon://sort" label="Sort" press="onColumnHeaderItemPress"/>
-                                                    <columnmenu:ActionItem icon="sap-icon://table-column" label="Columns" press="onColumnHeaderItemPress"/>
-                                                </columnmenu:items>
-                                            </columnmenu:Menu>
-                                        </ui:dependents> -->
-                                        <!---->
 
                                         <ui:columns>
-                                            <ui:Column width="5rem" hAlign="Center" tooltip="Dettaglio" >
-                                                <m:Label text=" " />
-                                                <ui:template>
-                                                    <m:Button
-                                                        icon="sap-icon://search"
-                                                        tooltip="Schedulazioni"
-                                                        type="Emphasized"
-                                                        press="buttonDetailSched"
-                                                    />
-                                                </ui:template>
-                                            </ui:Column>
-                                        
+                                          <ui:Column
+                                          width="10rem"
+                                          showSortMenuEntry="false"
+                                          tooltip="Cliente"
+                                          app:p13nKey="cliente"
+                                          sortProperty="Cliente"
+                                      >
+                                          <m:Label text="Cliente" />
+                                          <ui:template>
+                                              <m:ObjectIdentifier
+                                                  text="{detailData>posizione_77_86}"
+                                              />
+                                          </ui:template>
+                                      </ui:Column>  
+                                      <ui:Column
+                                      width="10rem"
+                                      showSortMenuEntry="false"
+                                      tooltip="Reason"
+                                      app:p13nKey="Reason"
+                                      sortProperty="Reason"
+                                  >
+                                      <m:Label text="Reason" />
+                                      <ui:template>
+                                          <m:ObjectIdentifier
+                                              text="{detailData>posizione_43_44}"
+                                          />
+                                      </ui:template>
+                                  </ui:Column>  
                                             <ui:Column
                                                 width="10rem"
                                                 showSortMenuEntry="false"
-                                                tooltip="Stato"
+                                                tooltip="DDT 35"
+                                                app:p13nKey="DDT_col_35"
+                                                sortProperty="DDT 35"
                                             >
-                                                <m:Label text="Stato" />
+                                                <m:Label text="DDT 35" />
                                                 <ui:template>
                                                     <m:ObjectIdentifier
-                                                        text="{detailData>Stato}"
+                                                        text="{detailData>posizione_6_13}"
+                                                    />
+                                                </ui:template>
+                                            </ui:Column>
+                                            <ui:Column
+                                            width="10rem"
+                                            showSortMenuEntry="false"
+                                            tooltip="DDT"
+                                            app:p13nKey="DDT_col"
+                                            sortProperty="DDT"
+                                        >
+                                            <m:Label text="DDT" />
+                                            <ui:template>
+                                                <m:ObjectIdentifier
+                                                    text="{detailData>posizione_121_128}"
+                                                />
+                                            </ui:template>
+                                        </ui:Column>
+                                            <ui:Column
+                                                width="10rem"
+                                                showSortMenuEntry="false"
+                                                tooltip="Data DDT"
+                                                app:p13nKey="data_DDT_col"
+                                                sortProperty="data DDT"
+                                            >
+                                                <m:Label text="Data DDT" />
+                                                <ui:template>
+                                                    <m:ObjectIdentifier
+                                                        text="{detailData>posizione_14_19}"
                                                     />
                                                 </ui:template>
                                             </ui:Column>
                                             <ui:Column
                                                 width="10rem"
-                                                showSortMenuEntry="false"
-                                                tooltip="Destinatario"
-                                                app:p13nKey="destinatario_col" sortProperty="destinatario"
+                                                tooltip="Progressivo Invio"
+                                                app:p13nKey="progressivo_invio_col"
+                                                sortProperty="Progressivo Invio"
                                             >
-                                                <m:Label text="Destinatario" />
-                                                <ui:template>
-                                                    <m:ObjectIdentifier
-                                                        text="{detailData>destinatario}"
-                                                    />
-                                                </ui:template>
-                                            </ui:Column>
-                                            <ui:Column width="10rem" tooltip="Codice cliente materiale"
-                                            app:p13nKey="codice_cliente_materiale_col" sortProperty="Cod. Cliente Mat.">
                                                 <m:Label
-                                                    text="Cod. Cliente Mat."
+                                                    text="Progressivo Invio"
                                                 />
                                                 <ui:template>
                                                     <m:ObjectIdentifier
-                                                        text="{detailData>codice_cliente_materiale}"
+                                                        text="{detailData>posizione_6_13}"
                                                     />
                                                 </ui:template>
                                             </ui:Column>
-                                            <ui:Column width="12rem" tooltip="Codice materiale fornitore"
-                                            app:p13nKey="codice_materiale_fornitore_col" sortProperty="Cod. Mat. Fornitore">
+                                            <ui:Column
+                                                width="12rem"
+                                                tooltip="Codice materiale"
+                                                app:p13nKey="codice_materiale_col"
+                                                sortProperty="Cod. Mat."
+                                            >
                                                 <m:Label
-                                                    text="Cod. Mat. Fornitore"
+                                                    text="Cod. Mat."
                                                 />
                                                 <ui:template>
                                                     <m:ObjectIdentifier
-                                                        text="{detailData>codice_materiale_fornitore}"
+                                                        text="{detailData>posizione_6_28}"
                                                     />
                                                 </ui:template>
                                             </ui:Column>
-                                            <ui:Column width="10rem" tooltip="Descrizione materiale" app:p13nKey="descrizione_materiale_col" sortProperty="Descr. Mat.">
-                                                <m:Label
-                                                    text="Descr. Mat."
-                                                />
-                                                <ui:template>
-                                                    <m:ObjectIdentifier
-                                                        text="{detailData>descrizione_materiale}"
-                                                    />
-                                                </ui:template>
-                                            </ui:Column>
+                                            
                                             <ui:Column
                                                 width="10rem"
                                                 sortProperty="Punto di scarico"
                                                 tooltip="Punto di scarico"
                                                 app:p13nKey="punto_scarico_col"
                                             >
-                                                <m:Label
-                                                    text="P. scarico"
-                                                />
+                                                <m:Label text="P. scarico" />
                                                 <ui:template>
                                                     <m:ObjectIdentifier
-                                                        text="{detailData>punto_scarico}"
+                                                        text="{detailData>posizione_20_24}"
                                                     />
                                                 </ui:template>
                                             </ui:Column>
                                             <ui:Column
                                                 width="10rem"
                                                 showSortMenuEntry="false"
-                                                tooltip="Destinazione interna"
-                                                sortProperty="Destinazione interna"
-                                                app:p13nKey="destinazione_interna_col"
+                                                tooltip="N Ord Presso Cliente"
+                                                sortProperty="N Ord Presso Cliente"
+                                                app:p13nKey="nord_cliente_col"
                                             >
-                                                <m:Label
-                                                    text="Dest. Interna"
-                                                />
+                                                <m:Label text="N Ord Presso Cliente" />
                                                 <ui:template>
                                                     <m:ObjectIdentifier
-                                                        text="{detailData>destinazione_interna}"
-                                                    />
-                                                </ui:template>
-                                            </ui:Column>
-                                            <ui:Column width="10rem" tooltip="Testo riga" sortProperty="Testo riga"
-                                            app:p13nKey="testo_riga_col">
-                                                <m:Label text="Testo riga" />
-                                                <ui:template>
-                                                    <m:ObjectIdentifier
-                                                        text="{detailData>testo_riga}"
-                                                    />
-                                                </ui:template>
-                                            </ui:Column>
-                                            <ui:Column width="15rem" tooltip="Data inizio calcolo quantità cumulata" sortProperty="Data inizio calcolo quantità cumulata"
-                                            app:p13nKey="data_inizio_calc_quantita_cumulata_col">
-                                                <m:Label
-                                                    text="Data inizio calc. q. cumulata"
-                                                />
-                                                <ui:template>
-                                                    <m:ObjectIdentifier
-                                                        text="{path:'detailData>data_inizio_calc_quantita_cumulata', formatter: '.formatter.formatDate'}"
-                                                    />
-                                                </ui:template>
-                                            </ui:Column>
-                                            <ui:Column width="10rem" tooltip="Progressivo invio" sortProperty="Progressivo invio"
-                                            app:p13nKey="progressivo_invio_col">
-                                                <m:Label
-                                                    text="P. invio"
-                                                />
-                                                <ui:template>
-                                                    <m:ObjectIdentifier
-                                                        text="{detailData>progressivo_invio}"
+                                                        text="{detailData>posizione_31_42}"
                                                     />
                                                 </ui:template>
                                             </ui:Column>
                                             <ui:Column
                                                 width="10rem"
-                                                sortProperty="Data progressivo invio"
-                                                tooltip="Data progressivo invio"
-                                                app:p13nKey="data_progressivo_invio_col"
+                                                tooltip="Num riga"
+                                                sortProperty="Num riga"
+                                                app:p13nKey="num_riga_col"
                                             >
-                                                <m:Label
-                                                    text="Data p. invio"
-                                                />
+                                                <m:Label text="Num riga" />
                                                 <ui:template>
                                                     <m:ObjectIdentifier
-                                                        text="{path:'detailData>data_progressivo_invio', formatter: '.formatter.formatDate'}"
+                                                        text="{detailData>posizione_87_89}"
                                                     />
                                                 </ui:template>
                                             </ui:Column>
+                                            
+                                            
+                                            
+                                            
+                                            
                                             <ui:Column
                                                 width="10rem"
-                                                showSortMenuEntry="false"
-                                                tooltip="Numero Ultima Schedulazione Ricevuta"
-                                                sortProperty="Numero Ultima Schedulazione Ricevuta"
-                                                app:p13nKey="numero_ultima_schedulazione_ricevuta_col"
+                                                tooltip="Quantità"
+                                                sortProperty="Quantità"
+                                                app:p13nKey="quantità_col"
                                             >
                                                 <m:Label
-                                                    text="Schedulazione"
+                                                    text="Quantità"
                                                 />
                                                 <ui:template>
                                                     <m:ObjectIdentifier
-                                                        text="{detailData>numero_ultima_schedulazione_ricevuta}"
-                                                    />
-                                                </ui:template>
-                                            </ui:Column>
-                                            <ui:Column width="10rem"  tooltip="Data Numero Ultima Schedulazione Ricevuta" sortProperty="Data Numero Ultima Schedulazione Ricevuta" app:p13nKey="data_numero_ultima_schedulazione_ricevuta_col">
-                                                <m:Label
-                                                    text="Data N. Schedulazione"
-                                                />
-                                                <ui:template>
-                                                    <m:ObjectIdentifier
-                                                        text="{path:'detailData>data_numero_ultima_schedulazione_ricevuta', formatter: '.formatter.formatDate'}"
-                                                    />
-                                                </ui:template>
-                                            </ui:Column>
-                                            <ui:Column width="12rem"  tooltip="Numero ordine di acquisto" sortProperty="Numero ordine di acquisto" app:p13nKey="numero_ordine_acquisto_col">
-                                                <m:Label
-                                                    text="N. ordine di acquisto"
-                                                />
-                                                <ui:template>
-                                                    <m:ObjectIdentifier
-                                                        text="{detailData>numero_ordine_acquisto}"
-                                                    />
-                                                </ui:template>
-                                            </ui:Column>
-                                            <ui:Column width="10rem"  tooltip="Ultima quantità spedita" sortProperty="Ultima quantità spedita" app:p13nKey="ultima_quantita_spedita_col">
-                                                <m:Label
-                                                    text="Ultima q. spedita"
-                                                />
-                                                <ui:template>
-                                                    <m:ObjectIdentifier
-                                                        text="{detailData>ultima_quantita_spedita}"
+                                                        text="{detailData>posizione_53_65}"
                                                     />
                                                 </ui:template>
                                             </ui:Column>
                                             <ui:Column
-                                                width="17rem"
-                                                sortProperty="Numero Ultima bolla ricevuta dal cliente"
-                                                tooltip="Numero Ultima bolla ricevuta dal cliente"
-                                                app:p13nKey="numero_ultima_bolla_ricevuta_cliente_col"
-                                            >
-                                                <m:Label
-                                                    text="N. bolla ricevuta cliente"
+                                            width="10rem"
+                                            tooltip="Udm"
+                                            sortProperty="Udm"
+                                            app:p13nKey="Udm_col"
+                                        >
+                                            <m:Label
+                                                text="Udm"
+                                            />
+                                            <ui:template>
+                                                <m:ObjectIdentifier
+                                                    text="{detailData>posizione_66_67}"
                                                 />
-                                                <ui:template>
-                                                    <m:ObjectIdentifier
-                                                        text="{detailData>numero_ultima_bolla_ricevuta_cliente}"
-                                                    />
-                                                </ui:template>
-                                            </ui:Column>
-                                            <ui:Column
-                                                width="13rem"
-                                                showSortMenuEntry="false"
-                                                tooltip="Data ultima bolla ricevuta"
-                                                sortProperty="Data ultima bolla ricevuta"
-                                                app:p13nKey="data_ultima_bolla_ricevuta_col"
-                                            >
-                                                <m:Label
-                                                    text="Data bolla ricevuta"
-                                                />
-                                                <ui:template>
-                                                    <m:ObjectIdentifier
-                                                        text="{path:'detailData>data_ultima_bolla_ricevuta',formatter: '.formatter.formatDate'}"
-                                                    />
-                                                </ui:template>
-                                            </ui:Column>
-                                            <ui:Column width="13rem" tooltip="Quantità cumulativa ricevuta" sortProperty="Quantità cumulativa ricevuta"
-                                            app:p13nKey="quantita_cumulativa_ricevuta_col">
-                                                <m:Label
-                                                    text="Q. cumulativa ricevuta"
-                                                />
-                                                <ui:template>
-                                                    <m:ObjectIdentifier
-                                                        text="{detailData>quantita_cumulativa_ricevuta}"
-                                                    />
-                                                </ui:template>
-                                            </ui:Column>
-                                            <ui:Column width="11rem" tooltip="Ultima quantità ordinata" sortProperty="Ultima quantità ordinata"
-                                            app:p13nKey="ultima_quantita_ordinata_col">
-                                                <m:Label
-                                                    text="Ultima q. ordinata"
-                                                />
-                                                <ui:template>
-                                                    <m:ObjectIdentifier
-                                                        text=""
-                                                    />
-                                                </ui:template>
-                                            </ui:Column>
-                                            <ui:Column width="10rem" tooltip="Release number" sortProperty="Release number"
-                                            app:p13nKey="release_number_col">
-                                                <m:Label
-                                                    text="Release number"
-                                                />
-                                                <ui:template>
-                                                    <m:ObjectIdentifier
-                                                        text=""
-                                                    />
-                                                </ui:template>
-                                            </ui:Column>
-                                            <ui:Column
-                                                width="15rem"
-                                                sortProperty="Quantità cumulativa precedente"
-                                                tooltip="Quantità cumulativa precedente"
-                                                app:p13nKey="quantita_cumulativa_precedente_col"
-                                            >
-                                                <m:Label
-                                                    text="Q. cumulativa precedente"
-                                                />
-                                                <ui:template>
-                                                    <m:ObjectIdentifier
-                                                        text=""
-                                                    />
-                                                </ui:template>
-                                            </ui:Column>
-                                            <ui:Column
-                                                width="10rem"
-                                                showSortMenuEntry="false"
-                                                tooltip="Quantità in backorder"
-                                                sortProperty="Quantità in backorder"
-                                                app:p13nKey="quantita_in_backorder_col"
-                                            >
-                                                <m:Label
-                                                    text="Q. in backorder"
-                                                />
-                                                <ui:template>
-                                                    <m:ObjectIdentifier
-                                                        text=""
-                                                    />
-                                                </ui:template>
-                                            </ui:Column>
-                                            <ui:Column width="13rem" tooltip="Quantità ricevuta e accettata" sortProperty="Quantità ricevuta e accettata"
-                                            app:p13nKey="quantita_ricevuta_e_accettata_col">
-                                                <m:Label
-                                                    text="Q. ricevuta e accettata"
-                                                />
-                                                <ui:template>
-                                                    <m:ObjectIdentifier
-                                                        text=""
-                                                    />
-                                                </ui:template>
-                                            </ui:Column>
-                                            <ui:Column width="10rem" tooltip="Contatto cliente" sortProperty="Contatto cliente"
-                                            app:p13nKey="contatto_cliente_col">
-                                                <m:Label
-                                                    text="Contatto cliente"
-                                                />
-                                                <ui:template>
-                                                    <m:ObjectIdentifier
-                                                        text="{detailData>contatto_cliente}"
-                                                    />
-                                                </ui:template>
-                                            </ui:Column>
-                                            <ui:Column width="10rem" tooltip="Info contatto email" sortProperty="Info contatto email"
-                                            app:p13nKey="informazioni_contatto_email_col">
-                                                <m:Label
-                                                    text="Info contatto email"
-                                                />
-                                                <ui:template>
-                                                    <m:ObjectIdentifier
-                                                        text="{detailData>informazioni_contatto_email}"
-                                                    />
-                                                </ui:template>
-                                            </ui:Column>
-                                            <ui:Column width="10rem" tooltip="Info contatto telefonico" sortProperty="Info contatto telefonico"
-                                            app:p13nKey="informazioni_contatto_telefonico_col">
-                                                <m:Label
-                                                    text="Info contatto telefonico"
-                                                />
-                                                <ui:template>
-                                                    <m:ObjectIdentifier
-                                                        text="{detailData>informazioni_contatto_telefonico}"
-                                                    />
-                                                </ui:template>
-                                            </ui:Column>
-                                            <ui:Column width="10rem" tooltip="Info contatto fax" sortProperty="Info contatto fax"
-                                            app:p13nKey="informazioni_contatto_fax_col">
-                                                <m:Label
-                                                    text="Info contatto fax"
-                                                />
-                                                <ui:template>
-                                                    <m:ObjectIdentifier
-                                                        text="{detailData>informazioni_contatto_fax}"
-                                                    />
-                                                </ui:template>
-                                            </ui:Column>
+                                            </ui:template>
+                                        </ui:Column>
+                                        <ui:Column
+                                        width="10rem"
+                                        tooltip="Stab. Consegna"
+                                        sortProperty="Stab. Consegna"
+                                        app:p13nKey="stab_consegna_col"
+                                    >
+                                        <m:Label
+                                            text="Stab. Consegna"
+                                        />
+                                        <ui:template>
+                                            <m:ObjectIdentifier
+                                                text="{detailData>posizione_49_51}"
+                                            />
+                                        </ui:template>
+                                    </ui:Column>   
+                                           
                                         </ui:columns>
                                     </ui:Table>
                                 </m:ScrollContainer>
@@ -577,7 +386,7 @@
                     </ObjectPageSubSection>
                 </subSections>
             </ObjectPageSection>
-            
+
             <ObjectPageSection title="LOG">
                 <subSections>
                     <ObjectPageSubSection>
@@ -587,8 +396,6 @@
                     </ObjectPageSubSection>
                 </subSections>
             </ObjectPageSection>
-
         </sections>
     </ObjectPageLayout>
-    
 </mvc:View>

@@ -21,7 +21,7 @@ sap.ui.define(
         _onProductMatched: function (oEvent) {
         debugger;
         this._id =oEvent.getParameter("arguments").id || this._id || "0";
-        let datiElementoSelect = this.getOwnerComponent().getModel("master3CO").getProperty("/").find((x) => (x.id = this._product));
+        let datiElementoSelect = this.getOwnerComponent().getModel("master3CO").getProperty("/").find((x) => (x.id = this._id));
         this.getView().setModel(
           new JSONModel(),
           "detailData"

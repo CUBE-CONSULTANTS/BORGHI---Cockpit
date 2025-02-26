@@ -268,6 +268,8 @@ sap.ui.define(
             }
           } catch (error) {
             MessageBox.error("Errore durante la ricezione dei dati")
+          }finally {
+            this.hideBusy(0)
           }
         },
         sortTables: function(table,aSortFields) {
