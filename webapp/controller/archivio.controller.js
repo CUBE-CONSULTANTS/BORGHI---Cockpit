@@ -223,9 +223,7 @@ sap.ui.define(
         }
       },
 
-      onclose: function (oEvent) {
-        oEvent.getSource().getParent().close();
-      },
+     
 
       importaPress: function (oEvent) {
         if (!this._oDialog2) {

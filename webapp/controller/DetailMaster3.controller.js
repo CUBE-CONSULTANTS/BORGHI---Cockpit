@@ -108,13 +108,6 @@ sap.ui.define(
           });
         },
 
-        handleClose: function () {
-          // var sNextLayout = this.oModel.getProperty(
-          //   "/actionButtonsInfo/midColumn/closeColumn"
-          // );
-          // this.oRouter.navTo("master3", { layout: sNextLayout });
-          this.oRouter.navTo("master3");
-        },
 
         onExit: function () {
           this.oRouter

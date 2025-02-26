@@ -4,7 +4,7 @@
             
         </content>
         <buttons>
-            <Button text="Chiudi" press="onclose"/> 
+            <Button text="Chiudi" press="onClose"/> 
         </buttons>
     </Dialog>
 </core:FragmentDefinition>

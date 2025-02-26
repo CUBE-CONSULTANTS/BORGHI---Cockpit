@@ -239,68 +239,50 @@ sap.ui.define(
           );
       },
       dettaglioNav: function (oEvent) {
-        debugger;
-        let level = oEvent
-          .getSource()
-          .getParent()
-          .getBindingContext("master3")
-          .getPath()
-          .includes("posizioni");
-        // let detailSched = oEvent.getSource().getParent().getBindingContext("master3").getObject().DelforSchedulazioni
-        let detailPath = oEvent
-          .getSource()
-          .getParent()
-          .getBindingContext("master3")
-          .getPath();
-        let detail = this.getView()
-          .getModel("master3")
-          .getProperty(`${detailPath}`);
-
-        this.getOwnerComponent()
-          .getModel("datiAppoggio")
-          .setProperty("/testata", detail);
-        this.getOwnerComponent()
-          .getModel("datiAppoggio")
-          .setProperty("/posizioni", detail.posizioni);
-        if (level) {
-          this.getOwnerComponent()
-            .getModel("datiAppoggio")
-            .setProperty("/posizioneCorrente", detail);
-          this.getOwnerComponent()
-            .getModel("datiAppoggio")
-            .setProperty("/schedulazioni", detail.schedulazioni.results);
-          this.getOwnerComponent()
-            .getModel("datiAppoggio")
-            .setProperty(
-              "/testata",
-              this.getView()
-                .getModel("master3")
-                .getProperty(`${detailPath[0] + detailPath[1]}`)
-            );
-          debugger;
-          let oNextUIState;
-          this.getOwnerComponent()
-            .getHelper()
-            .then(
-              function (oHelper) {
-                oNextUIState = oHelper.getNextUIState(1);
-                this.oRouter.navTo("Detail2Master3", {
-                  product: detail.id,
-                  layout: oNextUIState.layout,
-                });
-              }.bind(this)
-            );
-        } else {
-          let path = oEvent
-            .getSource()
-            .getParent()
-            .getBindingContext("master3")
-            .getPath();
-          this.oRouter.navTo("detailMaster3", {
-            product: detail.id,
-            layout: "OneColumn",
-          });
-        }
+      debugger;
+      let level, detailPath,detail
+        if(oEvent.getSource().getParent().getBindingContext("master3") !== undefined) {
+          level = oEvent.getSource().getParent().getBindingContext("master3").getPath().includes("posizioni");
+          detailPath = oEvent.getSource().getParent().getBindingContext("master3").getPath();
+          detail = this.getView().getModel("master3").getProperty(`${detailPath}`);
+          this.getOwnerComponent().getModel("datiAppoggio").setProperty("/testata", detail);
+          this.getOwnerComponent().getModel("datiAppoggio").setProperty("/posizioni", detail.posizioni);
+          if (level) {
+            this.getOwnerComponent().getModel("datiAppoggio").setProperty("/posizioneCorrente", detail);
+            this.getOwnerComponent().getModel("datiAppoggio").setProperty("/schedulazioni", detail.schedulazioni.results);
+            this.getOwnerComponent().getModel("datiAppoggio").setProperty(
+                "/testata",
+                this.getView().getModel("master3").getProperty(`${detailPath[0] + detailPath[1]}`)
+              );
+            debugger;
+            let oNextUIState;
+            this.getOwnerComponent()
+              .getHelper()
+              .then(
+                function (oHelper) {
+                  oNextUIState = oHelper.getNextUIState(1);
+                  this.oRouter.navTo("Detail2Master3", {
+                    product: detail.id,
+                    layout: oNextUIState.layout,
+                  });
+                }.bind(this)
+              );
+          } else {
+            detailPath = oEvent.getSource().getParent().getBindingContext("master3").getPath();
+            this.oRouter.navTo("detailMaster3", {
+              product: detail.id,
+              layout: "OneColumn",
+            });
+          }
+        }else if(oEvent.getSource().getParent().getBindingContext("master3CO")!== undefined) {
+          debugger
+          detailPath = oEvent.getSource().getParent().getBindingContext("master3CO").getPath();
+          detail = this.getView().getModel("master3CO").getProperty(`${detailPath}`);
+            this.oRouter.navTo("dettCallOff", {
+              id: detail.id,
+              layout: "OneColumn",
+            });
+        }  
       },
 
       statoButtonPress: function (oEvent) {

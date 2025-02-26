@@ -80,7 +80,7 @@
                     <m:OverflowToolbarButton
                         type="Transparent"
                         icon="sap-icon://decline"
-                        press=".handleClose"
+                        press=".handleCloseDetail"
                         tooltip="Close column"
                         visible="true"
                     />
