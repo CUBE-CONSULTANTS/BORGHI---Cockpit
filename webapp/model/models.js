@@ -48,7 +48,15 @@ sap.ui.define(
           },
           callOff : {
             dataRic : null,
-            nomeFile : {
+            cliente : {
+							value: null,
+							items: [],
+						},
+            materiale : {
+							value: null,
+							items: [],
+						},
+            reason : {
 							value: null,
 							items: [],
 						},

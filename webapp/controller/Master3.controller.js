@@ -59,7 +59,7 @@ sap.ui.define(
               "/Testata",
               [],
               [
-                "posizioni_testata,log_testata",
+                "master,posizioni_testata,log_testata",
               ],
               selectedKey
             );

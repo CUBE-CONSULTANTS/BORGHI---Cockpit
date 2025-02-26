@@ -164,12 +164,37 @@ sap.ui.define(
               aNumProgInvio.map((n) => ({ Key: n, Text: n }))
             );
           }else if(key === "02"){
-
+            debugger
             let aData = this.getModel("master3CO").getProperty("/");
-            let aNomeFiles = [...new Set(aData.map((item) => item.nome_file))];
+            let aClienti = [...new Set(aData.map((item) => item.codice_terre_cliente))];
+            let aReason = [];
+            let aMateriali = [];
+            aData.forEach((item) => {
+              if (item.posizioni_testata) {
+                item.posizioni_testata.forEach((pos) => {
+                  if (pos.posizione_6_28) {
+                    aMateriali.push(pos.posizione_6_28);
+                  }
+                  if(pos.posizione_43_44){
+                    aReason.push(pos.posizione_43_44);
+                  }
+                });
+              }
+            });
+            aReason = [...new Set(aReason)]
+            aMateriali = [...new Set(aMateriali)];
+
             this.getModel("filtersModel").setProperty(
-              "/callOff/nomeFile/items",
-              aNomeFiles.map((c) => ({ Key: c, Text: c }))
+              "/callOff/materiale/items",
+              aMateriali.map((m) => ({ Key: m, Text: m }))
+            );
+            this.getModel("filtersModel").setProperty(
+              "/callOff/reason/items",
+              aReason.map((m) => ({ Key: m, Text: m }))
+            );
+            this.getModel("filtersModel").setProperty(
+              "/callOff/clienti/items",
+              aClienti.map((m) => ({ Key: m, Text: m }))
             );
           }
         },
@@ -237,6 +262,7 @@ sap.ui.define(
               modelMeta = new JSONModel(metadata.results);
               modelMeta.getProperty("/").forEach((testata) => {
                 testata.posizioni_testata = Object.values(testata.posizioni_testata.results);
+                testata.master
               });
               this.getOwnerComponent().setModel(modelMeta, "master3CO");
             }
