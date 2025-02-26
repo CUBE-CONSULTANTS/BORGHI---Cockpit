@@ -221,6 +221,7 @@ sap.ui.define(
             debugger
           }
         },
+        
         callData : async function(oModel,entity,aFilters,Expands, key){
           debugger
           let metadata, modelMeta
@@ -234,6 +235,9 @@ sap.ui.define(
               this.getOwnerComponent().setModel(modelMeta, "master3");
             }else if(key === "02"){
               modelMeta = new JSONModel(metadata.results);
+              modelMeta.getProperty("/").forEach((testata) => {
+                testata.posizioni_testata = Object.values(testata.posizioni_testata.results);
+              });
               this.getOwnerComponent().setModel(modelMeta, "master3CO");
             }
           } catch (error) {

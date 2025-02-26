@@ -56,10 +56,10 @@ sap.ui.define(
             oModel = this.getOwnerComponent().getModel("calloffV2");
             await this.callData(
               oModel,
-              "/Master",
+              "/Testata",
               [],
               [
-                "testata_master,testata_master/posizioni_testata,testata_master/log_testata",
+                "posizioni_testata,log_testata",
               ],
               selectedKey
             );

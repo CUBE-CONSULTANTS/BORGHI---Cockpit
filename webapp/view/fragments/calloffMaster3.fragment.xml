@@ -36,7 +36,7 @@
                 </fb:control>
             </fb:FilterGroupItem>
 
-            <fb:FilterGroupItem
+            <!-- <fb:FilterGroupItem
                 name="Nome File"
                 label="Nome File"
                 groupName="Group1"
@@ -49,8 +49,19 @@
                 <core:ListItem key="{filtersModel>Key}" text="{filtersModel>Text}" />
               </ComboBox> 
             </fb:control>
-            </fb:FilterGroupItem>
-            <!-- <fb:FilterGroupItem
+            </fb:FilterGroupItem> -->
+            <fb:FilterGroupItem
+                    name="Cliente"
+                    label="Cliente"
+                    groupName="Group1"
+                    visibleInFilterBar="true"
+                >
+                    <fb:control>
+                    <Input/>
+                    </fb:control>
+                </fb:FilterGroupItem>
+
+            <fb:FilterGroupItem
                     name="Materiale"
                     label="Materiale"
                     groupName="Group1"
@@ -71,163 +82,140 @@
                        <Input/>
                     </fb:control>
                 </fb:FilterGroupItem>
-                 -->
+                
         </fb:filterGroupItems>
     </fb:FilterBar>
-
-    <List
-		items="{
-			path: 'master3CO>/'
-		}" >
-		<StandardListItem
-      type="Navigation"
-      press="onListItemPress"
-			title="Nome File: {master3CO>nome_file}"
-			description="Data Ricezione: {path: 'master3CO>data_ricezione', formatter: '.formatter.formatDate'}"/>     
-	  </List>
-
-    <!-- 
-        <ui:Table
-				rows="{master3>/}"
-				selectionMode="MultiToggle"
-				paste="onPaste"
-				ariaLabelledBy="title">
-				<ui:extension>
-					<OverflowToolbar style="Clear">
-						
-					</OverflowToolbar>
-				</ui:extension>
-				<ui:columns>
+    <ui:TreeTable
+    id="treetableCallOff"
+    rows="{
+      path: 'master3CO>/',
+      parameters: {
+        arrayNames: ['posizioni_testata']
+      }
+    }"
+    
+      selectionMode="None"
+  >
+    <ui:extension>
+      <OverflowToolbar style="Clear">
+        <Title />
+        <ToolbarSpacer />
+        <Button
+          text="Espandi tutti"
+          icon="sap-icon://expand-all"
+          press="onExpandFirstLevel"
+        />
+        <Button
+          icon="sap-icon://collapse-all"
+          text="Collassa tutti"
+          press="onCollapseAll"
+        />
+       
+        <Button
+          icon="sap-icon://sort"
+          text="Ordinamento"
+          press="sortCategories"
+        />
+       
+      </OverflowToolbar>
+    </ui:extension>
+    <ui:columns>
 					<ui:Column width="11rem">
-						<Label text="Progressivo trasmissione precedente" />
+						<Label text="Cliente" />
 						<ui:template>
-							<Text text="{master3>progressivo_ultimo_invio}" wrapping="false" />
+							<Text text="{master3CO>codice_terre_cliente}" wrapping="false" />
+						</ui:template>
+					</ui:Column>
+          <ui:Column width="7rem">
+						<Label text="N. progr. invio" />
+						<ui:template>
+							<Text text="{master3CO>progressivo_invio}" wrapping="false" />
 						</ui:template>
 					</ui:Column>
           <ui:Column width="11rem">
-						<Label text="Progressivo trasmissione" />
+						<Label text="Data Ricezione" />
 						<ui:template>
-							<Text text="{master3>codice_articolo}" wrapping="false" />
+							<DatePicker
+            editable="false"
+            visible="{= ${master3CO>data_ricezione} ? true : false}"
+            value="{
+              path: 'master3>data_ricezione',
+              type: 'sap.ui.model.type.Date',
+              formatOptions: {
+                pattern: 'dd/MM/yyyy'
+              }
+            }"
+            valueFormat="dd/MM/yyyy"
+            displayFormat="dd/MM/yyyy"
+          />
 						</ui:template>
 					</ui:Column>
-          <ui:Column width="11rem">
-						<Label text="Data trasmissione" />
+         
+          <ui:Column width="9rem">
+						<Label text="Materiale Fornitore" />
 						<ui:template>
-							<Text text="{Name}" wrapping="false" />
+							<Text text="{master3CO>posizione_6_28}" wrapping="false" />
 						</ui:template>
 					</ui:Column>
           <ui:Column width="9rem">
-						<Label text="Codice DDT" />
+						<Label text="Reason" />
 						<ui:template>
-							<Text text="{Name}" wrapping="false" />
-						</ui:template>
-					</ui:Column>
-          <ui:Column width="9rem">
-						<Label text="Data di spedizione" />
-						<ui:template>
-							<Text text="{Name}" wrapping="false" />
+							<Text text="{master3CO>posizione_43_44}" wrapping="false" />
 						</ui:template>
 					</ui:Column>
           <ui:Column width="11rem">
-						<Label text="Punto di scarico" />
+						<Label text="DDT" />
 						<ui:template>
-							<Text text="{Name}" wrapping="false" />
+							<Text text="{master3CO>posizione_6_13}" wrapping="false" />
 						</ui:template>
 					</ui:Column>
           <ui:Column width="6rem">
-						<Label text="Tipo di invio" />
+						<Label text="Num IDoc" />
 						<ui:template>
-							<Text text="{Name}" wrapping="false" />
+							<Text text="{master3CO>numero_idoc}" wrapping="false" />
 						</ui:template>
 					</ui:Column>
+                    
           <ui:Column width="14rem">
-						<Label text="Numero cliente" />
+						<Label text="Ordine Emissione Spedizione" />
 						<ui:template>
-							<Text text="{Name}" wrapping="false" />
+							<Text text="{master3CO>ordine_vendita}" wrapping="false" />
 						</ui:template>
 					</ui:Column>
-          <ui:Column width="11rem">
-						<Label text="Numero contratto" />
-						<ui:template>
-							<Text text="{Name}" wrapping="false" />
-						</ui:template>
-					</ui:Column>
-          <ui:Column width="11rem">
-						<Label text="Codice processo" />
-						<ui:template>
-							<Text text="{Name}" wrapping="false" />
-						</ui:template>
-					</ui:Column>
-          <ui:Column width="11rem">
-						<Label text="Stabilimento cliente" />
-						<ui:template>
-							<Text text="{Name}" wrapping="false" />
-						</ui:template>
-					</ui:Column>
-          <ui:Column width="11rem">
-						<Label text="Consigment reference" />
-						<ui:template>
-							<Text text="{Name}" wrapping="false" />
-						</ui:template>
-					</ui:Column>
-          <ui:Column width="11rem">
-						<Label text="ID del ricevente" />
-						<ui:template>
-							<Text text="{Name}" wrapping="false" />
-						</ui:template>
-					</ui:Column>
-          <ui:Column width="11rem">
-						<Label text="Magazzino cliente" />
-						<ui:template>
-							<Text text="{Name}" wrapping="false" />
-						</ui:template>
-					</ui:Column>
-          <ui:Column width="11rem">
-						<Label text="ID fornitore" />
-						<ui:template>
-							<Text text="{Name}" wrapping="false" />
-						</ui:template>
-					</ui:Column>
-          <ui:Column width="11rem">
-						<Label text="Punto di consumo" />
-						<ui:template>
-							<Text text="{Name}" wrapping="false" />
-						</ui:template>
-					</ui:Column>
-          <ui:Column width="11rem">
-						<Label text="Riferimento cliente" />
-						<ui:template>
-							<Text text="{Name}" wrapping="false" />
-						</ui:template>
-					</ui:Column>
-          <ui:Column width="11rem">
-						<Label text="Quantità spedita" />
-						<ui:template>
-							<Text text="{Name}" wrapping="false" />
-						</ui:template>
-					</ui:Column>
-          <ui:Column width="11rem">
-						<Label text="Unità di misura" />
-						<ui:template>
-							<Text text="{Name}" wrapping="false" />
-						</ui:template>
-					</ui:Column>
-          <ui:Column width="11rem">
-						<Label text="Consegna originale" />
-						<ui:template>
-							<Text text="{Name}" wrapping="false" />
-						</ui:template>
-					</ui:Column>
-          <ui:Column width="11rem">
-						
+          <ui:Column width="4rem" hAlign="Center">
+						<Label text="Stato" />
 						<ui:template>
 							<Button
-                tooltip="Stock Level"
-                icon="sap-icon://doc-attachment"
-                />
+                icon="{= ${master3CO>Stato} === 'OK' ? 'sap-icon://accept' : ${master3>Stato} === 'KO' ? 'sap-icon://decline' : 'sap-icon://warning'}"
+                type="{= ${master3CO>Stato} === 'OK' ? 'Accept' : ${master3>Stato} === 'KO' ? 'Negative' : 'Critical'}"
+                tooltip="{master3CO>Stato}"
+                press="statoButtonPress"
+            />
+						</ui:template>
+					</ui:Column>
+          
+          <ui:Column width="11rem">
+
+						<ui:template>
+              <HBox >
+              <Button
+              icon="sap-icon://display"
+              type="Emphasized"
+              press="dettaglioNav"
+              visible="{= ${master3CO>codice_terre_cliente}? true : false }"
+              />
+						<Button
+              icon="sap-icon://download"
+              tooltip="Dowload file edi"
+              visible="{= ${master3CO>codice_terre_cliente}? false : true }"
+              class="sapUiTinyMarginBegin"
+              press="downloadEdi"          
+            />
+          </HBox>
 						</ui:template>
 					</ui:Column>
 				
 				</ui:columns>
-			</ui:Table> -->
+  </ui:TreeTable>
+   
 </core:FragmentDefinition>
