@@ -240,10 +240,21 @@ sap.ui.define(
       },
       dettaglioNav: function (oEvent) {
         debugger;
-        let level = oEvent.getSource().getParent().getBindingContext("master3").getPath().includes("posizioni");
+        let level = oEvent
+          .getSource()
+          .getParent()
+          .getBindingContext("master3")
+          .getPath()
+          .includes("posizioni");
         // let detailSched = oEvent.getSource().getParent().getBindingContext("master3").getObject().DelforSchedulazioni
-        let detailPath = oEvent.getSource().getParent().getBindingContext("master3").getPath();
-        let detail = this.getView().getModel("master3").getProperty(`${detailPath}`);
+        let detailPath = oEvent
+          .getSource()
+          .getParent()
+          .getBindingContext("master3")
+          .getPath();
+        let detail = this.getView()
+          .getModel("master3")
+          .getProperty(`${detailPath}`);
 
         this.getOwnerComponent()
           .getModel("datiAppoggio")
@@ -321,7 +332,7 @@ sap.ui.define(
         const oTreeTable = this.byId("treetableMain");
         oTreeTable.expand(oTreeTable.getSelectedIndices());
       },
-      
+
       navToAPP: function (oEvent) {
         debugger;
         let level = oEvent
@@ -354,24 +365,55 @@ sap.ui.define(
           .join("");
         let message = `Vuoi continuare con questi elementi? \n ${itemList}`;
 
-        MessageBox.confirm(message, {
-          parameters: items,
+        // MessageBox.confirm(message, {
+        //   title: "Riepilogo",
+        //   onClose: (oAction) => {
+        //     debugger;
+        //     if (oAction === sap.m.MessageBox.Action.OK) {
+        //       debugger;
+        //     }
+        //   },
+        // });
+
+        //prova
+        sap.m.MessageBox.confirm(message, {
+          icon: sap.m.MessageBox.Icon.WARNING,
           title: "Riepilogo",
-          onClose: (oAction) => {
-            if (oAction === sap.m.MessageBox.Action.OK) {
+          actions: [sap.m.MessageBox.Action.YES, sap.m.MessageBox.Action.NO],
+          emphasizedAction: sap.m.MessageBox.Action.YES,
+          onClose: async function (oAction) {
+            if (oAction == "YES") {
+              let payload = [];
+              items.forEach((x) => {
+                payload.push(x.id);
+              });
               debugger;
+              let obj = { id: payload };
+              // let response = await oData._deleteAttachment({ self: this, soc, year, invoiceNumber, filename })
+              // console.log(response)
+              // if (response === 200) {
+              //     await this.getAttachemnt()
+              //     sap.ui.core.BusyIndicator.hide(0);
+
+              // } else {
+              //     this.showAlertDialog("Errore nella cancellazione del file")
+              //     sap.ui.core.BusyIndicator.hide(0);
+              // }
+            } else {
+              // sap.ui.core.BusyIndicator.hide(0);
             }
-          },
+          }.bind(this),
         });
       },
-       //FUNZIONI CALLOFF
-      onListItemPress: function (oEvent){
-        debugger
-        let idMaster = oEvent.getSource().getBindingContext("master3CO").getObject().id
-        this.getRouter().navTo("dettCallOff", {id: idMaster})
-
+      //FUNZIONI CALLOFF
+      onListItemPress: function (oEvent) {
+        debugger;
+        let idMaster = oEvent
+          .getSource()
+          .getBindingContext("master3CO")
+          .getObject().id;
+        this.getRouter().navTo("dettCallOff", { id: idMaster });
       },
     });
   }
- 
 );
