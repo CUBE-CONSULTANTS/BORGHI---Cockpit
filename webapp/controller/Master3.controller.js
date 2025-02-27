@@ -123,12 +123,18 @@ sap.ui.define(
               "progressivo_invio",
             ]);
             break;
+          case "03":
+            oTable = this.byId("treetableSB");
+            aSorters = this.sortTables(oTable, [
+              "customer",
+              "data_ricezione",
+            ]);
+            break;
           default:
             return;
         }
       },
       downloadExcelFile: function (oEvent) {
-
         let selectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
         !selectedKey ? (selectedKey = key) : (selectedKey = selectedKey);
         let oModel 
@@ -332,6 +338,10 @@ sap.ui.define(
             oTable = this.byId("treetableCallOff");
             oTable.collapseAll();
             break;
+          case "03":
+              oTable = this.byId("treetableSB");
+              oTable.collapseAll();
+              break;  
           default:
         }    
       },
@@ -348,6 +358,10 @@ sap.ui.define(
             oTable = this.byId("treetableCallOff");
             oTable.expandToLevel(1);
             break;
+          case "03":
+              oTable = this.byId("treetableSB");
+              oTable.expandToLevel(1);
+              break;  
           default:
         }    
       },

@@ -306,6 +306,7 @@ sap.ui.define(
           }
         },
         sortTables: function(table,aSortFields) {
+          debugger
           let oBinding = table.getBinding("rows");
           let aCurrentSorters = oBinding.aSorters || [];
           let bDescending = aCurrentSorters.length > 0 ? !aCurrentSorters[0].bDescending : false;
