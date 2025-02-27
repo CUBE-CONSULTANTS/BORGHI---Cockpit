@@ -63,55 +63,223 @@ xmlns:mvc="sap.ui.core.mvc">
 
 
 
-        <ui:Table
-				rows="{/ProductCollection}"
-				selectionMode="MultiToggle"
-				paste="onPaste"
-				ariaLabelledBy="title">
-				<ui:extension>
-					<OverflowToolbar style="Clear">
-						
-					</OverflowToolbar>
-				</ui:extension>
-				<ui:columns>
-					<ui:Column width="7rem">
-						<Label text="Cliente" />
-						<ui:template>
-							<Text text="{Name}" wrapping="false" />
-						</ui:template>
-					</ui:Column>
-         
-          <ui:Column width="11rem">
-						<Label text="Data Ricezione" />
-						<ui:template>
-							<Text text="{Name}" wrapping="false" />
-						</ui:template>
-					</ui:Column>
-          <ui:Column width="9rem">
-						<Label text="Mat. Fornitore" />
-						<ui:template>
-							<Text text="{Name}" wrapping="false" />
-						</ui:template>
-					</ui:Column>
-          
-          <ui:Column width="11rem">
-						<Label text="Num. DDT Cliente" />
-						<ui:template>
-							<Text text="{Name}" wrapping="false" />
-						</ui:template>
-					</ui:Column>
-         
-          <ui:Column width="11rem">
-						
-						<ui:template>
-							<Button
-                  tooltip="Report di Controllo"
-                  icon="sap-icon://activity-2"
+        <ui:TreeTable
+        id="treetableSB"
+        rows="{
+          path: 'master3SB>/',
+          parameters: {
+            arrayNames: ['dettaglio_fattura']
+          }
+        }"
+        
+        selectionMode="{=${datiAppoggio>/currentPage} === 'archivio' ? 'Single':'MultiToggle'}"
+      >
+        <ui:extension>
+          <OverflowToolbar style="Clear">
+            <Title />
+            <ToolbarSpacer />
+            <Button
+              text="Espandi tutti"
+              icon="sap-icon://expand-all"
+              press="onExpandFirstLevel"
+            />
+            <Button
+              icon="sap-icon://collapse-all"
+              text="Collassa tutti"
+              press="onCollapseAll"
+            />
+           
+            <Button
+              icon="sap-icon://sort"
+              text="Ordinamento"
+              press="sortCategories"
+            />
+            <Button
+            text="Esporta excel"
+            icon="sap-icon://excel-attachment"
+            press="downloadExcelFile"
+            visible="{=${datiAppoggio>/currentPage} === 'archivio' ? false:true}"
+            />
+            <Button
+              text="Elabora"
+              icon="sap-icon://process"
+              press="onProcessaButton"
+              type="Emphasized"
+              visible="{=${datiAppoggio>/currentPage} === 'archivio' ? false:true}"
+            />
+            <Button
+              text="Elimina"
+              icon="sap-icon://delete"
+              press=""
+              type="Reject"
+              visible="{=${datiAppoggio>/currentPage} === 'archivio' ? false:true}"
+            />
+          </OverflowToolbar>
+        </ui:extension>
+        <ui:columns>
+              <ui:Column width="11rem">
+                <Label text="Cliente" />
+                <ui:template>
+                  <Text text="{master3SB>customer}" wrapping="false" />
+                </ui:template>
+              </ui:Column>
+             
+              <ui:Column width="11rem">
+                <Label text="Data Ricezione" />
+                <ui:template>
+                  <DatePicker
+                editable="false"
+                visible="{= ${master3SB>data_ricezione} ? true : false}"
+                value="{
+                  path: 'master3SB>data_ricezione',
+                  type: 'sap.ui.model.type.Date',
+                  formatOptions: {
+                    pattern: 'dd/MM/yyyy'
+                  }
+                }"
+                valueFormat="dd/MM/yyyy"
+                displayFormat="dd/MM/yyyy"
+              />
+                </ui:template>
+              </ui:Column>
+              <ui:Column width="11rem">
+                <Label text="Data Trasmissione" />
+                <ui:template>
+                  <DatePicker
+                editable="false"
+                visible="{= ${master3SB>date_tras} ? true : false}"
+                value="{
+                  path: 'master3SB>date_tras',
+                  type: 'sap.ui.model.type.Date',
+                  formatOptions: {
+                    pattern: 'dd/MM/yyyy'
+                  }
+                }"
+                valueFormat="dd/MM/yyyy"
+                displayFormat="dd/MM/yyyy"
+              />
+                </ui:template>
+              </ui:Column>
+              <ui:Column width="9rem">
+                <Label text="Fornitore" />
+                <ui:template>
+                  <Text text="{master3SB>supplier}" wrapping="false"/>
+                </ui:template>
+              </ui:Column>
+              <ui:Column width="12rem">
+                <Label text="N. Fattura" />
+                <ui:template>
+                  <Text text="{master3SB>numero_fattura}" wrapping="false" />
+                </ui:template>
+              </ui:Column>
+              <ui:Column width="11rem">
+                <Label text="Data Fattura" />
+                <ui:template>
+                  <DatePicker
+                editable="false"
+                visible="{= ${master3SB>data_fattura} ? true : false}"
+                value="{
+                  path: 'master3SB>data_fattura',
+                  type: 'sap.ui.model.type.Date',
+                  formatOptions: {
+                    pattern: 'dd/MM/yyyy'
+                  }
+                }"
+                valueFormat="dd/MM/yyyy"
+                displayFormat="dd/MM/yyyy"
+              />
+                </ui:template>
+              </ui:Column>
+              <ui:Column width="11rem">
+                <Label text="Data Scadenza Fattura" />
+                <ui:template>
+                  <DatePicker
+                editable="false"
+                visible="{= ${master3SB>data_scadenza_fattura} ? true : false}"
+                value="{
+                  path: 'master3SB>data_scadenza_fattura',
+                  type: 'sap.ui.model.type.Date',
+                  formatOptions: {
+                    pattern: 'dd/MM/yyyy'
+                  }
+                }"
+                valueFormat="dd/MM/yyyy"
+                displayFormat="dd/MM/yyyy"
+              />
+                </ui:template>
+              </ui:Column>
+              <ui:Column width="7rem">
+                <Label text="P. IVA Cliente" />
+                <ui:template>
+                  <Text  text="{master3SB>piva_cliente}" wrapping="false" />
+                </ui:template>
+              </ui:Column>
+              <ui:Column width="7rem">
+                <Label text="P. IVA Mittente" />
+                <ui:template>
+                  <Text  text="{master3SB>piva_terre}" wrapping="false" />
+                </ui:template>
+              </ui:Column>
+             
+             
+            
+              <ui:Column width="9rem">
+                <Label text="Old Trasmission" />
+                <ui:template>
+                  <Text text="{master3SB>old_trasmission}" wrapping="false" />
+                </ui:template>
+              </ui:Column>
+              <ui:Column width="11rem">
+                <Label text="New Trasmission" />
+                <ui:template>
+                  <Text text="{master3SB>new_trasmission}" wrapping="false" />
+                </ui:template>
+              </ui:Column>
+              
+             
+              <ui:Column width="4rem" hAlign="Center">
+                <Label text="Stato" />
+                <ui:template>
+                  <Button
+                    icon="{= ${master3SB>Stato} === 'OK' ? 'sap-icon://accept' : ${master3>Stato} === 'KO' ? 'sap-icon://decline' : 'sap-icon://warning'}"
+                    type="{= ${master3SB>Stato} === 'OK' ? 'Accept' : ${master3>Stato} === 'KO' ? 'Negative' : 'Critical'}"
+                    tooltip="{master3SB>Stato}"
+                    press="statoButtonPress"
+                />
+                </ui:template>
+              </ui:Column>
+              
+              <ui:Column width="11rem" hAlign="Center">
+    
+                <ui:template>
+                  <HBox >
+                  <!-- <Button
+                  icon="sap-icon://display"
+                  type="Emphasized"
+                  press="dettaglioNav"
+                  class="sapUiTinyMarginBegin"
+                  visible="{= ${master3SB>codice_terre_cliente}? true : false }"
                   />
-						</ui:template>
-					</ui:Column>
-				
-				</ui:columns>
-			</ui:Table>
+                  <Button
+                  icon="sap-icon://download"
+                  tooltip="Dowload file edi"
+                  class="sapUiTinyMarginBegin"
+                  press="downloadEdi"
+                  visible="{= ${master3SB>codice_terre_cliente} ? true : false}"
+                />
+                <Button
+                  icon="sap-icon://doc-attachment"
+                  tooltip="Stock Level"
+                  visible="{= ${master3SB>posizione_43_44} === '35' }"   
+                  class="sapUiTinyMarginBegin"
+                  press="downloadEdi"          
+                />
+                 -->
+              </HBox>
+                </ui:template>
+              </ui:Column>
+            
+            </ui:columns>
+      </ui:TreeTable>
    
 </core:FragmentDefinition>

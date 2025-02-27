@@ -264,6 +264,13 @@ sap.ui.define(
                 testata.master
               });
               this.getOwnerComponent().setModel(modelMeta, "master3CO");
+            }else if(key === '03'){
+              debugger
+              modelMeta = new JSONModel(metadata.results);
+              modelMeta.getProperty("/").forEach((testata) => {
+                testata.dettaglio_fattura = Object.values(testata.dettaglio_fattura.results);
+              });
+              this.getOwnerComponent().setModel(modelMeta, "master3SB");
             }
           } catch (error) {
             MessageBox.error("Errore durante la ricezione dei dati")
@@ -337,10 +344,6 @@ sap.ui.define(
           return columns;
       },
       handleCloseDetail: function () {
-        // var sNextLayout = this.oModel.getProperty(
-        //   "/actionButtonsInfo/midColumn/closeColumn"
-        // );
-        // this.oRouter.navTo("master3", { layout: sNextLayout });
         this.getRouter().navTo("master3");
       },
       onClose: function (oEvent) {

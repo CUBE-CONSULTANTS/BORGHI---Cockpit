@@ -72,13 +72,15 @@ sap.ui.define(
             this.onFiltersBuilding(oEvent, selectedKey);
             break;
           case "03":
-            var oMaster3Model = new JSONModel(
-              sap.ui.require.toUrl(
-                "programmi/consegne/edi/mockdata/dataMaster3.json"
-              )
+            oModel = this.getOwnerComponent().getModel("selfBillingV2");
+            await this.callData(
+              oModel,
+              "/Testata",
+              [],
+              [ "dettaglio_fattura,log_testata,dettaglio_fattura/riferimento_ddt,dettaglio_fattura/riferimento_ddt/riga_fattura"],
+              selectedKey
             );
-            this.getOwnerComponent().setModel(oMaster3Model, "master3");
-            // this.getOwnerComponent().setModel(new JSONModel({}), "master3");
+            this.onFiltersBuilding(oEvent, selectedKey);
             break;
           case "04":
             this.getOwnerComponent().setModel(new JSONModel({}), "master3");
