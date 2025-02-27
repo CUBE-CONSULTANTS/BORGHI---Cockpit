@@ -10,7 +10,6 @@ sap.ui.define(
         onInit: function () {
           debugger;
           this.oOwnerComponent = this.getOwnerComponent();
-          this.getRouter() = this.oOwnerComponent.getRouter();
           this.oModel = this.oOwnerComponent.getModel();
 
           this.getRouter()
