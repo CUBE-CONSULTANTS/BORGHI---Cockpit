@@ -94,24 +94,25 @@ sap.ui.define(
         let dataArray = Array.isArray(data) ? data : [data];
         dataArray.forEach((item) => {
           let testataRow = { ...item };
-          delete testataRow.posizioni 
-          delete testataRow.posizioni_testata
-          delete testataRow.id 
-          delete testataRow.id_master
-          delete testataRow.edi 
-          delete testataRow.idoc_paylod
-          delete testataRow.log_testata
-          delete testataRow.master.edi
-          delete testataRow.__metadata
-          delete testataRow.payload_db 
-          delete testataRow.master.payload_db
-          delete testataRow.idoc_payload_db 
-          delete testataRow.master
-          delete testataRow.archiviato
-          delete testataRow.template;
-          delete testataRow.tipo;
-          delete testataRow.versione;
-          delete testataRow.numero_idoc;
+          delete testataRow?.posizioni;
+          delete testataRow?.posizioni_testata;
+          delete testataRow?.id;
+          delete testataRow?.id_master;
+          delete testataRow?.edi;
+          delete testataRow?.idoc_paylod;
+          delete testataRow?.log_testata;
+          delete testataRow?.__metadata;
+          delete testataRow?.payload_db;
+          delete testataRow?.idoc_payload_db;
+          delete testataRow?.archiviato;
+          delete testataRow?.template;
+          delete testataRow?.tipo;
+          delete testataRow?.versione;
+          delete testataRow?.numero_idoc;
+
+          delete testataRow?.master?.edi;
+          delete testataRow?.master?.payload_db;
+          delete testataRow?.master;
           
           debugger
           Object.keys(testataRow).forEach(key => {
@@ -125,13 +126,13 @@ sap.ui.define(
           if (Array.isArray(positions) && positions.length > 0) {
             positions.forEach((posizione) => {
               let posizioneRow = { ...posizione };
-              delete posizioneRow.id;
-              delete posizioneRow.id_testata;
-              delete posizioneRow.idoc_payload;
-              delete posizioneRow.log;
-              delete posizioneRow.testata;
-              delete posizioneRow.schedulazioni;
-              delete posizioneRow.__metadata
+              delete posizioneRow?.id;
+              delete posizioneRow?.id_testata;
+              delete posizioneRow?.idoc_payload;
+              delete posizioneRow?.log;
+              delete posizioneRow?.testata;
+              delete posizioneRow?.schedulazioni;
+              delete posizioneRow?.__metadata
               Object.keys(posizioneRow).forEach(key => {
                 if (key.toLowerCase().includes("data")) {
                     posizioneRow[key] = formatter.formatDate(posizioneRow[key]);
@@ -147,9 +148,10 @@ sap.ui.define(
               ) {
                 posizione.schedulazioni.results.forEach((schedulazione) => {
                   let schedulazioneRow = { ...schedulazione };
-                  delete schedulazioneRow.id;
-                  delete schedulazioneRow.id_posizione;
-                  delete schedulazioneRow.posizione;
+                  delete schedulazioneRow?.id;
+                  delete schedulazioneRow?.id_posizione;
+                  delete schedulazioneRow?.posizione;
+                  delete schedulazioneRow?.__metadata;
                   Object.keys(schedulazioneRow).forEach(key => {
                     if (key.toLowerCase().includes("data")) {
                         schedulazioneRow[key] = formatter.formatDate(schedulazioneRow[key]);

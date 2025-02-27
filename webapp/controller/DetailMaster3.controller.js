@@ -457,27 +457,6 @@ sap.ui.define(
           oTable.getBinding("rows").sort(aSorter);
         },
 
-        // openPosizioniDialog: function (oEvt) {
-        //   const oTable = this.byId("tablePos");
-
-        //   // Crea un'istanza di SelectionController
-        //   var oSelectionController = new sap.m.p13n.SelectionController({
-        //     control: oTable,
-        //   });
-
-        //   // Usa MetadataHelper per ottenere le colonne e fare ulteriori operazioni
-        //   var oMetadataHelper = new sap.m.p13n.MetadataHelper();
-        //   var aColumns = oTable.getColumns();
-
-        //   // Puoi usare aColumns per personalizzare ulteriormente le colonne
-
-        //   // Apri la dialog per la selezione delle colonne
-        //   oSelectionController.open({
-        //     source: oEvt.getSource(),
-        //     contentHeight: "35rem",
-        //     contentWidth: "32rem",
-        //   });
-        // },
       }
     );
   }

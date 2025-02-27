@@ -138,11 +138,7 @@
                                     <m:Title />
                                     <m:ToolbarSpacer />
 
-                                    <m:Button
-                                        icon="sap-icon://sort"
-                                        text="Ordinamento"
-                                        press="sortCategories"
-                                    />
+                                   
                                     <m:Button
                                         text="Esporta excel"
                                         icon="sap-icon://excel-attachment"

@@ -171,16 +171,6 @@
                                     <m:ToolbarSpacer />
 
                                     <m:Button
-                                        icon="sap-icon://sort"
-                                        text="Ordinamento"
-                                        press="sortCategories"
-                                    />
-                                    <!-- <m:Button
-                                        icon="sap-icon://excel-attachment"
-                                        text="Caricamento Manuale"
-                                        press="importaPress"
-                                    /> -->
-                                    <m:Button
                                         text="Esporta excel"
                                         icon="sap-icon://excel-attachment"
                                         press="downloadExcelFileDett"
