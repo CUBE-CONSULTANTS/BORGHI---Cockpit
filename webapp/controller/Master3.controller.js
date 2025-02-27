@@ -32,6 +32,7 @@ sap.ui.define(
     return BaseController.extend("programmi.consegne.edi.controller.Master3", {
       formatter: formatter,
       onInit: async function () {
+        this.setModel(models.createMainModel(), "main");
         // let countModel = new JSONModel(
         //   { delivery: "", calloff: "", selfbilling: "" },
         //   "count"
@@ -43,9 +44,7 @@ sap.ui.define(
         // );
         debugger;
         this.getRouter().getHashChanger().replaceHash("master3");
-        this.getRouter()
-          .getRoute("master3")
-          .attachPatternMatched(this._onObjectMatched, this);
+        this.getRouter().getRoute("master3").attachPatternMatched(this._onObjectMatched, this);
         this.onFilterSelect(null, "01");
         this.setModel(models.createEdiFiltersModel(), "filtersModel");
       },
@@ -166,10 +165,6 @@ sap.ui.define(
         } else {
           this.getView().byId("buttonDelete").setProperty("enabled", true);
         }
-      },
-
-      navToHome: function () {
-        this.getRouter().navTo("home");
       },
 
       onProcessaButton: function (oEvent) {
@@ -385,16 +380,11 @@ sap.ui.define(
 
       navToAPP: function (oEvent) {
         debugger;
-        let level = oEvent
-          .getSource()
-          .getParent()
-          .getParent()
-          .getBindingContext("master3")
-          .getPath();
-        if (level.includes("DelforPosizioni")) {
-          this.getRouter().navTo("master");
+        let level = oEvent.getSource().getParent().getParent().getBindingContext("master3").getPath();
+        if (level.includes("posizioni")) {
+          this.getRouter().navTo("master", { monitor: "monitor" });
         } else {
-          this.getRouter().navTo("master2");
+          this.getRouter().navTo("master2",{ monitor: "monitor" });
         }
       },
 

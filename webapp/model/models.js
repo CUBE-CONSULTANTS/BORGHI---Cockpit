@@ -26,6 +26,7 @@ sap.ui.define(
 					enabled: false,
 					busy: false,
 					selected: false,
+          backToMon: false
 				});
 			},
 			createEdiFiltersModel: function () {

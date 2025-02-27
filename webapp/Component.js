@@ -4,12 +4,14 @@ sap.ui.define(
     "sap/ui/model/json/JSONModel",
     "sap/f/FlexibleColumnLayoutSemanticHelper",
     "sap/f/library",
+    "./model/models"
   ],
   function (
     UIComponent,
     JSONModel,
     FlexibleColumnLayoutSemanticHelper,
-    fioriLibrary
+    fioriLibrary,
+    models
   ) {
     "use strict";
 

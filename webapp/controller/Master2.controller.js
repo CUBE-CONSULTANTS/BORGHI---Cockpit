@@ -1,11 +1,13 @@
 sap.ui.define(
-  ["./BaseController", "sap/ui/model/json/JSONModel"],
-  function (BaseController, JSONModel) {
+  ["./BaseController", "sap/ui/model/json/JSONModel", "../model/models"],
+  function (BaseController, JSONModel, models ) {
     "use strict";
 
     return BaseController.extend("programmi.consegne.edi.controller.Master2", {
       onInit: function () {
         // Carica i dati dei clienti
+        this.setModel(models.createMainModel(), "main");
+        this.getRouter().getRoute("master2").attachPatternMatched(this._onObjectMatched, this);
         var oCustomersModel = new JSONModel(
           sap.ui.require.toUrl("programmi/consegne/edi/mockdata/customers.json")
         );
@@ -14,10 +16,13 @@ sap.ui.define(
         // Modello per il cliente selezionato
         var oSelectedCustomerModel = new JSONModel();
         this.getView().setModel(oSelectedCustomerModel, "selectedCustomer");
-
-       
+  
       },
-
+      _onObjectMatched: function (oEvent) { 
+        debugger
+        oEvent.getParameters().arguments.monitor !== undefined ? this.getModel("main").setProperty("/backToMon", true) : 
+        this.getModel("main").setProperty("/backToMon", false);
+      },
       onSearch: function (oEvent) {
         // Ottieni l'ID del cliente selezionato dal ComboBox
         var oComboBox = this.byId("customerComboBox");
@@ -47,9 +52,7 @@ sap.ui.define(
           this.getView().getModel("selectedCustomer");
         oSelectedCustomerModel.setData(oSelectedCustomer);
       },
-      navToHome: function () {
-        this.getRouter().navTo("home");
-      },
+      
     });
   }
 );

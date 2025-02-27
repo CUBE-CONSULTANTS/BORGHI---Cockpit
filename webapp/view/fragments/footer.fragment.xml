@@ -1,0 +1,23 @@
+<c:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:c="sap.ui.core"
+>
+<OverflowToolbar>
+          
+  <Button
+      press="navToHome"
+      icon="sap-icon://home"
+      text="Home"
+      type="Emphasized"
+  />
+
+  <ToolbarSpacer />
+  <Button
+      press="handleCloseDetail"
+      icon="sap-icon://navigation-right-arrow"
+      text="Monitor"
+      type="Emphasized"
+      visible="{= ${main>/backToMon}}"
+  />
+</OverflowToolbar>
+</c:FragmentDefinition>

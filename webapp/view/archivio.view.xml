@@ -146,17 +146,10 @@
 
         <!-- DynamicPage Footer -->
         <f:footer>
-            <OverflowToolbar>
-          
-                <Button
-                    press="navToHome"
-                    type="Back"
-                    text="Torna alla Home"
-                />
-      
-                <ToolbarSpacer />
-
-            </OverflowToolbar>
+          <core:Fragment
+          fragmentName="programmi.consegne.edi.view.fragments.footer"
+          type="XML"
+      />
         </f:footer>
     </f:DynamicPage>
 </mvc:View>

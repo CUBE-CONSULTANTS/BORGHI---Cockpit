@@ -204,13 +204,10 @@
             </VBox>
         </f:content>
         <f:footer>
-          <Toolbar>
-            <Button
-                press="navToHome"
-                type="Back"
-                text="Torna alla Home"
-            />
-        </Toolbar>
+          <core:Fragment
+          fragmentName="programmi.consegne.edi.view.fragments.footer"
+          type="XML"
+      />
         </f:footer>
     </f:DynamicPage>
 </mvc:View>

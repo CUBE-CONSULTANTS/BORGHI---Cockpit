@@ -181,12 +181,12 @@
 					"target": "home"
 				},
 				{
-					"pattern": "master",
+					"pattern": "master/:monitor:",
 					"name": "master",
 					"target": "master"
 				},
 				{
-					"pattern": "master2",
+					"pattern": "master2/:monitor:",
 					"name": "master2",
 					"target": "master2"
 				},

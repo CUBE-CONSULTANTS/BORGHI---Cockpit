@@ -30,7 +30,7 @@
                 tooltip="Exit Full Screen Mode"
                 visible="{= ${/actionButtonsInfo/midColumn/exitFullScreen} !== null }" />
             <m:Button
-                type="Transparent"
+                type="Emphasized"
                 icon="sap-icon://decline"
                 press=".handleClose"
                 tooltip="Close column"

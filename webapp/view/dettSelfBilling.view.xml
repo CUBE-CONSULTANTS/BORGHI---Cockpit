@@ -62,10 +62,10 @@
           <navigationActions>
 
               <m:OverflowToolbarButton
-                  type="Transparent"
+                  type="Emphasized"
                   icon="sap-icon://decline"
                   press=".handleCloseDetail"
-                  tooltip="Close column"
+                  tooltip="Close"
                   visible="true"
               />
               <!-- {= ${/actionButtonsInfo/midColumn/closeColumn} !== null } -->

@@ -6,6 +6,7 @@ sap.ui.define(
     "sap/ui/core/library",
     "sap/ui/core/Fragment",
     "sap/m/MessageBox",
+    "../model/models"
   ],
   function (
     BaseController,
@@ -13,7 +14,8 @@ sap.ui.define(
     Sorter,
     CoreLibrary,
     Fragment,
-    MessageBox
+    MessageBox,
+    models
   ) {
     "use strict";
 
@@ -21,6 +23,7 @@ sap.ui.define(
 
     return BaseController.extend("programmi.consegne.edi.controller.archivio", {
       onInit: function () {
+        this.setModel(models.createMainModel(), "main");
         // var oMaster3Model = new JSONModel(sap.ui.require.toUrl('programmi/consegne/edi/mockdata/master3.json'));
         // this.getView().setModel(oMaster3Model, 'master3');
         

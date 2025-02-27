@@ -371,6 +371,9 @@ sap.ui.define(
           });
           return columns;
       },
+      navToHome: function () {
+        this.getRouter().navTo("home");
+      },
       handleCloseDetail: function () {
         this.getRouter().navTo("master3");
       },
