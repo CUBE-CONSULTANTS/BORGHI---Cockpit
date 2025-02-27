@@ -146,7 +146,7 @@
                         icon="sap-icon://shipping-status"
                         iconColor="Default"
                         
-                        count="2"
+                        
                         text="Delivery Forecast"
                         key="01"
                         

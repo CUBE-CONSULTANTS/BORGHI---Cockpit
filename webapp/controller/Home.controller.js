@@ -11,13 +11,16 @@ sap.ui.define(
         this.getRouter().navTo("master2");
       },
       onNavigateToPage3: function () {
+        this.getOwnerComponent()
+          .getModel("datiAppoggio")
+          .setProperty("/currentPage", "master3");
         this.getRouter().navTo("master3");
       },
       onNavigateToPage4: function () {
         this.getOwnerComponent()
           .getModel("datiAppoggio")
           .setProperty("/currentPage", "archivio");
-          this.getRouter().navTo("archivio");
+        this.getRouter().navTo("archivio");
       },
     });
   }

@@ -31,7 +31,17 @@ sap.ui.define(
 
     return BaseController.extend("programmi.consegne.edi.controller.Master3", {
       formatter: formatter,
-      onInit: function () {
+      onInit: async function () {
+        // let countModel = new JSONModel(
+        //   { delivery: "", calloff: "", selfbilling: "" },
+        //   "count"
+        // );
+        // this.setModel("count");
+        // this.getModel("count").setProperty(
+        //   "/delivery",
+        //   await API.getEntity("/Testata/$count")
+        // );
+        debugger;
         this.getRouter().getHashChanger().replaceHash("master3");
         this.getRouter()
           .getRoute("master3")
@@ -75,10 +85,13 @@ sap.ui.define(
             break;
           case "03":
             oModel = this.getOwnerComponent().getModel("selfBillingV2");
-            await this.callData(oModel,
+            await this.callData(
+              oModel,
               "/Testata",
               [],
-              [ "dettaglio_fattura,log_testata,dettaglio_fattura/riferimento_ddt,dettaglio_fattura/riferimento_ddt/riga_fattura"],
+              [
+                "dettaglio_fattura,log_testata,dettaglio_fattura/riferimento_ddt,dettaglio_fattura/riferimento_ddt/riga_fattura",
+              ],
               selectedKey
             );
             this.onFiltersBuilding(oEvent, selectedKey);
@@ -127,10 +140,7 @@ sap.ui.define(
             break;
           case "03":
             oTable = this.byId("treetableSB");
-            aSorters = this.sortTables(oTable, [
-              "customer",
-              "data_ricezione",
-            ]);
+            aSorters = this.sortTables(oTable, ["customer", "data_ricezione"]);
             break;
           default:
             return;
@@ -380,9 +390,9 @@ sap.ui.define(
             oTable.collapseAll();
             break;
           case "03":
-              oTable = this.byId("treetableSB");
-              oTable.collapseAll();
-              break;  
+            oTable = this.byId("treetableSB");
+            oTable.collapseAll();
+            break;
           default:
         }
       },
@@ -400,9 +410,9 @@ sap.ui.define(
             oTable.expandToLevel(1);
             break;
           case "03":
-              oTable = this.byId("treetableSB");
-              oTable.expandToLevel(1);
-              break;  
+            oTable = this.byId("treetableSB");
+            oTable.expandToLevel(1);
+            break;
           default:
         }
       },
