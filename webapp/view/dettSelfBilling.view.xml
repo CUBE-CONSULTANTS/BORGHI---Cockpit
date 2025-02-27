@@ -178,9 +178,9 @@
                                         id="tablePosSB"
                                         selectionMode="MultiToggle"
                                         rows="{
-                                          path: 'detailData>/',
+                                          path: 'detailData>/DettaglioFatture',
                                           parameters: {
-                                            arrayNames: ['riferimento_ddt']
+                                            arrayNames: ['riferimento_ddt','riga_fattura']
                                           }
                                         }"
                                         autoPopinMode="true"
@@ -258,6 +258,76 @@
                                                     />
                                                 </ui:template>
                                             </ui:Column>
+                                            <ui:Column
+                                                width="10rem"
+                                                showSortMenuEntry="false"
+                                                tooltip="DDT Terre"
+                                                app:p13nKey="DDT Terre"
+                                                sortProperty="DDT Terre"
+                                            >
+                                                <m:Label text="DDT Terre" />
+                                                <ui:template>
+                                                    <m:ObjectIdentifier
+                                                        text="{detailData>ddt_terre}"
+                                                    />
+                                                </ui:template>
+                                            </ui:Column>
+                                            <ui:Column
+                                            width="10rem"
+                                            showSortMenuEntry="false"
+                                            tooltip="Num. DDT Cliente"
+                                            app:p13nKey="Num. DDT Cliente"
+                                            sortProperty="Num. DDT Cliente"
+                                        >
+                                            <m:Label text="Num. DDT Cliente" />
+                                            <ui:template>
+                                                <m:ObjectIdentifier
+                                                    text="{detailData>num_ddt_cliente}"
+                                                />
+                                            </ui:template>
+                                        </ui:Column>
+                                            <ui:Column
+                                            width="10rem"
+                                            showSortMenuEntry="false"
+                                            tooltip="Data DDT"
+                                            app:p13nKey="Data DDT"
+                                            sortProperty="Data DDT"
+                                        >
+                                            <m:Label text="Data DDT" />
+                                            <ui:template>
+                                                <m:ObjectIdentifier
+                                                    text="{detailData>data_ddt_cliente}"
+                                                />
+                                            </ui:template>
+                                        </ui:Column>
+                                        <ui:Column
+                                        width="10rem"
+                                        showSortMenuEntry="false"
+                                        tooltip="Num. Ordine"
+                                        app:p13nKey="Num. Ordine"
+                                        sortProperty="Num. Ordine"
+                                    >
+                                        <m:Label text="Num. Ordine" />
+                                        <ui:template>
+                                            <m:ObjectIdentifier
+                                                text="{detailData>order_number}"
+                                            />
+                                        </ui:template>
+                                    </ui:Column>
+                                    <ui:Column
+                                    width="10rem"
+                                    showSortMenuEntry="false"
+                                    tooltip="Cod Articolo"
+                                    app:p13nKey="Cod Articolo"
+                                    sortProperty="Cod Articolo"
+                                >
+                                    <m:Label text="Cod Articolo" />
+                                    <ui:template>
+                                        <m:ObjectIdentifier
+                                            text="{detailData>codice_articolo_cliente_da_transcodificare}"
+                                        />
+                                    </ui:template>
+                                </ui:Column>
                                             <ui:Column
                                             width="10rem"
                                             showSortMenuEntry="false"
