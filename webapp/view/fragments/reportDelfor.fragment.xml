@@ -1,0 +1,99 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.f"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:ui="sap.ui.table"
+    xmlns:mvc="sap.ui.core.mvc">
+    <Dialog title="Fine del processamento" >
+        <VBox class="sapUiMediumMargin">
+            <Text text="Processo di eliminazione terminato, si potranno trovare i risultati nelle tabelle sottostanti"></Text>
+        </VBox>
+        <VBox class="sapUiMediumMargin">
+            <Text text="Tabella elementi processati con successo"/>
+            <ui:Table rows="{/ProductCollection}"  paste="onPaste" ariaLabelledBy="title" >
+           
+            <ui:columns>
+                <ui:Column >
+                    <Label text="Cliente" />
+                    <ui:template>
+                        <Text text="{Name}" wrapping="false" />
+                    </ui:template>
+                </ui:Column>
+    
+                <ui:Column >
+                    <Label text="Progressivo invio" />
+                    <ui:template>
+                        <Text text="{Name}" wrapping="false" />
+                    </ui:template>
+                </ui:Column>
+
+                <ui:Column >
+                    <Label text="Materiale" />
+                    <ui:template>
+                        <Text text="{Name}" wrapping="false" />
+                    </ui:template>
+                </ui:Column>
+
+                <ui:Column >
+                    <Label text="IDoc" />
+                    <ui:template>
+                        <Text text="{Name}" wrapping="false" />
+                    </ui:template>
+                </ui:Column>
+    
+                <ui:Column >
+                    <Label text="Download" />
+                    <ui:template>
+                        <HBox>
+                            <Button icon="sap-icon://delete" />
+                            <Button icon="sap-icon://download" />
+                           
+                        </HBox>
+                    </ui:template>
+                </ui:Column>
+            </ui:columns>
+        </ui:Table>
+        </VBox>
+        <VBox class="sapUiMediumMargin">
+            <Text text="Tabella elementi processati con errori"/>
+            <ui:Table rows="{/ProductCollection}"  paste="onPaste" ariaLabelledBy="title" >
+           
+            <ui:columns>
+                <ui:Column >
+                    <Label text="Cliente" />
+                    <ui:template>
+                        <Text text="{Name}" wrapping="false" />
+                    </ui:template>
+                </ui:Column>
+    
+                <ui:Column >
+                    <Label text="Progressivo invio" />
+                    <ui:template>
+                        <Text text="{Name}" wrapping="false" />
+                    </ui:template>
+                </ui:Column>
+
+                <ui:Column >
+                    <Label text="Materiale" />
+                    <ui:template>
+                        <Text text="{Name}" wrapping="false" />
+                    </ui:template>
+                </ui:Column>
+
+                <ui:Column >
+                    <Label text="IDoc" />
+                    <ui:template>
+                        <Text text="{Name}" wrapping="false" />
+                    </ui:template>
+                </ui:Column>
+    
+            </ui:columns>
+        </ui:Table>
+        </VBox>
+
+        <buttons>
+            <Button text="Chiudi" press="onClose"></Button>
+        </buttons>
+   
+</Dialog>
+</core:FragmentDefinition>

@@ -7,20 +7,22 @@
       "target": "/odata/v4/$1",
       "destination": "borghi-edi-cap",
       "authenticationType": "xsuaa",
-      "csrfProtection": false
+      "csrfProtection": false,
+      "cacheControl": "no-cache, no-store, must-revalidate"
     },
     {
       "source": "^/odata/v2/(.*)$",
       "target": "/odata/v2/$1",
       "destination": "borghi-edi-cap",
       "authenticationType": "xsuaa",
-      "csrfProtection": false
+      "csrfProtection": false,
+      "cacheControl": "no-cache, no-store, must-revalidate"
     },
     {
       "source": "^(.*)$",
       "localDir": "./webapp",
       "target": "$1",
-      "cacheControl": "no-store",
+      "cacheControl": "no-cache, no-store, must-revalidate",
       "authenticationType": "xsuaa"
     }
   ]

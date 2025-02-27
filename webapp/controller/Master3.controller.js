@@ -9,6 +9,8 @@ sap.ui.define(
     "../model/API",
     "../model/models",
     "../model/formatter",
+    "sap/ui/model/Filter",
+    "sap/ui/model/FilterOperator",
   ],
   function (
     BaseController,
@@ -19,7 +21,9 @@ sap.ui.define(
     MessageBox,
     API,
     models,
-    formatter
+    formatter,
+    Filter,
+    FilterOperator
   ) {
     "use strict";
 
@@ -46,7 +50,7 @@ sap.ui.define(
             await this.callData(
               oModel,
               "/Testata",
-              [],
+              [new Filter("posizioni/stato", FilterOperator.NE, "53")],
               ["posizioni,posizioni/schedulazioni,posizioni/log"],
               selectedKey
             );
@@ -387,18 +391,37 @@ sap.ui.define(
               items.forEach((x) => {
                 payload.push(x.id);
               });
-              debugger;
-              let obj = { id: payload };
-              // let response = await oData._deleteAttachment({ self: this, soc, year, invoiceNumber, filename })
-              // console.log(response)
-              // if (response === 200) {
-              //     await this.getAttachemnt()
-              //     sap.ui.core.BusyIndicator.hide(0);
 
-              // } else {
-              //     this.showAlertDialog("Errore nella cancellazione del file")
-              //     sap.ui.core.BusyIndicator.hide(0);
-              // }
+              let obj = { id: payload };
+
+              let oModel = this.getOwnerComponent().getModel("modelloV2");
+              let res = await API.createEntity(oModel, "/Processamento", obj);
+              debugger;
+              let modelloReport = new JSONModel(
+                { successo: "", errore: "" },
+                "modelloReport"
+              );
+              let success = [];
+              let error = [];
+              res.results.forEach((x) => {});
+
+              if (!this._fragment) {
+                Fragment.load({
+                  name: "programmi.consegne.edi.view.fragments.reportDelfor",
+                  controller: this,
+                }).then(
+                  function (oFragment) {
+                    this._fragment = oFragment;
+                    this._fragment.setModel(modelloReport);
+                    this.getView().addDependent(this._fragment);
+
+                    this._fragment.open();
+                  }.bind(this)
+                );
+              } else {
+                this._fragment.setModel(modelloReport);
+                this._fragment.open();
+              }
             } else {
               // sap.ui.core.BusyIndicator.hide(0);
             }
