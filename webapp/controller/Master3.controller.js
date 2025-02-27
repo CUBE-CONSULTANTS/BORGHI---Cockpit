@@ -32,13 +32,15 @@ sap.ui.define(
     return BaseController.extend("programmi.consegne.edi.controller.Master3", {
       formatter: formatter,
       onInit: function () {
-        this.getRouter().getHashChanger().replaceHash("master3")
-        this.getRouter().getRoute("master3").attachPatternMatched(this._onObjectMatched, this);
+        this.getRouter().getHashChanger().replaceHash("master3");
+        this.getRouter()
+          .getRoute("master3")
+          .attachPatternMatched(this._onObjectMatched, this);
         this.onFilterSelect(null, "01");
         this.setModel(models.createEdiFiltersModel(), "filtersModel");
       },
       _onObjectMatched: function (oEvent) {
-        debugger
+        debugger;
         this.onFilterSelect(null, "01");
       },
       onFilterSelect: async function (oEvent, key) {
@@ -52,8 +54,10 @@ sap.ui.define(
             await this.callData(
               oModel,
               "/Testata",
-              [new Filter("posizioni/stato", FilterOperator.NE, "53")],
-              ["posizioni,posizioni/schedulazioni,posizioni/log"],
+              [],
+              [
+                "posizioni($filter=stato ne '53'),posizioni($expand=log,schedulazioni,testata)",
+              ],
               selectedKey
             );
             this.onFiltersBuilding(oEvent, selectedKey);
@@ -64,9 +68,7 @@ sap.ui.define(
               oModel,
               "/Testata",
               [],
-              [
-                "master,posizioni_testata,log_testata",
-              ],
+              ["master,posizioni_testata,log_testata"],
               selectedKey
             );
             this.onFiltersBuilding(oEvent, selectedKey);
@@ -127,26 +129,25 @@ sap.ui.define(
         }
       },
       downloadExcelFile: function (oEvent) {
-
         let selectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
         !selectedKey ? (selectedKey = key) : (selectedKey = selectedKey);
-        let oModel 
-        
+        let oModel;
+
         switch (selectedKey) {
           case "01":
-            oModel =  this.getModel("master3");
+            oModel = this.getModel("master3");
             break;
           case "02":
-            oModel = this.getModel("master3CO")
+            oModel = this.getModel("master3CO");
             break;
           default:
-        }   
+        }
         let aData = oModel.getProperty("/");
         if (!aData || aData.length === 0) {
           MessageToast.show("Nessun dato disponibile per l'esportazione");
           return;
         }
-        this.buildSpreadSheet(aData); 
+        this.buildSpreadSheet(aData);
       },
       onPressRow: function (oEvent) {
         var index = oEvent.getParameter("rowIndex");
@@ -158,7 +159,7 @@ sap.ui.define(
       },
 
       navToHome: function () {
-       this.getRouter().navTo("home");
+        this.getRouter().navTo("home");
       },
 
       onProcessaButton: function (oEvent) {
@@ -262,20 +263,46 @@ sap.ui.define(
           );
       },
       dettaglioNav: function (oEvent) {
-      debugger;
-      let level, detailPath,detail
-        if(oEvent.getSource().getParent().getBindingContext("master3") !== undefined) {
-          level = oEvent.getSource().getParent().getBindingContext("master3").getPath().includes("posizioni");
-          detailPath = oEvent.getSource().getParent().getBindingContext("master3").getPath();
-          detail = this.getView().getModel("master3").getProperty(`${detailPath}`);
-          this.getOwnerComponent().getModel("datiAppoggio").setProperty("/testata", detail);
-          this.getOwnerComponent().getModel("datiAppoggio").setProperty("/posizioni", detail.posizioni);
+        debugger;
+        let level, detailPath, detail;
+        if (
+          oEvent.getSource().getParent().getBindingContext("master3") !==
+          undefined
+        ) {
+          level = oEvent
+            .getSource()
+            .getParent()
+            .getBindingContext("master3")
+            .getPath()
+            .includes("posizioni");
+          detailPath = oEvent
+            .getSource()
+            .getParent()
+            .getBindingContext("master3")
+            .getPath();
+          detail = this.getView()
+            .getModel("master3")
+            .getProperty(`${detailPath}`);
+          this.getOwnerComponent()
+            .getModel("datiAppoggio")
+            .setProperty("/testata", detail);
+          this.getOwnerComponent()
+            .getModel("datiAppoggio")
+            .setProperty("/posizioni", detail.posizioni);
           if (level) {
-            this.getOwnerComponent().getModel("datiAppoggio").setProperty("/posizioneCorrente", detail);
-            this.getOwnerComponent().getModel("datiAppoggio").setProperty("/schedulazioni", detail.schedulazioni.results);
-            this.getOwnerComponent().getModel("datiAppoggio").setProperty(
+            this.getOwnerComponent()
+              .getModel("datiAppoggio")
+              .setProperty("/posizioneCorrente", detail);
+            this.getOwnerComponent()
+              .getModel("datiAppoggio")
+              .setProperty("/schedulazioni", detail.schedulazioni.results);
+            this.getOwnerComponent()
+              .getModel("datiAppoggio")
+              .setProperty(
                 "/testata",
-                this.getView().getModel("master3").getProperty(`${detailPath[0] + detailPath[1]}`)
+                this.getView()
+                  .getModel("master3")
+                  .getProperty(`${detailPath[0] + detailPath[1]}`)
               );
             debugger;
             let oNextUIState;
@@ -291,21 +318,34 @@ sap.ui.define(
                 }.bind(this)
               );
           } else {
-            detailPath = oEvent.getSource().getParent().getBindingContext("master3").getPath();
+            detailPath = oEvent
+              .getSource()
+              .getParent()
+              .getBindingContext("master3")
+              .getPath();
             this.getRouter().navTo("detailMaster3", {
               product: detail.id,
               layout: "OneColumn",
             });
           }
-        }else if(oEvent.getSource().getParent().getBindingContext("master3CO")!== undefined) {
-          debugger
-          detailPath = oEvent.getSource().getParent().getBindingContext("master3CO").getPath();
-          detail = this.getView().getModel("master3CO").getProperty(`${detailPath}`);
-            this.getRouter().navTo("dettCallOff", {
-              id: detail.id,
-              layout: "OneColumn",
-            });
-        }  
+        } else if (
+          oEvent.getSource().getParent().getBindingContext("master3CO") !==
+          undefined
+        ) {
+          debugger;
+          detailPath = oEvent
+            .getSource()
+            .getParent()
+            .getBindingContext("master3CO")
+            .getPath();
+          detail = this.getView()
+            .getModel("master3CO")
+            .getProperty(`${detailPath}`);
+          this.getRouter().navTo("dettCallOff", {
+            id: detail.id,
+            layout: "OneColumn",
+          });
+        }
       },
 
       statoButtonPress: function (oEvent) {
@@ -319,7 +359,7 @@ sap.ui.define(
       },
 
       onCollapseAll: function () {
-        let oTable
+        let oTable;
         let selectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
         !selectedKey ? (selectedKey = key) : (selectedKey = selectedKey);
         switch (selectedKey) {
@@ -332,10 +372,10 @@ sap.ui.define(
             oTable.collapseAll();
             break;
           default:
-        }    
+        }
       },
       onExpandFirstLevel: function () {
-        let oTable
+        let oTable;
         let selectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
         !selectedKey ? (selectedKey = key) : (selectedKey = selectedKey);
         switch (selectedKey) {
@@ -348,7 +388,7 @@ sap.ui.define(
             oTable.expandToLevel(1);
             break;
           default:
-        }    
+        }
       },
 
       navToAPP: function (oEvent) {
