@@ -17,13 +17,14 @@
       "authenticationType": "xsuaa",
       "csrfProtection": false,
       "cacheControl": "no-cache, no-store, must-revalidate"
+      
     },
     {
       "source": "^(.*)$",
       "localDir": "./webapp",
       "target": "$1",
-      "cacheControl": "no-cache, no-store, must-revalidate",
-      "authenticationType": "xsuaa"
+      "authenticationType": "xsuaa",
+      "cacheControl": "no-cache, no-store, must-revalidate"
     }
   ]
 }

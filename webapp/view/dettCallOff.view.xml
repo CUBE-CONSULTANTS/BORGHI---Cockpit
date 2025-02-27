@@ -1,336 +1,396 @@
 <mvc:View
     controllerName="programmi.consegne.edi.controller.DettCallOff"
+    xmlns="sap.uxap"
+    xmlns:m="sap.m"
     xmlns:f="sap.f"
-    xmlns:fb="sap.ui.comp.filterbar"
-    xmlns="sap.m"
-    xmlns:ui="sap.ui.table"
-    xmlns:core="sap.ui.core"
+    xmlns:form="sap.ui.layout.form"
     xmlns:mvc="sap.ui.core.mvc"
-    xmlns:commons="sap.suite.ui.commons"
+    xmlns:core="sap.ui.core"
+    xmlns:viz="sap.viz.ui5.controls"
+    xmlns:viz.data="sap.viz.ui5.data"
+    xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
     xmlns:layout="sap.ui.layout"
-    height="100%"
-> 
-<f:DynamicPage fitContent="true" showFooter="true" >
-        
-<f:title>
-    <f:DynamicPageTitle >
-      <f:heading>
-        <Title text="Dettaglio nome File Data Ricezione" />
-        
-      </f:heading>
-    </f:DynamicPageTitle>
-</f:title>
-<f:header>
-    <f:DynamicPageHeader pinnable="true">
-  <layout:HorizontalLayout allowWrapping="true">
-    <layout:VerticalLayout class="sapUiMediumMarginEnd">
-     
-        <fb:FilterBar
-    persistencyKey="myPersKey"
-    useToolbar="false"
-    search=".onSearchData"
-    showFilterConfiguration="false"
-    showGoOnFB="true"
-    showClearOnFB="true"
-    clear="onFilterBarClear"
-    class="sapUiSmallMarginBottom"
-  >
-    <fb:filterGroupItems>
-      <fb:FilterGroupItem
-        name="Data ricezione"
-        label="Data ricezione"
-        groupName="Group1"
-        visibleInFilterBar="true"
-      >
-        <fb:control>
-          <DatePicker
-            tooltip="Data di ricezione"
-            secondaryCalendarType="Gregorian"
-            change="handleChange"
-            value="{filtersModel>/delivery/dataRic}" 
-            valueFormat="dd/MM/yyyy"
-            displayFormat="dd/MM/yyyy"
-          />
-        </fb:control>
-      </fb:FilterGroupItem>
-      <fb:FilterGroupItem
-        name="Numero progressivo invio"
-        label="Numero progressivo invio"
-        groupName="Group1"
-        visibleInFilterBar="true"
-      >
-     <fb:control>
-      <ComboBox 
-        items="{filtersModel>/delivery/numProg/items}" 
-        value="{filtersModel>/delivery/numProg/value}">
-        <core:ListItem key="{filtersModel>Key}" text="{filtersModel>Text}" />
-        </ComboBox>
-     </fb:control>
-      </fb:FilterGroupItem>
-      <!-- <fb:FilterGroupItem
-        id="idDataConsegna"
-        name="Date di consegna"
-        label="Date di consegna"
-        groupName="Group1"
-        visibleInFilterBar="true"
-      >
-        <fb:control>
-          <DatePicker
-            tooltip="Date di consegna"
-            value="{filtersModel>/delivery/dataCons}" 
-            secondaryCalendarType="Gregorian"
-            change="handleChange"
-            displayFormat="dd.MM.yyyy"
-          />
-        </fb:control>
-      </fb:FilterGroupItem> -->
-      <fb:FilterGroupItem
-        name="Cliente"
-        label="Cliente"
-        groupName="Group1"
-        visibleInFilterBar="true"
-      >
-        <fb:control>
+    xmlns:commons="sap.suite.ui.commons"
+    xmlns:columnmenu="sap.m.table.columnmenu"
+    xmlns:sap.ui.fl="sap.ui.fl"
+    xmlns:sap.ui.dt="sap.ui.dt"
+    xmlns:ui="sap.ui.table"
+    xmlns:p13n="sap.m.p13n"
+    xmlns:ce="sap.ui.codeeditor"
+    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+    xmlns:vm="sap.ui.fl.variants"
+>
+    <ObjectPageLayout
+        showTitleInHeaderContent="true"
+        alwaysShowContentHeader="true"
+        preserveHeaderStateOnScroll="false"
+        headerContentPinnable="true"
+        isChildPage="true"
+        showFooter="true"
+        upperCaseAnchorBar="false"
+    >
+        <headerTitle>
+            <ObjectPageDynamicHeaderTitle>
+                <expandedHeading>
+                    <m:Title
+                        text="{detailData>/DettaglioMaster3/sender_id}  {detailData>/DettaglioMaster3/progressivo_invio}"
+                        wrapping="true"
+                        class="sapUiSmallMarginEnd"
+                    />
+                </expandedHeading>
 
-        <ComboBox 
-            items="{filtersModel>/delivery/cliente/items}" 
-            value="{filtersModel>/delivery/cliente/value}">
-            <core:ListItem key="{filtersModel>Key}" text="{filtersModel>Text}" />
-        </ComboBox>
+                <snappedHeading>
+                    <m:FlexBox
+                        wrap="Wrap"
+                        fitContainer="true"
+                        alignItems="Center"
+                    >
+                        <m:FlexBox
+                            wrap="NoWrap"
+                            fitContainer="true"
+                            alignItems="Center"
+                            class="sapUiTinyMarginEnd"
+                        >
+                            <m:Title
+                                text="{detailData>/DettaglioMaster3/sender_id}"
+                                wrapping="true"
+                            />
+                        </m:FlexBox>
+                    </m:FlexBox>
+                </snappedHeading>
 
-     </fb:control>
-      </fb:FilterGroupItem>
-      <fb:FilterGroupItem
-        name="Materiale"
-        label="Materiale"
-        groupName="Group1"
-        visibleInFilterBar="true"
-      >
-        <fb:control>
-          <ComboBox 
-          items="{filtersModel>/delivery/materiale/items}" 
-          value="{filtersModel>/delivery/materiale/value}">
-          <core:ListItem key="{filtersModel>Key}" text="{filtersModel>Text}" />
-      </ComboBox>
-        </fb:control>
-      </fb:FilterGroupItem>
-     
-    </fb:filterGroupItems>
-  </fb:FilterBar>    
-    </layout:VerticalLayout>
-  </layout:HorizontalLayout>
-</f:DynamicPageHeader>
-</f:header>
-<f:content>
-  
-  <ui:TreeTable
-    id="treetableCallOff"
-    rows="{
-      path: 'master3CO>/',
-      parameters: {
-        arrayNames: ['posizioni']
-      }
-    }"
-    
-    enableSelectAll="false"
-    ariaLabelledBy="title"
-    selectionBehavior="Row"
-    
-  >
-    <ui:extension>
-      <OverflowToolbar style="Clear">
-        <Title />
-        <ToolbarSpacer />
-        <Button
-          text="Espandi tutti"
-          icon="sap-icon://expand-all"
-          press="onExpandFirstLevel"
-        />
-        <Button
-          icon="sap-icon://collapse-all"
-          text="Collassa tutti"
-          press="onCollapseAll"
-        />
-       
-        <Button
-          icon="sap-icon://sort"
-          text="Ordinamento"
-          press="sortCategories"
-        />
-       
-        <Button
-          text="Esporta excel"
-          icon="sap-icon://excel-attachment"
-          press="downloadExcelFile"
-          visible="{=${datiAppoggio>/currentPage} === 'archivio' ? false:true}"
-        />
-        <Button icon="sap-icon://upload"
-        type="Emphasized"
-        text="Caricamento Manuale"
-        press="importaPress" />
-        <Button
-          text="Elabora"
-          icon="sap-icon://process"
-          press="onProcessaButton"
-          type="Emphasized"
-          visible="{=${datiAppoggio>/currentPage} === 'archivio' ? false:true}"
-        />
-        <Button
-          text="Elimina"
-          icon="sap-icon://delete"
-          press=""
-          type="Reject"
-          visible="{=${datiAppoggio>/currentPage} === 'archivio' ? false:true}"
-        />
-      </OverflowToolbar>
-    </ui:extension>
-    <ui:columns>
-					<ui:Column width="11rem">
-						<Label text="Progressivo trasmissione precedente" />
-						<ui:template>
-							<Text text="{master3>progressivo_ultimo_invio}" wrapping="false" />
-						</ui:template>
-					</ui:Column>
-          <ui:Column width="11rem">
-						<Label text="Progressivo trasmissione" />
-						<ui:template>
-							<Text text="{master3>codice_articolo}" wrapping="false" />
-						</ui:template>
-					</ui:Column>
-          <ui:Column width="11rem">
-						<Label text="Data trasmissione" />
-						<ui:template>
-							<Text text="{Name}" wrapping="false" />
-						</ui:template>
-					</ui:Column>
-          <ui:Column width="9rem">
-						<Label text="Codice DDT" />
-						<ui:template>
-							<Text text="{Name}" wrapping="false" />
-						</ui:template>
-					</ui:Column>
-          <ui:Column width="9rem">
-						<Label text="Data di spedizione" />
-						<ui:template>
-							<Text text="{Name}" wrapping="false" />
-						</ui:template>
-					</ui:Column>
-          <ui:Column width="11rem">
-						<Label text="Punto di scarico" />
-						<ui:template>
-							<Text text="{Name}" wrapping="false" />
-						</ui:template>
-					</ui:Column>
-          <ui:Column width="6rem">
-						<Label text="Tipo di invio" />
-						<ui:template>
-							<Text text="{Name}" wrapping="false" />
-						</ui:template>
-					</ui:Column>
-          <ui:Column width="14rem">
-						<Label text="Numero cliente" />
-						<ui:template>
-							<Text text="{Name}" wrapping="false" />
-						</ui:template>
-					</ui:Column>
-          <ui:Column width="11rem">
-						<Label text="Numero contratto" />
-						<ui:template>
-							<Text text="{Name}" wrapping="false" />
-						</ui:template>
-					</ui:Column>
-          <ui:Column width="11rem">
-						<Label text="Codice processo" />
-						<ui:template>
-							<Text text="{Name}" wrapping="false" />
-						</ui:template>
-					</ui:Column>
-          <ui:Column width="11rem">
-						<Label text="Stabilimento cliente" />
-						<ui:template>
-							<Text text="{Name}" wrapping="false" />
-						</ui:template>
-					</ui:Column>
-          <ui:Column width="11rem">
-						<Label text="Consigment reference" />
-						<ui:template>
-							<Text text="{Name}" wrapping="false" />
-						</ui:template>
-					</ui:Column>
-          <ui:Column width="11rem">
-						<Label text="ID del ricevente" />
-						<ui:template>
-							<Text text="{Name}" wrapping="false" />
-						</ui:template>
-					</ui:Column>
-          <ui:Column width="11rem">
-						<Label text="Magazzino cliente" />
-						<ui:template>
-							<Text text="{Name}" wrapping="false" />
-						</ui:template>
-					</ui:Column>
-          <ui:Column width="11rem">
-						<Label text="ID fornitore" />
-						<ui:template>
-							<Text text="{Name}" wrapping="false" />
-						</ui:template>
-					</ui:Column>
-          <ui:Column width="11rem">
-						<Label text="Punto di consumo" />
-						<ui:template>
-							<Text text="{Name}" wrapping="false" />
-						</ui:template>
-					</ui:Column>
-          <ui:Column width="11rem">
-						<Label text="Riferimento cliente" />
-						<ui:template>
-							<Text text="{Name}" wrapping="false" />
-						</ui:template>
-					</ui:Column>
-          <ui:Column width="11rem">
-						<Label text="Quantità spedita" />
-						<ui:template>
-							<Text text="{Name}" wrapping="false" />
-						</ui:template>
-					</ui:Column>
-          <ui:Column width="11rem">
-						<Label text="Unità di misura" />
-						<ui:template>
-							<Text text="{Name}" wrapping="false" />
-						</ui:template>
-					</ui:Column>
-          <ui:Column width="11rem">
-						<Label text="Consegna originale" />
-						<ui:template>
-							<Text text="{Name}" wrapping="false" />
-						</ui:template>
-					</ui:Column>
-          <ui:Column width="11rem">
-						
-						<ui:template>
-							<Button
-                tooltip="Stock Level"
-                icon="sap-icon://doc-attachment"
-                />
-						</ui:template>
-					</ui:Column>
-				
-				</ui:columns>
-  </ui:TreeTable>
-  
-</f:content>
-<f:footer>
-  <OverflowToolbar>
+                <navigationActions>
+                    <m:OverflowToolbarButton
+                        type="Transparent"
+                        icon="sap-icon://decline"
+                        press=".handleCloseDetail"
+                        tooltip="Close column"
+                        visible="true"
+                    />
+                </navigationActions>
+            </ObjectPageDynamicHeaderTitle>
+        </headerTitle>
 
-      <Button
-          press="onNavBack"
-          type="Back"
-          text="Indietro"
-      />
+        <headerContent>
+            <m:HBox
+                justifyContent="SpaceBetween"
+                fitContainer="true"
+            >
+                <m:VBox class="sapUiSmallMarginEnd">
+                    <m:VBox class="sapUiTinyMarginBottom">
+                        <m:Label
+                            text="Cliente"
+                            design="Bold"
+                        />
+                        <m:Text
+                            text="{detailData>/DettaglioMaster3/codice_terre_cliente}"
+                        />
+                    </m:VBox>
+                    <m:VBox class="sapUiTinyMarginBottom">
+                        <m:Label
+                            text="Nome file"
+                            design="Bold"
+                        />
+                        <m:Text
+                            text="{detailData>/DettaglioMaster3/master/nome_file}"
+                        />
+                    </m:VBox>
+                    <m:VBox>
+                        <m:Label
+                            text="Data Ricezione"
+                            design="Bold"
+                        />
+                        <m:Text
+                            text="{path:'detailData>/DettaglioMaster3/master/data_ricezione', formatter: '.formatter.formatDate'}"
+                        />
+                    </m:VBox>
+                </m:VBox>
+                <m:VBox class="sapUiSmallMarginEnd">
+                    <m:VBox class="sapUiTinyMarginBottom">
+                        <m:Label
+                            text="Num. progressivo invio"
+                            design="Bold"
+                        />
+                        <m:Text
+                            text="{detailData>/DettaglioMaster3/progressivo_invio}"
+                        />
+                    </m:VBox>
+                    <m:VBox class="sapUiTinyMarginBottom">
+                        <m:Label
+                            text="Data progressivo invio"
+                            design="Bold"
+                        />
+                        <m:Text
+                            text="{path:'detailData>/DettaglioMaster3/data_progressivo_invio', formatter: '.formatter.formatDate'}"
+                        />
+                    </m:VBox>
+                </m:VBox>
+            </m:HBox>
+        </headerContent>
 
-      <ToolbarSpacer />
+        <sections>
+            <ObjectPageSection title="Posizioni">
+                <subSections>
+                    <ObjectPageSubSection>
+                        <blocks>
+                            <m:VBox height="90%">
+                                <m:OverflowToolbar style="Clear">
+                                    <m:Title />
+                                    <m:ToolbarSpacer />
 
-  </OverflowToolbar>
-</f:footer>
-</f:DynamicPage>
+                                   
+                                    <m:Button
+                                        text="Esporta excel"
+                                        icon="sap-icon://excel-attachment"
+                                        press="downloadExcelFileDett"
+                                    />
+
+                                    <m:Button
+                                        text="Elimina"
+                                        icon="sap-icon://delete"
+                                        press=""
+                                        type="Reject"
+                                    />
+                                </m:OverflowToolbar>
+                                <m:ScrollContainer
+                                    height="100%"
+                                    width="100%"
+                                    vertical="true"
+                                    horizontal="true"
+                                >
+                                    <ui:Table
+                                        id="tablePosCO"
+                                        selectionMode="MultiToggle"
+                                        rows="{detailData>/DettaglioMaster3/posizioni_testata}"
+                                        autoPopinMode="true"
+                                        fixedLayout="false"
+                                        sort="onSort"
+                                        ariaLabelledBy="title"
+                                        showColumnVisibilityMenu="true"
+                                        sap.ui.fl:flexibility="sap/m/flexibility/EngineFlex"
+                                    >
+                                        <ui:extension>
+                                            <m:OverflowToolbar id="prova2">
+                                                <m:ToolbarSpacer />
+                                                <m:Button
+                                                    icon="sap-icon://action-settings"
+                                                    press="openPosizioniDialog"
+                                                    id="p13n"
+                                                />
+                                            </m:OverflowToolbar>
+                                        </ui:extension>
+
+                                        <ui:columns>
+                                          <ui:Column
+                                          width="10rem"
+                                          showSortMenuEntry="false"
+                                          tooltip="Cliente"
+                                          app:p13nKey="cliente"
+                                          sortProperty="Cliente"
+                                      >
+                                          <m:Label text="Cliente" />
+                                          <ui:template>
+                                              <m:ObjectIdentifier
+                                                  text="{detailData>posizione_77_86}"
+                                              />
+                                          </ui:template>
+                                      </ui:Column>  
+                                      <ui:Column
+                                      width="10rem"
+                                      showSortMenuEntry="false"
+                                      tooltip="Reason"
+                                      app:p13nKey="Reason"
+                                      sortProperty="Reason"
+                                  >
+                                      <m:Label text="Reason" />
+                                      <ui:template>
+                                          <m:ObjectIdentifier
+                                              text="{detailData>posizione_43_44}"
+                                          />
+                                      </ui:template>
+                                  </ui:Column>  
+                                            <ui:Column
+                                                width="10rem"
+                                                showSortMenuEntry="false"
+                                                tooltip="DDT 35"
+                                                app:p13nKey="DDT_col_35"
+                                                sortProperty="DDT 35"
+                                            >
+                                                <m:Label text="DDT 35" />
+                                                <ui:template>
+                                                    <m:ObjectIdentifier
+                                                        text="{detailData>posizione_6_13}"
+                                                    />
+                                                </ui:template>
+                                            </ui:Column>
+                                            <ui:Column
+                                            width="10rem"
+                                            showSortMenuEntry="false"
+                                            tooltip="DDT"
+                                            app:p13nKey="DDT_col"
+                                            sortProperty="DDT"
+                                        >
+                                            <m:Label text="DDT" />
+                                            <ui:template>
+                                                <m:ObjectIdentifier
+                                                    text="{detailData>posizione_121_128}"
+                                                />
+                                            </ui:template>
+                                        </ui:Column>
+                                            <ui:Column
+                                                width="10rem"
+                                                showSortMenuEntry="false"
+                                                tooltip="Data DDT"
+                                                app:p13nKey="data_DDT_col"
+                                                sortProperty="data DDT"
+                                            >
+                                                <m:Label text="Data DDT" />
+                                                <ui:template>
+                                                    <m:ObjectIdentifier
+                                                        text="{path:'detailData>posizione_14_19'}"
+                                                    />
+                                                </ui:template>
+                                            </ui:Column>
+                                            <ui:Column
+                                                width="10rem"
+                                                tooltip="Progressivo Invio"
+                                                app:p13nKey="progressivo_invio_col"
+                                                sortProperty="Progressivo Invio"
+                                            >
+                                                <m:Label
+                                                    text="Progressivo Invio"
+                                                />
+                                                <ui:template>
+                                                    <m:ObjectIdentifier
+                                                        text="{detailData>posizione_6_13}"
+                                                    />
+                                                </ui:template>
+                                            </ui:Column>
+                                            <ui:Column
+                                                width="12rem"
+                                                tooltip="Codice materiale"
+                                                app:p13nKey="codice_materiale_col"
+                                                sortProperty="Cod. Mat."
+                                            >
+                                                <m:Label
+                                                    text="Cod. Mat."
+                                                />
+                                                <ui:template>
+                                                    <m:ObjectIdentifier
+                                                        text="{detailData>posizione_6_28}"
+                                                    />
+                                                </ui:template>
+                                            </ui:Column>
+                                            
+                                            <ui:Column
+                                                width="10rem"
+                                                sortProperty="Punto di scarico"
+                                                tooltip="Punto di scarico"
+                                                app:p13nKey="punto_scarico_col"
+                                            >
+                                                <m:Label text="P. scarico" />
+                                                <ui:template>
+                                                    <m:ObjectIdentifier
+                                                        text="{detailData>posizione_20_24}"
+                                                    />
+                                                </ui:template>
+                                            </ui:Column>
+                                            <ui:Column
+                                                width="10rem"
+                                                showSortMenuEntry="false"
+                                                tooltip="N Ord Presso Cliente"
+                                                sortProperty="N Ord Presso Cliente"
+                                                app:p13nKey="nord_cliente_col"
+                                            >
+                                                <m:Label text="N Ord Presso Cliente" />
+                                                <ui:template>
+                                                    <m:ObjectIdentifier
+                                                        text="{detailData>posizione_31_42}"
+                                                    />
+                                                </ui:template>
+                                            </ui:Column>
+                                            <ui:Column
+                                                width="10rem"
+                                                tooltip="Num riga"
+                                                sortProperty="Num riga"
+                                                app:p13nKey="num_riga_col"
+                                            >
+                                                <m:Label text="Num riga" />
+                                                <ui:template>
+                                                    <m:ObjectIdentifier
+                                                        text="{detailData>posizione_87_89}"
+                                                    />
+                                                </ui:template>
+                                            </ui:Column>
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            <ui:Column
+                                                width="10rem"
+                                                tooltip="Quantità"
+                                                sortProperty="Quantità"
+                                                app:p13nKey="quantità_col"
+                                            >
+                                                <m:Label
+                                                    text="Quantità"
+                                                />
+                                                <ui:template>
+                                                    <m:ObjectIdentifier
+                                                        text="{detailData>posizione_53_65}"
+                                                    />
+                                                </ui:template>
+                                            </ui:Column>
+                                            <ui:Column
+                                            width="10rem"
+                                            tooltip="Udm"
+                                            sortProperty="Udm"
+                                            app:p13nKey="Udm_col"
+                                        >
+                                            <m:Label
+                                                text="Udm"
+                                            />
+                                            <ui:template>
+                                                <m:ObjectIdentifier
+                                                    text="{detailData>posizione_66_67}"
+                                                />
+                                            </ui:template>
+                                        </ui:Column>
+                                        <ui:Column
+                                        width="10rem"
+                                        tooltip="Stab. Consegna"
+                                        sortProperty="Stab. Consegna"
+                                        app:p13nKey="stab_consegna_col"
+                                    >
+                                        <m:Label
+                                            text="Stab. Consegna"
+                                        />
+                                        <ui:template>
+                                            <m:ObjectIdentifier
+                                                text="{detailData>posizione_49_51}"
+                                            />
+                                        </ui:template>
+                                    </ui:Column>   
+                                           
+                                        </ui:columns>
+                                    </ui:Table>
+                                </m:ScrollContainer>
+                            </m:VBox>
+                        </blocks>
+                    </ObjectPageSubSection>
+                </subSections>
+            </ObjectPageSection>
+
+            <ObjectPageSection title="LOG">
+                <subSections>
+                    <ObjectPageSubSection>
+                        <blocks>
+                            <m:Text text="Processamento" />
+                        </blocks>
+                    </ObjectPageSubSection>
+                </subSections>
+            </ObjectPageSection>
+        </sections>
+    </ObjectPageLayout>
 </mvc:View>

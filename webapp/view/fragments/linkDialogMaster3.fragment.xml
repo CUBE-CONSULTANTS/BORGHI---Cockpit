@@ -27,7 +27,7 @@
         </VBox>
         </content>
         <buttons>
-            <Button text="Chiudi" press="onclose" icon="sap-icon://decline"/> 
+            <Button text="Chiudi" press="onClose" icon="sap-icon://decline"/> 
         </buttons>
     </Dialog>
 </core:FragmentDefinition>

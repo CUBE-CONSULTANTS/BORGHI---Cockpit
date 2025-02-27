@@ -164,12 +164,37 @@ sap.ui.define(
               aNumProgInvio.map((n) => ({ Key: n, Text: n }))
             );
           }else if(key === "02"){
-
+            debugger
             let aData = this.getModel("master3CO").getProperty("/");
-            let aNomeFiles = [...new Set(aData.map((item) => item.nome_file))];
+            let aClienti = [...new Set(aData.map((item) => item.codice_terre_cliente))];
+            let aReason = [];
+            let aMateriali = [];
+            aData.forEach((item) => {
+              if (item.posizioni_testata) {
+                item.posizioni_testata.forEach((pos) => {
+                  if (pos.posizione_6_28) {
+                    aMateriali.push(pos.posizione_6_28);
+                  }
+                  if(pos.posizione_43_44){
+                    aReason.push(pos.posizione_43_44);
+                  }
+                });
+              }
+            });
+            aReason = [...new Set(aReason)]
+            aMateriali = [...new Set(aMateriali)];
+
             this.getModel("filtersModel").setProperty(
-              "/callOff/nomeFile/items",
-              aNomeFiles.map((c) => ({ Key: c, Text: c }))
+              "/callOff/materiale/items",
+              aMateriali.map((m) => ({ Key: m, Text: m }))
+            );
+            this.getModel("filtersModel").setProperty(
+              "/callOff/reason/items",
+              aReason.map((m) => ({ Key: m, Text: m }))
+            );
+            this.getModel("filtersModel").setProperty(
+              "/callOff/clienti/items",
+              aClienti.map((m) => ({ Key: m, Text: m }))
             );
           }
         },
@@ -196,31 +221,32 @@ sap.ui.define(
           }
           this.getModel("filtersModel").refresh(true);
           let oBinding;
+          let modelMeta
           if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("delivery")) {
-            let modelMeta = await this.callData(this.getOwnerComponent().getModel("modelloV2"), "/Testata", [], ["posizioni,posizioni/schedulazioni,posizioni/log"],"01")
+            modelMeta = await this.callData(this.getOwnerComponent().getModel("modelloV2"), "/Testata", [], ["posizioni,posizioni/schedulazioni,posizioni/log"],"01")
           }
-          oBinding.filter([]);
-          oBinding.sort([]);
+          if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("callOff")) {
+            modelMeta = await this.callData(this.getOwnerComponent().getModel("calloffV2"), "/Testata", [], ["master,posizioni_testata,log_testata"],"02")
+          }
+          // oBinding.filter([]);
+          // oBinding.sort([]);
         },
         onSearchData: async function (oEvent) {
           //ricerca filtrata
           let oFilterSet;
+          let key
           if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("delivery")) {
             oFilterSet = this.getModel("filtersModel").getProperty("/delivery");
-            let aFilters = mapper.buildFilters(oFilterSet)
-            let aModelFilter = await API.getEntity(this.getOwnerComponent().getModel("modelloV2"),"/Testata",aFilters,["posizioni","posizioni/schedulazioni","posizioni/log"]) 
-            let filteredMeta = aModelFilter.results.map((testata) => {
-              return {
-                ...testata,
-                posizioni: testata.posizioni?.results ? Object.values(testata.posizioni.results) : [],
-              };
-            })
-            this.getOwnerComponent().getModel("master3").setData(filteredMeta);
-            this.getModel("master3").refresh(true);
+            let aFilters = mapper.buildFilters(oFilterSet,key = "01")
+            await this.callData(this.getOwnerComponent().getModel("modelloV2"),"/Testata",aFilters,["posizioni","posizioni/schedulazioni","posizioni/log"],"01") 
           }else if(oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("callOff")){
             debugger
+            oFilterSet = this.getModel("filtersModel").getProperty("/callOff");
+            let aFilters = mapper.buildFilters(oFilterSet,key = "02")
+            await this.callData(this.getOwnerComponent().getModel("calloffV2"), "/Testata", aFilters, ["master,posizioni_testata,log_testata"],"02") 
           }
         },
+        
         callData : async function(oModel,entity,aFilters,Expands, key){
           debugger
           let metadata, modelMeta
@@ -234,10 +260,16 @@ sap.ui.define(
               this.getOwnerComponent().setModel(modelMeta, "master3");
             }else if(key === "02"){
               modelMeta = new JSONModel(metadata.results);
+              modelMeta.getProperty("/").forEach((testata) => {
+                testata.posizioni_testata = Object.values(testata.posizioni_testata.results);
+                testata.master
+              });
               this.getOwnerComponent().setModel(modelMeta, "master3CO");
             }
           } catch (error) {
             MessageBox.error("Errore durante la ricezione dei dati")
+          }finally {
+            this.hideBusy(0)
           }
         },
         sortTables: function(table,aSortFields) {
@@ -246,6 +278,16 @@ sap.ui.define(
           let bDescending = aCurrentSorters.length > 0 ? !aCurrentSorters[0].bDescending : false;
           let aSorters = aSortFields.map(field => new sap.ui.model.Sorter(field, bDescending));
           oBinding.sort(aSorters)
+        },
+        downloadExcelFileDett: function (oEvent){
+          debugger
+          let oModel = this.getModel("detailData")
+          let aData = oModel.getProperty("/DettaglioMaster3"); 
+            if (!aData || aData.length === 0) {
+              MessageToast.show("Nessun dato disponibile per l'esportazione");
+              return;
+            }
+          this.buildSpreadSheet(aData)
         },
         buildSpreadSheet: function(aExportData){
           debugger
@@ -295,7 +337,13 @@ sap.ui.define(
           });
           return columns;
       },
-      
+      handleCloseDetail: function () {
+        // var sNextLayout = this.oModel.getProperty(
+        //   "/actionButtonsInfo/midColumn/closeColumn"
+        // );
+        // this.oRouter.navTo("master3", { layout: sNextLayout });
+        this.oRouter.navTo("master3");
+      },
       onClose: function (oEvent) {
         oEvent.getSource().getParent().close();
       },

@@ -69,108 +69,12 @@ sap.ui.define(
           // 	model: "products"
           // });
 
-          this._registerForP13n();
+          this._registerForP13n(oEvent);
         },
-        downloadExcelFile: function (oEvent){
-          debugger
-          let oModel = this.getModel("detailData")
-          let aData = oModel.getProperty("/DettaglioMaster3"); 
-            if (!aData || aData.length === 0) {
-              MessageToast.show("Nessun dato disponibile per l'esportazione");
-              return;
-            }
-          this.buildSpreadSheet(aData)
-        },
-        onEditToggleButtonPress: function () {
-          var oObjectPage = this.getView().byId("ObjectPageLayout"),
-            bCurrentShowFooterState = oObjectPage.getShowFooter();
-
-          oObjectPage.setShowFooter(!bCurrentShowFooterState);
-        },
-
-        handleFullScreen: function () {
-          var sNextLayout = this.oModel.getProperty(
-            "/actionButtonsInfo/midColumn/fullScreen"
-          );
-          this.oRouter.navTo("detailMaster3", {
-            layout: sNextLayout,
-            product: this._product,
-          });
-        },
-
-        handleExitFullScreen: function () {
-          var sNextLayout = this.oModel.getProperty(
-            "/actionButtonsInfo/midColumn/exitFullScreen"
-          );
-          this.oRouter.navTo("detailMaster3", {
-            layout: sNextLayout,
-            product: this._product,
-          });
-        },
-
-        handleClose: function () {
-          // var sNextLayout = this.oModel.getProperty(
-          //   "/actionButtonsInfo/midColumn/closeColumn"
-          // );
-          // this.oRouter.navTo("master3", { layout: sNextLayout });
-          this.oRouter.navTo("master3");
-        },
-
-        onExit: function () {
-          this.oRouter
-            .getRoute("master3")
-            .detachPatternMatched(this._onProductMatched, this);
-          this.oRouter
-            .getRoute("detailMaster3")
-            .detachPatternMatched(this._onProductMatched, this);
-        },
-
-        onCollapseAll: function () {
-          const oTreeTable = this.byId("treetableDetail");
-          oTreeTable.collapseAll();
-        },
-
-        onCollapseSelection: function () {
-          const oTreeTable = this.byId("treetableDetail");
-          oTreeTable.collapse(oTreeTable.getSelectedIndices());
-        },
-
-        onExpandFirstLevel: function () {
-          const oTreeTable = this.byId("treetableDetail");
-          oTreeTable.expandToLevel(1);
-        },
-
-        onExpandSelection: function () {
-          const oTreeTable = this.byId("treetableDetail");
-          oTreeTable.expand(oTreeTable.getSelectedIndices());
-        },
-
-        importaPress: function (oEvent) {
-          if (!this._oDialog2) {
-            Fragment.load({
-              id: this.getView().getId(),
-              name: "programmi.consegne.edi.view.fragments.importMaster3",
-              controller: this,
-            }).then(
-              function (oDialog2) {
-                this._oDialog2 = oDialog2;
-                this.getView().addDependent(this._oDialog2);
-                this._oDialog2.open();
-              }.bind(this)
-            );
-          } else {
-            this._oDialog.open();
-          }
-        },
-
-        onclose: function (oEvent) {
-          oEvent.getSource().getParent().close();
-        },
-
         onProcessaButton: function (oEvent) {
           debugger;
           let indici = this.getView()
-            .byId("treetableDetail")
+            .byId("tablePos")
             .getSelectedIndices();
           let data = this.getView().getModel("master3").getData().Master3;
           let selected = [];
@@ -238,9 +142,9 @@ sap.ui.define(
             );
         },
 
-        _registerForP13n: function () {
-          const oTable = this.byId("tablePos");
-
+        _registerForP13n: function (oEvent) {
+          debugger
+          let oTable = this.byId("tablePos")
           this.oMetadataHelper = new MetadataHelper([
             {
               key: "destinatario_col",
@@ -402,13 +306,12 @@ sap.ui.define(
           );
         },
 
-        openPosizioniDialog: function (oEvt) {
-          const oTable = this.byId("tablePos");
-
+        openPosizioniDialog: function (oEvent) {
+          let oTable = this.byId("tablePos")
           Engine.getInstance().show(oTable, ["Columns", "Sorter"], {
             contentHeight: "35rem",
             contentWidth: "32rem",
-            source: oEvt.getSource(),
+            source: oEvent.getSource(),
           });
         },
 
@@ -418,7 +321,7 @@ sap.ui.define(
 
         handleStateChange: function (oEvt) {
           debugger;
-          const oTable = this.byId("tablePos");
+          const oTable = oEvt.getSource();
           const oState = oEvt.getParameter("state");
 
           if (!oState) {
@@ -473,27 +376,6 @@ sap.ui.define(
           oTable.getBinding("rows").sort(aSorter);
         },
 
-        // openPosizioniDialog: function (oEvt) {
-        //   const oTable = this.byId("tablePos");
-
-        //   // Crea un'istanza di SelectionController
-        //   var oSelectionController = new sap.m.p13n.SelectionController({
-        //     control: oTable,
-        //   });
-
-        //   // Usa MetadataHelper per ottenere le colonne e fare ulteriori operazioni
-        //   var oMetadataHelper = new sap.m.p13n.MetadataHelper();
-        //   var aColumns = oTable.getColumns();
-
-        //   // Puoi usare aColumns per personalizzare ulteriormente le colonne
-
-        //   // Apri la dialog per la selezione delle colonne
-        //   oSelectionController.open({
-        //     source: oEvt.getSource(),
-        //     contentHeight: "35rem",
-        //     contentWidth: "32rem",
-        //   });
-        // },
       }
     );
   }

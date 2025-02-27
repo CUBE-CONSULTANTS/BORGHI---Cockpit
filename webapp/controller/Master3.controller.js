@@ -60,10 +60,10 @@ sap.ui.define(
             oModel = this.getOwnerComponent().getModel("calloffV2");
             await this.callData(
               oModel,
-              "/Master",
+              "/Testata",
               [],
               [
-                "testata_master,testata_master/posizioni_testata,testata_master/log_testata",
+                "master,posizioni_testata,log_testata",
               ],
               selectedKey
             );
@@ -114,20 +114,37 @@ sap.ui.define(
             ]);
             break;
           case "02":
+            oTable = this.byId("treetableCallOff");
+            aSorters = this.sortTables(oTable, [
+              "codice_terre_cliente",
+              "progressivo_invio",
+            ]);
             break;
           default:
             return;
         }
       },
       downloadExcelFile: function (oEvent) {
-        debugger;
-        let oModel = this.getModel("master3");
+
+        let selectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
+        !selectedKey ? (selectedKey = key) : (selectedKey = selectedKey);
+        let oModel 
+        
+        switch (selectedKey) {
+          case "01":
+            oModel =  this.getModel("master3");
+            break;
+          case "02":
+            oModel = this.getModel("master3CO")
+            break;
+          default:
+        }   
         let aData = oModel.getProperty("/");
         if (!aData || aData.length === 0) {
           MessageToast.show("Nessun dato disponibile per l'esportazione");
           return;
         }
-        this.buildSpreadSheet(aData);
+        this.buildSpreadSheet(aData); 
       },
       onPressRow: function (oEvent) {
         var index = oEvent.getParameter("rowIndex");
@@ -243,68 +260,50 @@ sap.ui.define(
           );
       },
       dettaglioNav: function (oEvent) {
-        debugger;
-        let level = oEvent
-          .getSource()
-          .getParent()
-          .getBindingContext("master3")
-          .getPath()
-          .includes("posizioni");
-        // let detailSched = oEvent.getSource().getParent().getBindingContext("master3").getObject().DelforSchedulazioni
-        let detailPath = oEvent
-          .getSource()
-          .getParent()
-          .getBindingContext("master3")
-          .getPath();
-        let detail = this.getView()
-          .getModel("master3")
-          .getProperty(`${detailPath}`);
-
-        this.getOwnerComponent()
-          .getModel("datiAppoggio")
-          .setProperty("/testata", detail);
-        this.getOwnerComponent()
-          .getModel("datiAppoggio")
-          .setProperty("/posizioni", detail.posizioni);
-        if (level) {
-          this.getOwnerComponent()
-            .getModel("datiAppoggio")
-            .setProperty("/posizioneCorrente", detail);
-          this.getOwnerComponent()
-            .getModel("datiAppoggio")
-            .setProperty("/schedulazioni", detail.schedulazioni.results);
-          this.getOwnerComponent()
-            .getModel("datiAppoggio")
-            .setProperty(
-              "/testata",
-              this.getView()
-                .getModel("master3")
-                .getProperty(`${detailPath[0] + detailPath[1]}`)
-            );
-          debugger;
-          let oNextUIState;
-          this.getOwnerComponent()
-            .getHelper()
-            .then(
-              function (oHelper) {
-                oNextUIState = oHelper.getNextUIState(1);
-                this.oRouter.navTo("Detail2Master3", {
-                  product: detail.id,
-                  layout: oNextUIState.layout,
-                });
-              }.bind(this)
-            );
-        } else {
-          let path = oEvent
-            .getSource()
-            .getParent()
-            .getBindingContext("master3")
-            .getPath();
-          this.oRouter.navTo("detailMaster3", {
-            product: detail.id,
-            layout: "OneColumn",
-          });
-        }
+      debugger;
+      let level, detailPath,detail
+        if(oEvent.getSource().getParent().getBindingContext("master3") !== undefined) {
+          level = oEvent.getSource().getParent().getBindingContext("master3").getPath().includes("posizioni");
+          detailPath = oEvent.getSource().getParent().getBindingContext("master3").getPath();
+          detail = this.getView().getModel("master3").getProperty(`${detailPath}`);
+          this.getOwnerComponent().getModel("datiAppoggio").setProperty("/testata", detail);
+          this.getOwnerComponent().getModel("datiAppoggio").setProperty("/posizioni", detail.posizioni);
+          if (level) {
+            this.getOwnerComponent().getModel("datiAppoggio").setProperty("/posizioneCorrente", detail);
+            this.getOwnerComponent().getModel("datiAppoggio").setProperty("/schedulazioni", detail.schedulazioni.results);
+            this.getOwnerComponent().getModel("datiAppoggio").setProperty(
+                "/testata",
+                this.getView().getModel("master3").getProperty(`${detailPath[0] + detailPath[1]}`)
+              );
+            debugger;
+            let oNextUIState;
+            this.getOwnerComponent()
+              .getHelper()
+              .then(
+                function (oHelper) {
+                  oNextUIState = oHelper.getNextUIState(1);
+                  this.oRouter.navTo("Detail2Master3", {
+                    product: detail.id,
+                    layout: oNextUIState.layout,
+                  });
+                }.bind(this)
+              );
+          } else {
+            detailPath = oEvent.getSource().getParent().getBindingContext("master3").getPath();
+            this.oRouter.navTo("detailMaster3", {
+              product: detail.id,
+              layout: "OneColumn",
+            });
+          }
+        }else if(oEvent.getSource().getParent().getBindingContext("master3CO")!== undefined) {
+          debugger
+          detailPath = oEvent.getSource().getParent().getBindingContext("master3CO").getPath();
+          detail = this.getView().getModel("master3CO").getProperty(`${detailPath}`);
+            this.oRouter.navTo("dettCallOff", {
+              id: detail.id,
+              layout: "OneColumn",
+            });
+        }  
       },
 
       statoButtonPress: function (oEvent) {
@@ -318,23 +317,36 @@ sap.ui.define(
       },
 
       onCollapseAll: function () {
-        const oTreeTable = this.byId("treetableMain");
-        oTreeTable.collapseAll();
+        let oTable
+        let selectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
+        !selectedKey ? (selectedKey = key) : (selectedKey = selectedKey);
+        switch (selectedKey) {
+          case "01":
+            oTable = this.byId("treetableMain");
+            oTable.collapseAll();
+            break;
+          case "02":
+            oTable = this.byId("treetableCallOff");
+            oTable.collapseAll();
+            break;
+          default:
+        }    
       },
-
-      onCollapseSelection: function () {
-        const oTreeTable = this.byId("treetableMain");
-        oTreeTable.collapse(oTreeTable.getSelectedIndices());
-      },
-
       onExpandFirstLevel: function () {
-        const oTreeTable = this.byId("treetableMain");
-        oTreeTable.expandToLevel(1);
-      },
-
-      onExpandSelection: function () {
-        const oTreeTable = this.byId("treetableMain");
-        oTreeTable.expand(oTreeTable.getSelectedIndices());
+        let oTable
+        let selectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
+        !selectedKey ? (selectedKey = key) : (selectedKey = selectedKey);
+        switch (selectedKey) {
+          case "01":
+            oTable = this.byId("treetableMain");
+            oTable.expandToLevel(1);
+            break;
+          case "02":
+            oTable = this.byId("treetableCallOff");
+            oTable.expandToLevel(1);
+            break;
+          default:
+        }    
       },
 
       navToAPP: function (oEvent) {
