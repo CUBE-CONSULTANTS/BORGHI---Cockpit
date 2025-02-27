@@ -58,7 +58,7 @@
 	}
 	},
 	"sap.ui5": {
-		"flexEnabled": true,
+		"flexEnabled": false,
     "contentDensities": {"compact": true, "cozy": true},
 		"rootView": {
 			"viewName": "programmi.consegne.edi.view.App",

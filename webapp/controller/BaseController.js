@@ -115,25 +115,24 @@ sap.ui.define(
           sap.ui.core.BusyIndicator.hide(delay);
         },
         onOpenDialog: function (dialName, fragmName, self, ...oModel) {
-          let oView = this.getView();
-          dialName = self.dialName;
-          if (!dialName) {
-            dialName = Fragment.load({
-              id: oView.getId(),
-              name: fragmName,
-              controller: self,
-            }).then((oValueHelpDialog) => {
-              oView.addDependent(oValueHelpDialog);
-              oValueHelpDialog.setModel(this.getModel(...oModel));
-              return oValueHelpDialog;
-            });
-            dialName.then(function (oValueHelpDialog) {
-              oValueHelpDialog.open();
+        
+          let oView = self.getView();
+          if (!self[dialName]) {
+            Fragment.load({
+                id: oView.getId(),
+                name: fragmName,
+                controller: self
+            }).then((oDialog) => {
+                oView.addDependent(oDialog);
+                oDialog.setModel(self.getModel(...oModel));
+                self[dialName] = oDialog;
+                oDialog.open();
             });
           } else {
-            self.dialName.open();
+              self[dialName].open();
           }
         },
+       
         onFiltersBuilding: function (oEvent, key) {
           if (key === "01") {
             //clienti/materiali/num Progr invio
