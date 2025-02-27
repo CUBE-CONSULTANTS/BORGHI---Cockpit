@@ -73,8 +73,7 @@ sap.ui.define(
             break;
           case "03":
             oModel = this.getOwnerComponent().getModel("selfBillingV2");
-            await this.callData(
-              oModel,
+            await this.callData(oModel,
               "/Testata",
               [],
               [ "dettaglio_fattura,log_testata,dettaglio_fattura/riferimento_ddt,dettaglio_fattura/riferimento_ddt/riga_fattura"],

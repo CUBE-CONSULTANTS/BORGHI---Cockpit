@@ -163,7 +163,6 @@ sap.ui.define(
               aNumProgInvio.map((n) => ({ Key: n, Text: n }))
             );
           }else if(key === "02"){
-            debugger
             let aData = this.getModel("master3CO").getProperty("/");
             let aClienti = [...new Set(aData.map((item) => item.codice_terre_cliente))];
             let aReason = [];
@@ -195,6 +194,33 @@ sap.ui.define(
               "/callOff/clienti/items",
               aClienti.map((m) => ({ Key: m, Text: m }))
             );
+          }else if(key === "03"){
+            let aData = this.getModel("master3SB").getProperty("/");
+            let aClienti = [...new Set(aData.map((item) => item.customer))];
+            let aFornitori = [...new Set(aData.map((item) => item.supplier))];
+            let aFatture = [];
+            aData.forEach((item) => {
+              if (item.dettaglio_fattura) {
+                item.dettaglio_fattura.forEach((pos) => {
+                  if (pos.numero_fattura) {
+                    aFatture.push(pos.numero_fattura);
+                  }
+                });
+              }
+            });
+            aFatture = [...new Set(aFatture)]
+            this.getModel("filtersModel").setProperty(
+              "/selfBilling/fatture/items",
+              aFatture.map((m) => ({ Key: m, Text: m }))
+            );
+            this.getModel("filtersModel").setProperty(
+              "/selfBilling/clienti/items",
+              aClienti.map((m) => ({ Key: m, Text: m }))
+            );
+            this.getModel("filtersModel").setProperty(
+              "/selfBilling/fornitori/items",
+              aFornitori.map((m) => ({ Key: m, Text: m }))
+            );
           }
         },
         onFilterBarClear: async function (oEvent) {
@@ -219,13 +245,15 @@ sap.ui.define(
             }
           }
           this.getModel("filtersModel").refresh(true);
-          let oBinding;
           let modelMeta
           if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("delivery")) {
             modelMeta = await this.callData(this.getOwnerComponent().getModel("modelloV2"), "/Testata", [], ["posizioni,posizioni/schedulazioni,posizioni/log"],"01")
           }
           if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("callOff")) {
             modelMeta = await this.callData(this.getOwnerComponent().getModel("calloffV2"), "/Testata", [], ["master,posizioni_testata,log_testata"],"02")
+          }
+          if(oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("selfBilling")){
+            modelMeta = await this.callData(this.getOwnerComponent().getModel("selfBillingV2"), "/Testata", [],[ "dettaglio_fattura,log_testata,dettaglio_fattura/riferimento_ddt,dettaglio_fattura/riferimento_ddt/riga_fattura"],"03")
           }
           // oBinding.filter([]);
           // oBinding.sort([]);
@@ -265,7 +293,6 @@ sap.ui.define(
               });
               this.getOwnerComponent().setModel(modelMeta, "master3CO");
             }else if(key === '03'){
-              debugger
               modelMeta = new JSONModel(metadata.results);
               modelMeta.getProperty("/").forEach((testata) => {
                 testata.dettaglio_fattura = Object.values(testata.dettaglio_fattura.results);

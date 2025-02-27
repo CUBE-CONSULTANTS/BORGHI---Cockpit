@@ -25,10 +25,13 @@ xmlns:mvc="sap.ui.core.mvc">
                     visibleInFilterBar="true"
                 >
                     <fb:control>
-                    <DatePicker
-                    tooltip="..."
-                    secondaryCalendarType="Gregorian"
-                    change="handleChange"
+                      <DatePicker
+                      tooltip="Data di ricezione"
+                      secondaryCalendarType="Gregorian"
+                      change="handleChange"
+                      value="{filtersModel>/selfBilling/dataRic}" 
+                      valueFormat="dd/MM/yyyy"
+                      displayFormat="dd/MM/yyyy"
                     />
                     </fb:control>
                 </fb:FilterGroupItem>
@@ -40,22 +43,42 @@ xmlns:mvc="sap.ui.core.mvc">
                     visibleInFilterBar="true"
                 >
                     <fb:control>
-                       <Input/>
+                      <ComboBox 
+                      items="{filtersModel>/selfBilling/clienti/items}" 
+                      value="{filtersModel>/selfBilling/clienti/value}">
+                      <core:ListItem key="{filtersModel>Key}" text="{filtersModel>Text}" />
+                      </ComboBox>
                     </fb:control>
                 </fb:FilterGroupItem>
                 
-                
                  <fb:FilterGroupItem
-                    name="Num DDT Cliente"
-                    label="Num DDT Cliente"
+                    name="Fornitore"
+                    label="Fornitore"
                     groupName="Group1"
                     visibleInFilterBar="true"
                 >
                     <fb:control>
-                       <Input/>
+                      <ComboBox 
+                      items="{filtersModel>/selfBilling/fornitori/items}" 
+                      value="{filtersModel>/selfBilling/fornitori/value}">
+                      <core:ListItem key="{filtersModel>Key}" text="{filtersModel>Text}" />
+                      </ComboBox>
                     </fb:control>
                 </fb:FilterGroupItem>
-                
+                <fb:FilterGroupItem
+                name="N. Fattura"
+                label="N. Fattura"
+                groupName="Group1"
+                visibleInFilterBar="true"
+            >
+                <fb:control>
+                  <ComboBox 
+                  items="{filtersModel>/selfBilling/fatture/items}" 
+                  value="{filtersModel>/selfBilling/fatture/value}">
+                  <core:ListItem key="{filtersModel>Key}" text="{filtersModel>Text}" />
+                  </ComboBox>
+                </fb:control>
+            </fb:FilterGroupItem>
             </fb:filterGroupItems>
         </fb:FilterBar>
         
@@ -124,7 +147,7 @@ xmlns:mvc="sap.ui.core.mvc">
                 </ui:template>
               </ui:Column>
              
-              <ui:Column width="11rem">
+              <ui:Column width="9rem">
                 <Label text="Data Ricezione" />
                 <ui:template>
                   <DatePicker
@@ -142,7 +165,7 @@ xmlns:mvc="sap.ui.core.mvc">
               />
                 </ui:template>
               </ui:Column>
-              <ui:Column width="11rem">
+              <ui:Column width="9rem">
                 <Label text="Data Trasmissione" />
                 <ui:template>
                   <DatePicker
@@ -160,19 +183,19 @@ xmlns:mvc="sap.ui.core.mvc">
               />
                 </ui:template>
               </ui:Column>
-              <ui:Column width="9rem">
+              <ui:Column width="7rem">
                 <Label text="Fornitore" />
                 <ui:template>
                   <Text text="{master3SB>supplier}" wrapping="false"/>
                 </ui:template>
               </ui:Column>
-              <ui:Column width="12rem">
+              <ui:Column width="9rem">
                 <Label text="N. Fattura" />
                 <ui:template>
                   <Text text="{master3SB>numero_fattura}" wrapping="false" />
                 </ui:template>
               </ui:Column>
-              <ui:Column width="11rem">
+              <ui:Column width="9rem">
                 <Label text="Data Fattura" />
                 <ui:template>
                   <DatePicker
@@ -190,7 +213,7 @@ xmlns:mvc="sap.ui.core.mvc">
               />
                 </ui:template>
               </ui:Column>
-              <ui:Column width="11rem">
+              <ui:Column width="10rem">
                 <Label text="Data Scadenza Fattura" />
                 <ui:template>
                   <DatePicker
@@ -221,23 +244,20 @@ xmlns:mvc="sap.ui.core.mvc">
                 </ui:template>
               </ui:Column>
              
-             
-            
-              <ui:Column width="9rem">
+              <ui:Column width="8rem">
                 <Label text="Old Trasmission" />
                 <ui:template>
                   <Text text="{master3SB>old_trasmission}" wrapping="false" />
                 </ui:template>
               </ui:Column>
-              <ui:Column width="11rem">
+              <ui:Column width="8rem">
                 <Label text="New Trasmission" />
                 <ui:template>
                   <Text text="{master3SB>new_trasmission}" wrapping="false" />
                 </ui:template>
-              </ui:Column>
-              
+              </ui:Column>              
              
-              <ui:Column width="4rem" hAlign="Center">
+              <!-- <ui:Column width="4rem" hAlign="Center">
                 <Label text="Stato" />
                 <ui:template>
                   <Button
@@ -247,12 +267,19 @@ xmlns:mvc="sap.ui.core.mvc">
                     press="statoButtonPress"
                 />
                 </ui:template>
-              </ui:Column>
+              </ui:Column> -->
               
               <ui:Column width="11rem" hAlign="Center">
     
                 <ui:template>
                   <HBox >
+                    <Button
+                    icon="sap-icon://download"
+                    tooltip="Dowload file edi"
+                    class="sapUiTinyMarginBegin"
+                    press="downloadEdi"
+                    visible="{= ${master3SB>supplier} ? true : false}"
+                  />
                   <!-- <Button
                   icon="sap-icon://display"
                   type="Emphasized"
@@ -260,13 +287,7 @@ xmlns:mvc="sap.ui.core.mvc">
                   class="sapUiTinyMarginBegin"
                   visible="{= ${master3SB>codice_terre_cliente}? true : false }"
                   />
-                  <Button
-                  icon="sap-icon://download"
-                  tooltip="Dowload file edi"
-                  class="sapUiTinyMarginBegin"
-                  press="downloadEdi"
-                  visible="{= ${master3SB>codice_terre_cliente} ? true : false}"
-                />
+            
                 <Button
                   icon="sap-icon://doc-attachment"
                   tooltip="Stock Level"

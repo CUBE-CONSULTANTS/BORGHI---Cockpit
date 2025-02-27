@@ -49,23 +49,7 @@
         </ComboBox>
      </fb:control>
       </fb:FilterGroupItem>
-      <!-- <fb:FilterGroupItem
-        id="idDataConsegna"
-        name="Date di consegna"
-        label="Date di consegna"
-        groupName="Group1"
-        visibleInFilterBar="true"
-      >
-        <fb:control>
-          <DatePicker
-            tooltip="Date di consegna"
-            value="{filtersModel>/delivery/dataCons}" 
-            secondaryCalendarType="Gregorian"
-            change="handleChange"
-            displayFormat="dd.MM.yyyy"
-          />
-        </fb:control>
-      </fb:FilterGroupItem> -->
+     
       <fb:FilterGroupItem
         name="Cliente"
         label="Cliente"

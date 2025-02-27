@@ -61,7 +61,21 @@ sap.ui.define(
 							items: [],
 						},
           },
-          selfbilling: {},
+          selfBilling: {
+            dataRic : null,
+            clienti : {
+							value: null,
+							items: [],
+						},
+            fornitori:{
+              value: null,
+              items: [],
+            },
+            fatture: {
+              value: null,
+              items: [],
+            }
+          },
           despatch: {},
           invoice: {},
           scartati: {}
