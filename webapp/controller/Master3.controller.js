@@ -84,24 +84,16 @@ sap.ui.define(
             this.onFiltersBuilding(oEvent, selectedKey);
             break;
           case "04":
-            this.getOwnerComponent().setModel(new JSONModel({}), "master3");
-            this.byId("idDataConsegna").setProperty(
-              "label",
-              "Data di uscita merci"
-            );
-            this.byId("idDataConsegna").setProperty(
-              "name",
-              "Data di uscita merci"
-            );
+           
             break;
           case "05":
-            this.getOwnerComponent().setModel(new JSONModel({}), "master3");
+           
             break;
           case "06":
-            this.getOwnerComponent().setModel(new JSONModel({}), "master3");
+           
             break;
           case "07":
-            this.getOwnerComponent().setModel(new JSONModel({}), "master3");
+            
             break;
         }
         this.hideBusy(0);

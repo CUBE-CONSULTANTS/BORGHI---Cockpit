@@ -34,6 +34,7 @@ sap.ui.define(
         // this.onFilterSelect(null, "01");
       },
       onFilterSelect: async function (oEvent, key) {
+        debugger
         this.showBusy(0);
         var selectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
         !selectedKey ? (selectedKey = key) : (selectedKey = selectedKey);
