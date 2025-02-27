@@ -74,13 +74,14 @@ sap.ui.define(
             this.onFiltersBuilding(oEvent, selectedKey);
             break;
           case "03":
-            var oMaster3Model = new JSONModel(
-              sap.ui.require.toUrl(
-                "programmi/consegne/edi/mockdata/dataMaster3.json"
-              )
+            oModel = this.getOwnerComponent().getModel("selfBillingV2");
+            await this.callData(oModel,
+              "/Testata",
+              [],
+              [ "dettaglio_fattura,log_testata,dettaglio_fattura/riferimento_ddt,dettaglio_fattura/riferimento_ddt/riga_fattura"],
+              selectedKey
             );
-            this.getOwnerComponent().setModel(oMaster3Model, "master3");
-            // this.getOwnerComponent().setModel(new JSONModel({}), "master3");
+            this.onFiltersBuilding(oEvent, selectedKey);
             break;
           case "04":
             this.getOwnerComponent().setModel(new JSONModel({}), "master3");
@@ -122,6 +123,13 @@ sap.ui.define(
             aSorters = this.sortTables(oTable, [
               "codice_terre_cliente",
               "progressivo_invio",
+            ]);
+            break;
+          case "03":
+            oTable = this.byId("treetableSB");
+            aSorters = this.sortTables(oTable, [
+              "customer",
+              "data_ricezione",
             ]);
             break;
           default:
@@ -371,6 +379,10 @@ sap.ui.define(
             oTable = this.byId("treetableCallOff");
             oTable.collapseAll();
             break;
+          case "03":
+              oTable = this.byId("treetableSB");
+              oTable.collapseAll();
+              break;  
           default:
         }
       },
@@ -387,6 +399,10 @@ sap.ui.define(
             oTable = this.byId("treetableCallOff");
             oTable.expandToLevel(1);
             break;
+          case "03":
+              oTable = this.byId("treetableSB");
+              oTable.expandToLevel(1);
+              break;  
           default:
         }
       },
