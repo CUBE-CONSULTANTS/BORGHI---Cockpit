@@ -23,7 +23,7 @@ sap.ui.define(
       onInit: function () {
         // var oMaster3Model = new JSONModel(sap.ui.require.toUrl('programmi/consegne/edi/mockdata/master3.json'));
         // this.getView().setModel(oMaster3Model, 'master3');
-        this.oRouter = this.getOwnerComponent().getRouter();
+        
         // this.onFilterSelect(null, "01");
         // this.onFilterSelect();
         // this.getRouter()
@@ -123,7 +123,7 @@ sap.ui.define(
       },
 
       navToHome: function () {
-        this.oRouter.navTo("home");
+        this.getRouter().navTo("home");
       },
 
       onProcessaButton: function (oEvent) {
@@ -254,7 +254,7 @@ sap.ui.define(
           .then(
             function (oHelper) {
               oNextUIState = oHelper.getNextUIState(1);
-              this.oRouter.navTo("detailMaster3", {
+              this.getRouter().navTo("detailMaster3", {
                 product: detail,
                 layout: oNextUIState.layout,
               });
@@ -293,7 +293,7 @@ sap.ui.define(
             .then(
               function (oHelper) {
                 oNextUIState = oHelper.getNextUIState(1);
-                this.oRouter.navTo("Detail2Master3", {
+                this.getRouter().navTo("Detail2Master3", {
                   product: detail.id,
                   layout: oNextUIState.layout,
                 });
@@ -305,7 +305,7 @@ sap.ui.define(
             .getParent()
             .getBindingContext("master3")
             .getPath();
-          this.oRouter.navTo("detailMaster3", {
+          this.getRouter().navTo("detailMaster3", {
             product: detail.DelforTestata.id,
             layout: "OneColumn",
           });

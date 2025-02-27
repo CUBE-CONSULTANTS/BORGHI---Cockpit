@@ -7,13 +7,12 @@ sap.ui.define(
       onInit: function () {
         this.oOwnerComponent = this.getOwnerComponent();
 
-        this.oRouter = this.oOwnerComponent.getRouter();
         this.oModel = this.oOwnerComponent.getModel();
 
-        this.oRouter
+        this.getRouter()
           .getRoute("master")
           .attachPatternMatched(this._onProductMatched, this);
-        this.oRouter
+        this.getRouter()
           .getRoute("detail")
           .attachPatternMatched(this._onProductMatched, this);
       },
@@ -88,7 +87,7 @@ sap.ui.define(
         var sNextLayout = this.oModel.getProperty(
           "/actionButtonsInfo/midColumn/fullScreen"
         );
-        this.oRouter.navTo("detail", {
+        this.getRouter().navTo("detail", {
           layout: sNextLayout,
           product: this._product,
         });
@@ -98,7 +97,7 @@ sap.ui.define(
         var sNextLayout = this.oModel.getProperty(
           "/actionButtonsInfo/midColumn/exitFullScreen"
         );
-        this.oRouter.navTo("detail", {
+        this.getRouter().navTo("detail", {
           layout: sNextLayout,
           product: this._product,
         });
@@ -108,14 +107,14 @@ sap.ui.define(
         var sNextLayout = this.oModel.getProperty(
           "/actionButtonsInfo/midColumn/closeColumn"
         );
-        this.oRouter.navTo("master", { layout: sNextLayout });
+        this.getRouter().navTo("master", { layout: sNextLayout });
       },
 
       onExit: function () {
-        this.oRouter
+        this.getRouter()
           .getRoute("master")
           .detachPatternMatched(this._onProductMatched, this);
-        this.oRouter
+        this.getRouter()
           .getRoute("detail")
           .detachPatternMatched(this._onProductMatched, this);
       },

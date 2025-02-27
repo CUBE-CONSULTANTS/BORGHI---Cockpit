@@ -15,7 +15,7 @@ sap.ui.define(
         var oSelectedCustomerModel = new JSONModel();
         this.getView().setModel(oSelectedCustomerModel, "selectedCustomer");
 
-        this.oRouter = this.getOwnerComponent().getRouter();
+       
       },
 
       onSearch: function (oEvent) {
@@ -48,7 +48,7 @@ sap.ui.define(
         oSelectedCustomerModel.setData(oSelectedCustomer);
       },
       navToHome: function () {
-        this.oRouter.navTo("home");
+        this.getRouter().navTo("home");
       },
     });
   }

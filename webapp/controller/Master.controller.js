@@ -14,7 +14,7 @@ sap.ui.define(
         this.oView = this.getView();
         this._bDescendingSort = false;
         this.oProductsTable = this.oView.byId("productsTable");
-        this.oRouter = this.getOwnerComponent().getRouter();
+        
       },
 
       onSearch: function (oEvent) {
@@ -58,7 +58,7 @@ sap.ui.define(
           .then(
             function (oHelper) {
               oNextUIState = oHelper.getNextUIState(1);
-              this.oRouter.navTo("detail", {
+              this.getRouter().navTo("detail", {
                 layout: oNextUIState.layout,
                 product: product,
               });
@@ -66,7 +66,7 @@ sap.ui.define(
           );
       },
       navToHome: function () {
-        this.oRouter.navTo("home");
+        this.getRouter().navTo("home");
       },
     });
   }
