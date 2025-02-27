@@ -4,8 +4,8 @@ sap.ui.define(["./BaseController"], function (BaseController) {
   return BaseController.extend("programmi.consegne.edi.controller.App", {
     onInit: function () {
       this.oOwnerComponent = this.getOwnerComponent();
-      this.oRouter = this.oOwnerComponent.getRouter();
-      this.oRouter.attachRouteMatched(this.onRouteMatched, this);
+      
+      this.getRouter().attachRouteMatched(this.onRouteMatched, this);
     },
 
     onRouteMatched: function (oEvent) {
