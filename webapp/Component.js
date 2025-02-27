@@ -21,10 +21,10 @@ sap.ui.define(
       init: function () {
 
         UIComponent.prototype.init.apply(this, arguments);
+        this.getRouter().attachBeforeRouteMatched(this._onBeforeRouteMatched, this);
         this.getRouter().initialize();
         let oModel = new JSONModel();
         this.setModel(oModel);
-
 
         this.setModel(
           new JSONModel({
@@ -54,6 +54,7 @@ sap.ui.define(
       },
 
       _onBeforeRouteMatched: function (oEvent) {
+        debugger
         var oModel = this.getModel(),
           sLayout = oEvent.getParameters().arguments.layout,
           oNextUIState;

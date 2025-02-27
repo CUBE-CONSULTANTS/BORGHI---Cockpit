@@ -276,15 +276,17 @@ sap.ui.define(
         debugger;
         let level, detailPath, detail;
         if (
-          oEvent.getSource().getParent().getBindingContext("master3") !==
-          undefined
+          oEvent.getSource().getParent().getBindingContext("master3") !== undefined
         ) {
           level = oEvent.getSource().getParent().getBindingContext("master3").getPath().includes("posizioni");
           detailPath = oEvent.getSource().getParent().getBindingContext("master3").getPath();
           detail = this.getView().getModel("master3").getProperty(`${detailPath}`);
           this.getOwnerComponent().getModel("datiAppoggio").setProperty("/testata", detail);
           this.getOwnerComponent().getModel("datiAppoggio").setProperty("/posizioni", detail.posizioni);
-          if (level) {this.getOwnerComponent()  .getModel("datiAppoggio")  .setProperty("/posizioneCorrente", detail);this.getOwnerComponent()  .getModel("datiAppoggio")  .setProperty("/schedulazioni", detail.schedulazioni.results);this.getOwnerComponent()  .getModel("datiAppoggio")  .setProperty(
+          if (level) {
+            this.getOwnerComponent().getModel("datiAppoggio").setProperty("/posizioneCorrente", detail);
+            this.getOwnerComponent().getModel("datiAppoggio").setProperty("/schedulazioni", detail.schedulazioni.results);
+            this.getOwnerComponent().getModel("datiAppoggio").setProperty(
                 "/testata",
                 this.getView()
                   .getModel("master3")
@@ -311,8 +313,7 @@ sap.ui.define(
             });
           }
         } else if (
-          oEvent.getSource().getParent().getBindingContext("master3CO") !==
-          undefined
+          oEvent.getSource().getParent().getBindingContext("master3CO") !== undefined
         ) {
           detailPath = oEvent.getSource().getParent().getBindingContext("master3CO").getPath();
           detail = this.getView().getModel("master3CO").getProperty(`${detailPath}`);

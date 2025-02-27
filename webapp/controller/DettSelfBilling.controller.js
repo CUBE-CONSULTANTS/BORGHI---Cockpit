@@ -4,7 +4,7 @@ sap.ui.define(
     "use strict";
     
     return BaseController.extend(
-      "programmi.consegne.edi.controller.SelfBilling",
+      "programmi.consegne.edi.controller.DettSelfBilling",
       {
         formatter: formatter,
         onInit: function () {
