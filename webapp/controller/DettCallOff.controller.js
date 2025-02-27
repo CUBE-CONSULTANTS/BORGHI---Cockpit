@@ -10,10 +10,10 @@ sap.ui.define(
         onInit: function () {
           debugger;
           this.oOwnerComponent = this.getOwnerComponent();
-          this.oRouter = this.oOwnerComponent.getRouter();
+          
           this.oModel = this.oOwnerComponent.getModel();
 
-          this.oRouter
+          this.getRouter()
             .getRoute("dettCallOff")
             .attachPatternMatched(this._onProductMatched, this);
         },

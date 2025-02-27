@@ -10,10 +10,9 @@ sap.ui.define(
         onInit: function () {
           debugger;
           this.oOwnerComponent = this.getOwnerComponent();
-          this.oRouter = this.oOwnerComponent.getRouter();
           this.oModel = this.oOwnerComponent.getModel();
 
-          this.oRouter
+          this.getRouter()
             .getRoute("Detail2Master3")
             .attachPatternMatched(this._onProductMatched, this);
         },
@@ -103,7 +102,7 @@ sap.ui.define(
           var sNextLayout = this.oModel.getProperty(
             "/actionButtonsInfo/midColumn/fullScreen"
           );
-          this.oRouter.navTo("Detail2Master3", {
+          this.getRouter().navTo("Detail2Master3", {
             layout: sNextLayout,
             product: this._product,
           });
@@ -113,7 +112,7 @@ sap.ui.define(
           var sNextLayout = this.oModel.getProperty(
             "/actionButtonsInfo/midColumn/exitFullScreen"
           );
-          this.oRouter.navTo("Detail2Master3", {
+          this.getRouter().navTo("Detail2Master3", {
             layout: sNextLayout,
             product: this._product,
           });
@@ -136,7 +135,7 @@ sap.ui.define(
           );
           //prova chiusura colonna e nav
           if (currentBegColViewName === undefined) {
-            sNextLayout = this.oRouter.navTo("master3", {
+            sNextLayout = this.getRouter().navTo("master3", {
               layout: sNextLayout,
               product: this._product,
             });
@@ -153,10 +152,10 @@ sap.ui.define(
         },
 
         onExit: function () {
-          this.oRouter
+          this.getRouter()
             .getRoute("master3")
             .detachPatternMatched(this._onProductMatched, this);
-          this.oRouter
+          this.getRouter()
             .getRoute("detailMaster3")
             .detachPatternMatched(this._onProductMatched, this);
         },
