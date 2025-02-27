@@ -19,6 +19,7 @@
     xmlns:ce="sap.ui.codeeditor"
     xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
     xmlns:vm="sap.ui.fl.variants"
+    id="idViewDetailDF"
 >
     <ObjectPageLayout
         showTitleInHeaderContent="true"
@@ -28,7 +29,6 @@
         isChildPage="true"
         showFooter="true"
         upperCaseAnchorBar="false"
-        id="prova"
     >
         <headerTitle>
             <ObjectPageDynamicHeaderTitle>
@@ -61,22 +61,7 @@
                 </snappedHeading>
 
                 <navigationActions>
-                    <m:OverflowToolbarButton
-                        type="Transparent"
-                        icon="sap-icon://full-screen"
-                        press=".handleFullScreen"
-                        tooltip="Enter Full Screen Mode"
-                        visible="false"
-                    />
-                    <!-- {= ${/actionButtonsInfo/midColumn/fullScreen} !== null } -->
-                    <m:OverflowToolbarButton
-                        type="Transparent"
-                        icon="sap-icon://exit-full-screen"
-                        press=".handleExitFullScreen"
-                        tooltip="Exit Full Screen Mode"
-                        visible="false"
-                    />
-                    <!-- {= ${/actionButtonsInfo/midColumn/exitFullScreen} !== null } -->
+
                     <m:OverflowToolbarButton
                         type="Transparent"
                         icon="sap-icon://decline"
@@ -210,7 +195,7 @@
                                         <!--try-->
 
                                         <ui:extension>
-                                            <m:OverflowToolbar id="prova2">
+                                            <m:OverflowToolbar >
                                                 <m:ToolbarSpacer />
                                                 <!-- <vm:VariantManagement id="p13nVm" for="tablePos"/> -->
                                                 <m:Button

@@ -58,7 +58,8 @@
 	}
 	},
 	"sap.ui5": {
-		
+		"flexEnabled": true,
+    "contentDensities": {"compact": true, "cozy": true},
 		"rootView": {
 			"viewName": "programmi.consegne.edi.view.App",
 			"type": "XML",
@@ -214,7 +215,7 @@
 					"pattern": "Detail2Master3/{product}/{layout}",
 					"name": "Detail2Master3",
 					"target": [
-						
+
 						"Detail2Master3"
 					]
 				},
@@ -228,7 +229,7 @@
 					"name": "dettCallOff",
 					"target": "dettCallOff"
         }
-				
+
 			],
 			"targets": {
 				"home": {
@@ -276,7 +277,7 @@
 					"controlAggregation": "beginColumnPages",
 					"viewLevel": 2
 				}
-			
+
 			}
 		}
 	}
