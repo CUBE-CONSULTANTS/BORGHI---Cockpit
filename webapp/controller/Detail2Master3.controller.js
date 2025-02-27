@@ -9,9 +9,7 @@ sap.ui.define(
         formatter: formatter,
         onInit: function () {
           debugger;
-          this.oOwnerComponent = this.getOwnerComponent();
-          this.oModel = this.oOwnerComponent.getModel();
-
+          
           this.getRouter()
             .getRoute("Detail2Master3")
             .attachPatternMatched(this._onProductMatched, this);

@@ -19,29 +19,12 @@ sap.ui.define(
       },
 
       init: function () {
-        var oModel,
-          oProductsModel,
-          // oMaster3Model,
-          oRouter;
 
         UIComponent.prototype.init.apply(this, arguments);
-
-        oModel = new JSONModel();
+        this.getRouter().initialize();
+        let oModel = new JSONModel();
         this.setModel(oModel);
 
-        // set products demo model on this sample
-        oProductsModel = new JSONModel(
-          sap.ui.require.toUrl("programmi/consegne/edi/mockdata/products.json")
-        );
-        oProductsModel.setSizeLimit(1000);
-        this.setModel(oProductsModel, "products");
-
-        // oMaster3Model = new JSONModel(sap.ui.require.toUrl('programmi/consegne/edi/mockdata/master3.json'));
-        // this.setModel(oMaster3Model, 'master3');
-
-        oRouter = this.getRouter();
-        oRouter.attachBeforeRouteMatched(this._onBeforeRouteMatched, this);
-        oRouter.initialize();
 
         this.setModel(
           new JSONModel({

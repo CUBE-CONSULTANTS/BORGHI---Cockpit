@@ -9,9 +9,9 @@ sap.ui.define(
         formatter: formatter,
         onInit: function () {
           debugger;
-          this.oOwnerComponent = this.getOwnerComponent();
           
-          this.oModel = this.oOwnerComponent.getModel();
+          
+          this.oModel = this.getOwnerComponent().getModel();
 
           this.getRouter()
             .getRoute("dettCallOff")

@@ -3,8 +3,6 @@ sap.ui.define(["./BaseController"], function (BaseController) {
 
   return BaseController.extend("programmi.consegne.edi.controller.App", {
     onInit: function () {
-      this.oOwnerComponent = this.getOwnerComponent();
-      
       this.getRouter().attachRouteMatched(this.onRouteMatched, this);
     },
 
@@ -29,7 +27,7 @@ sap.ui.define(["./BaseController"], function (BaseController) {
 
       // Replace the URL with the new layout if a navigation arrow was used
       if (bIsNavigationArrow) {
-        this.oRouter.navTo(
+        this.getRouter().navTo(
           this.currentRouteName,
           {
             layout: sLayout,
@@ -43,17 +41,17 @@ sap.ui.define(["./BaseController"], function (BaseController) {
 
     // Update the close/fullscreen buttons visibility
     _updateUIElements: function () {
-      var oModel = this.oOwnerComponent.getModel(),
+      var oModel = this.getOwnerComponent().getModel(),
         oUIState;
-      this.oOwnerComponent.getHelper().then(function (oHelper) {
+      this.getOwnerComponent().getHelper().then(function (oHelper) {
         oUIState = oHelper.getCurrentUIState();
         oModel.setData(oUIState);
       });
     },
 
     onExit: function () {
-      this.oRouter.detachRouteMatched(this.onRouteMatched, this);
-      this.oRouter.detachBeforeRouteMatched(this.onBeforeRouteMatched, this);
+      this.getRouter().detachRouteMatched(this.onRouteMatched, this);
+      this.getRouter().detachBeforeRouteMatched(this.onBeforeRouteMatched, this);
     },
   });
 });

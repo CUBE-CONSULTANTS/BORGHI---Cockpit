@@ -265,7 +265,7 @@ sap.ui.define(
           if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("delivery")) {
             oFilterSet = this.getModel("filtersModel").getProperty("/delivery");
             let aFilters = mapper.buildFilters(oFilterSet,key = "01")
-            await this.callData(this.getOwnerComponent().getModel("modelloV2"),"/Testata",aFilters,["posizioni","posizioni/schedulazioni","posizioni/log"],"01") 
+            await this.callData(this.getOwnerComponent().getModel("modelloV2"),"/Testata",aFilters,["posizioni($filter=stato ne '53'),posizioni($expand=log,schedulazioni,testata)",],"01") 
           }else if(oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("callOff")){
             debugger
             oFilterSet = this.getModel("filtersModel").getProperty("/callOff");
