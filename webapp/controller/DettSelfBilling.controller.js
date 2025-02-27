@@ -4,20 +4,24 @@ sap.ui.define(
     "use strict";
     
     return BaseController.extend(
-      "programmi.consegne.edi.controller.DettCallOff",
+      "programmi.consegne.edi.controller.SelfBilling",
       {
         formatter: formatter,
         onInit: function () {
           debugger;
           this.getRouter()
-            .getRoute("dettCallOff")
+            .getRoute("dettSelfBilling")
             .attachPatternMatched(this._onProductMatched, this);
         },
 
         _onProductMatched: function (oEvent) {
         this._id =oEvent.getParameter("arguments").id || this._id || "0";
-        let datiElementoSelect = this.getOwnerComponent().getModel("master3CO").getProperty("/").find((x) => (x.id = this._id));
-        datiElementoSelect.posizioni_testata.forEach(pos=> pos.posizione_14_19 = formatter.returnDate(pos.posizione_14_19,"yyyyMMdd","dd/MM/yyyy"))
+        let datiElementoSelect = this.getOwnerComponent().getModel("master3SB").getProperty("/").find((x) => (x.id = this._id));
+        datiElementoSelect.dettaglio_fattura.forEach(pos=> {
+          pos.data_fattura = formatter.returnDate(pos.data_fattura,"yyyyMMdd","dd/MM/yyyy")
+          pos.data_scadenza_fattura = formatter.returnDate(pos.data_scadenza_fattura,"yyyyMMdd","dd/MM/yyyy")
+          pos.riferimento_ddt = Object.values(pos.riferimento_ddt.results);
+        })
         this.getView().setModel(
           new JSONModel(),
           "detailData"

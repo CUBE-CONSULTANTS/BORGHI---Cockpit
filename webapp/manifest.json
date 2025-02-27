@@ -228,6 +228,11 @@
 					"pattern": "dettCallOff/{id}",
 					"name": "dettCallOff",
 					"target": "dettCallOff"
+        },
+        {
+					"pattern": "dettSelfBilling/{id}",
+					"name": "dettSelfBilling",
+					"target": "dettSelfBilling"
         }
 
 			],
@@ -275,6 +280,11 @@
         "dettCallOff": {
 					"viewName": "dettCallOff",
 					"controlAggregation": "beginColumnPages",
+					"viewLevel": 2
+				},
+        "dettSelfBilling": {
+          "viewName": "dettSelfBilling",
+          "controlAggregation": "beginColumnPages",
 					"viewLevel": 2
 				}
 
