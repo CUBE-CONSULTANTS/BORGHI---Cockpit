@@ -32,11 +32,13 @@ sap.ui.define(
     return BaseController.extend("programmi.consegne.edi.controller.Master3", {
       formatter: formatter,
       onInit: function () {
-        this.oRouter = this.getOwnerComponent().getRouter();
+        this.getRouter().getHashChanger().replaceHash("master3")
+        this.getRouter().getRoute("master3").attachPatternMatched(this._onObjectMatched, this);
         this.onFilterSelect(null, "01");
         this.setModel(models.createEdiFiltersModel(), "filtersModel");
       },
       _onObjectMatched: function (oEvent) {
+        debugger
         this.onFilterSelect(null, "01");
       },
       onFilterSelect: async function (oEvent, key) {
@@ -156,7 +158,7 @@ sap.ui.define(
       },
 
       navToHome: function () {
-        this.oRouter.navTo("home");
+       this.getRouter().navTo("home");
       },
 
       onProcessaButton: function (oEvent) {
@@ -252,7 +254,7 @@ sap.ui.define(
           .then(
             function (oHelper) {
               oNextUIState = oHelper.getNextUIState(1);
-              this.oRouter.navTo("detailMaster3", {
+              this.getRouter().navTo("detailMaster3", {
                 product: detail,
                 layout: oNextUIState.layout,
               });
@@ -282,7 +284,7 @@ sap.ui.define(
               .then(
                 function (oHelper) {
                   oNextUIState = oHelper.getNextUIState(1);
-                  this.oRouter.navTo("Detail2Master3", {
+                  this.getRouter().navTo("Detail2Master3", {
                     product: detail.id,
                     layout: oNextUIState.layout,
                   });
@@ -290,7 +292,7 @@ sap.ui.define(
               );
           } else {
             detailPath = oEvent.getSource().getParent().getBindingContext("master3").getPath();
-            this.oRouter.navTo("detailMaster3", {
+            this.getRouter().navTo("detailMaster3", {
               product: detail.id,
               layout: "OneColumn",
             });
@@ -299,7 +301,7 @@ sap.ui.define(
           debugger
           detailPath = oEvent.getSource().getParent().getBindingContext("master3CO").getPath();
           detail = this.getView().getModel("master3CO").getProperty(`${detailPath}`);
-            this.oRouter.navTo("dettCallOff", {
+            this.getRouter().navTo("dettCallOff", {
               id: detail.id,
               layout: "OneColumn",
             });

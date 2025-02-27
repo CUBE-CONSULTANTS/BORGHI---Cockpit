@@ -341,7 +341,7 @@ sap.ui.define(
         //   "/actionButtonsInfo/midColumn/closeColumn"
         // );
         // this.oRouter.navTo("master3", { layout: sNextLayout });
-        this.oRouter.navTo("master3");
+        this.getRouter().navTo("master3");
       },
       onClose: function (oEvent) {
         oEvent.getSource().getParent().close();

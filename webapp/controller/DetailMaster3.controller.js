@@ -32,19 +32,8 @@ sap.ui.define(
       {
         formatter: formatter,
         onInit: function () {
-          this.oOwnerComponent = this.getOwnerComponent();
-
-          this.oRouter = this.oOwnerComponent.getRouter();
-          this.oModel = this.oOwnerComponent.getModel();
-
-          this.oRouter
-            .getRoute("master3")
-            .attachPatternMatched(this._onProductMatched, this);
-          this.oRouter
-            .getRoute("detailMaster3")
-            .attachPatternMatched(this._onProductMatched, this);
+          this.getRouter().getRoute("detailMaster3").attachPatternMatched(this._onProductMatched, this);
         },
-
         _onProductMatched: function (oEvent) {
           debugger;
           this._product =
