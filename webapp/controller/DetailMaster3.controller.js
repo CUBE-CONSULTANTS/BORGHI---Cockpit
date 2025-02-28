@@ -285,6 +285,7 @@ sap.ui.define(
         },
 
         openPosizioniDialog: function (oEvent) {
+          debugger
           let oTable = this.byId("tablePos")
           Engine.getInstance().show(oTable, ["Columns", "Sorter"], {
             contentHeight: "35rem",
@@ -294,6 +295,7 @@ sap.ui.define(
         },
 
         _getKey: function (oControl) {
+          debugger
           return oControl.data("p13nKey");
         },
 
