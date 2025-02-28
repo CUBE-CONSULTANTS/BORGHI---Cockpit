@@ -299,7 +299,7 @@ sap.ui.define(
 
         handleStateChange: function (oEvt) {
           debugger;
-          const oTable = oEvt.getSource();
+          const oTable = this.byId("tablePos")
           const oState = oEvt.getParameter("state");
 
           if (!oState) {

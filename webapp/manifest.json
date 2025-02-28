@@ -301,7 +301,8 @@
 				"detailMaster3": {
 					"viewName": "DetailMaster3",
 					"controlAggregation": "beginColumnPages",
-					"viewLevel": 2
+					"viewLevel": 2,
+					"viewId": "idDetailMaster3"
 				},
 				"Detail2Master3": {
 					"viewName": "Detail2Master3",
