@@ -1,112 +1,117 @@
-sap.ui.define([
-  "sap/ui/model/Filter",
-  "sap/ui/model/FilterOperator"
-], function (Filter, FilterOperator) {
-  "use strict";
-  
-  return {
-    getEntity: function (oModel, Entity, aFilters = [], Expands = []) {
-      let urlParameters = {};
-      if (Expands.length > 0) {
-        debugger
-        urlParameters.$expand = Expands.join(",");
-      }
-      
-      return new Promise((resolve, reject) => {
-        oModel.read(Entity, {
-          filters: aFilters.length > 0 ? aFilters : undefined,
-          urlParameters: urlParameters,
-          success: (odata) => {
-            resolve({
-              "results": odata.results || odata,
-              success: true
-            });
-          },
-          error: (err) => {
-            reject({ success: false, error: err });
-          }
-        });
-      });
-    },
-    
-    readByKey: function (oModel, Entity, keyValue) {
-      let keyString = typeof keyValue === "object"
-        ? Object.entries(keyValue).map(([k, v]) => `${k}='${v}'`).join(",")
-        : `'${keyValue}'`;
-      
-      return new Promise((resolve, reject) => {
-        oModel.read(`${Entity}(${keyString})`, {
-          success: function (data) {
-            resolve(data);
-          },
-          error: function (err) {
-            reject(err);
-          }
-        });
-      });
-    },
-    
-    createEntity: function (oModel, Entity, oRecords, headers = {}) {
-      return new Promise((resolve, reject) => {
-        oModel.create(Entity, oRecords, {
-          headers: headers,
-          success: function (res) {
-            resolve(res);
-          },
-          error: function (err) {
-            reject({ success: false, error: err });
-          }
-        });
-      });
-    },
+sap.ui.define(
+  ["sap/ui/model/Filter", "sap/ui/model/FilterOperator"],
+  function (Filter, FilterOperator) {
+    "use strict";
 
-    updateEntity: function (oModel, Entity, oRecord, method) {
-      return new Promise((resolve, reject) => {
-        oModel.update(Entity, oRecord, {
-          method: method, // "PATCH" or "PUT"
-          success: function (res) {
-            resolve(res);
-          },
-          error: function (err) {
-            reject({ success: false, error: err });
-          }
-        });
-      });
-    },
-    deleteEntity: function (oModel, Entity) {
-      return new Promise((resolve, reject) => {
-        oModel.remove(Entity, {
-          success: function () {
-            resolve();
-          },
-          error: function (err) {
-            reject({ success: false, error: err });
-          }
-        });
-      });
-    },
+    return {
+      getEntity: function (oModel, Entity, aFilters = [], Expands = []) {
+        let urlParameters = {};
+        if (Expands.length > 0) {
+          debugger;
+          urlParameters.$expand = Expands.join(",");
+        }
 
-    //esempio batchOP: const batchOperations = [
-    //   { path: "/Products", method: "GET" }, 
-    //   { path: "/Products", method: "POST", data: { ID: 1003, Name: "Smartphone", Price: 800 }}, 
-    //   { path: "/Products(1003)", method: "PATCH", data: { Price: 850 } }, 
-    //   { path: "/Products(1002)", method: "DELETE" }
-    // ];
-    sendBatchRequest: function (oModel, batchOperations) {
-      return new Promise((resolve, reject) => {
-        let mRequests = [];
-        
-        batchOperations.forEach(op => {
-          mRequests.push(oModel.createBatchOperation(op.path, op.method, op.data));
+        return new Promise((resolve, reject) => {
+          oModel.read(Entity, {
+            filters: aFilters.length > 0 ? aFilters : undefined,
+            urlParameters: urlParameters,
+            success: (odata) => {
+              resolve({
+                results: odata.results || odata,
+                success: true,
+              });
+            },
+            error: (err) => {
+              reject({ success: false, error: err });
+            },
+          });
         });
-        
-        oModel.addBatchChangeOperations(mRequests);
-        
-        oModel.submitBatch(
-          (oData, oResponse) => resolve(oData), 
-          (oError) => reject(oError) 
-        );
-      });
-    }
-  };
-});
+      },
+
+      readByKey: function (oModel, Entity, keyValue) {
+        let keyString =
+          typeof keyValue === "object"
+            ? Object.entries(keyValue)
+                .map(([k, v]) => `${k}='${v}'`)
+                .join(",")
+            : `'${keyValue}'`;
+
+        return new Promise((resolve, reject) => {
+          oModel.read(`${Entity}(${keyString})`, {
+            success: function (data) {
+              resolve(data);
+            },
+            error: function (err) {
+              reject(err);
+            },
+          });
+        });
+      },
+
+      createEntity: function (oModel, Entity, oRecords, headers = {}) {
+        return new Promise((resolve, reject) => {
+          oModel.create(Entity, oRecords, {
+            headers: headers,
+            success: function (res) {
+              resolve(res);
+            },
+            error: function (err) {
+              reject({ success: false, error: err });
+            },
+          });
+        });
+      },
+
+      updateEntity: function (oModel, Entity, oRecord, method) {
+        return new Promise((resolve, reject) => {
+          oModel.update(Entity, oRecord, {
+            method: method, // "PATCH" or "PUT"
+            success: function (res) {
+              resolve(res);
+            },
+            error: function (err) {
+              reject({ success: false, error: err });
+            },
+          });
+        });
+      },
+      deleteEntity: function (oModel, Entity) {
+        return new Promise((resolve, reject) => {
+          oModel.remove(Entity, {
+            success: function () {
+              resolve();
+            },
+            error: function (err) {
+              reject({ success: false, error: err });
+            },
+          });
+        });
+      },
+
+      //esempio batchOP: const batchOperations = [
+      //   { path: "/Products", method: "GET" },
+      //   { path: "/Products", method: "POST", data: { ID: 1003, Name: "Smartphone", Price: 800 }},
+      //   { path: "/Products(1003)", method: "PATCH", data: { Price: 850 } },
+      //   { path: "/Products(1002)", method: "DELETE" }
+      // ];
+      sendBatchRequest: function (oModel, batchOperations) {
+        return new Promise((resolve, reject) => {
+          let mRequests = [];
+
+          batchOperations.forEach((op) => {
+            mRequests.push(
+              oModel.createBatchOperation(op.path, op.method, op.data)
+            );
+          });
+
+          oModel.addBatchChangeOperations(mRequests);
+
+          oModel.submitBatch(
+            (oData, oResponse) => resolve(oData),
+            (oError) => reject(oError)
+          );
+        });
+      },
+    };
+  }
+);
