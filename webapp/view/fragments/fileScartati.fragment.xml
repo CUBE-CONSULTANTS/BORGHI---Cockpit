@@ -6,10 +6,33 @@ xmlns:ui="sap.ui.table"
 xmlns:mvc="sap.ui.core.mvc">
 <fb:FilterBar        
 useToolbar="false"
-
+search=".onSearchData"
+showFilterConfiguration="false"
+showGoOnFB="true"
+showClearOnFB="true"
+clear="onFilterBarClear"
 class="sapUiSmallMarginBottom"
 >
 <fb:filterGroupItems>
+
+   
+<fb:FilterGroupItem
+name="Data Ricezione"
+label="Data Ricezione"
+groupName="gr1"
+visibleInFilterBar="true"
+>
+<fb:control>
+  <DatePicker
+  tooltip="Data di ricezione"
+  secondaryCalendarType="Gregorian"
+  change="handleChange"
+  value="{filtersModel>/scartati/dataRic}"
+  valueFormat="dd/MM/yyyy"
+  displayFormat="dd/MM/yyyy"
+/>
+</fb:control>
+</fb:FilterGroupItem>  
   <fb:FilterGroupItem
         name="Nome File"
         label="Nome File"
@@ -17,24 +40,14 @@ class="sapUiSmallMarginBottom"
         visibleInFilterBar="true"
     >
         <fb:control>
-           <Input/>
+          <ComboBox 
+          items="{filtersModel>/scartati/nomeFile/items}" 
+          value="{filtersModel>/scartati/nomeFile/value}">
+          <core:ListItem key="{filtersModel>Key}" text="{filtersModel>Text}" />
+        </ComboBox> 
         </fb:control>
     </fb:FilterGroupItem>
-   
-    <fb:FilterGroupItem
-        name="Data Ricezione"
-        label="Data Ricezione"
-        groupName="gr1"
-        visibleInFilterBar="true"
-    >
-        <fb:control>
-        <DatePicker
-        tooltip="..."
-        secondaryCalendarType="Gregorian"
-        change="handleChange"
-        />
-        </fb:control>
-    </fb:FilterGroupItem>                
+              
 
     
 </fb:filterGroupItems>
@@ -44,43 +57,84 @@ class="sapUiSmallMarginBottom"
 
 
 <ui:Table
-rows="{/ProductCollection}"
-selectionMode="MultiToggle"
-paste="onPaste"
-ariaLabelledBy="title">
+rows="{master3Scart>/}"
+selectionMode="{=${datiAppoggio>/currentPage} === 'archivio' ? 'Single':'MultiToggle'}"
+ariaLabelledBy="title"
+>
 <ui:extension>
   <OverflowToolbar style="Clear">
-    
+    <ToolbarSpacer/>
+    <Button
+    icon="sap-icon://sort"
+    text="Ordinamento"
+    press="sortCategories"
+  />
+  <Button
+  text="Esporta excel"
+  icon="sap-icon://excel-attachment"
+  press="downloadExcelFile"
+  visible="{=${datiAppoggio>/currentPage} === 'archivio' ? false:true}"
+  />
+  <Button
+    text="Elabora"
+    icon="sap-icon://process"
+    press="onProcessaButton"
+    type="Emphasized"
+    visible="{=${datiAppoggio>/currentPage} === 'archivio' ? false:true}"
+  />
+  <Button
+    text="Elimina"
+    icon="sap-icon://delete"
+    press=""
+    type="Reject"
+    visible="{=${datiAppoggio>/currentPage} === 'archivio' ? false:true}"
+  />
   </OverflowToolbar>
 </ui:extension>
 <ui:columns>
-  <ui:Column width="7rem">
+  
+  <ui:Column >
+    <Label text="Data Ricezione" />
+    <ui:template>
+      <DatePicker 
+      editable="false"
+      value="{
+        path: 'master3Scart>data_ricezione',
+        type: 'sap.ui.model.type.Date',
+        formatOptions: {
+          pattern: 'dd/MM/yyyy'
+        }
+      }"
+      valueFormat="dd/MM/yyyy"
+      displayFormat="dd/MM/yyyy"  />
+    </ui:template>
+  </ui:Column>
+  <ui:Column >
     <Label text="Nome File" />
     <ui:template>
-      <Text text="{Name}" wrapping="false" />
+      <Text text="{master3Scart>filename}" wrapping="false" />
     </ui:template>
   </ui:Column>
   
-  
-  <ui:Column width="15rem">
-    <Label text="Data Ricezione" />
+  <ui:Column >
+    <Label text="Tipo" />
     <ui:template>
-      <Text text="{Name}" wrapping="false" />
+      <Text text="{master3Scart>tipo}" wrapping="false" />
     </ui:template>
   </ui:Column>
 
+  <ui:Column >
+    <Label text="Versione" />
+    <ui:template>
+      <Text text="{master3Scart>versione}" wrapping="false" />
+    </ui:template>
+  </ui:Column>
   
  
-  <ui:Column width="11rem">
+  <ui:Column >
     
     <ui:template>
-      <HBox
-      >
-      <Button  icon="sap-icon://delete"/>
-      <Button icon="sap-icon://download"/>
-      <Button icon="sap-icon://action"/>
-      </HBox>
-      
+ 
     </ui:template>
   </ui:Column>
 

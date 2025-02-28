@@ -79,7 +79,13 @@ sap.ui.define(
           },
           despatch: {},
           invoice: {},
-          scartati: {}
+          scartati: {
+            dataRic : null,
+            nomeFile : {
+							value: null,
+							items: [],
+						},
+          }
 				});
 			},
  

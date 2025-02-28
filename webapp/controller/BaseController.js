@@ -255,6 +255,9 @@ sap.ui.define(
           if(oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("selfBilling")){
             modelMeta = await this.callData(this.getOwnerComponent().getModel("selfBillingV2"), "/Testata", [],[ "dettaglio_fattura,log_testata,dettaglio_fattura/riferimento_ddt,dettaglio_fattura/riferimento_ddt/riga_fattura"],"03")
           }
+          if(oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("fileScartati")){
+            modelMeta = await this.callData(this.getOwnerComponent().getModel("fileScartatiV2"), "/FileScartati", [],[],"06")
+          }
           // oBinding.filter([]);
           // oBinding.sort([]);
         },
@@ -298,6 +301,10 @@ sap.ui.define(
                 testata.dettaglio_fattura = Object.values(testata.dettaglio_fattura.results);
               });
               this.getOwnerComponent().setModel(modelMeta, "master3SB");
+            }else if(key == "06"){
+              debugger
+              modelMeta = new JSONModel(metadata.results);
+              this.getOwnerComponent().setModel(modelMeta, "master3Scart");
             }
           } catch (error) {
             MessageBox.error("Errore durante la ricezione dei dati")

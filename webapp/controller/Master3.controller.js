@@ -96,16 +96,21 @@ sap.ui.define(
             this.onFiltersBuilding(oEvent, selectedKey);
             break;
           case "04":
-           
+            
             break;
           case "05":
            
             break;
           case "06":
-           
-            break;
-          case "07":
-            
+            oModel = this.getOwnerComponent().getModel("fileScartatiV2");
+            await this.callData(
+              oModel,
+              "/FileScartati",
+              [],
+              [],
+              selectedKey
+            );
+            this.onFiltersBuilding(oEvent, selectedKey);
             break;
         }
         this.hideBusy(0);
