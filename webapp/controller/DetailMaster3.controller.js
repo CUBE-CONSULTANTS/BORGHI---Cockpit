@@ -44,27 +44,20 @@ sap.ui.define(
           debugger;
           this._product =
             oEvent.getParameter("arguments").product || this._product || "0";
-          ///prova anthea binding su table
-          // let datiElementoSelect=this.getOwnerComponent().getModel("master3").getProperty(`/Master3/${this._product}`)
-          let datiElementoSelect = this.getOwnerComponent()
-            .getModel("master3")
-            .getProperty("/")
-            .find((x) => (x.id = this._product));
-          // datiElementoSelect.DelforPosizioni =
-          //   datiElementoSelect.DelforPosizioni.flat();
-          this.getView().setModel(
-            new sap.ui.model.json.JSONModel(),
-            "detailData"
-          );
-          this.getView()
-            .getModel("detailData")
-            .setProperty("/DettaglioMaster3", datiElementoSelect);
-          // this.getView().bindElement({
-          // 	path: "/ProductCollection/" + this._product,
-          // 	model: "products"
-          // });
-
-          this._registerForP13n(oEvent);
+          if (this.getOwnerComponent().getModel("master3") !== undefined) {
+            let datiElementoSelect = this.getOwnerComponent()
+              .getModel("master3")
+              .getProperty("/")
+              .find((x) => (x.id = this._product));
+            this.getView().setModel(
+              new sap.ui.model.json.JSONModel(),
+              "detailData"
+            );
+            this.getView()
+              .getModel("detailData")
+              .setProperty("/DettaglioMaster3", datiElementoSelect);
+            this._registerForP13n(oEvent);
+          }
         },
         onProcessaButton: function (oEvent) {
           debugger;
@@ -378,6 +371,7 @@ sap.ui.define(
         },
 
         openPosizioniDialog: function (oEvent) {
+          debugger;
           let oTable = this.byId("tablePos");
           Engine.getInstance().show(oTable, ["Columns", "Sorter"], {
             contentHeight: "35rem",
@@ -387,6 +381,7 @@ sap.ui.define(
         },
 
         _getKey: function (oControl) {
+          debugger;
           return oControl.data("p13nKey");
         },
 

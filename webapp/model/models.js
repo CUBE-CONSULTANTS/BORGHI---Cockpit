@@ -29,6 +29,13 @@ sap.ui.define(
           backToMon: false
 				});
 			},
+      createCountModel: function () {
+				return new JSONModel({
+					delivery: "",
+          calloff: "",
+          selfbilling: "",
+				});
+			},
 			createEdiFiltersModel: function () {
 				return new JSONModel({
 					delivery: {

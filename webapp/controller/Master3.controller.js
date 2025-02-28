@@ -31,30 +31,30 @@ sap.ui.define(
 
     return BaseController.extend("programmi.consegne.edi.controller.Master3", {
       formatter: formatter,
+      
       onInit: async function () {
         this.setModel(models.createMainModel(), "main");
-        let countModel = new JSONModel({
-          delivery: "",
-          calloff: "",
-          selfbilling: "",
-        });
-        this.setModel(countModel, "count");
-        let oModel = this.getOwnerComponent().getModel("modelloV2");
-        let del = await API.getEntity(oModel, "/Testata/$count", [], []);
-        this.getModel("count").setProperty("/delivery", del.results);
-        let oModel2 = this.getOwnerComponent().getModel("calloffV2");
-        let cal = await API.getEntity(oModel2, "/Testata/$count", [], []);
-        this.getModel("count").setProperty("/calloff", cal.results);
-        let oModel3 = this.getOwnerComponent().getModel("selfBillingV2");
-        let selfb = await API.getEntity(oModel3, "/Testata/$count", [], []);
-        this.getModel("count").setProperty("/selfbilling", selfb.results);
-        debugger;
-        this.getRouter().getHashChanger().replaceHash("master3");
-        this.getRouter()
-          .getRoute("master3")
-          .attachPatternMatched(this._onObjectMatched, this);
-        this.onFilterSelect(null, "01");
+        this.setModel(models.createCountModel(),"count");
         this.setModel(models.createEdiFiltersModel(), "filtersModel");
+        this.getRouter().getHashChanger().replaceHash("master3");
+        this.getRouter().getRoute("master3").attachPatternMatched(this._onObjectMatched, this);
+        await this._getCounters();
+        this.onFilterSelect(null, "01");  
+      },
+      _getCounters: async function(){
+        this.showBusy(0)
+        try {
+          let del = await API.getEntity(this.getOwnerComponent().getModel("modelloV2"), "/Testata/$count", [], []);
+          this.getModel("count").setProperty("/delivery", del.results);
+          let cal = await API.getEntity(this.getOwnerComponent().getModel("calloffV2"), "/Testata/$count", [], []);
+          this.getModel("count").setProperty("/calloff", cal.results);
+          let selfb = await API.getEntity(this.getOwnerComponent().getModel("selfBillingV2"), "/Testata/$count", [], []);
+          this.getModel("count").setProperty("/selfbilling", selfb.results);
+        } catch (error) {
+          MessageBox.error("Errore durante il recupero dei Dati")
+        }finally {
+          this.hideBusy(0);
+        }
       },
       _onObjectMatched: function (oEvent) {
         debugger;
@@ -283,83 +283,40 @@ sap.ui.define(
           );
       },
       dettaglioNav: function (oEvent) {
-        debugger;
         let level, detailPath, detail;
         if (
           oEvent.getSource().getParent().getBindingContext("master3") !==
           undefined
         ) {
-          level = oEvent
-            .getSource()
-            .getParent()
-            .getBindingContext("master3")
-            .getPath()
-            .includes("posizioni");
-          detailPath = oEvent
-            .getSource()
-            .getParent()
-            .getBindingContext("master3")
-            .getPath();
-          detail = this.getView()
-            .getModel("master3")
-            .getProperty(`${detailPath}`);
-          this.getOwnerComponent()
-            .getModel("datiAppoggio")
-            .setProperty("/testata", detail);
-          this.getOwnerComponent()
-            .getModel("datiAppoggio")
-            .setProperty("/posizioni", detail.posizioni);
+          level = oEvent.getSource().getParent().getBindingContext("master3").getPath().includes("posizioni");
+          detailPath = oEvent.getSource().getParent().getBindingContext("master3").getPath();
+          detail = this.getView().getModel("master3").getProperty(`${detailPath}`);
+          this.getOwnerComponent().getModel("datiAppoggio").setProperty("/testata", detail);
+          this.getOwnerComponent().getModel("datiAppoggio").setProperty("/posizioni", detail.posizioni);
           if (level) {
-            this.getOwnerComponent()
-              .getModel("datiAppoggio")
-              .setProperty("/posizioneCorrente", detail);
-            this.getOwnerComponent()
-              .getModel("datiAppoggio")
-              .setProperty("/schedulazioni", detail.schedulazioni.results);
-            this.getOwnerComponent()
-              .getModel("datiAppoggio")
-              .setProperty(
+            this.getOwnerComponent().getModel("datiAppoggio").setProperty("/posizioneCorrente", detail);
+            this.getOwnerComponent().getModel("datiAppoggio").setProperty("/schedulazioni", detail.schedulazioni.results);
+            this.getOwnerComponent().getModel("datiAppoggio").setProperty(
                 "/testata",
-                this.getView()
-                  .getModel("master3")
-                  .getProperty(`${detailPath[0] + detailPath[1]}`)
+                this.getView().getModel("master3").getProperty(`${detailPath[0] + detailPath[1]}`)
               );
             debugger;
-            let oNextUIState;
-            this.getOwnerComponent()
-              .getHelper()
-              .then(
-                function (oHelper) {
-                  oNextUIState = oHelper.getNextUIState(1);
-                  this.getRouter().navTo("Detail2Master3", {
-                    product: detail.id,
-                    layout: oNextUIState.layout,
-                  });
-                }.bind(this)
-              );
+              this.getRouter().navTo("Detail2Master3", {
+                product: detail.id,
+                layout: "TwoColumnsBeginExpanded",
+              });
           } else {
-            detailPath = oEvent
-              .getSource()
-              .getParent()
-              .getBindingContext("master3")
-              .getPath();
+            detailPath = oEvent.getSource().getParent().getBindingContext("master3").getPath();
             this.getRouter().navTo("detailMaster3", {
               product: detail.id,
               layout: "OneColumn",
             });
           }
         } else if (
-          oEvent.getSource().getParent().getBindingContext("master3CO") !==
-          undefined
+          oEvent.getSource().getParent().getBindingContext("master3CO") !== undefined
         ) {
-          detailPath = oEvent
-            .getSource()
-            .getParent()
-            .getBindingContext("master3CO")
-            .getPath();
-          detail = this.getView()
-            .getModel("master3CO")
-            .getProperty(`${detailPath}`);
+          detailPath = oEvent.getSource().getParent().getBindingContext("master3CO").getPath();
+          detail = this.getView().getModel("master3CO").getProperty(`${detailPath}`);
           this.getRouter().navTo("dettCallOff", {
             id: detail.id,
             layout: "OneColumn",
@@ -369,14 +326,8 @@ sap.ui.define(
           undefined
         ) {
           debugger;
-          detailPath = oEvent
-            .getSource()
-            .getParent()
-            .getBindingContext("master3SB")
-            .getPath();
-          detail = this.getView()
-            .getModel("master3SB")
-            .getProperty(`${detailPath}`);
+          detailPath = oEvent.getSource().getParent().getBindingContext("master3SB").getPath();
+          detail = this.getView().getModel("master3SB").getProperty(`${detailPath}`);
           this.getRouter().navTo("dettSelfBilling", {
             id: detail.id,
             layout: "OneColumn",
@@ -437,25 +388,13 @@ sap.ui.define(
 
       navToAPP: function (oEvent) {
         debugger;
-        let level = oEvent
-          .getSource()
-          .getParent()
-          .getParent()
-          .getBindingContext("master3")
-          .getPath();
+        let level = oEvent.getSource().getParent().getParent().getBindingContext("master3").getPath();
         if (level.includes("posizioni")) {
           this.getRouter().navTo("master", { monitor: "monitor" });
         } else {
           this.getRouter().navTo("master2", { monitor: "monitor" });
         }
       },
-
-      prova2: function (oEvent) {
-        debugger;
-        let table = this.byId("treetableMain");
-        let row = oEvent.getParameter("rowContext").getObject();
-      },
-
       processaItems: function (items) {
         debugger;
 
@@ -537,15 +476,6 @@ sap.ui.define(
             }
           }.bind(this),
         });
-      },
-      //FUNZIONI CALLOFF
-      onListItemPress: function (oEvent) {
-        debugger;
-        let idMaster = oEvent
-          .getSource()
-          .getBindingContext("master3CO")
-          .getObject().id;
-        this.getRouter().navTo("dettCallOff", { id: idMaster });
       },
     });
   }
