@@ -138,6 +138,10 @@ sap.ui.define(
             oTable = this.byId("treetableSB");
             aSorters = this.sortTables(oTable, ["customer", "data_ricezione"]);
             break;
+          case "06":
+            oTable = this.byId("tableScartati");
+            aSorters = this.sortTables(oTable, ["filename", "data_ricezione"]);
+              break;  
           default:
             return;
         }

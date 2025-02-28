@@ -151,29 +151,7 @@
                     <ObjectPageSubSection>
                         <blocks>
                             <m:VBox height="90%">
-                                <m:OverflowToolbar style="Clear">
-                                    <m:Title />
-                                    <m:ToolbarSpacer />
-
-                                    <m:Button
-                                        text="Esporta excel"
-                                        icon="sap-icon://excel-attachment"
-                                        press="downloadExcelFileDett"
-                                    />
-                                    <m:Button
-                                        text="Elabora"
-                                        icon="sap-icon://process"
-                                        press="onProcessaButton"
-                                        type="Emphasized"
-                                    />
-
-                                    <m:Button
-                                        text="Elimina"
-                                        icon="sap-icon://delete"
-                                        press=""
-                                        type="Reject"
-                                    />
-                                </m:OverflowToolbar>
+                               
                                 <m:ScrollContainer
                                     height="100%"
                                     width="100%"
@@ -196,8 +174,26 @@
 
                                         <ui:extension>
                                             <m:OverflowToolbar >
-                                                <m:ToolbarSpacer />
-                                                <!-- <vm:VariantManagement id="p13nVm" for="tablePos"/> -->
+                                              <m:ToolbarSpacer />
+
+                                              <m:Button
+                                                  text="Esporta excel"
+                                                  icon="sap-icon://excel-attachment"
+                                                  press="downloadExcelFileDett"
+                                              />
+                                              <m:Button
+                                                  text="Elabora"
+                                                  icon="sap-icon://process"
+                                                  press="onProcessaButton"
+                                                  type="Emphasized"
+                                              />
+          
+                                              <m:Button
+                                                  text="Elimina"
+                                                  icon="sap-icon://delete"
+                                                  press=""
+                                                  type="Reject"
+                                              />
                                                 <m:Button
                                                     icon="sap-icon://action-settings"
                                                     press="openPosizioniDialog"

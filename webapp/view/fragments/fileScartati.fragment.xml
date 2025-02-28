@@ -48,15 +48,11 @@ visibleInFilterBar="true"
         </fb:control>
     </fb:FilterGroupItem>
               
-
-    
 </fb:filterGroupItems>
 </fb:FilterBar>
 
-
-
-
 <ui:Table
+id="tableScartati"
 rows="{master3Scart>/}"
 selectionMode="{=${datiAppoggio>/currentPage} === 'archivio' ? 'Single':'MultiToggle'}"
 ariaLabelledBy="title"
