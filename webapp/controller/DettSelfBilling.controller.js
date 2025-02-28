@@ -21,6 +21,9 @@ sap.ui.define(
           pos.data_fattura = formatter.formatDate(pos.data_fattura)
           pos.data_scadenza_fattura = formatter.formatDate(pos.data_scadenza_fattura)
           pos.riferimento_ddt = Object.values(pos.riferimento_ddt.results);
+          pos.riferimento_ddt.forEach(posit=>{
+            posit.data_ddt_cliente = formatter.formatDate(posit.data_ddt_cliente)
+          })
         })
         this.getView().setModel(
           new JSONModel(),
@@ -30,7 +33,18 @@ sap.ui.define(
         this.getModel("detailData").setProperty("/DettaglioFatture", datiElementoSelect.dettaglio_fattura);
         // this._registerForP13n();
         },
-        
+        onCollapseAll: function (oEvent) {
+          debugger
+          let oTable = oEvent.getSource().getParent().getParent()
+              oTable.collapseAll();
+        },
+        onExpandFirstLevel: function (oEvent) {
+          debugger
+          let oTable = oEvent.getSource().getParent().getParent()
+          oTable.expandToLevel(2);
+          
+        },
+  
       }
     );
   }
