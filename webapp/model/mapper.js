@@ -115,12 +115,20 @@ sap.ui.define(
         let aExportData = [];
         aData.forEach(item => {
             let row = this._cleanAndFormatData(item);
-            let positions = item.posizioni || item.posizioni_testata || [];
+            let positions = item.posizioni || item.posizioni_testata ||
+            item.dettaglio_fattura || [];
             positions.forEach(position => {
                 let positionRow = { ...row, ...this._cleanAndFormatData(position) };
-                let schedules = position.schedulazioni?.results || [];
+                let schedules = position.schedulazioni?.results ||
+                position.riferimento_ddt?.results || [];
                 schedules.forEach(schedule => {
                     let scheduleRow = { ...positionRow, ...this._cleanAndFormatData(schedule) };
+
+                    let invoiceLines = schedule.riga_fattura?.results || [];
+                    invoiceLines.forEach(invoice => {
+                      let invoiceRow = { ...scheduleRow, ...this._cleanAndFormatData(invoice) };
+                      aExportData.push(invoiceRow);
+                    });
                     aExportData.push(scheduleRow); 
                 });
                 aExportData.push(positionRow); 
@@ -136,14 +144,15 @@ sap.ui.define(
         [
             "posizioni", "posizioni_testata", "id", "id_master", "edi",
             "idoc_paylod", "log_testata", "__metadata", "payload_db",
-            "idoc_payload_db", "archiviato", "template", "tipo","posizione",
+            "idoc_payload_db", "archiviato", "template", "tipo","posizione","dettaglio_fattura",
+            "riferimento_ddt", "riga_fattura","id_dettaglio_fattura",
             "versione", "numero_idoc", "master","log","id_posizione","id_testata","testata"
         ].forEach(key => delete cleanedData[key]);
         if (cleanedData.master) {
             ["edi", "payload_db","id"].forEach(key => delete cleanedData.master[key]);
         }
         Object.keys(cleanedData).forEach(key => {
-          if (key.toLowerCase().includes("data")) {
+          if (key.toLowerCase().includes("data") || key.toLowerCase().includes("date")) {
             cleanedData[key] = formatter.formatDate(cleanedData[key]);
           }
           if(key.toLowerCase().includes("posizione_14_19")){
@@ -152,84 +161,84 @@ sap.ui.define(
         });
         return cleanedData;
       },
-      flatData: function (data) {
-        debugger;
-        const flatData = [];
-        let dataArray = Array.isArray(data) ? data : [data];
-        dataArray.forEach((item) => {
-          let testataRow = { ...item };
-          delete testataRow?.posizioni;
-          delete testataRow?.posizioni_testata;
-          delete testataRow?.id;
-          delete testataRow?.id_master;
-          delete testataRow?.edi;
-          delete testataRow?.idoc_paylod;
-          delete testataRow?.log_testata;
-          delete testataRow?.__metadata;
-          delete testataRow?.payload_db;
-          delete testataRow?.idoc_payload_db;
-          delete testataRow?.archiviato;
-          delete testataRow?.template;
-          delete testataRow?.tipo;
-          delete testataRow?.versione;
-          delete testataRow?.numero_idoc;
+      // flatData: function (data) {
+      //   debugger;
+      //   const flatData = [];
+      //   let dataArray = Array.isArray(data) ? data : [data];
+      //   dataArray.forEach((item) => {
+      //     let testataRow = { ...item };
+      //     delete testataRow?.posizioni;
+      //     delete testataRow?.posizioni_testata;
+      //     delete testataRow?.id;
+      //     delete testataRow?.id_master;
+      //     delete testataRow?.edi;
+      //     delete testataRow?.idoc_paylod;
+      //     delete testataRow?.log_testata;
+      //     delete testataRow?.__metadata;
+      //     delete testataRow?.payload_db;
+      //     delete testataRow?.idoc_payload_db;
+      //     delete testataRow?.archiviato;
+      //     delete testataRow?.template;
+      //     delete testataRow?.tipo;
+      //     delete testataRow?.versione;
+      //     delete testataRow?.numero_idoc;
 
-          delete testataRow?.master?.edi;
-          delete testataRow?.master?.payload_db;
-          delete testataRow?.master;
+      //     delete testataRow?.master?.edi;
+      //     delete testataRow?.master?.payload_db;
+      //     delete testataRow?.master;
           
-          debugger
-          Object.keys(testataRow).forEach(key => {
-            if (key.toLowerCase().includes("data")) {
-                testataRow[key] = formatter.formatDate(testataRow[key]);
-            }
-          });
-          flatData.push(testataRow);
-          let positions
-          item.posizioni ? positions = item.posizioni : positions = item.posizioni_testata
-          if (Array.isArray(positions) && positions.length > 0) {
-            positions.forEach((posizione) => {
-              let posizioneRow = { ...posizione };
-              delete posizioneRow?.id;
-              delete posizioneRow?.id_testata;
-              delete posizioneRow?.idoc_payload;
-              delete posizioneRow?.log;
-              delete posizioneRow?.testata;
-              delete posizioneRow?.schedulazioni;
-              delete posizioneRow?.__metadata
-              Object.keys(posizioneRow).forEach(key => {
-                if (key.toLowerCase().includes("data")) {
-                    posizioneRow[key] = formatter.formatDate(posizioneRow[key]);
-                }
-                if(key.toLowerCase().includes("posizione_14_19")){
-                  posizioneRow[key] = formatter.returnDate(posizioneRow[key],"yyyyMMdd","dd/MM/YYYY");
-                }
-              });
-              flatData.push(posizioneRow);
-              if (
-                posizione.schedulazioni?.results &&
-                posizione.schedulazioni.results.length > 0
-              ) {
-                posizione.schedulazioni.results.forEach((schedulazione) => {
-                  let schedulazioneRow = { ...schedulazione };
-                  delete schedulazioneRow?.id;
-                  delete schedulazioneRow?.id_posizione;
-                  delete schedulazioneRow?.posizione;
-                  delete schedulazioneRow?.__metadata;
-                  Object.keys(schedulazioneRow).forEach(key => {
-                    if (key.toLowerCase().includes("data")) {
-                        schedulazioneRow[key] = formatter.formatDate(schedulazioneRow[key]);
-                    }
-                  });
-                  flatData.push(schedulazioneRow);
-                });
-              }
-            });
-          }
-        });
+      //     debugger
+      //     Object.keys(testataRow).forEach(key => {
+      //       if (key.toLowerCase().includes("data")) {
+      //           testataRow[key] = formatter.formatDate(testataRow[key]);
+      //       }
+      //     });
+      //     flatData.push(testataRow);
+      //     let positions
+      //     item.posizioni ? positions = item.posizioni : positions = item.posizioni_testata
+      //     if (Array.isArray(positions) && positions.length > 0) {
+      //       positions.forEach((posizione) => {
+      //         let posizioneRow = { ...posizione };
+      //         delete posizioneRow?.id;
+      //         delete posizioneRow?.id_testata;
+      //         delete posizioneRow?.idoc_payload;
+      //         delete posizioneRow?.log;
+      //         delete posizioneRow?.testata;
+      //         delete posizioneRow?.schedulazioni;
+      //         delete posizioneRow?.__metadata
+      //         Object.keys(posizioneRow).forEach(key => {
+      //           if (key.toLowerCase().includes("data")) {
+      //               posizioneRow[key] = formatter.formatDate(posizioneRow[key]);
+      //           }
+      //           if(key.toLowerCase().includes("posizione_14_19")){
+      //             posizioneRow[key] = formatter.returnDate(posizioneRow[key],"yyyyMMdd","dd/MM/YYYY");
+      //           }
+      //         });
+      //         flatData.push(posizioneRow);
+      //         if (
+      //           posizione.schedulazioni?.results &&
+      //           posizione.schedulazioni.results.length > 0
+      //         ) {
+      //           posizione.schedulazioni.results.forEach((schedulazione) => {
+      //             let schedulazioneRow = { ...schedulazione };
+      //             delete schedulazioneRow?.id;
+      //             delete schedulazioneRow?.id_posizione;
+      //             delete schedulazioneRow?.posizione;
+      //             delete schedulazioneRow?.__metadata;
+      //             Object.keys(schedulazioneRow).forEach(key => {
+      //               if (key.toLowerCase().includes("data")) {
+      //                   schedulazioneRow[key] = formatter.formatDate(schedulazioneRow[key]);
+      //               }
+      //             });
+      //             flatData.push(schedulazioneRow);
+      //           });
+      //         }
+      //       });
+      //     }
+      //   });
 
-        return flatData;
-      },
+      //   return flatData;
+      // },
     };
   }
 );

@@ -158,6 +158,12 @@ sap.ui.define(
           case "02":
             oModel = this.getModel("master3CO");
             break;
+          case "03":
+            oModel = this.getModel("master3SB");
+            break;
+          case "06":
+            oModel = this.getModel("master3Scart");
+            break;  
           default:
         }
         let aData = oModel.getProperty("/");
