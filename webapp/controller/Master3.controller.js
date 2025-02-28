@@ -50,9 +50,7 @@ sap.ui.define(
         this.getModel("count").setProperty("/selfbilling", selfb.results);
         debugger;
         this.getRouter().getHashChanger().replaceHash("master3");
-        this.getRouter()
-          .getRoute("master3")
-          .attachPatternMatched(this._onObjectMatched, this);
+        this.getRouter().getRoute("master3").attachPatternMatched(this._onObjectMatched, this);
         this.onFilterSelect(null, "01");
         this.setModel(models.createEdiFiltersModel(), "filtersModel");
       },
@@ -313,36 +311,18 @@ sap.ui.define(
             this.getOwnerComponent()
               .getModel("datiAppoggio")
               .setProperty("/posizioneCorrente", detail);
-            this.getOwnerComponent()
-              .getModel("datiAppoggio")
-              .setProperty("/schedulazioni", detail.schedulazioni.results);
-            this.getOwnerComponent()
-              .getModel("datiAppoggio")
-              .setProperty(
+            this.getOwnerComponent().getModel("datiAppoggio").setProperty("/schedulazioni", detail.schedulazioni.results);
+            this.getOwnerComponent().getModel("datiAppoggio").setProperty(
                 "/testata",
-                this.getView()
-                  .getModel("master3")
-                  .getProperty(`${detailPath[0] + detailPath[1]}`)
+                this.getView().getModel("master3").getProperty(`${detailPath[0] + detailPath[1]}`)
               );
             debugger;
-            let oNextUIState;
-            this.getOwnerComponent()
-              .getHelper()
-              .then(
-                function (oHelper) {
-                  oNextUIState = oHelper.getNextUIState(1);
-                  this.getRouter().navTo("Detail2Master3", {
-                    product: detail.id,
-                    layout: oNextUIState.layout,
-                  });
-                }.bind(this)
-              );
+              this.getRouter().navTo("Detail2Master3", {
+                product: detail.id,
+                layout: "TwoColumnsBeginExpanded",
+              });
           } else {
-            detailPath = oEvent
-              .getSource()
-              .getParent()
-              .getBindingContext("master3")
-              .getPath();
+            detailPath = oEvent.getSource().getParent().getBindingContext("master3").getPath();
             this.getRouter().navTo("detailMaster3", {
               product: detail.id,
               layout: "OneColumn",
@@ -437,12 +417,7 @@ sap.ui.define(
 
       navToAPP: function (oEvent) {
         debugger;
-        let level = oEvent
-          .getSource()
-          .getParent()
-          .getParent()
-          .getBindingContext("master3")
-          .getPath();
+        let level = oEvent.getSource().getParent().getParent().getBindingContext("master3").getPath();
         if (level.includes("posizioni")) {
           this.getRouter().navTo("master", { monitor: "monitor" });
         } else {
@@ -537,15 +512,6 @@ sap.ui.define(
             }
           }.bind(this),
         });
-      },
-      //FUNZIONI CALLOFF
-      onListItemPress: function (oEvent) {
-        debugger;
-        let idMaster = oEvent
-          .getSource()
-          .getBindingContext("master3CO")
-          .getObject().id;
-        this.getRouter().navTo("dettCallOff", { id: idMaster });
       },
     });
   }

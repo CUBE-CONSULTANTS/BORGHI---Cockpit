@@ -117,14 +117,19 @@ sap.ui.define(
             let row = this._cleanAndFormatData(item);
             let positions = item.posizioni || item.posizioni_testata ||
             item.dettaglio_fattura || [];
+          
             positions.forEach(position => {
+              debugger
                 let positionRow = { ...row, ...this._cleanAndFormatData(position) };
                 let schedules = position.schedulazioni?.results ||
-                position.riferimento_ddt?.results || [];
+                position.riferimento_ddt?.results || 
+                Array.isArray(position.riferimento_ddt) ? position.riferimento_ddt : [position.riferimento_ddt] 
+                 || [];
+                debugger
                 schedules.forEach(schedule => {
                     let scheduleRow = { ...positionRow, ...this._cleanAndFormatData(schedule) };
-
-                    let invoiceLines = schedule.riga_fattura?.results || [];
+                    debugger
+                    let invoiceLines = Array.isArray(schedule.riga_fattura) ? schedule.riga_fattura : [schedule.riga_fattura]
                     invoiceLines.forEach(invoice => {
                       let invoiceRow = { ...scheduleRow, ...this._cleanAndFormatData(invoice) };
                       aExportData.push(invoiceRow);
@@ -144,9 +149,9 @@ sap.ui.define(
         [
             "posizioni", "posizioni_testata", "id", "id_master", "edi",
             "idoc_paylod", "log_testata", "__metadata", "payload_db",
-            "idoc_payload_db", "archiviato", "template", "tipo","posizione","dettaglio_fattura",
+            "idoc_payload_db", "archiviato", "template","posizione","dettaglio_fattura",
             "riferimento_ddt", "riga_fattura","id_dettaglio_fattura",
-            "versione", "numero_idoc", "master","log","id_posizione","id_testata","testata"
+             "numero_idoc", "master","log","id_posizione","id_testata","testata"
         ].forEach(key => delete cleanedData[key]);
         if (cleanedData.master) {
             ["edi", "payload_db","id"].forEach(key => delete cleanedData.master[key]);
