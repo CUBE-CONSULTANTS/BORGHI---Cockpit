@@ -5,16 +5,10 @@ sap.ui.define(
 
     return BaseController.extend("programmi.consegne.edi.controller.Detail", {
       onInit: function () {
-        this.oOwnerComponent = this.getOwnerComponent();
+        this.oModel = this.getOwnerComponent.getModel();
 
-        this.oModel = this.oOwnerComponent.getModel();
-
-        this.getRouter()
-          .getRoute("master")
-          .attachPatternMatched(this._onProductMatched, this);
-        this.getRouter()
-          .getRoute("detail")
-          .attachPatternMatched(this._onProductMatched, this);
+        this.getRouter().getRoute("master").attachPatternMatched(this._onProductMatched, this);
+        this.getRouter().getRoute("detail").attachPatternMatched(this._onProductMatched, this);
       },
 
       _onProductMatched: function (oEvent) {

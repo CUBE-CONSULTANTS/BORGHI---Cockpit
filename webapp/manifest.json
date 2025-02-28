@@ -54,6 +54,22 @@
 				"annotations": [],
 				"odataVersion": "2.0"
 				}
+			},
+      "fileScartatiService": {
+				"uri": "/odata/v4/file-scartati/",
+				"type": "OData",
+				"settings": {
+				"annotations": [],
+				"odataVersion": "4.0"
+				}
+			},
+			"fileScartatiService2": {
+				"uri": "/odata/v2/file-scartati/",
+				"type": "OData",
+				"settings": {
+				"annotations": [],
+				"odataVersion": "2.0"
+				}
 			}
 	}
 	},
@@ -143,7 +159,27 @@
           "autoExpandSelect": true,
           "earlyRequests": true
         }
-	  }
+	    },
+      "fileScartatiV4": {
+        "dataSource": "fileScartatiService",
+        "preload": true,
+        "settings": {
+          "synchronizationMode": "None",
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      },
+      "fileScartatiV2": {
+        "dataSource": "fileScartatiService2",
+        "preload": true,
+        "settings": {
+          "synchronizationMode": "None",
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+	    }
     },
 		"resources": {
 			"css": [
@@ -181,12 +217,12 @@
 					"target": "home"
 				},
 				{
-					"pattern": "master",
+					"pattern": "master/:monitor:",
 					"name": "master",
 					"target": "master"
 				},
 				{
-					"pattern": "master2",
+					"pattern": "master2/:monitor:",
 					"name": "master2",
 					"target": "master2"
 				},
@@ -228,6 +264,11 @@
 					"pattern": "dettCallOff/{id}",
 					"name": "dettCallOff",
 					"target": "dettCallOff"
+        },
+        {
+					"pattern": "dettSelfBilling/{id}",
+					"name": "dettSelfBilling",
+					"target": "dettSelfBilling"
         }
 
 			],
@@ -275,6 +316,11 @@
         "dettCallOff": {
 					"viewName": "dettCallOff",
 					"controlAggregation": "beginColumnPages",
+					"viewLevel": 2
+				},
+        "dettSelfBilling": {
+          "viewName": "dettSelfBilling",
+          "controlAggregation": "beginColumnPages",
 					"viewLevel": 2
 				}
 

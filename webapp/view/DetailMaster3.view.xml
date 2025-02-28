@@ -63,10 +63,10 @@
                 <navigationActions>
 
                     <m:OverflowToolbarButton
-                        type="Transparent"
+                        type="Emphasized"
                         icon="sap-icon://decline"
                         press=".handleCloseDetail"
-                        tooltip="Close column"
+                        tooltip="Close"
                         visible="true"
                     />
                     <!-- {= ${/actionButtonsInfo/midColumn/closeColumn} !== null } -->
@@ -151,29 +151,7 @@
                     <ObjectPageSubSection>
                         <blocks>
                             <m:VBox height="90%">
-                                <m:OverflowToolbar style="Clear">
-                                    <m:Title />
-                                    <m:ToolbarSpacer />
-
-                                    <m:Button
-                                        text="Esporta excel"
-                                        icon="sap-icon://excel-attachment"
-                                        press="downloadExcelFileDett"
-                                    />
-                                    <m:Button
-                                        text="Elabora"
-                                        icon="sap-icon://process"
-                                        press="onProcessaButton"
-                                        type="Emphasized"
-                                    />
-
-                                    <m:Button
-                                        text="Elimina"
-                                        icon="sap-icon://delete"
-                                        press=""
-                                        type="Reject"
-                                    />
-                                </m:OverflowToolbar>
+                               
                                 <m:ScrollContainer
                                     height="100%"
                                     width="100%"
@@ -196,8 +174,26 @@
 
                                         <ui:extension>
                                             <m:OverflowToolbar >
-                                                <m:ToolbarSpacer />
-                                                <!-- <vm:VariantManagement id="p13nVm" for="tablePos"/> -->
+                                              <m:ToolbarSpacer />
+
+                                              <m:Button
+                                                  text="Esporta excel"
+                                                  icon="sap-icon://excel-attachment"
+                                                  press="downloadExcelFileDett"
+                                              />
+                                              <m:Button
+                                                  text="Elabora"
+                                                  icon="sap-icon://process"
+                                                  press="onProcessaButton"
+                                                  type="Emphasized"
+                                              />
+          
+                                              <m:Button
+                                                  text="Elimina"
+                                                  icon="sap-icon://delete"
+                                                  press=""
+                                                  type="Reject"
+                                              />
                                                 <m:Button
                                                     icon="sap-icon://action-settings"
                                                     press="openPosizioniDialog"
@@ -205,15 +201,6 @@
                                                 />
                                             </m:OverflowToolbar>
                                         </ui:extension>
-                                        <!-- <ui:dependents>
-                                            <columnmenu:Menu id="menu">
-                                                <columnmenu:items>
-                                                    <columnmenu:ActionItem icon="sap-icon://sort" label="Sort" press="onColumnHeaderItemPress"/>
-                                                    <columnmenu:ActionItem icon="sap-icon://table-column" label="Columns" press="onColumnHeaderItemPress"/>
-                                                </columnmenu:items>
-                                            </columnmenu:Menu>
-                                        </ui:dependents> -->
-                                        <!---->
 
                                         <ui:columns>
                                             <ui:Column width="5rem" hAlign="Center" tooltip="Dettaglio" >

@@ -1,0 +1,585 @@
+<mvc:View
+  controllerName="programmi.consegne.edi.controller.DettSelfBilling"
+  xmlns="sap.uxap"
+  xmlns:m="sap.m"
+  xmlns:f="sap.f"
+  xmlns:form="sap.ui.layout.form"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:core="sap.ui.core"
+  xmlns:viz="sap.viz.ui5.controls"
+  xmlns:viz.data="sap.viz.ui5.data"
+  xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+  xmlns:layout="sap.ui.layout"
+  xmlns:commons="sap.suite.ui.commons"
+  xmlns:columnmenu="sap.m.table.columnmenu"
+  xmlns:sap.ui.fl="sap.ui.fl"
+  xmlns:sap.ui.dt="sap.ui.dt"
+  xmlns:ui="sap.ui.table"
+  xmlns:p13n="sap.m.p13n"
+  xmlns:ce="sap.ui.codeeditor"
+  xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+  xmlns:vm="sap.ui.fl.variants"
+>
+  <ObjectPageLayout
+    showTitleInHeaderContent="true"
+    alwaysShowContentHeader="true"
+    preserveHeaderStateOnScroll="false"
+    headerContentPinnable="true"
+    isChildPage="true"
+    showFooter="true"
+    upperCaseAnchorBar="false"
+  >
+    <headerTitle>
+      <ObjectPageDynamicHeaderTitle>
+        <expandedHeading>
+          <m:Title
+            text="{detailData>/DettaglioMaster3/customer}  {detailData>/DettaglioMaster3/supplier} {detailData>/DettaglioMaster3/new_trasmission}"
+            wrapping="true"
+            class="sapUiSmallMarginEnd"
+          />
+        </expandedHeading>
+        <snappedHeading>
+          <m:FlexBox
+            wrap="Wrap"
+            fitContainer="true"
+            alignItems="Center"
+          >
+            <m:FlexBox
+              wrap="NoWrap"
+              fitContainer="true"
+              alignItems="Center"
+              class="sapUiTinyMarginEnd"
+            >
+              <m:Title
+                text="{detailData>/customer}"
+                wrapping="true"
+              />
+            </m:FlexBox>
+          </m:FlexBox>
+        </snappedHeading>
+        <navigationActions>
+          <m:OverflowToolbarButton
+            type="Emphasized"
+            icon="sap-icon://decline"
+            press=".handleCloseDetail"
+            tooltip="Close"
+            visible="true"
+          />
+          <!-- {= ${/actionButtonsInfo/midColumn/closeColumn} !== null } -->
+        </navigationActions>
+      </ObjectPageDynamicHeaderTitle>
+    </headerTitle>
+    <headerContent>
+      <m:HBox
+        justifyContent="SpaceBetween"
+        fitContainer="true"
+      >
+        <m:VBox class="sapUiSmallMarginEnd">
+          <m:VBox class="sapUiTinyMarginBottom">
+            <m:Label
+              text="Cliente"
+              design="Bold"
+            />
+            <m:Text text="{detailData>/DettaglioMaster3/customer}" />
+          </m:VBox>
+          <m:VBox class="sapUiTinyMarginBottom">
+            <m:Label
+              text="Nome file"
+              design="Bold"
+            />
+            <m:Text text="{detailData>/DettaglioMaster3/nome_file}" />
+          </m:VBox>
+          <m:VBox>
+            <m:Label
+              text="Data Ricezione"
+              design="Bold"
+            />
+            <m:Text text="{
+              path: 'detailData>/DettaglioMaster3/data_ricezione',
+              formatter: '.formatter.formatDate'
+            }" />
+          </m:VBox>
+        </m:VBox>
+        <m:VBox class="sapUiSmallMarginEnd">
+          <m:VBox class="sapUiTinyMarginBottom">
+            <m:Label
+              text="New Trasmission"
+              design="Bold"
+            />
+            <m:Text text="{detailData>/DettaglioMaster3/new_trasmission}" />
+          </m:VBox>
+          <m:VBox class="sapUiTinyMarginBottom">
+            <m:Label
+              text="Data Trasmissione"
+              design="Bold"
+            />
+            <m:Text text="{
+              path: 'detailData>/DettaglioMaster3/date_tras',
+              formatter: '.formatter.formatDate'
+            }" />
+          </m:VBox>
+          <m:VBox>
+            <m:Label
+              text="Fornitore"
+              design="Bold"
+            />
+            <m:Text text="{detailData>/DettaglioMaster3/supplier}" />
+          </m:VBox>
+        </m:VBox>
+        <m:VBox class="sapUiSmallMarginEnd">
+          <m:VBox class="sapUiTinyMarginBottom">
+            <m:Label
+              text="P. Iva Cliente"
+              design="Bold"
+            />
+            <m:Text text="{detailData>/DettaglioMaster3/piva_cliente}" />
+          </m:VBox>
+          <m:VBox class="sapUiTinyMarginBottom">
+            <m:Label
+              text="P. IVA Mittente"
+              design="Bold"
+            />
+            <m:Text text="{detailData>/DettaglioMaster3/piva_terre}" />
+          </m:VBox>
+        </m:VBox>
+      </m:HBox>
+    </headerContent>
+    <sections>
+      <ObjectPageSection title="Dettaglio Fattura">
+        <subSections>
+          <ObjectPageSubSection>
+            <blocks>
+              <m:VBox height="90%">
+                <m:ScrollContainer
+                  height="100%"
+                  width="100%"
+                  vertical="true"
+                  horizontal="true"
+                >
+                  <ui:TreeTable
+                    id="tablePosSB"
+                    selectionMode="MultiToggle"
+                    rows="{
+                      path: 'detailData>/DettaglioFatture',
+                      parameters: {
+                        arrayNames: ['riferimento_ddt', 'riga_fattura']
+                      }
+                    }"
+                    autoPopinMode="true"
+                    fixedLayout="false"
+                    sort="onSort"
+                    ariaLabelledBy="title"
+                    showColumnVisibilityMenu="true"
+                    sap.ui.fl:flexibility="sap/m/flexibility/EngineFlex"
+                  >
+                    <ui:extension>
+                      <m:OverflowToolbar id="prova3">
+                        <m:ToolbarSpacer
+                          />
+                        <m:Button
+                        text="Espandi tutti"
+                        icon="sap-icon://expand-all"
+                        press="onExpandFirstLevel"
+                      />
+                      <m:Button
+                        icon="sap-icon://collapse-all"
+                        text="Collassa tutti"
+                        press="onCollapseAll"
+                      />
+                      <m:Button
+                      text="Esporta excel"
+                      icon="sap-icon://excel-attachment"
+                      press="downloadExcelFileDett"
+                    />
+                    <m:Button
+                      text="Elimina"
+                      icon="sap-icon://delete"
+                      press=""
+                      type="Reject"
+                    />
+                        
+                        <m:Button
+                          icon="sap-icon://action-settings"
+                          press="openPosizioniDialog"
+                          id="p13n"
+                        />
+                      </m:OverflowToolbar>
+                    </ui:extension>
+                    <ui:columns>
+                      <ui:Column
+                        width="10rem"
+                        showSortMenuEntry="false"
+                        tooltip="Num Fattura"
+                        app:p13nKey="Num Fattura"
+                        sortProperty="Num Fattura"
+                      >
+                        <m:Label text="Num Fattura" />
+                        <ui:template>
+                          <m:ObjectIdentifier text="{detailData>numero_fattura}" />
+                        </ui:template>
+                      </ui:Column>
+                      <ui:Column
+                        width="10rem"
+                        showSortMenuEntry="false"
+                        tooltip="Data Fattura"
+                        app:p13nKey="Data Fattura"
+                        sortProperty="Data Fattura"
+                      >
+                        <m:Label text="Data Fattura" />
+                        <ui:template>
+                          <m:ObjectIdentifier text="{detailData>data_fattura}" />
+                        </ui:template>
+                      </ui:Column>
+                      <ui:Column
+                        width="10rem"
+                        showSortMenuEntry="false"
+                        tooltip="Data Scadenza Fattura"
+                        app:p13nKey="Data Scadenza Fattura"
+                        sortProperty="Data Scadenza Fattura"
+                      >
+                        <m:Label text="Data Scadenza Fattura" />
+                        <ui:template>
+                          <m:ObjectIdentifier text="{detailData>data_scadenza_fattura}" />
+                        </ui:template>
+                      </ui:Column>
+                     
+                      <ui:Column
+                        width="10rem"
+                        showSortMenuEntry="false"
+                        tooltip="DDT Terre"
+                        app:p13nKey="DDT Terre"
+                        sortProperty="DDT Terre"
+                      >
+                        <m:Label text="DDT Terre" />
+                        <ui:template>
+                          <m:ObjectIdentifier text="{detailData>ddt_terre}" />
+                        </ui:template>
+                      </ui:Column>
+                      <ui:Column
+                        width="10rem"
+                        showSortMenuEntry="false"
+                        tooltip="Num. DDT Cliente"
+                        app:p13nKey="Num. DDT Cliente"
+                        sortProperty="Num. DDT Cliente"
+                      >
+                        <m:Label text="Num. DDT Cliente" />
+                        <ui:template>
+                          <m:ObjectIdentifier text="{detailData>num_ddt_cliente}" />
+                        </ui:template>
+                      </ui:Column>
+                      <ui:Column
+                        width="10rem"
+                        showSortMenuEntry="false"
+                        tooltip="Data DDT"
+                        app:p13nKey="Data DDT"
+                        sortProperty="Data DDT"
+                      >
+                        <m:Label text="Data DDT" />
+                        <ui:template>
+                          <m:ObjectIdentifier text="{detailData>data_ddt_cliente}" />
+                        </ui:template>
+                      </ui:Column>
+                      <ui:Column
+                        width="10rem"
+                        showSortMenuEntry="false"
+                        tooltip="Num. Ordine"
+                        app:p13nKey="Num. Ordine"
+                        sortProperty="Num. Ordine"
+                      >
+                        <m:Label text="Num. Ordine" />
+                        <ui:template>
+                          <m:ObjectIdentifier text="{detailData>order_number}" />
+                        </ui:template>
+                      </ui:Column>
+                     
+                      <ui:Column
+                        width="10rem"
+                        showSortMenuEntry="false"
+                        tooltip="Transazione"
+                        app:p13nKey="Transazione"
+                        sortProperty="Transazione"
+                      >
+                        <m:Label text="Transazione" />
+                        <ui:template>
+                          <m:ObjectIdentifier text="{detailData>transaction}" />
+                        </ui:template>
+                      </ui:Column>
+                      <ui:Column
+                        width="10rem"
+                        showSortMenuEntry="false"
+                        tooltip="Cod Articolo"
+                        app:p13nKey="Cod Articolo"
+                        sortProperty="Cod Articolo"
+                      >
+                        <m:Label text="Cod Articolo" />
+                        <ui:template>
+                          <m:ObjectIdentifier text="{detailData>codice_articolo_cliente_da_transcodificare}" />
+                        </ui:template>
+                      </ui:Column>
+                      <ui:Column
+                        width="10rem"
+                        showSortMenuEntry="false"
+                        tooltip="Versione"
+                        app:p13nKey="Versione"
+                        sortProperty="Versione"
+                      >
+                        <m:Label text="Versione" />
+                        <ui:template>
+                          <m:ObjectIdentifier text="{detailData>version}" />
+                        </ui:template>
+                      </ui:Column>
+                      <ui:Column
+                        width="10rem"
+                        showSortMenuEntry="false"
+                        tooltip="Vat"
+                        app:p13nKey="Vat"
+                        sortProperty="Vat"
+                      >
+                        <m:Label text="Vat" />
+                        <ui:template>
+                          <m:ObjectIdentifier text="{detailData>vat}" />
+                        </ui:template>
+                      </ui:Column>
+                      <ui:Column
+                        width="10rem"
+                        showSortMenuEntry="false"
+                        tooltip="Cash"
+                        app:p13nKey="Cash"
+                        sortProperty="Cash"
+                      >
+                        <m:Label text="Cash" />
+                        <ui:template>
+                          <m:ObjectIdentifier text="{detailData>cash}" />
+                        </ui:template>
+                      </ui:Column>
+                      <ui:Column
+                        width="10rem"
+                        showSortMenuEntry="false"
+                        tooltip="Prezzo Totale"
+                        app:p13nKey="Prezzo Totale"
+                        sortProperty="Prezzo Totale"
+                      >
+                        <m:Label text="Prezzo Totale" />
+                        <ui:template>
+                          <m:ObjectIdentifier text="{detailData>total_pirce}" />
+                        </ui:template>
+                      </ui:Column>
+                      <ui:Column
+                        width="10rem"
+                        showSortMenuEntry="false"
+                        tooltip="Totale dal Prezzo Tot"
+                        app:p13nKey="Totale dal Prezzo Tot"
+                        sortProperty="Totale dal Prezzo Tot"
+                      >
+                        <m:Label text="Totale dal Prezzo Tot" />
+                        <ui:template>
+                          <m:ObjectIdentifier text="{detailData>total_from_total_price}" />
+                        </ui:template>
+                      </ui:Column>
+                      <ui:Column
+                        width="10rem"
+                        showSortMenuEntry="false"
+                        tooltip="Unità Prezzo"
+                        app:p13nKey="Unità Prezzo"
+                        sortProperty="Unità Prezzo"
+                      >
+                        <m:Label text="Unità Prezzo" />
+                        <ui:template>
+                          <m:ObjectIdentifier text="{detailData>unit_price}" />
+                        </ui:template>
+                      </ui:Column>
+                      <ui:Column
+                        width="10rem"
+                        showSortMenuEntry="false"
+                        tooltip="Prezzo Unit"
+                        app:p13nKey="Prezzo Unit"
+                        sortProperty="Prezzo Unit"
+                      >
+                        <m:Label text="Prezzo Unit" />
+                        <ui:template>
+                          <m:ObjectIdentifier text="{detailData>price_unit}" />
+                        </ui:template>
+                      </ui:Column>
+                      <ui:Column
+                        width="10rem"
+                        showSortMenuEntry="false"
+                        tooltip="Quantità Consegna"
+                        app:p13nKey="Quantità Consegna"
+                        sortProperty="Quantità Consegna"
+                      >
+                        <m:Label text="Quantità Consegna" />
+                        <ui:template>
+                          <m:ObjectIdentifier text="{detailData>qty_delivery}" />
+                        </ui:template>
+                      </ui:Column>
+                      <ui:Column
+                        width="10rem"
+                        showSortMenuEntry="false"
+                        tooltip="UdM"
+                        app:p13nKey="UdM"
+                        sortProperty="UdM"
+                      >
+                        <m:Label text="UdM" />
+                        <ui:template>
+                          <m:ObjectIdentifier text="{detailData>um}" />
+                        </ui:template>
+                      </ui:Column>
+                      <ui:Column
+                        width="10rem"
+                        showSortMenuEntry="false"
+                        tooltip="Num IDoc"
+                        app:p13nKey="Num IDoc"
+                        sortProperty="Num IDoc"
+                      >
+                        <m:Label text="Num IDoc" />
+                        <ui:template>
+                          <m:ObjectIdentifier text="{detailData>numero_idoc}" />
+                        </ui:template>
+                      </ui:Column>
+                      <ui:Column
+                      width="10rem"
+                      showSortMenuEntry="false"
+                      tooltip="Invoice Code"
+                      app:p13nKey="invoice_code"
+                      sortProperty="Invoice Code"
+                    >
+                      <m:Label text="Invoice Code" />
+                      <ui:template>
+                        <m:ObjectIdentifier text="{detailData>sb_invoice_code}" />
+                      </ui:template>
+                    </ui:Column>
+                      <ui:Column
+                        width="10rem"
+                        showSortMenuEntry="false"
+                        tooltip="Sign 01"
+                        app:p13nKey="Sign 01"
+                        sortProperty="Sign 01"
+                      >
+                        <m:Label text="Sign 01" />
+                        <ui:template>
+                          <m:ObjectIdentifier text="{detailData>sign_code_1}" />
+                        </ui:template>
+                      </ui:Column>
+                      <ui:Column
+                        width="10rem"
+                        showSortMenuEntry="false"
+                        tooltip="Sign 02"
+                        app:p13nKey="Sign 02"
+                        sortProperty="Sign 02"
+                      >
+                        <m:Label text="Sign 02" />
+                        <ui:template>
+                          <m:ObjectIdentifier text="{
+                            path: 'detailData>sign_code_2'
+                          }" />
+                        </ui:template>
+                      </ui:Column>
+                      <ui:Column
+                        width="10rem"
+                        tooltip="Subcharger Deduction"
+                        app:p13nKey="subcharger_deduction"
+                        sortProperty="Subcharger Deduction"
+                      >
+                        <m:Label text="Subcharger Deduction" />
+                        <ui:template>
+                          <m:ObjectIdentifier text="{detailData>subcharger_deduction}" />
+                        </ui:template>
+                      </ui:Column>
+                      <ui:Column
+                        width="12rem"
+                        tooltip="Consignment"
+                        app:p13nKey="consignment"
+                        sortProperty="consignment"
+                      >
+                        <m:Label text="Consignment" />
+                        <ui:template>
+                          <m:ObjectIdentifier text="{detailData>consignment}" />
+                        </ui:template>
+                      </ui:Column>
+                      <ui:Column
+                        width="10rem"
+                        sortProperty="Paese"
+                        tooltip="Paese"
+                        app:p13nKey="paese"
+                      >
+                        <m:Label text="Paese" />
+                        <ui:template>
+                          <m:ObjectIdentifier text="{detailData>country}" />
+                        </ui:template>
+                      </ui:Column>
+                      <ui:Column
+                        width="10rem"
+                        showSortMenuEntry="false"
+                        tooltip="Valuta"
+                        sortProperty="Valuta"
+                        app:p13nKey="Valuta"
+                      >
+                        <m:Label text="" />
+                        <ui:template>
+                          <m:ObjectIdentifier text="{detailData>currency}" />
+                        </ui:template>
+                      </ui:Column>
+                      <ui:Column
+                        width="10rem"
+                        tooltip="Tot Vat"
+                        sortProperty="Tot Vat"
+                        app:p13nKey="tot_vat"
+                      >
+                        <m:Label text="Tot Vat" />
+                        <ui:template>
+                          <m:ObjectIdentifier text="{detailData>total_vat}" />
+                        </ui:template>
+                      </ui:Column>
+                      <ui:Column
+                        width="10rem"
+                        tooltip="Tot Invoice"
+                        sortProperty="Tot Invoice"
+                        app:p13nKey="Tot Invoice"
+                      >
+                        <m:Label text="Tot Invoice" />
+                        <ui:template>
+                          <m:ObjectIdentifier text="{detailData>total_sb_invoice}" />
+                        </ui:template>
+                      </ui:Column>
+                      <ui:Column
+                        width="10rem"
+                        tooltip="Tot Sconto"
+                        sortProperty="Tot Sconto"
+                        app:p13nKey="Tot Sconto"
+                      >
+                        <m:Label text="Tot Sconto" />
+                        <ui:template>
+                          <m:ObjectIdentifier text="{detailData>total_cash_discount}" />
+                        </ui:template>
+                      </ui:Column>
+                      <ui:Column
+                        width="10rem"
+                        tooltip="Stab. Consegna"
+                        sortProperty="Stab. Consegna"
+                        app:p13nKey="stab_consegna_col"
+                      >
+                        <m:Label text="Stab. Consegna" />
+                        <ui:template>
+                          <m:ObjectIdentifier text="{detailData>posizione_49_51}" />
+                        </ui:template>
+                      </ui:Column>
+                    </ui:columns>
+                  </ui:TreeTable>
+                </m:ScrollContainer>
+              </m:VBox>
+            </blocks>
+          </ObjectPageSubSection>
+        </subSections>
+      </ObjectPageSection>
+      <ObjectPageSection title="LOG">
+        <subSections>
+          <ObjectPageSubSection>
+            <blocks>
+              <m:Text text="Processamento" />
+            </blocks>
+          </ObjectPageSubSection>
+        </subSections>
+      </ObjectPageSection>
+    </sections>
+  </ObjectPageLayout>
+</mvc:View>

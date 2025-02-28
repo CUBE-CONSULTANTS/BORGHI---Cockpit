@@ -221,6 +221,13 @@ sap.ui.define(
               "/selfBilling/fornitori/items",
               aFornitori.map((m) => ({ Key: m, Text: m }))
             );
+          }else if(key === "06"){
+            let aData = this.getModel("master3Scart").getProperty("/");
+            let aFile = [...new Set(aData.map((item) => item.filename))];
+            this.getModel("filtersModel").setProperty(
+              "/scartati/nomeFile/items",
+              aFile.map((m) => ({ Key: m, Text: m }))
+            );
           }
         },
         onFilterBarClear: async function (oEvent) {
@@ -255,22 +262,39 @@ sap.ui.define(
           if(oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("selfBilling")){
             modelMeta = await this.callData(this.getOwnerComponent().getModel("selfBillingV2"), "/Testata", [],[ "dettaglio_fattura,log_testata,dettaglio_fattura/riferimento_ddt,dettaglio_fattura/riferimento_ddt/riga_fattura"],"03")
           }
+          if(oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("fileScartati")){
+            modelMeta = await this.callData(this.getOwnerComponent().getModel("fileScartatiV2"), "/FileScartati", [],[],"06")
+          }
           // oBinding.filter([]);
           // oBinding.sort([]);
         },
         onSearchData: async function (oEvent) {
           //ricerca filtrata
+          debugger
           let oFilterSet;
           let key
           if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("delivery")) {
             oFilterSet = this.getModel("filtersModel").getProperty("/delivery");
             let aFilters = mapper.buildFilters(oFilterSet,key = "01")
-            await this.callData(this.getOwnerComponent().getModel("modelloV2"),"/Testata",aFilters,["posizioni","posizioni/schedulazioni","posizioni/log"],"01") 
+            await this.callData(this.getOwnerComponent().getModel("modelloV2"),"/Testata",aFilters,["posizioni($filter=stato ne '53'),posizioni($expand=log,schedulazioni,testata)",],"01") 
           }else if(oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("callOff")){
             debugger
             oFilterSet = this.getModel("filtersModel").getProperty("/callOff");
             let aFilters = mapper.buildFilters(oFilterSet,key = "02")
             await this.callData(this.getOwnerComponent().getModel("calloffV2"), "/Testata", aFilters, ["master,posizioni_testata,log_testata"],"02") 
+          }else if(oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("selfBilling")){
+            debugger
+            oFilterSet = this.getModel("filtersModel").getProperty("/selfBilling");
+            let aFilters = mapper.buildFilters(oFilterSet,key = "03")
+            await this.callData(this.getOwnerComponent().getModel("selfBillingV2"), "/Testata",
+              aFilters, [
+                "dettaglio_fattura,log_testata,dettaglio_fattura/riferimento_ddt,dettaglio_fattura/riferimento_ddt/riga_fattura",
+              ],"03") 
+          }else if(oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("scartati")){
+            debugger
+            oFilterSet = this.getModel("filtersModel").getProperty("/scartati");
+            let aFilters = mapper.buildFilters(oFilterSet,key = "06")
+            await this.callData(this.getOwnerComponent().getModel("fileScartatiV2"), "/FileScartati", aFilters, [],"06") 
           }
         },
         
@@ -298,6 +322,10 @@ sap.ui.define(
                 testata.dettaglio_fattura = Object.values(testata.dettaglio_fattura.results);
               });
               this.getOwnerComponent().setModel(modelMeta, "master3SB");
+            }else if(key == "06"){
+              debugger
+              modelMeta = new JSONModel(metadata.results);
+              this.getOwnerComponent().setModel(modelMeta, "master3Scart");
             }
           } catch (error) {
             MessageBox.error("Errore durante la ricezione dei dati")
@@ -325,7 +353,8 @@ sap.ui.define(
         },
         buildSpreadSheet: function(aExportData){
           debugger
-          let flatExportData = mapper.flatData(aExportData);
+          let exportData = Array.isArray(aExportData) ? aExportData : [aExportData]; 
+          let flatExportData = mapper._formatExcelData(exportData);
           let oSpreadsheet = new Spreadsheet({
             dataSource: flatExportData,
             workbook: {
@@ -371,6 +400,9 @@ sap.ui.define(
           });
           return columns;
       },
+      navToHome: function () {
+        this.getRouter().navTo("home");
+      },
       handleCloseDetail: function () {
         this.getRouter().navTo("master3");
       },
@@ -378,38 +410,7 @@ sap.ui.define(
         oEvent.getSource().getParent().close();
       },
 
-        // _formatExcelData: function(aData) {
-        //   debugger;
-        //   let aExportData = [];
-        //     aData.forEach(item => {
-        //         let row = {};
-        //         Object.keys(item).forEach(key => {
-        //             row[key] = item[key];  
-        //         });
-        //         let positions = item.posizioni || [];
-        //         positions.forEach(position => {
-        //             let positionRow = { ...row }; 
-        //             Object.keys(position).forEach(key => {
-        //                 positionRow[key] = position[key];  
-        //             });
-
-        //             let schedules = position.schedulazioni.results || [];
-        //             schedules.forEach(schedule => {
-        //                 let scheduleRow = { ...positionRow }; 
-        //                 Object.keys(schedule).forEach(key => {
-        //                     scheduleRow[key] = schedule[key];  
-        //                 });
-        //                 aExportData.push(scheduleRow); 
-        //             });
-
-        //             aExportData.push(positionRow); 
-        //         });
-
-        //         aExportData.push(row); 
-        //     });
-
-        //     return aExportData;
-        // },
+      
       }
     );
   }

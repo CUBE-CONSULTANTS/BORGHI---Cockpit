@@ -8,49 +8,23 @@ sap.ui.define(
       {
         formatter: formatter,
         onInit: function () {
-          debugger;
-          this.oOwnerComponent = this.getOwnerComponent();
-          this.oModel = this.oOwnerComponent.getModel();
-
-          this.getRouter()
-            .getRoute("Detail2Master3")
-            .attachPatternMatched(this._onProductMatched, this);
+          debugger;     
+          this.getRouter().getRoute("Detail2Master3").attachPatternMatched(this._onProductMatched, this);
         },
 
         _onProductMatched: function (oEvent) {
           debugger;
-          this._product =
-            oEvent.getParameter("arguments").product || this._product || "0";
+          this._product = oEvent.getParameter("arguments").product || this._product || "0";
           let productData = this.getModel("datiAppoggio").getData();
-          let codiceClienteMateriale =
-            productData.posizioneCorrente.codice_cliente_materiale;
-          let numeroOrdineAcquisto =
-            productData.posizioneCorrente.numero_ordine_acquisto;
+          let codiceClienteMateriale = productData.posizioneCorrente.codice_cliente_materiale;
+          let numeroOrdineAcquisto = productData.posizioneCorrente.numero_ordine_acquisto;
           let materiale = productData.posizioneCorrente.descrizione_materiale;
           let idoc = productData.posizioneCorrente.numero_idoc;
-          let datiElementoSelect =
-            productData.posizioneCorrente.schedulazioni.results;
-          let numeroProgressivoInvio =
-            this.getModel("datiAppoggio").getProperty(
-              "/testata"
-            ).numero_progressivo_invio;
-          let cliente =
-            this.getModel("datiAppoggio").getProperty("/testata").codice_buyer;
-
-          //prova per testata info
-          // let datiElementoSelect2 = this.getOwnerComponent()
-          //   .getModel("master3")
-          //   .getProperty("/Master3")
-          //   .find((x) => (x.DelforPosizioni.id = this._product));
-          // datiElementoSelect2.DelforPosizioni =
-          //   datiElementoSelect2.DelforPosizioni.flat();
-          this.getView().setModel(
-            new sap.ui.model.json.JSONModel(),
-            "detailData2"
-          );
-          this.getView()
-            .getModel("detailData2")
-            .setProperty("/DettaglioMaster3", {
+          let datiElementoSelect = productData.posizioneCorrente.schedulazioni.results;
+          let numeroProgressivoInvio = this.getModel("datiAppoggio").getProperty("/testata").numero_progressivo_invio;
+          let cliente = this.getModel("datiAppoggio").getProperty("/testata").codice_buyer;
+          this.getView().setModel(new JSONModel(),"detailData2");
+          this.getView().getModel("detailData2").setProperty("/DettaglioMaster3", {
               codiceClienteMateriale: codiceClienteMateriale,
               numeroOrdineAcquisto: numeroOrdineAcquisto,
               materiale: materiale,
@@ -58,8 +32,6 @@ sap.ui.define(
               numeroProgressivoInvio: numeroProgressivoInvio,
               cliente: cliente,
             });
-
-          // fine prova
           datiElementoSelect = datiElementoSelect
             .map((item) => {
               if (item.data_spedizione_richiesta_da) {
@@ -99,7 +71,7 @@ sap.ui.define(
         },
 
         handleFullScreen: function () {
-          var sNextLayout = this.oModel.getProperty(
+          var sNextLayout = this.getOwnerComponent().getModel().getProperty(
             "/actionButtonsInfo/midColumn/fullScreen"
           );
           this.getRouter().navTo("Detail2Master3", {
@@ -109,7 +81,7 @@ sap.ui.define(
         },
 
         handleExitFullScreen: function () {
-          var sNextLayout = this.oModel.getProperty(
+          var sNextLayout = this.getOwnerComponent().getModel().getProperty(
             "/actionButtonsInfo/midColumn/exitFullScreen"
           );
           this.getRouter().navTo("Detail2Master3", {
@@ -130,7 +102,7 @@ sap.ui.define(
             .getCurrentBeginColumnPage()
             .getProperty("viewName");
 
-          var sNextLayout = this.oModel.getProperty(
+          var sNextLayout = this.getOwnerComponent().getModel().getProperty(
             "/actionButtonsInfo/midColumn/closeColumn"
           );
           //prova chiusura colonna e nav

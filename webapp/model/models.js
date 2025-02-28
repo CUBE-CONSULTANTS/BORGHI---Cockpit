@@ -26,6 +26,7 @@ sap.ui.define(
 					enabled: false,
 					busy: false,
 					selected: false,
+          backToMon: false
 				});
 			},
 			createEdiFiltersModel: function () {
@@ -78,7 +79,13 @@ sap.ui.define(
           },
           despatch: {},
           invoice: {},
-          scartati: {}
+          scartati: {
+            dataRic : null,
+            nomeFile : {
+							value: null,
+							items: [],
+						},
+          }
 				});
 			},
  

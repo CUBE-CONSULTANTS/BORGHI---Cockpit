@@ -85,8 +85,72 @@ sap.ui.define(
             );
           }
         }
-       
+        if (key === '03'){}
+        if(key === '06'){
+          if (oFilterSet.dataRic) {
+            let oDataRic = formatter.parseDate(oFilterSet.dataRic);
+            oDataRic.setHours(1, 0, 0, 0);
+            aFilters.push(
+              new sap.ui.model.Filter(
+                "data_ricezione",
+                sap.ui.model.FilterOperator.EQ,
+                oDataRic
+              )
+            );
+          }
+          if (oFilterSet.nomeFile && oFilterSet.nomeFile.value) {
+            aFilters.push(
+              new sap.ui.model.Filter(
+                "filename",
+                sap.ui.model.FilterOperator.EQ,
+                oFilterSet.nomeFile.value
+              )
+            );
+          }  
+        }
         return aFilters;
+      },
+      _formatExcelData: function(aData) {
+        debugger;
+        let aExportData = [];
+        aData.forEach(item => {
+            let row = this._cleanAndFormatData(item);
+            let positions = item.posizioni || item.posizioni_testata || [];
+            positions.forEach(position => {
+                let positionRow = { ...row, ...this._cleanAndFormatData(position) };
+                let schedules = position.schedulazioni?.results || [];
+                schedules.forEach(schedule => {
+                    let scheduleRow = { ...positionRow, ...this._cleanAndFormatData(schedule) };
+                    aExportData.push(scheduleRow); 
+                });
+                aExportData.push(positionRow); 
+            });
+            aExportData.push(row); 
+        });
+        return aExportData;
+    },
+    _cleanAndFormatData: function(data) {
+      debugger
+        if (!data || typeof data !== "object") return data; 
+        let cleanedData = { ...data };
+        [
+            "posizioni", "posizioni_testata", "id", "id_master", "edi",
+            "idoc_paylod", "log_testata", "__metadata", "payload_db",
+            "idoc_payload_db", "archiviato", "template", "tipo","posizione",
+            "versione", "numero_idoc", "master","log","id_posizione","id_testata","testata"
+        ].forEach(key => delete cleanedData[key]);
+        if (cleanedData.master) {
+            ["edi", "payload_db","id"].forEach(key => delete cleanedData.master[key]);
+        }
+        Object.keys(cleanedData).forEach(key => {
+          if (key.toLowerCase().includes("data")) {
+            cleanedData[key] = formatter.formatDate(cleanedData[key]);
+          }
+          if(key.toLowerCase().includes("posizione_14_19")){
+            cleanedData[key] = formatter.returnDate( cleanedData[key],"yyyyMMdd","dd/MM/YYYY");
+          }
+        });
+        return cleanedData;
       },
       flatData: function (data) {
         debugger;

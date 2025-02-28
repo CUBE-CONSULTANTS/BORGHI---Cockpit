@@ -5,18 +5,25 @@ sap.ui.define(
     "sap/ui/model/FilterOperator",
     "sap/ui/model/Sorter",
     "sap/m/MessageBox",
+    "../model/models"
   ],
-  function (BaseController, Filter, FilterOperator, Sorter, MessageBox) {
+  function (BaseController, Filter, FilterOperator, Sorter, MessageBox, models) {
     "use strict";
 
     return BaseController.extend("programmi.consegne.edi.controller.Master", {
       onInit: function () {
+        this.setModel(models.createMainModel(), "main");
         this.oView = this.getView();
+        this.getRouter().getRoute("master").attachPatternMatched(this._onObjectMatched, this);
         this._bDescendingSort = false;
         this.oProductsTable = this.oView.byId("productsTable");
         
       },
-
+      _onObjectMatched: function (oEvent) { 
+        debugger
+        oEvent.getParameters().arguments.monitor ? this.getModel("main").setProperty("/backToMon", true) : 
+        this.getModel("main").setProperty("/backToMon", false);
+      },
       onSearch: function (oEvent) {
         var oTableSearchState = [],
           sQuery = oEvent.getParameter("query");

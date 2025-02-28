@@ -32,6 +32,7 @@ sap.ui.define(
     return BaseController.extend("programmi.consegne.edi.controller.Master3", {
       formatter: formatter,
       onInit: async function () {
+        this.setModel(models.createMainModel(), "main");
         let countModel = new JSONModel({
           delivery: "",
           calloff: "",
@@ -107,8 +108,9 @@ sap.ui.define(
           case "05":
             break;
           case "06":
-            break;
-          case "07":
+            oModel = this.getOwnerComponent().getModel("fileScartatiV2");
+            await this.callData(oModel, "/FileScartati", [], [], selectedKey);
+            this.onFiltersBuilding(oEvent, selectedKey);
             break;
         }
         this.hideBusy(0);
@@ -135,6 +137,10 @@ sap.ui.define(
           case "03":
             oTable = this.byId("treetableSB");
             aSorters = this.sortTables(oTable, ["customer", "data_ricezione"]);
+            break;
+          case "06":
+            oTable = this.byId("tableScartati");
+            aSorters = this.sortTables(oTable, ["filename", "data_ricezione"]);
             break;
           default:
             return;
@@ -168,10 +174,6 @@ sap.ui.define(
         } else {
           this.getView().byId("buttonDelete").setProperty("enabled", true);
         }
-      },
-
-      navToHome: function () {
-        this.getRouter().navTo("home");
       },
 
       onProcessaButton: function (oEvent) {
@@ -344,7 +346,6 @@ sap.ui.define(
           oEvent.getSource().getParent().getBindingContext("master3CO") !==
           undefined
         ) {
-          debugger;
           detailPath = oEvent
             .getSource()
             .getParent()
@@ -354,6 +355,23 @@ sap.ui.define(
             .getModel("master3CO")
             .getProperty(`${detailPath}`);
           this.getRouter().navTo("dettCallOff", {
+            id: detail.id,
+            layout: "OneColumn",
+          });
+        } else if (
+          oEvent.getSource().getParent().getBindingContext("master3SB") !==
+          undefined
+        ) {
+          debugger;
+          detailPath = oEvent
+            .getSource()
+            .getParent()
+            .getBindingContext("master3SB")
+            .getPath();
+          detail = this.getView()
+            .getModel("master3SB")
+            .getProperty(`${detailPath}`);
+          this.getRouter().navTo("dettSelfBilling", {
             id: detail.id,
             layout: "OneColumn",
           });
@@ -419,10 +437,10 @@ sap.ui.define(
           .getParent()
           .getBindingContext("master3")
           .getPath();
-        if (level.includes("DelforPosizioni")) {
-          this.getRouter().navTo("master");
+        if (level.includes("posizioni")) {
+          this.getRouter().navTo("master", { monitor: "monitor" });
         } else {
-          this.getRouter().navTo("master2");
+          this.getRouter().navTo("master2", { monitor: "monitor" });
         }
       },
 

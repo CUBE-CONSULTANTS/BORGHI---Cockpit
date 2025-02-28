@@ -39,96 +39,7 @@
             <f:DynamicPageHeader pinnable="false" backgroundDesign="Solid"  >
                 <f:content>
                     
-                    <!-- <fb:FilterBar
-                        id="filterbar"
-                        persistencyKey="myPersKey"
-                        useToolbar="false"
-                        search=".onSearch"
-                        filterChange=".onFilterChange"
-                        afterVariantLoad=".onAfterVariantLoad"
-                        showGoOnFB="false"
-                        showFilterConfiguration="false"
-                    >
-                        <fb:filterGroupItems>
-                            <fb:FilterGroupItem
-                                name="Date Processamento EDI"
-                                label="Date Processamento EDI"
-                                groupName="Group1"
-                                visibleInFilterBar="true"
-                            >
-                                <fb:control>
-                                <DatePicker
-                                tooltip="..."
-					secondaryCalendarType="Gregorian"
-					change="handleChange"
-					/>
-                                </fb:control>
-                            </fb:FilterGroupItem>
-                            <fb:FilterGroupItem
-                            id="idDataConsegna"
-                                name="Date di consegna"
-                                label="Date di consegna"
-                                groupName="Group1"
-                                visibleInFilterBar="true"
-                            >
-                                <fb:control>
-                                 <DatePicker
-                                  tooltip="..."
-					secondaryCalendarType="Gregorian"
-					change="handleChange"
-					/>
-                                </fb:control>
-                            </fb:FilterGroupItem>
-                            <fb:FilterGroupItem
-                                name="Cliente"
-                                label="Cliente"
-                                groupName="Group1"
-                                visibleInFilterBar="true"
-                            >
-                                <fb:control>
-                                   <Input/>
-                                </fb:control>
-                            </fb:FilterGroupItem>
-                             <fb:FilterGroupItem
-                                name="Materiale"
-                                label="Materiale"
-                                groupName="Group1"
-                                visibleInFilterBar="true"
-                            >
-                                <fb:control>
-                                <Input/>
-                                </fb:control>
-                            </fb:FilterGroupItem>
-                            
-                             <fb:FilterGroupItem
-                                name="Stato"
-                                label="Stato"
-                                groupName="Group1"
-                                visibleInFilterBar="true"
-                            >
-                                <fb:control>
-                                    <ComboBox
-                                        name=""
-                                        selectionChange=".onSelectionChange"
-                                    >
-                                        <core:Item
-                                            key="{key}"
-                                            text="OK"
-                                        />
-                                        <core:Item
-                                            key="{key}"
-                                            text="KO"
-                                        />
-                                        <core:Item
-                                            key="{key}"
-                                            text="WARNING"
-                                        />
-                                    </ComboBox>
-                                </fb:control>
-                            </fb:FilterGroupItem>
-                            
-                        </fb:filterGroupItems>
-                    </fb:FilterBar> -->
+         
                 </f:content>
             </f:DynamicPageHeader>
         </f:header>
@@ -215,18 +126,7 @@
                     <core:Fragment fragmentName="programmi.consegne.edi.view.fragments.fileScartati"
                 type="XML" />
                 </IconTabFilter>
-                <!-- <IconTabFilter
-                icon="sap-icon://excel-attachment"
-                iconColor="Default"
-                count="{/ProductCollectionStats/Counts/Weight/Overweight}"
-                text="Caricamento Manuale"
-                key="07"
-                
-              > -->
-           <!-- importaPress-->
-                <!-- <core:Fragment fragmentName="programmi.consegne.edi.view.fragments.importMaster3"
-            type="XML" />
-            </IconTabFilter> -->
+              
                 </items>
 
                 <content />
@@ -235,17 +135,10 @@
 
         <!-- DynamicPage Footer -->
         <f:footer>
-            <OverflowToolbar>
-          
-                <Button
-                    press="navToHome"
-                    type="Back"
-                    text="Torna alla Home"
-                />
-      
-                <ToolbarSpacer />
-
-            </OverflowToolbar>
+          <core:Fragment
+          fragmentName="programmi.consegne.edi.view.fragments.footer"
+          type="XML"
+      />
         </f:footer>
     </f:DynamicPage>
 </mvc:View>
