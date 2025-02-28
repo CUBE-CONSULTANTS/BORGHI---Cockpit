@@ -3,7 +3,11 @@ sap.ui.define(["./BaseController"], function (BaseController) {
 
   return BaseController.extend("programmi.consegne.edi.controller.App", {
     onInit: function () {
-      this.getRouter().attachRouteMatched(this.onRouteMatched, this);
+      if (this.getRouter() === undefined) {
+        window.location.hash = "#/home";
+      } else {
+        this.getRouter().attachRouteMatched(this.onRouteMatched, this);
+      }
     },
 
     onRouteMatched: function (oEvent) {
@@ -43,15 +47,20 @@ sap.ui.define(["./BaseController"], function (BaseController) {
     _updateUIElements: function () {
       var oModel = this.getOwnerComponent().getModel(),
         oUIState;
-      this.getOwnerComponent().getHelper().then(function (oHelper) {
-        oUIState = oHelper.getCurrentUIState();
-        oModel.setData(oUIState);
-      });
+      this.getOwnerComponent()
+        .getHelper()
+        .then(function (oHelper) {
+          oUIState = oHelper.getCurrentUIState();
+          oModel.setData(oUIState);
+        });
     },
 
     onExit: function () {
       this.getRouter().detachRouteMatched(this.onRouteMatched, this);
-      this.getRouter().detachBeforeRouteMatched(this.onBeforeRouteMatched, this);
+      this.getRouter().detachBeforeRouteMatched(
+        this.onBeforeRouteMatched,
+        this
+      );
     },
   });
 });
