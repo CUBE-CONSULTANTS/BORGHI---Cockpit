@@ -32,15 +32,21 @@ sap.ui.define(
     return BaseController.extend("programmi.consegne.edi.controller.Master3", {
       formatter: formatter,
       onInit: async function () {
-        // let countModel = new JSONModel(
-        //   { delivery: "", calloff: "", selfbilling: "" },
-        //   "count"
-        // );
-        // this.setModel("count");
-        // this.getModel("count").setProperty(
-        //   "/delivery",
-        //   await API.getEntity("/Testata/$count")
-        // );
+        let countModel = new JSONModel({
+          delivery: "",
+          calloff: "",
+          selfbilling: "",
+        });
+        this.setModel(countModel, "count");
+        let oModel = this.getOwnerComponent().getModel("modelloV2");
+        let del = await API.getEntity(oModel, "/Testata/$count", [], []);
+        this.getModel("count").setProperty("/delivery", del.results);
+        let oModel2 = this.getOwnerComponent().getModel("calloffV2");
+        let cal = await API.getEntity(oModel2, "/Testata/$count", [], []);
+        this.getModel("count").setProperty("/calloff", cal.results);
+        let oModel3 = this.getOwnerComponent().getModel("selfBillingV2");
+        let selfb = await API.getEntity(oModel3, "/Testata/$count", [], []);
+        this.getModel("count").setProperty("/selfbilling", selfb.results);
         debugger;
         this.getRouter().getHashChanger().replaceHash("master3");
         this.getRouter()
@@ -97,16 +103,12 @@ sap.ui.define(
             this.onFiltersBuilding(oEvent, selectedKey);
             break;
           case "04":
-           
             break;
           case "05":
-           
             break;
           case "06":
-           
             break;
           case "07":
-            
             break;
         }
         this.hideBusy(0);
@@ -469,13 +471,25 @@ sap.ui.define(
               let oModel = this.getOwnerComponent().getModel("modelloV2");
               let res = await API.createEntity(oModel, "/Processamento", obj);
               debugger;
-              let modelloReport = new JSONModel(
-                { successo: "", errore: "" },
-                "modelloReport"
-              );
+
+              let modelloReport = new JSONModel({ successo: "", errore: "" });
+              this.setModel(modelloReport, "modelloReport");
               let success = [];
               let error = [];
-              res.results.forEach((x) => {});
+              res.results.forEach((x) => {
+                if (x.status === "51") {
+                  debugger;
+                  let el = items.find((y) => x.id === y.id);
+                  success.push(el);
+                } else {
+                  let el = items.find((y) => x.id === y.id);
+                  error.push(el);
+                }
+              });
+
+              this.getModel().setProperty("/successo", success);
+              this.getModel().setProperty("/errore", error);
+              debugger;
 
               if (!this._fragment) {
                 Fragment.load({

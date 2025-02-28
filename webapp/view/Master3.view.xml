@@ -145,8 +145,7 @@
                         class="prova"
                         icon="sap-icon://shipping-status"
                         iconColor="Default"
-                        
-                        
+                        count="{count>/delivery}"
                         text="Delivery Forecast"
                         key="01"
                         
@@ -160,7 +159,7 @@
                     <IconTabFilter
                         icon="sap-icon://time-off"
                         iconColor="Default"
-                        count="{/ProductCollectionStats/Counts/Weight/Heavy}"
+                        count="{count>/calloff}"
                         text="Call-Off"
                         key="02"
                         
@@ -173,7 +172,7 @@
                     <IconTabFilter
                         icon="sap-icon://monitor-payments"
                         iconColor="Default"
-                        count="{/ProductCollectionStats/Counts/Weight/Overweight}"
+                        count="{count>/selfbilling}"
                         text="Self Billing"
                         key="03"
                        
