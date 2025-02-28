@@ -85,8 +85,7 @@ sap.ui.define(
             );
           }
         }
-        if (key === '03'){}
-        if(key === '06'){
+        if (key === '03'){
           if (oFilterSet.dataRic) {
             let oDataRic = formatter.parseDate(oFilterSet.dataRic);
             oDataRic.setHours(1, 0, 0, 0);
@@ -98,6 +97,46 @@ sap.ui.define(
               )
             );
           }
+          if (oFilterSet.clienti && oFilterSet.clienti.value) {
+            aFilters.push(
+              new sap.ui.model.Filter(
+                "customer",
+                sap.ui.model.FilterOperator.EQ,
+                oFilterSet.clienti.value
+              )
+            );
+          }
+          if (oFilterSet.fornitori && oFilterSet.fornitori.value) {
+              aFilters.push(
+                new sap.ui.model.Filter(
+                  "supplier",
+                  sap.ui.model.FilterOperator.EQ,
+                  oFilterSet.fornitori.value
+                )
+          ); 
+          } 
+          if (oFilterSet.fatture && oFilterSet.fatture.value) {
+            aFilters.push(
+              new sap.ui.model.Filter(
+                "dettaglio_fattura/numero_fattura",
+                sap.ui.model.FilterOperator.EQ,
+                oFilterSet.fatture.value
+              )
+            );  
+          }
+        }
+        if(key === '06'){
+          if (oFilterSet.dataRic) {
+            let oDataRic = formatter.parseDate(oFilterSet.dataRic);
+            oDataRic.setHours(1, 0, 0, 0);
+              aFilters.push(
+                new sap.ui.model.Filter(
+                  "data_ricezione",
+                  sap.ui.model.FilterOperator.EQ,
+                  oDataRic
+                )
+              );
+            }
           if (oFilterSet.nomeFile && oFilterSet.nomeFile.value) {
             aFilters.push(
               new sap.ui.model.Filter(

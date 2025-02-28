@@ -278,20 +278,17 @@ sap.ui.define(
             let aFilters = mapper.buildFilters(oFilterSet,key = "01")
             await this.callData(this.getOwnerComponent().getModel("modelloV2"),"/Testata",aFilters,["posizioni($filter=stato ne '53'),posizioni($expand=log,schedulazioni,testata)",],"01") 
           }else if(oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("callOff")){
-            debugger
             oFilterSet = this.getModel("filtersModel").getProperty("/callOff");
             let aFilters = mapper.buildFilters(oFilterSet,key = "02")
             await this.callData(this.getOwnerComponent().getModel("calloffV2"), "/Testata", aFilters, ["master,posizioni_testata,log_testata"],"02") 
           }else if(oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("selfBilling")){
-            debugger
             oFilterSet = this.getModel("filtersModel").getProperty("/selfBilling");
+            debugger
             let aFilters = mapper.buildFilters(oFilterSet,key = "03")
-            await this.callData(this.getOwnerComponent().getModel("selfBillingV2"), "/Testata",
-              aFilters, [
+            await this.callData(this.getOwnerComponent().getModel("selfBillingV2"), "/Testata",aFilters, [
                 "dettaglio_fattura,log_testata,dettaglio_fattura/riferimento_ddt,dettaglio_fattura/riferimento_ddt/riga_fattura",
               ],"03") 
           }else if(oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("scartati")){
-            debugger
             oFilterSet = this.getModel("filtersModel").getProperty("/scartati");
             let aFilters = mapper.buildFilters(oFilterSet,key = "06")
             await this.callData(this.getOwnerComponent().getModel("fileScartatiV2"), "/FileScartati", aFilters, [],"06") 
@@ -334,7 +331,6 @@ sap.ui.define(
           }
         },
         sortTables: function(table,aSortFields) {
-          debugger
           let oBinding = table.getBinding("rows");
           let aCurrentSorters = oBinding.aSorters || [];
           let bDescending = aCurrentSorters.length > 0 ? !aCurrentSorters[0].bDescending : false;
@@ -342,7 +338,6 @@ sap.ui.define(
           oBinding.sort(aSorters)
         },
         downloadExcelFileDett: function (oEvent){
-          debugger
           let oModel = this.getModel("detailData")
           let aData = oModel.getProperty("/DettaglioMaster3"); 
             if (!aData || aData.length === 0) {
@@ -352,7 +347,6 @@ sap.ui.define(
           this.buildSpreadSheet(aData)
         },
         buildSpreadSheet: function(aExportData){
-          debugger
           let exportData = Array.isArray(aExportData) ? aExportData : [aExportData]; 
           let flatExportData = mapper._formatExcelData(exportData);
           let oSpreadsheet = new Spreadsheet({
