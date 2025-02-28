@@ -33,18 +33,26 @@ sap.ui.define(
       formatter: formatter,
       onInit: async function () {
         this.setModel(models.createMainModel(), "main");
-        // let countModel = new JSONModel(
-        //   { delivery: "", calloff: "", selfbilling: "" },
-        //   "count"
-        // );
-        // this.setModel("count");
-        // this.getModel("count").setProperty(
-        //   "/delivery",
-        //   await API.getEntity("/Testata/$count")
-        // );
+        let countModel = new JSONModel({
+          delivery: "",
+          calloff: "",
+          selfbilling: "",
+        });
+        this.setModel(countModel, "count");
+        let oModel = this.getOwnerComponent().getModel("modelloV2");
+        let del = await API.getEntity(oModel, "/Testata/$count", [], []);
+        this.getModel("count").setProperty("/delivery", del.results);
+        let oModel2 = this.getOwnerComponent().getModel("calloffV2");
+        let cal = await API.getEntity(oModel2, "/Testata/$count", [], []);
+        this.getModel("count").setProperty("/calloff", cal.results);
+        let oModel3 = this.getOwnerComponent().getModel("selfBillingV2");
+        let selfb = await API.getEntity(oModel3, "/Testata/$count", [], []);
+        this.getModel("count").setProperty("/selfbilling", selfb.results);
         debugger;
         this.getRouter().getHashChanger().replaceHash("master3");
-        this.getRouter().getRoute("master3").attachPatternMatched(this._onObjectMatched, this);
+        this.getRouter()
+          .getRoute("master3")
+          .attachPatternMatched(this._onObjectMatched, this);
         this.onFilterSelect(null, "01");
         this.setModel(models.createEdiFiltersModel(), "filtersModel");
       },
@@ -96,20 +104,12 @@ sap.ui.define(
             this.onFiltersBuilding(oEvent, selectedKey);
             break;
           case "04":
-            
             break;
           case "05":
-           
             break;
           case "06":
             oModel = this.getOwnerComponent().getModel("fileScartatiV2");
-            await this.callData(
-              oModel,
-              "/FileScartati",
-              [],
-              [],
-              selectedKey
-            );
+            await this.callData(oModel, "/FileScartati", [], [], selectedKey);
             this.onFiltersBuilding(oEvent, selectedKey);
             break;
         }
@@ -141,7 +141,7 @@ sap.ui.define(
           case "06":
             oTable = this.byId("tableScartati");
             aSorters = this.sortTables(oTable, ["filename", "data_ricezione"]);
-              break;  
+            break;
           default:
             return;
         }
@@ -286,17 +286,39 @@ sap.ui.define(
         debugger;
         let level, detailPath, detail;
         if (
-          oEvent.getSource().getParent().getBindingContext("master3") !== undefined
+          oEvent.getSource().getParent().getBindingContext("master3") !==
+          undefined
         ) {
-          level = oEvent.getSource().getParent().getBindingContext("master3").getPath().includes("posizioni");
-          detailPath = oEvent.getSource().getParent().getBindingContext("master3").getPath();
-          detail = this.getView().getModel("master3").getProperty(`${detailPath}`);
-          this.getOwnerComponent().getModel("datiAppoggio").setProperty("/testata", detail);
-          this.getOwnerComponent().getModel("datiAppoggio").setProperty("/posizioni", detail.posizioni);
+          level = oEvent
+            .getSource()
+            .getParent()
+            .getBindingContext("master3")
+            .getPath()
+            .includes("posizioni");
+          detailPath = oEvent
+            .getSource()
+            .getParent()
+            .getBindingContext("master3")
+            .getPath();
+          detail = this.getView()
+            .getModel("master3")
+            .getProperty(`${detailPath}`);
+          this.getOwnerComponent()
+            .getModel("datiAppoggio")
+            .setProperty("/testata", detail);
+          this.getOwnerComponent()
+            .getModel("datiAppoggio")
+            .setProperty("/posizioni", detail.posizioni);
           if (level) {
-            this.getOwnerComponent().getModel("datiAppoggio").setProperty("/posizioneCorrente", detail);
-            this.getOwnerComponent().getModel("datiAppoggio").setProperty("/schedulazioni", detail.schedulazioni.results);
-            this.getOwnerComponent().getModel("datiAppoggio").setProperty(
+            this.getOwnerComponent()
+              .getModel("datiAppoggio")
+              .setProperty("/posizioneCorrente", detail);
+            this.getOwnerComponent()
+              .getModel("datiAppoggio")
+              .setProperty("/schedulazioni", detail.schedulazioni.results);
+            this.getOwnerComponent()
+              .getModel("datiAppoggio")
+              .setProperty(
                 "/testata",
                 this.getView()
                   .getModel("master3")
@@ -316,25 +338,45 @@ sap.ui.define(
                 }.bind(this)
               );
           } else {
-            detailPath = oEvent.getSource().getParent().getBindingContext("master3").getPath();
+            detailPath = oEvent
+              .getSource()
+              .getParent()
+              .getBindingContext("master3")
+              .getPath();
             this.getRouter().navTo("detailMaster3", {
               product: detail.id,
               layout: "OneColumn",
             });
           }
         } else if (
-          oEvent.getSource().getParent().getBindingContext("master3CO") !== undefined
+          oEvent.getSource().getParent().getBindingContext("master3CO") !==
+          undefined
         ) {
-          detailPath = oEvent.getSource().getParent().getBindingContext("master3CO").getPath();
-          detail = this.getView().getModel("master3CO").getProperty(`${detailPath}`);
+          detailPath = oEvent
+            .getSource()
+            .getParent()
+            .getBindingContext("master3CO")
+            .getPath();
+          detail = this.getView()
+            .getModel("master3CO")
+            .getProperty(`${detailPath}`);
           this.getRouter().navTo("dettCallOff", {
             id: detail.id,
             layout: "OneColumn",
           });
-        }else if( oEvent.getSource().getParent().getBindingContext("master3SB") !==undefined){
-          debugger
-          detailPath = oEvent.getSource().getParent().getBindingContext("master3SB").getPath();
-          detail = this.getView().getModel("master3SB").getProperty(`${detailPath}`);
+        } else if (
+          oEvent.getSource().getParent().getBindingContext("master3SB") !==
+          undefined
+        ) {
+          debugger;
+          detailPath = oEvent
+            .getSource()
+            .getParent()
+            .getBindingContext("master3SB")
+            .getPath();
+          detail = this.getView()
+            .getModel("master3SB")
+            .getProperty(`${detailPath}`);
           this.getRouter().navTo("dettSelfBilling", {
             id: detail.id,
             layout: "OneColumn",
@@ -395,11 +437,16 @@ sap.ui.define(
 
       navToAPP: function (oEvent) {
         debugger;
-        let level = oEvent.getSource().getParent().getParent().getBindingContext("master3").getPath();
+        let level = oEvent
+          .getSource()
+          .getParent()
+          .getParent()
+          .getBindingContext("master3")
+          .getPath();
         if (level.includes("posizioni")) {
           this.getRouter().navTo("master", { monitor: "monitor" });
         } else {
-          this.getRouter().navTo("master2",{ monitor: "monitor" });
+          this.getRouter().navTo("master2", { monitor: "monitor" });
         }
       },
 
@@ -448,13 +495,25 @@ sap.ui.define(
               let oModel = this.getOwnerComponent().getModel("modelloV2");
               let res = await API.createEntity(oModel, "/Processamento", obj);
               debugger;
-              let modelloReport = new JSONModel(
-                { successo: "", errore: "" },
-                "modelloReport"
-              );
+
+              let modelloReport = new JSONModel({ successo: "", errore: "" });
+              this.setModel(modelloReport, "modelloReport");
               let success = [];
               let error = [];
-              res.results.forEach((x) => {});
+              res.results.forEach((x) => {
+                if (x.status === "51") {
+                  debugger;
+                  let el = items.find((y) => x.id === y.id);
+                  success.push(el);
+                } else {
+                  let el = items.find((y) => x.id === y.id);
+                  error.push(el);
+                }
+              });
+
+              this.getModel().setProperty("/successo", success);
+              this.getModel().setProperty("/errore", error);
+              debugger;
 
               if (!this._fragment) {
                 Fragment.load({
