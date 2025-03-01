@@ -13,7 +13,13 @@ sap.ui.define(
     "sap/ui/core/format/DateFormat",
     "../model/API",
     "../model/mapper",
-    "../model/formatter"
+    "../model/formatter",
+    "sap/m/p13n/Engine",
+    "sap/m/p13n/SelectionController",
+    "sap/m/p13n/SortController",
+    "sap/m/p13n/GroupController",
+    "sap/m/p13n/MetadataHelper",
+    "sap/ui/core/library",
   ],
   function (
     Controller,
@@ -29,7 +35,13 @@ sap.ui.define(
     DateFormat,
     API,
     mapper,
-    formatter
+    formatter,
+    Engine,
+    SelectionController,
+    SortController,
+    GroupController,
+    MetadataHelper,
+    CoreLibrary,
   ) {
     "use strict";
 
@@ -394,6 +406,100 @@ sap.ui.define(
           });
           return columns;
       },
+      //engine dinamico
+      _registerForP13n: function (oEvent, tableId) {
+        let columnConfig = mapper.getColumnConfig(tableId)
+        let oTable = this.byId(tableId); 
+        this.oMetadataHelper = new MetadataHelper(columnConfig); 
+        
+        this._mIntialWidth = columnConfig.reduce((acc, column) => {
+          acc[column.key] = column.initialWidth || "11rem"; 
+          return acc;
+        }, {});
+      
+        Engine.getInstance().register(oTable, {
+          helper: this.oMetadataHelper,
+          controller: {
+            Columns: new SelectionController({
+              targetAggregation: "columns",
+              control: oTable,
+            }),
+            Sorter: new SortController({
+              control: oTable,
+            }),
+            Groups: new GroupController({
+              control: oTable,
+            }),
+          },
+        });
+      
+        Engine.getInstance().attachStateChange(
+          this.handleStateChange.bind(this) 
+        );
+      },
+      openPosizioniDialog: function (oEvent) {
+        let tableId = oEvent.getSource().getParent().getParent().getId().split('--').pop()
+        let oTable = this.byId(tableId);
+        Engine.getInstance().show(oTable, ["Columns", "Sorter"], {
+          contentHeight: "35rem",
+          contentWidth: "32rem",
+          source: oEvent.getSource(),
+        });
+      },
+      _getKey: function (oControl) {
+        let aCustomData = oControl.getCustomData();
+        let sKey = aCustomData.find(data => data.getKey() === "p13nKey");
+        return sKey ? sKey.getValue() : null;
+      },
+
+      handleStateChange: function (oEvt,tableId){
+        const oTable = this.getView().byId("tablePos")
+        const oState = oEvt.getParameter("state");
+
+        if (!oState) {
+          return;
+        }
+
+        oTable.getColumns().forEach(oColumn => {
+          const sKey = this._getKey(oColumn);
+          const sColumnWidth = oState.ColumnWidth ? oState.ColumnWidth[sKey] : undefined;
+          oColumn.setWidth(sColumnWidth || this._mIntialWidth[sKey] || "10rem");
+          oColumn.setVisible(false);
+          oColumn.setSortOrder(CoreLibrary.SortOrder.None);
+        });
+      
+        oState.Columns.forEach((oProp, iIndex) => {
+          const oCol = oTable.getColumns().find(oColumn => this._getKey(oColumn) === oProp.key);
+            if (oCol) {
+              oCol.setVisible(true);
+              oTable.removeColumn(oCol);
+              oTable.insertColumn(oCol, iIndex);
+            }
+        });
+        if (oState.Sorter) {
+        const aSorter = [];
+          oState.Sorter.forEach(oSorter => {
+            const oColumn = oTable.getColumns().find(oColumn => this._getKey(oColumn) === oSorter.key);
+
+            if (oColumn) {
+              oColumn.setSorted(true);
+              oColumn.setSortOrder(
+                  oSorter.descending ? CoreLibrary.SortOrder.Descending : CoreLibrary.SortOrder.Ascending
+              );
+
+              const oProperty = this.oMetadataHelper.getProperty(oSorter.key);
+                if (oProperty) {
+                  aSorter.push(new Sorter(oProperty.path, oSorter.descending));
+                }
+            }
+          });
+          if (oTable.getBinding("rows")) {
+            oTable.getBinding("rows").sort(aSorter);
+          }
+        }          
+      },
+      //fine configurazione Engine x tutte tabelle, da richiamare nei controller dei dettagli, 
+      // dopo aver mappato le colonne in mapper e definite il custData nelle view di dettaglio
       navToHome: function () {
         this.getRouter().navTo("home");
       },
