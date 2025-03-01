@@ -3,11 +3,9 @@ sap.ui.define(["./BaseController"], function (BaseController) {
 
   return BaseController.extend("programmi.consegne.edi.controller.App", {
     onInit: function () {
-      if (this.getRouter() === undefined) {
-        window.location.hash = "#/home";
-      } else {
-        this.getRouter().attachRouteMatched(this.onRouteMatched, this);
-      }
+     
+      this.getRouter().attachRouteMatched(this.onRouteMatched, this);
+      
     },
 
     onRouteMatched: function (oEvent) {

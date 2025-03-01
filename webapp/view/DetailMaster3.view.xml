@@ -203,7 +203,8 @@
                                         </ui:extension>
 
                                         <ui:columns>
-                                            <ui:Column width="5rem" hAlign="Center" tooltip="Dettaglio" >
+                                            <ui:Column width="5rem" hAlign="Center" tooltip="Dettaglio"
+                                            app:p13nKey="dettaglio_col" sortProperty="dettaglio" >
                                                 <m:Label text=" " />
                                                 <ui:template>
                                                     <m:Button
@@ -219,6 +220,7 @@
                                                 width="10rem"
                                                 showSortMenuEntry="false"
                                                 tooltip="Stato"
+                                                app:p13nKey="stato_col" sortProperty="stato"
                                             >
                                                 <m:Label text="Stato" />
                                                 <ui:template>
