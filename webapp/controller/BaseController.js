@@ -126,8 +126,7 @@ sap.ui.define(
           // sap.ui.core.BusyIndicator.hide(delay || 0);
           sap.ui.core.BusyIndicator.hide(delay);
         },
-        onOpenDialog: function (dialName, fragmName, self, ...oModel) {
-        
+        onOpenDialog: function (dialName, fragmName, self, ...oModel) {        
           let oView = self.getView();
           if (!self[dialName]) {
             Fragment.load({
@@ -143,11 +142,9 @@ sap.ui.define(
           } else {
               self[dialName].open();
           }
-        },
-       
+        }, 
         onFiltersBuilding: function (oEvent, key) {
           if (key === "01") {
-            //clienti/materiali/num Progr invio
             let aData = this.getModel("master3").getProperty("/");
             let aClienti = [...new Set(aData.map((item) => item.codice_seller))];
             let aNumProgInvio = [...new Set(aData.map((item) => item.numero_progressivo_invio))];

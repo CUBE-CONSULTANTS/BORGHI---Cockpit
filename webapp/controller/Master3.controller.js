@@ -36,7 +36,7 @@ sap.ui.define(
         this.setModel(models.createMainModel(), "main");
         this.setModel(models.createCountModel(),"count");
         this.setModel(models.createEdiFiltersModel(), "filtersModel");
-        this.getRouter().getHashChanger().replaceHash("master3");
+        // this.getRouter().getHashChanger().replaceHash("master3");
         this.getRouter().getRoute("master3").attachPatternMatched(this._onObjectMatched, this);
         await this._getCounters();
       },

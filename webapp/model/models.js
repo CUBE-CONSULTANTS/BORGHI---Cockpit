@@ -11,7 +11,7 @@ sap.ui.define(
 			},
 			createLayoutModel: function () {
 				return new JSONModel({
-					layout: "TwoColumnsMidExpanded",
+					layout: "OneColumn"
 				});
 			},
 			createDeviceModel: function () {

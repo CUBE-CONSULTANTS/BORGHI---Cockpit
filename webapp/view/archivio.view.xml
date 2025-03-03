@@ -70,7 +70,7 @@
                     <IconTabFilter
                         icon="sap-icon://time-off"
                         iconColor="Default"
-                        count="{/ProductCollectionStats/Counts/Weight/Heavy}"
+                        
                         text="Call-Off"
                         key="02"
                         
@@ -83,7 +83,7 @@
                     <IconTabFilter
                         icon="sap-icon://monitor-payments"
                         iconColor="Default"
-                        count="{/ProductCollectionStats/Counts/Weight/Overweight}"
+                        
                         text="Self Billing"
                         key="03"
                        
@@ -96,7 +96,7 @@
                     <IconTabFilter
                         icon="sap-icon://letter"
                         iconColor="Default"
-                        count="{/ProductCollectionStats/Counts/Weight/Overweight}"
+                        
                         text="Despatch Advice"
                         key="04"
                         
@@ -107,7 +107,7 @@
                     <IconTabFilter
                         icon="sap-icon://sales-order"
                         iconColor="Default"
-                        count="{/ProductCollectionStats/Counts/Weight/Overweight}"
+                        
                         text="Invoice"
                         key="05"
                        
@@ -118,7 +118,7 @@
                     <IconTabFilter
                     icon="sap-icon://delete"
                     iconColor="Default"
-                    count="{/ProductCollectionStats/Counts/Weight/Overweight}"
+                    
                     text="File Scartati"
                     key="06"
                     
@@ -129,7 +129,7 @@
                 <IconTabFilter
                 icon="sap-icon://excel-attachment"
                 iconColor="Default"
-                count="{/ProductCollectionStats/Counts/Weight/Overweight}"
+                
                 text="Caricamento Manuale"
                 key="07"
                 
