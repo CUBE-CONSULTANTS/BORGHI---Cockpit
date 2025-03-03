@@ -96,7 +96,7 @@
                     <IconTabFilter
                         icon="sap-icon://letter"
                         iconColor="Default"
-                        count="{/ProductCollectionStats/Counts/Weight/Overweight}"
+                        count="{count>/despatch}"
                         text="Despatch Advice"
                         key="04"
                         
@@ -107,7 +107,7 @@
                     <IconTabFilter
                         icon="sap-icon://sales-order"
                         iconColor="Default"
-                        count="{/ProductCollectionStats/Counts/Weight/Overweight}"
+                        count="{count>/invoice}"
                         text="Invoice"
                         key="05"
                        
@@ -118,7 +118,7 @@
                     <IconTabFilter
                     icon="sap-icon://delete"
                     iconColor="Default"
-                    count="{/ProductCollectionStats/Counts/Weight/Overweight}"
+                    count="{count>/fileScartati}"
                     text="File Scartati"
                     key="06"
                     

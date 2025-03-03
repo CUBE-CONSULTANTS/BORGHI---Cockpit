@@ -39,9 +39,9 @@ sap.ui.define(
         this.getRouter().getHashChanger().replaceHash("master3");
         this.getRouter().getRoute("master3").attachPatternMatched(this._onObjectMatched, this);
         await this._getCounters();
-        this.onFilterSelect(null, "01");  
       },
       _getCounters: async function(){
+        debugger
         this.showBusy(0)
         try {
           let del = await API.getEntity(this.getOwnerComponent().getModel("modelloV2"), "/Testata/$count", [], []);
@@ -50,6 +50,8 @@ sap.ui.define(
           this.getModel("count").setProperty("/calloff", cal.results);
           let selfb = await API.getEntity(this.getOwnerComponent().getModel("selfBillingV2"), "/Testata/$count", [], []);
           this.getModel("count").setProperty("/selfbilling", selfb.results);
+          let fileScart = await API.getEntity(this.getOwnerComponent().getModel("fileScartatiV2"), "/FileScartati/$count", [], []);
+          this.getModel("count").setProperty("/fileScartati", fileScart.results);
         } catch (error) {
           MessageBox.error("Errore durante il recupero dei Dati")
         }finally {
@@ -57,7 +59,6 @@ sap.ui.define(
         }
       },
       _onObjectMatched: function (oEvent) {
-        debugger;
         this.onFilterSelect(null, "01");
       },
       onFilterSelect: async function (oEvent, key) {
