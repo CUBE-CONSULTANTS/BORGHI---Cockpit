@@ -434,10 +434,11 @@ sap.ui.define(
         });
       
         Engine.getInstance().attachStateChange(
-          this.handleStateChange.bind(this) 
+          this.handleStateChange.bind(this,tableId) 
         );
       },
       openPosizioniDialog: function (oEvent) {
+        debugger
         let tableId = oEvent.getSource().getParent().getParent().getId().split('--').pop()
         let oTable = this.byId(tableId);
         Engine.getInstance().show(oTable, ["Columns", "Sorter"], {
@@ -452,8 +453,8 @@ sap.ui.define(
         return sKey ? sKey.getValue() : null;
       },
 
-      handleStateChange: function (oEvt,tableId){
-        const oTable = this.getView().byId("tablePos")
+      handleStateChange: function (tableId, oEvt){
+        const oTable = this.getView().byId(tableId);
         const oState = oEvt.getParameter("state");
 
         if (!oState) {

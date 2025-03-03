@@ -147,7 +147,41 @@ sap.ui.define(
               path: "informazioni_contatto_fax",
             },
           ],
-          //altre tabelle
+          tablePosCO: [
+            { key: "cliente_col", label: "Cliente", path: "posizione_77_86" },
+            { key: "reason_col", label: "Reason", path: "posizione_43_44" },
+            { key: "DDT_col_35", label: "DDT 35", path: "posizione_6_13" },
+            { key: "DDT_col", label: "DDT", path: "posizione_121_128" },
+            { key: "data_DDT_col", label: "Data DDT", path: "posizione_14_19" },
+            {
+              key: "progressivo_invio_col",
+              label: "Progressivo Invio",
+              path: "posizione_6_13",
+            },
+            {
+              key: "codice_materiale_col",
+              label: "Cod. Mat.",
+              path: "posizione_6_28",
+            },
+            {
+              key: "punto_scarico_col",
+              label: "P. scarico",
+              path: "posizione_20_24",
+            },
+            {
+              key: "nord_cliente_col",
+              label: "N Ord Presso Cliente",
+              path: "posizione_31_42",
+            },
+            { key: "num_riga_col", label: "Num riga", path: "posizione_87_89" },
+            { key: "quantità_col", label: "Quantità", path: "posizione_53_65" },
+            { key: "Udm_col", label: "Udm", path: "posizione_66_67" },
+            {
+              key: "stab_consegna_col",
+              label: "Stab. Consegna",
+              path: "posizione_49_51",
+            },
+          ],
         };
         return columnMapper[tableId] || [];
       },
@@ -312,30 +346,35 @@ sap.ui.define(
             debugger;
             let positionRow = { ...row, ...this._cleanAndFormatData(position) };
             let schedules =
-              position.schedulazioni?.results ||
-              position.riferimento_ddt?.results ||
-              Array.isArray(position.riferimento_ddt)
-                ? position.riferimento_ddt
-                : [position.riferimento_ddt] || [];
-            debugger;
-            schedules.forEach((schedule) => {
-              let scheduleRow = {
-                ...positionRow,
-                ...this._cleanAndFormatData(schedule),
-              };
-              debugger;
-              let invoiceLines = Array.isArray(schedule.riga_fattura)
-                ? schedule.riga_fattura
-                : [schedule.riga_fattura];
-              invoiceLines.forEach((invoice) => {
-                let invoiceRow = {
-                  ...scheduleRow,
-                  ...this._cleanAndFormatData(invoice),
+              (position.schedulazioni?.results &&
+                position.schedulazioni.results.length > 0 &&
+                position.schedulazioni.results) ||
+              (position.riferimento_ddt?.results &&
+                position.riferimento_ddt.results.length > 0 &&
+                position.riferimento_ddt.results) ||
+              (Array.isArray(position.riferimento_ddt) &&
+                position.riferimento_ddt.length > 0 &&
+                position.riferimento_ddt) ||
+              (position.riferimento_ddt ? [position.riferimento_ddt] : []);
+            if (schedules.length > 0) {
+              schedules.forEach((schedule) => {
+                let scheduleRow = {
+                  ...positionRow,
+                  ...this._cleanAndFormatData(schedule),
                 };
-                aExportData.push(invoiceRow);
+                let invoiceLines = Array.isArray(schedule.riga_fattura)
+                  ? schedule.riga_fattura
+                  : [schedule.riga_fattura];
+                invoiceLines.forEach((invoice) => {
+                  let invoiceRow = {
+                    ...scheduleRow,
+                    ...this._cleanAndFormatData(invoice),
+                  };
+                  aExportData.push(invoiceRow);
+                });
+                aExportData.push(scheduleRow);
               });
-              aExportData.push(scheduleRow);
-            });
+            }
             aExportData.push(positionRow);
           });
           aExportData.push(row);

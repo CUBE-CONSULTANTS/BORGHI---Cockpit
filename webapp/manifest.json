@@ -263,7 +263,10 @@
         {
 					"pattern": "dettCallOff/{id}",
 					"name": "dettCallOff",
-					"target": "dettCallOff"
+					"target": [
+						"master3",
+						"dettCallOff"
+					]
         },
         {
 					"pattern": "dettSelfBilling/{id}",
@@ -317,7 +320,8 @@
         "dettCallOff": {
 					"viewName": "dettCallOff",
 					"controlAggregation": "beginColumnPages",
-					"viewLevel": 2
+					"viewLevel": 2,
+          "viewId": "idDetailCallOff"
 				},
         "dettSelfBilling": {
           "viewName": "dettSelfBilling",

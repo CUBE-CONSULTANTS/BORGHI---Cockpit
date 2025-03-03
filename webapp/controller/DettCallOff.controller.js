@@ -9,9 +9,7 @@ sap.ui.define(
         formatter: formatter,
         onInit: function () {
           debugger;
-          this.getRouter()
-            .getRoute("dettCallOff")
-            .attachPatternMatched(this._onProductMatched, this);
+          this.getRouter().getRoute("dettCallOff").attachPatternMatched(this._onProductMatched, this);
         },
 
         _onProductMatched: function (oEvent) {
@@ -23,7 +21,7 @@ sap.ui.define(
           "detailData"
         );
         this.getModel("detailData").setProperty("/DettaglioMaster3", datiElementoSelect);
-        // this._registerForP13n();
+        this._registerForP13n(oEvent, "tablePosCO")
         },
         
       }

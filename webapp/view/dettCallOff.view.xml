@@ -144,19 +144,14 @@
                                     <ui:Table
                                         id="tablePosCO"
                                         selectionMode="MultiToggle"
-                                        rows="{detailData>/DettaglioMaster3/posizioni_testata}"
-                                        autoPopinMode="true"
-                                        fixedLayout="false"
+                                        rows="{detailData>/DettaglioMaster3/posizioni_testata}"                                       
                                         sort="onSort"
                                         ariaLabelledBy="title"
-                                        showColumnVisibilityMenu="true"
                                         sap.ui.fl:flexibility="sap/m/flexibility/EngineFlex"
                                     >
                                         <ui:extension>
-                                            <m:OverflowToolbar id="prova2">
+                                            <m:OverflowToolbar>
                                               <m:ToolbarSpacer />
-
-                                   
                                               <m:Button
                                                   text="Esporta excel"
                                                   icon="sap-icon://excel-attachment"
@@ -196,7 +191,7 @@
                                       width="10rem"
                                       showSortMenuEntry="false"
                                       tooltip="Reason"
-                                      app:p13nKey="Reason"
+                                      app:p13nKey="Reason_col"
                                       sortProperty="Reason"
                                   >
                                       <m:Label text="Reason" />
