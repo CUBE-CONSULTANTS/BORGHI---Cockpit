@@ -210,7 +210,7 @@
                         width="10rem"
                         showSortMenuEntry="false"
                         tooltip="Num Fattura"
-                        app:p13nKey="Num Fattura"
+                        app:p13nKey="num_fattura_col"
                         sortProperty="Num Fattura"
                       >
                         <m:Label text="Num Fattura" />
@@ -222,7 +222,7 @@
                         width="10rem"
                         showSortMenuEntry="false"
                         tooltip="Data Fattura"
-                        app:p13nKey="Data Fattura"
+                        app:p13nKey="data_fattura_col"
                         sortProperty="Data Fattura"
                       >
                         <m:Label text="Data Fattura" />
@@ -234,7 +234,7 @@
                         width="10rem"
                         showSortMenuEntry="false"
                         tooltip="Data Scadenza Fattura"
-                        app:p13nKey="Data Scadenza Fattura"
+                        app:p13nKey="data_scadenza_fattura_col"
                         sortProperty="Data Scadenza Fattura"
                       >
                         <m:Label text="Data Scadenza Fattura" />
@@ -247,7 +247,7 @@
                         width="10rem"
                         showSortMenuEntry="false"
                         tooltip="DDT Terre"
-                        app:p13nKey="DDT Terre"
+                        app:p13nKey="DDT_terre_col"
                         sortProperty="DDT Terre"
                       >
                         <m:Label text="DDT Terre" />
@@ -259,7 +259,7 @@
                         width="10rem"
                         showSortMenuEntry="false"
                         tooltip="Num. DDT Cliente"
-                        app:p13nKey="Num. DDT Cliente"
+                        app:p13nKey="num_DDT_cliente_col"
                         sortProperty="Num. DDT Cliente"
                       >
                         <m:Label text="Num. DDT Cliente" />
@@ -271,7 +271,7 @@
                         width="10rem"
                         showSortMenuEntry="false"
                         tooltip="Data DDT"
-                        app:p13nKey="Data DDT"
+                        app:p13nKey="data_DDT_col"
                         sortProperty="Data DDT"
                       >
                         <m:Label text="Data DDT" />
@@ -283,7 +283,7 @@
                         width="10rem"
                         showSortMenuEntry="false"
                         tooltip="Num. Ordine"
-                        app:p13nKey="Num. Ordine"
+                        app:p13nKey="num_ordine_col"
                         sortProperty="Num. Ordine"
                       >
                         <m:Label text="Num. Ordine" />
@@ -296,7 +296,7 @@
                         width="10rem"
                         showSortMenuEntry="false"
                         tooltip="Transazione"
-                        app:p13nKey="Transazione"
+                        app:p13nKey="transazione_col"
                         sortProperty="Transazione"
                       >
                         <m:Label text="Transazione" />
@@ -308,7 +308,7 @@
                         width="10rem"
                         showSortMenuEntry="false"
                         tooltip="Cod Articolo"
-                        app:p13nKey="Cod Articolo"
+                        app:p13nKey="cod_articolo_col"
                         sortProperty="Cod Articolo"
                       >
                         <m:Label text="Cod Articolo" />
@@ -320,7 +320,7 @@
                         width="10rem"
                         showSortMenuEntry="false"
                         tooltip="Versione"
-                        app:p13nKey="Versione"
+                        app:p13nKey="versione_col"
                         sortProperty="Versione"
                       >
                         <m:Label text="Versione" />
@@ -332,7 +332,7 @@
                         width="10rem"
                         showSortMenuEntry="false"
                         tooltip="Vat"
-                        app:p13nKey="Vat"
+                        app:p13nKey="vat_col"
                         sortProperty="Vat"
                       >
                         <m:Label text="Vat" />
@@ -344,7 +344,7 @@
                         width="10rem"
                         showSortMenuEntry="false"
                         tooltip="Cash"
-                        app:p13nKey="Cash"
+                        app:p13nKey="cash_col"
                         sortProperty="Cash"
                       >
                         <m:Label text="Cash" />
@@ -356,7 +356,7 @@
                         width="10rem"
                         showSortMenuEntry="false"
                         tooltip="Prezzo Totale"
-                        app:p13nKey="Prezzo Totale"
+                        app:p13nKey="prezzo_totale_col"
                         sortProperty="Prezzo Totale"
                       >
                         <m:Label text="Prezzo Totale" />
@@ -368,7 +368,7 @@
                         width="10rem"
                         showSortMenuEntry="false"
                         tooltip="Totale dal Prezzo Tot"
-                        app:p13nKey="Totale dal Prezzo Tot"
+                        app:p13nKey="tot_prezzo_tot_col"
                         sortProperty="Totale dal Prezzo Tot"
                       >
                         <m:Label text="Totale dal Prezzo Tot" />
@@ -380,7 +380,7 @@
                         width="10rem"
                         showSortMenuEntry="false"
                         tooltip="Unità Prezzo"
-                        app:p13nKey="Unità Prezzo"
+                        app:p13nKey="unita_prezzo_col"
                         sortProperty="Unità Prezzo"
                       >
                         <m:Label text="Unità Prezzo" />
@@ -392,7 +392,7 @@
                         width="10rem"
                         showSortMenuEntry="false"
                         tooltip="Prezzo Unit"
-                        app:p13nKey="Prezzo Unit"
+                        app:p13nKey="prezzo_unit_col"
                         sortProperty="Prezzo Unit"
                       >
                         <m:Label text="Prezzo Unit" />
@@ -404,7 +404,7 @@
                         width="10rem"
                         showSortMenuEntry="false"
                         tooltip="Quantità Consegna"
-                        app:p13nKey="Quantità Consegna"
+                        app:p13nKey="quantita_consegna_col"
                         sortProperty="Quantità Consegna"
                       >
                         <m:Label text="Quantità Consegna" />
@@ -416,7 +416,7 @@
                         width="10rem"
                         showSortMenuEntry="false"
                         tooltip="UdM"
-                        app:p13nKey="UdM"
+                        app:p13nKey="udm_col"
                         sortProperty="UdM"
                       >
                         <m:Label text="UdM" />
@@ -428,7 +428,7 @@
                         width="10rem"
                         showSortMenuEntry="false"
                         tooltip="Num IDoc"
-                        app:p13nKey="Num IDoc"
+                        app:p13nKey="num_idoc_col"
                         sortProperty="Num IDoc"
                       >
                         <m:Label text="Num IDoc" />
@@ -440,7 +440,7 @@
                       width="10rem"
                       showSortMenuEntry="false"
                       tooltip="Invoice Code"
-                      app:p13nKey="invoice_code"
+                      app:p13nKey="invoice_code_col"
                       sortProperty="Invoice Code"
                     >
                       <m:Label text="Invoice Code" />
@@ -452,7 +452,7 @@
                         width="10rem"
                         showSortMenuEntry="false"
                         tooltip="Sign 01"
-                        app:p13nKey="Sign 01"
+                        app:p13nKey="sign_01_col"
                         sortProperty="Sign 01"
                       >
                         <m:Label text="Sign 01" />
@@ -464,7 +464,7 @@
                         width="10rem"
                         showSortMenuEntry="false"
                         tooltip="Sign 02"
-                        app:p13nKey="Sign 02"
+                        app:p13nKey="sign_02_col"
                         sortProperty="Sign 02"
                       >
                         <m:Label text="Sign 02" />
@@ -477,7 +477,7 @@
                       <ui:Column
                         width="10rem"
                         tooltip="Subcharger Deduction"
-                        app:p13nKey="subcharger_deduction"
+                        app:p13nKey="subcharger_deduction_col"
                         sortProperty="Subcharger Deduction"
                       >
                         <m:Label text="Subcharger Deduction" />
@@ -488,7 +488,7 @@
                       <ui:Column
                         width="12rem"
                         tooltip="Consignment"
-                        app:p13nKey="consignment"
+                        app:p13nKey="consignment_col"
                         sortProperty="consignment"
                       >
                         <m:Label text="Consignment" />
@@ -500,7 +500,7 @@
                         width="10rem"
                         sortProperty="Paese"
                         tooltip="Paese"
-                        app:p13nKey="paese"
+                        app:p13nKey="paese_col"
                       >
                         <m:Label text="Paese" />
                         <ui:template>
@@ -512,7 +512,7 @@
                         showSortMenuEntry="false"
                         tooltip="Valuta"
                         sortProperty="Valuta"
-                        app:p13nKey="Valuta"
+                        app:p13nKey="valuta_col"
                       >
                         <m:Label text="" />
                         <ui:template>
@@ -523,7 +523,7 @@
                         width="10rem"
                         tooltip="Tot Vat"
                         sortProperty="Tot Vat"
-                        app:p13nKey="tot_vat"
+                        app:p13nKey="tot_vat_col"
                       >
                         <m:Label text="Tot Vat" />
                         <ui:template>
@@ -534,7 +534,7 @@
                         width="10rem"
                         tooltip="Tot Invoice"
                         sortProperty="Tot Invoice"
-                        app:p13nKey="Tot Invoice"
+                        app:p13nKey="tot_invoice_col"
                       >
                         <m:Label text="Tot Invoice" />
                         <ui:template>
@@ -545,7 +545,7 @@
                         width="10rem"
                         tooltip="Tot Sconto"
                         sortProperty="Tot Sconto"
-                        app:p13nKey="Tot Sconto"
+                        app:p13nKey="tot_sconto_col"
                       >
                         <m:Label text="Tot Sconto" />
                         <ui:template>

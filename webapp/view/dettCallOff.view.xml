@@ -177,7 +177,7 @@
                                           width="10rem"
                                           showSortMenuEntry="false"
                                           tooltip="Cliente"
-                                          app:p13nKey="cliente"
+                                          app:p13nKey="cliente_col"
                                           sortProperty="Cliente"
                                       >
                                           <m:Label text="Cliente" />
@@ -191,7 +191,7 @@
                                       width="10rem"
                                       showSortMenuEntry="false"
                                       tooltip="Reason"
-                                      app:p13nKey="Reason_col"
+                                      app:p13nKey="reason_col"
                                       sortProperty="Reason"
                                   >
                                       <m:Label text="Reason" />

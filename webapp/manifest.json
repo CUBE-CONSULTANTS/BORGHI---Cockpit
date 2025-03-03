@@ -271,7 +271,10 @@
         {
 					"pattern": "dettSelfBilling/{id}",
 					"name": "dettSelfBilling",
-					"target": "dettSelfBilling"
+					"target": [
+            "master3",
+            "dettSelfBilling"
+          ]
         }
 
 			],
@@ -326,7 +329,8 @@
         "dettSelfBilling": {
           "viewName": "dettSelfBilling",
           "controlAggregation": "beginColumnPages",
-					"viewLevel": 2
+					"viewLevel": 2,
+          "viewId": "idDetailSelfBilling"
 				}
 
 			}
