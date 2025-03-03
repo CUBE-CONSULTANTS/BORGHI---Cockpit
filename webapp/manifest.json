@@ -7,7 +7,7 @@
 			"version": "1.0.0"
 		},
 		"dataSources": {
-			"mainService": {
+			"mainServiceV4": {
 				"uri": "/odata/v4/delivery-forecast/",
 				"type": "OData",
 				"settings": {
@@ -100,8 +100,8 @@
           "bundleName": "cruscottopassivo.i18n.i18n"
         }
       },
-      "": {
-        "dataSource": "mainService",
+      "modelloV4": {
+        "dataSource": "mainServiceV4",
         "preload": true,
         "settings": {
           "synchronizationMode": "None",
@@ -243,7 +243,7 @@
 					"pattern": "detailMaster3/{product}/{layout}",
 					"name": "detailMaster3",
 					"target": [
-						"master3",
+						
 						"detailMaster3"
 					]
 				},
@@ -251,7 +251,7 @@
 					"pattern": "Detail2Master3/{product}/{layout}",
 					"name": "Detail2Master3",
 					"target": [
-
+            
 						"Detail2Master3"
 					]
 				},
@@ -264,7 +264,7 @@
 					"pattern": "dettCallOff/{id}",
 					"name": "dettCallOff",
 					"target": [
-						"master3",
+						
 						"dettCallOff"
 					]
         },
@@ -272,7 +272,7 @@
 					"pattern": "dettSelfBilling/{id}",
 					"name": "dettSelfBilling",
 					"target": [
-            "master3",
+            
             "dettSelfBilling"
           ]
         }

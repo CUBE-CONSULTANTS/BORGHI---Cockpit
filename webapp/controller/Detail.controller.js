@@ -5,7 +5,7 @@ sap.ui.define(
 
     return BaseController.extend("programmi.consegne.edi.controller.Detail", {
       onInit: function () {
-        this.oModel = this.getOwnerComponent.getModel();
+        this.oModel = this.getOwnerComponent.getModel("layout");
 
         this.getRouter().getRoute("master").attachPatternMatched(this._onProductMatched, this);
         this.getRouter().getRoute("detail").attachPatternMatched(this._onProductMatched, this);

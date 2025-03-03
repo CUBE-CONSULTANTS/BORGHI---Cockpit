@@ -36,7 +36,6 @@ sap.ui.define(
         this.setModel(models.createMainModel(), "main");
         this.setModel(models.createCountModel(),"count");
         this.setModel(models.createEdiFiltersModel(), "filtersModel");
-        // this.getRouter().getHashChanger().replaceHash("master3");
         this.getRouter().getRoute("master3").attachPatternMatched(this._onObjectMatched, this);
         await this._getCounters();
       },
@@ -285,10 +284,7 @@ sap.ui.define(
       },
       dettaglioNav: function (oEvent) {
         let level, detailPath, detail;
-        if (
-          oEvent.getSource().getParent().getBindingContext("master3") !==
-          undefined
-        ) {
+        if ( oEvent.getSource().getParent().getBindingContext("master3") !== undefined) {
           level = oEvent.getSource().getParent().getBindingContext("master3").getPath().includes("posizioni");
           detailPath = oEvent.getSource().getParent().getBindingContext("master3").getPath();
           detail = this.getView().getModel("master3").getProperty(`${detailPath}`);
@@ -302,10 +298,18 @@ sap.ui.define(
                 this.getView().getModel("master3").getProperty(`${detailPath[0] + detailPath[1]}`)
               );
             debugger;
-              this.getRouter().navTo("Detail2Master3", {
-                product: detail.id,
-                layout: "TwoColumnsBeginExpanded",
-              });
+              let oNextUIState;
+              this.getOwnerComponent()
+                .getHelper()
+                .then(
+                  function (oHelper) {
+                    oNextUIState = oHelper.getNextUIState(1);
+                    this.getRouter().navTo("Detail2Master3", {
+                      product: detail.id,
+                      layout: oNextUIState.layout,
+                    });
+                  }.bind(this)
+                );
           } else {
             detailPath = oEvent.getSource().getParent().getBindingContext("master3").getPath();
             this.getRouter().navTo("detailMaster3", {

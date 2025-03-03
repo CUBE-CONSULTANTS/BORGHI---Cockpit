@@ -71,7 +71,7 @@ sap.ui.define(
         },
 
         handleFullScreen: function () {
-          var sNextLayout = this.getOwnerComponent().getModel().getProperty(
+          var sNextLayout = this.getOwnerComponent().getModel("layout").getProperty(
             "/actionButtonsInfo/midColumn/fullScreen"
           );
           this.getRouter().navTo("Detail2Master3", {
@@ -81,7 +81,7 @@ sap.ui.define(
         },
 
         handleExitFullScreen: function () {
-          var sNextLayout = this.getOwnerComponent().getModel().getProperty(
+          var sNextLayout = this.getOwnerComponent().getModel("layout").getProperty(
             "/actionButtonsInfo/midColumn/exitFullScreen"
           );
           this.getRouter().navTo("Detail2Master3", {
@@ -102,7 +102,7 @@ sap.ui.define(
             .getCurrentBeginColumnPage()
             .getProperty("viewName");
 
-          var sNextLayout = this.getOwnerComponent().getModel().getProperty(
+          var sNextLayout = this.getOwnerComponent().getModel("layout").getProperty(
             "/actionButtonsInfo/midColumn/closeColumn"
           );
           //prova chiusura colonna e nav
