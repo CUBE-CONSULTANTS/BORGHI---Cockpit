@@ -6,7 +6,12 @@ xmlns:ui="sap.ui.table"
 xmlns:mvc="sap.ui.core.mvc">
 <fb:FilterBar        
 useToolbar="false"
-
+search=".onSearchData"
+showFilterConfiguration="false"
+showGoOnFB="true"
+showClearOnFB="true"
+clear="onFilterBarClear"
+filterContainerWidth="20rem"
 class="sapUiSmallMarginBottom"
 >
 <fb:filterGroupItems>
@@ -89,6 +94,8 @@ paste="onPaste"
 ariaLabelledBy="title">
 <ui:extension>
   <OverflowToolbar style="Clear">
+    <ToolbarSpacer
+    />
     <Button
     text="Archivia"
     icon="sap-icon://bbyd-active-sales"
