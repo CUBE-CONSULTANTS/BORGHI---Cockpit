@@ -145,7 +145,7 @@
       </m:HBox>
     </headerContent>
     <sections>
-      <ObjectPageSection title="Posizione">
+      <ObjectPageSection title="Posizioni" >
         <subSections>
           <ObjectPageSubSection>
             <blocks>

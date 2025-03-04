@@ -174,14 +174,6 @@ sap.ui.define(
         }
         this.buildSpreadSheet(aData);
       },
-      onPressRow: function (oEvent) {
-        var index = oEvent.getParameter("rowIndex");
-        if (index === 0) {
-          this.getView().byId("buttonDelete").setProperty("enabled", false);
-        } else {
-          this.getView().byId("buttonDelete").setProperty("enabled", true);
-        }
-      },
 
       onProcessaButton: function (oEvent) {
         debugger;
@@ -209,17 +201,14 @@ sap.ui.define(
           if (flag) {
             //selezionata testata
             MessageBox.confirm(
-              "Essendo stata selezionata una testata verranno processate tutte le posizioni al suo interno, continuare?",
+              "Verranno processate tutte le posizioni della Testata selezionata, continuare?",
               {
                 title: "Continuare?",
                 onClose: (oAction) => {
                   if (oAction === sap.m.MessageBox.Action.OK) {
-                    debugger;
                     testate.forEach((x) => {
-                      debugger;
                       selectedPos = selectedPos.concat(x.posizioni);
                     });
-                    debugger;
                     let uniqueArray = selectedPos.reduce(
                       (acc, currentValue) => {
                         if (!acc.some((item) => item.id === currentValue.id)) {
@@ -229,15 +218,12 @@ sap.ui.define(
                       },
                       []
                     );
-
-                    console.log(uniqueArray);
                     this.processaItems(uniqueArray);
                   }
                 },
               }
             );
           } else {
-            //selezionate solo posizioni
             debugger;
             this.processaItems(selectedPos);
           }
@@ -247,7 +233,6 @@ sap.ui.define(
       },
 
       importaPress: function (oEvent) {
-        debugger;
         if (!this._oDialog2) {
           Fragment.load({
             id: this.getView().getId(),
@@ -280,7 +265,6 @@ sap.ui.define(
                 "/testata",
                 this.getView().getModel("master3").getProperty(`${detailPath[0] + detailPath[1]}`)
               );
-            debugger;
               let oNextUIState;
               this.getOwnerComponent()
                 .getHelper()
@@ -294,7 +278,6 @@ sap.ui.define(
                   }.bind(this)
                 );
           } else {
-            debugger
             detailPath = oEvent.getSource().getParent().getBindingContext("master3").getPath();
             this.getRouter().navTo("detailMaster3", {
               id: detail.id,
@@ -303,8 +286,7 @@ sap.ui.define(
             });
           }
         } else if (
-          oEvent.getSource().getParent().getBindingContext("master3CO") !== undefined
-        ) {
+          oEvent.getSource().getParent().getBindingContext("master3CO") !== undefined) {
           detailPath = oEvent.getSource().getParent().getBindingContext("master3CO").getPath();
           detail = this.getView().getModel("master3CO").getProperty(`${detailPath}`);
           this.getRouter().navTo("dettCallOff", {
@@ -312,10 +294,7 @@ sap.ui.define(
             layout: "OneColumn",
           });
         } else if (
-          oEvent.getSource().getParent().getBindingContext("master3SB") !==
-          undefined
-        ) {
-          debugger;
+          oEvent.getSource().getParent().getBindingContext("master3SB") !==undefined) {
           detailPath = oEvent.getSource().getParent().getBindingContext("master3SB").getPath();
           detail = this.getView().getModel("master3SB").getProperty(`${detailPath}`);
           this.getRouter().navTo("dettSelfBilling", {
@@ -326,7 +305,6 @@ sap.ui.define(
       },
 
       statoButtonPress: function (oEvent) {
-        debugger;
         let lastIndexMessage = oEvent.getSource().getBindingContext("master3").getObject().log.results.length -1
         let message = oEvent.getSource().getBindingContext("master3").getObject().log.results[lastIndexMessage].messaggio
         MessageBox.error(message);
@@ -374,7 +352,6 @@ sap.ui.define(
       },
 
       navToAPP: function (oEvent) {
-        debugger;
         let level = oEvent.getSource().getParent().getParent().getBindingContext("master3").getPath();
         if (level.includes("posizioni")) {
           this.getRouter().navTo("master", { monitor: "monitor" });
@@ -383,14 +360,9 @@ sap.ui.define(
         }
       },
       processaItems: function (items) {
-        debugger;
-
-        let itemList = items
-          .map(
-            (item) =>
-              `Codice cliente materiale: ${item.codice_cliente_materiale} - ID: ${item.id} - Codice materiale fornitore: ${item.codice_materiale_fornitore}\n`
-          )
-          .join("");
+        let itemList = items.map((item) =>
+           `Codice cliente materiale: ${item.codice_cliente_materiale} - ID: ${item.id} - Codice materiale fornitore: ${item.codice_materiale_fornitore}\n`
+          ).join("");
         let message = `Vuoi continuare con questi elementi? \n ${itemList}`;
         let that = this
 
@@ -442,8 +414,7 @@ sap.ui.define(
                   that._fragment.open();
                 }
               } catch (error) {
-                MessageBox.error("Errore durante la ricezione dei dati")
-              
+                MessageBox.error("Errore durante la ricezione dei dati")              
               }finally {
                 that.hideBusy(0);
               }

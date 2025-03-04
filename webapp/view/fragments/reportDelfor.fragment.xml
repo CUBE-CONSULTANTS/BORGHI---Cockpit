@@ -7,7 +7,7 @@
     <Dialog title="Risultati del processamento" icon="sap-icon://information">
        
         <VBox class="sapUiMediumMargin" visible="{= ${modelloReport>/successo}.length > 0}">
-            <Text class="sapUiSmallMarginBottom" text="Posizioni processate con successo"/>
+            <Text class="sapUiSmallMarginBottom" text="Posizioni processate con successo:"/>
             <ui:Table rows="{modelloReport>/successo}"  paste="onPaste" ariaLabelledBy="title" >
            
             <ui:columns>
@@ -52,7 +52,7 @@
         </ui:Table>
         </VBox>
         <VBox class="sapUiMediumMargin" visible="{= ${modelloReport>/errore}.length > 0}">
-            <Text text="Posizioni processate con errori" class="sapUiSmallMarginBottom"/>
+            <Text text="Posizioni processate con errori:" class="sapUiSmallMarginBottom"/>
             <ui:Table rows="{modelloReport>/errore}"  paste="onPaste" ariaLabelledBy="title" >
            
             <ui:columns>
