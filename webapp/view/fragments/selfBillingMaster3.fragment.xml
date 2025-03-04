@@ -122,7 +122,13 @@ xmlns:mvc="sap.ui.core.mvc">
             press="downloadExcelFile"
             visible="{=${datiAppoggio>/currentPage} === 'archivio' ? false:true}"
             />
-            
+            <Button
+            text="Archivia"
+            icon="sap-icon://bbyd-active-sales"
+            press=""
+            type="Emphasized"
+           
+          />            
             <Button
               text="Elimina"
               icon="sap-icon://delete"

@@ -71,19 +71,19 @@ ariaLabelledBy="title"
   press="downloadExcelFile"
   visible="{=${datiAppoggio>/currentPage} === 'archivio' ? false:true}"
   />
-  <Button
+  <!-- <Button
     text="Elabora"
     icon="sap-icon://process"
     press="onProcessaButton"
     type="Emphasized"
     visible="{=${datiAppoggio>/currentPage} === 'archivio' ? false:true}"
-  />
+  /> -->
   <Button
-    text="Elimina"
-    icon="sap-icon://delete"
+    text="Archivia"
+    icon="sap-icon://bbyd-active-sales"
     press=""
-    type="Reject"
-    visible="{=${datiAppoggio>/currentPage} === 'archivio' ? false:true}"
+    type="Emphasized"
+   
   />
   </OverflowToolbar>
 </ui:extension>

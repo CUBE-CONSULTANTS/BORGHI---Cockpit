@@ -235,7 +235,13 @@
               class="sapUiTinyMarginBegin"
               press="downloadEdi"          
             />
-            
+            <Button
+              text="Archivia"
+              icon="sap-icon://bbyd-active-sales"
+              press=""
+              type="Emphasized"
+              visible="{= ${master3CO>posizione_43_44} === '35' }" 
+          />
           </HBox>
 						</ui:template>
 					</ui:Column>

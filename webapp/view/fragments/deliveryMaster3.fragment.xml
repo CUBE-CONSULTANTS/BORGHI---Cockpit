@@ -15,6 +15,7 @@
     showGoOnFB="true"
     showClearOnFB="true"
     clear="onFilterBarClear"
+    filterContainerWidth="20rem"
     class="sapUiSmallMarginBottom"
   >
     <fb:filterGroupItems>
@@ -80,7 +81,34 @@
       </ComboBox>
         </fb:control>
       </fb:FilterGroupItem>
-     
+      <fb:FilterGroupItem
+        name="Stato"
+        label="Stato"
+        groupName="Group1"
+        visibleInFilterBar="true"
+      >
+        <fb:control>
+          <ComboBox 
+          items="{filtersModel>/delivery/stato/items}" 
+          value="{filtersModel>/delivery/stato/value}">
+          <core:ListItem key="{filtersModel>Key}" text="{filtersModel>Text}" />
+      </ComboBox>
+        </fb:control>
+      </fb:FilterGroupItem>
+      <fb:FilterGroupItem
+        name="Messaggio"
+        label="Messaggio"
+        groupName="Group1"
+        visibleInFilterBar="true"
+      >
+        <fb:control>
+          <ComboBox 
+          items="{filtersModel>/delivery/messaggio/items}" 
+          value="{filtersModel>/delivery/messaggio/value}">
+          <core:ListItem key="{filtersModel>Key}" text="{filtersModel>Text}" />
+      </ComboBox>
+        </fb:control>
+      </fb:FilterGroupItem>
     </fb:filterGroupItems>
   </fb:FilterBar>
   <ui:TreeTable

@@ -52,6 +52,14 @@ sap.ui.define(
             materiale: {
 							value: null,
 							items: [],
+						},
+            stato: {
+							value: null,
+							items: [],
+						},
+            messaggio: {
+							value: null,
+							items: [],
 						}
           },
           callOff : {

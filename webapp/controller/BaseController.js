@@ -146,20 +146,28 @@ sap.ui.define(
         }, 
         onFiltersBuilding: function (oEvent, key) {
           if (key === "01") {
+            debugger
             let aData = this.getModel("master3").getProperty("/");
+            let aStato = aData.map(item => [...new Set(item.posizioni.map(pos =>pos.stato))])
             let aClienti = [...new Set(aData.map((item) => item.codice_cliente))];
             let aNumProgInvio = [...new Set(aData.map((item) => item.numero_progressivo_invio))];
             let aMateriali = [];
+            let aMessaggi = []
             aData.forEach((item) => {
               if (item.posizioni) {
                 item.posizioni.forEach((pos) => {
                   if (pos.codice_cliente_materiale) {
                     aMateriali.push(pos.codice_cliente_materiale);
                   }
+                  if(pos.log){
+                    debugger
+                    pos.log.results.forEach(res=> aMessaggi.push(res.messaggio))
+                  }
                 });
               }
             });
             aMateriali = [...new Set(aMateriali)];
+            aMessaggi = [...new Set(aMessaggi)];
             this.getModel("filtersModel").setProperty(
               "/delivery/cliente/items",
               aClienti.map((c) => ({ Key: c, Text: c }))
@@ -171,6 +179,14 @@ sap.ui.define(
             this.getModel("filtersModel").setProperty(
               "/delivery/numProg/items",
               aNumProgInvio.map((n) => ({ Key: n, Text: n }))
+            );
+            this.getModel("filtersModel").setProperty(
+              "/delivery/stato/items",
+              aStato.map((n) => ({ Key: n, Text: n }))
+            );
+            this.getModel("filtersModel").setProperty(
+              "/delivery/messaggio/items",
+              aMessaggi.map((n) => ({ Key: n, Text: n }))
             );
           }else if(key === "02"){
             let aData = this.getModel("master3CO").getProperty("/");
@@ -264,7 +280,7 @@ sap.ui.define(
           this.getModel("filtersModel").refresh(true);
           let modelMeta
           if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("delivery")) {
-            modelMeta = await this.callData(this.getOwnerComponent().getModel("modelloV2"), "/Testata", [], ["posizioni,posizioni/schedulazioni,posizioni/log"],"01")
+            modelMeta = await this.callData(this.getOwnerComponent().getModel("modelloV2"), "/Testata", [], [`posizioni($filter=stato ne '53'),posizioni($expand=log,schedulazioni,testata),master`],"01")
           }
           if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("callOff")) {
             modelMeta = await this.callData(this.getOwnerComponent().getModel("calloffV2"), "/Testata", [], ["master,posizioni_testata,log_testata"],"02")
@@ -280,20 +296,38 @@ sap.ui.define(
         },
         onSearchData: async function (oEvent) {
           //ricerca filtrata
-          debugger
           let oFilterSet;
           let key
           if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("delivery")) {
             oFilterSet = this.getModel("filtersModel").getProperty("/delivery");
             let aFilters = mapper.buildFilters(oFilterSet,key = "01")
-            await this.callData(this.getOwnerComponent().getModel("modelloV2"),"/Testata",aFilters,["posizioni($filter=stato ne '53'),posizioni($expand=log,schedulazioni,testata)",],"01") 
+            let findStato = aFilters.find(filter => filter.sPath === "posizioni/stato")
+            let findMessaggio = aFilters.find(filter => filter.sPath === "posizioni/log/messaggio")
+            if (findStato && findMessaggio) {
+              let index = aFilters.findIndex(filter => filter.sPath === "posizioni/stato")
+              aFilters.splice(index,1)
+              let indexMess = aFilters.findIndex(filter => filter.sPath === "posizioni/log/messaggio")
+              aFilters.splice(indexMess,1)
+              await this.callData(this.getOwnerComponent().getModel("modelloV2"),"/Testata",aFilters,[`posizioni($filter=stato eq '${findStato.oValue1}'),posizioni($expand=log($filter=messaggio eq '${findMessaggio.oValue1}'),schedulazioni,testata),master`],"01")         
+            }else if(findStato){
+              let index = aFilters.findIndex(filter => filter.sPath === "posizioni/stato")
+              aFilters.splice(index,1)
+              await this.callData(this.getOwnerComponent().getModel("modelloV2"),"/Testata",aFilters,[`posizioni($filter=stato eq '${findStato.oValue1}'),posizioni($expand=log,schedulazioni,testata),master`],"01")   
+            }
+            else if(findMessaggio){
+              let indexMess = aFilters.findIndex(filter => filter.sPath === "posizioni/log/messaggio")
+              aFilters.splice(indexMess,1)
+              await this.callData(this.getOwnerComponent().getModel("modelloV2"),"/Testata",aFilters,[`posizioni($filter=stato ne '53'),posizioni($expand=log($filter=messaggio eq '${findMessaggio.oValue1}'),schedulazioni,testata),master`],"01")
+            }
+            else{
+              await this.callData(this.getOwnerComponent().getModel("modelloV2"),"/Testata",aFilters,[`posizioni($filter=stato ne '53'),posizioni($expand=log,schedulazioni,testata),master`],"01") 
+            }
           }else if(oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("callOff")){
             oFilterSet = this.getModel("filtersModel").getProperty("/callOff");
             let aFilters = mapper.buildFilters(oFilterSet,key = "02")
             await this.callData(this.getOwnerComponent().getModel("calloffV2"), "/Testata", aFilters, ["master,posizioni_testata,log_testata"],"02") 
           }else if(oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("selfBilling")){
             oFilterSet = this.getModel("filtersModel").getProperty("/selfBilling");
-            debugger
             let aFilters = mapper.buildFilters(oFilterSet,key = "03")
             await this.callData(this.getOwnerComponent().getModel("selfBillingV2"), "/Testata",aFilters, [
                 "dettaglio_fattura,log_testata,dettaglio_fattura/riferimento_ddt,dettaglio_fattura/riferimento_ddt/riga_fattura",

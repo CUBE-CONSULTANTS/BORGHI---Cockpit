@@ -258,6 +258,24 @@ sap.ui.define(
               )
             );
           }
+          if (oFilterSet.stato && oFilterSet.stato.value) {
+            aFilters.push(
+              new sap.ui.model.Filter(
+                "posizioni/stato",
+                sap.ui.model.FilterOperator.EQ,
+                oFilterSet.stato.value
+              )
+            );
+          }
+          if (oFilterSet.messaggio && oFilterSet.messaggio.value) {
+            aFilters.push(
+              new sap.ui.model.Filter(
+                "posizioni/log/messaggio",
+                sap.ui.model.FilterOperator.EQ,
+                oFilterSet.messaggio.value
+              )
+            );
+          }
         }
         if (key === "02") {
           if (oFilterSet.dataRic) {
