@@ -313,8 +313,10 @@ sap.ui.define(
               modelMeta = new JSONModel(metadata.results);
               modelMeta.getProperty("/").forEach((testata) => {
                 testata.posizioni = Object.values(testata.posizioni.results);
+                
               });
               this.getOwnerComponent().setModel(modelMeta, "master3");
+              debugger
             }else if(key === "02"){
               modelMeta = new JSONModel(metadata.results);
               modelMeta.getProperty("/").forEach((testata) => {

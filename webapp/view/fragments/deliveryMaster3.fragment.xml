@@ -157,7 +157,7 @@
           <!-- <Button icon="{=${master3>DelforTestata/template} === 'MAN' ? 'sap-icon://attachment' : 'sap-icon://cloud'}"></Button> -->
           <core:Icon
             src="{=${master3>template} === 'MAN' ? 'sap-icon://attachment' : 'sap-icon://cloud'}"
-            visible="{= ${master3>codice_seller} ? true : false}"
+            visible="{= ${master3>codice_cliente} ? true : false}"
             size="1rem"
             tooltip="{=${master3>template} === 'MAN' ? 'Caricamento manuale' : 'Caricamento in cloud'}"
           />
@@ -169,7 +169,7 @@
       >
         <Label text="Cliente" />
         <ui:template>
-          <Text text="{master3>codice_seller}" />
+          <Text text="{master3>codice_cliente}" />
         </ui:template>
       </ui:Column>
       <ui:Column
@@ -186,10 +186,11 @@
         tooltip="Data ricezione"
       >
         <Label text="Data ricezione" />
+        <!-- cambio binding -->
         <ui:template>
           <DatePicker
             editable="false"
-            visible="{= ${master3>data_ricezione} ? true : false}"
+            visible="{= ${master3>master/data_ricezione} ? true : false}"
             value="{
               path: 'master3>data_ricezione',
               type: 'sap.ui.model.type.Date',
@@ -241,12 +242,16 @@
       >
         <Label text="Stato" />
         <ui:template>
+          
           <Button
-            icon="{= ${master3>Stato} === 'OK' ? 'sap-icon://accept' : ${master3>Stato} === 'KO' ? 'sap-icon://decline' : 'sap-icon://warning'}"
-            type="{= ${master3>Stato} === 'OK' ? 'Accept' : ${master3>Stato} === 'KO' ? 'Negative' : 'Critical'}"
-            tooltip="{master3>Stato}"
+            visible="{= ${master3>numero_progressivo_invio} ? false : true}"
+            icon="{= ${master3>stato} === '53' ? 'sap-icon://status-positive' : ${master3>stato} === '51' ? 'sap-icon://status-negative' : 'sap-icon://in-progress'}"
+            type="{= ${master3>stato} === '53' ? 'Accept' : ${master3>stato} === '51' ? 'Negative' : 'Ghost'}"
+            tooltip="{master3>stato}"
+           
             press="statoButtonPress"
           />
+          <!-- enabled="{= ${master3>stato} === ''}" -->
           <!-- <Button text="{master3>template}"></Button> -->
           <!-- <Text text="X"/> -->
         </ui:template>
@@ -263,14 +268,14 @@
               icon="sap-icon://display"
               type="Emphasized"
               press="dettaglioNav"
-              tooltip="{= ${master3>codice_seller} ? 'Dettaglio posizioni' : 'Dettaglio schedulazioni'}"
+              tooltip="{= ${master3>codice_cliente} ? 'Dettaglio posizioni' : 'Dettaglio schedulazioni'}"
             />
             <Button
               icon="sap-icon://commission-check"
               type="Emphasized"
               class="sapUiTinyMarginBegin"
               press="navToAPP"
-              tooltip="{= ${master3>codice_seller} ? 'Confronto Programmazione Cliente' : 'Confronto Programmazione Materiale'}"
+              tooltip="{= ${master3>codice_cliente} ? 'Confronto Programmazione Cliente' : 'Confronto Programmazione Materiale'}"
             />
             <Button
               icon="sap-icon://download"
@@ -278,7 +283,7 @@
               type="Default"
               class="sapUiTinyMarginBegin"
               press="downloadEdi"
-              visible="{= ${master3>codice_seller} ? true : false}"
+              visible="{= ${master3>codice_cliente} ? true : false}"
             />
           </HBox>
         </ui:template>

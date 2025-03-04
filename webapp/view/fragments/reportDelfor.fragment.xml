@@ -4,43 +4,40 @@
     xmlns:fb="sap.ui.comp.filterbar"
     xmlns:ui="sap.ui.table"
     xmlns:mvc="sap.ui.core.mvc">
-    <Dialog title="Fine del processamento" >
-        <VBox class="sapUiMediumMargin">
-            <Text text="Processo di eliminazione terminato, si potranno trovare i risultati nelle tabelle sottostanti"></Text>
-        </VBox>
-        <VBox class="sapUiMediumMargin">
-            <Text text="Tabella elementi processati con successo"/>
-            <ui:Table rows="{/ProductCollection}"  paste="onPaste" ariaLabelledBy="title" >
+    <Dialog title="Risultati del processamento" icon="sap-icon://information">
+       
+        <VBox class="sapUiMediumMargin" visible="{= ${modelloReport>/successo}.length > 0}">
+            <Text class="sapUiSmallMarginBottom" text="Posizioni processate con successo"/>
+            <ui:Table rows="{modelloReport>/successo}"  paste="onPaste" ariaLabelledBy="title" >
            
             <ui:columns>
-                <ui:Column >
-                    <Label text="Cliente" />
-                    <ui:template>
-                        <Text text="{Name}" wrapping="false" />
-                    </ui:template>
-                </ui:Column>
-    
-                <ui:Column >
-                    <Label text="Progressivo invio" />
-                    <ui:template>
-                        <Text text="{Name}" wrapping="false" />
-                    </ui:template>
-                </ui:Column>
+              <ui:Column >
+                <Label text="Cliente" />
+                <ui:template>
+                    <Text text="{modelloReport>codice_cliente}" wrapping="false" />
+                </ui:template>
+            </ui:Column>
 
-                <ui:Column >
-                    <Label text="Materiale" />
-                    <ui:template>
-                        <Text text="{Name}" wrapping="false" />
-                    </ui:template>
-                </ui:Column>
+            <ui:Column >
+                <Label text="Progressivo invio" />
+                <ui:template>
+                    <Text text="{modelloReport>progressivo_invio}" wrapping="false" />
+                </ui:template>
+            </ui:Column>
 
-                <ui:Column >
-                    <Label text="IDoc" />
-                    <ui:template>
-                        <Text text="{Name}" wrapping="false" />
-                    </ui:template>
-                </ui:Column>
-    
+            <ui:Column >
+                <Label text="Materiale" />
+                <ui:template>
+                    <Text text="{modelloReport>codice_cliente_materiale}" wrapping="false" />
+                </ui:template>
+            </ui:Column>
+
+            <ui:Column >
+                <Label text="IDoc" />
+                <ui:template>
+                    <Text text="{modelloReport>numero_idoc}" wrapping="false" />
+                </ui:template>
+            </ui:Column>
                 <ui:Column >
                     <Label text="Download" />
                     <ui:template>
@@ -54,36 +51,36 @@
             </ui:columns>
         </ui:Table>
         </VBox>
-        <VBox class="sapUiMediumMargin">
-            <Text text="Tabella elementi processati con errori"/>
-            <ui:Table rows="{/ProductCollection}"  paste="onPaste" ariaLabelledBy="title" >
+        <VBox class="sapUiMediumMargin" visible="{= ${modelloReport>/errore}.length > 0}">
+            <Text text="Posizioni processate con errori" class="sapUiSmallMarginBottom"/>
+            <ui:Table rows="{modelloReport>/errore}"  paste="onPaste" ariaLabelledBy="title" >
            
             <ui:columns>
                 <ui:Column >
                     <Label text="Cliente" />
                     <ui:template>
-                        <Text text="{Name}" wrapping="false" />
+                        <Text text="{modelloReport>codice_cliente}" wrapping="false" />
                     </ui:template>
                 </ui:Column>
     
                 <ui:Column >
                     <Label text="Progressivo invio" />
                     <ui:template>
-                        <Text text="{Name}" wrapping="false" />
+                        <Text text="{modelloReport>progressivo_invio}" wrapping="false" />
                     </ui:template>
                 </ui:Column>
 
                 <ui:Column >
                     <Label text="Materiale" />
                     <ui:template>
-                        <Text text="{Name}" wrapping="false" />
+                        <Text text="{modelloReport>codice_cliente_materiale}" wrapping="false" />
                     </ui:template>
                 </ui:Column>
 
                 <ui:Column >
                     <Label text="IDoc" />
                     <ui:template>
-                        <Text text="{Name}" wrapping="false" />
+                        <Text text="{modelloReport>numero_idoc}" wrapping="false" />
                     </ui:template>
                 </ui:Column>
     
@@ -92,7 +89,7 @@
         </VBox>
 
         <buttons>
-            <Button text="Chiudi" press="onClose"></Button>
+            <Button type="Emphasized"  text="Chiudi" press="onClose"/>
         </buttons>
    
 </Dialog>

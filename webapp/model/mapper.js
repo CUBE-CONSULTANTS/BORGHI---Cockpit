@@ -225,7 +225,7 @@ sap.ui.define(
             oDataRic.setHours(1, 0, 0, 0);
             aFilters.push(
               new sap.ui.model.Filter(
-                "data_ricezione",
+                "master/data_ricezione",
                 sap.ui.model.FilterOperator.EQ,
                 oDataRic
               )

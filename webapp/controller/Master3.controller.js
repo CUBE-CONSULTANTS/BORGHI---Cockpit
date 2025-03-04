@@ -72,8 +72,9 @@ sap.ui.define(
               oModel,
               "/Testata",
               [],
+              //modifica $filter
               [
-                "posizioni($filter=stato ne '53'),posizioni($expand=log,schedulazioni,testata)",
+                "posizioni($filter=stato ne '53'),posizioni($expand=log,schedulazioni,testata),master",
               ],
               selectedKey
             );
@@ -410,18 +411,8 @@ sap.ui.define(
           )
           .join("");
         let message = `Vuoi continuare con questi elementi? \n ${itemList}`;
+        let that = this
 
-        // MessageBox.confirm(message, {
-        //   title: "Riepilogo",
-        //   onClose: (oAction) => {
-        //     debugger;
-        //     if (oAction === sap.m.MessageBox.Action.OK) {
-        //       debugger;
-        //     }
-        //   },
-        // });
-
-        //prova
         sap.m.MessageBox.confirm(message, {
           icon: sap.m.MessageBox.Icon.WARNING,
           title: "Riepilogo",
@@ -429,55 +420,52 @@ sap.ui.define(
           emphasizedAction: sap.m.MessageBox.Action.YES,
           onClose: async function (oAction) {
             if (oAction == "YES") {
-              let payload = [];
-              items.forEach((x) => {
-                payload.push(x.id);
-              });
-
-              let obj = { id: payload };
-
-              let oModel = this.getOwnerComponent().getModel("modelloV2");
-              let res = await API.createEntity(oModel, "/Processamento", obj);
-              debugger;
-
-              let modelloReport = new JSONModel({ successo: "", errore: "" });
-              this.setModel(modelloReport, "modelloReport");
-              let success = [];
-              let error = [];
-              res.results.forEach((x) => {
-                if (x.status === "51") {
-                  debugger;
-                  let el = items.find((y) => x.id === y.id);
-                  success.push(el);
+              try {
+                that.showBusy(0)
+                let payload = [];
+                items.forEach((x) => {
+                  payload.push(x.id);
+                });
+                let obj = { id: payload };
+                let oModel = this.getOwnerComponent().getModel("modelloV2");
+                let res = await API.createEntity(oModel, "/Processamento", obj);
+                let modelloReport = new JSONModel({ successo: "", errore: "" });
+                that.setModel(modelloReport, "modelloReport");
+                let success = [];
+                let error = [];
+                res.results.forEach((x) => {
+                  if (x.status === "51") {
+                    debugger;
+                    let el = items.find((y) => x.id === y.id);
+                    error.push(el);
+                  } else {
+                    let el = items.find((y) => x.id === y.id);
+                    success.push(el);
+                  }
+                });  
+                that.getModel("modelloReport").setProperty("/successo", success);
+                that.getModel("modelloReport").setProperty("/errore", error);
+                if (!that._fragment) {
+                  Fragment.load({
+                    name: "programmi.consegne.edi.view.fragments.reportDelfor",
+                    controller:this,
+                  }).then(
+                    function (oFragment) {
+                      this._fragment = oFragment;
+                      this.getView().addDependent(this._fragment);
+                      this._fragment.open();
+                    }.bind(this)
+                  );
                 } else {
-                  let el = items.find((y) => x.id === y.id);
-                  error.push(el);
+                  that._fragment.setModel("modelloReport");
+                  that._fragment.open();
                 }
-              });
-
-              this.getModel().setProperty("/successo", success);
-              this.getModel().setProperty("/errore", error);
-              debugger;
-
-              if (!this._fragment) {
-                Fragment.load({
-                  name: "programmi.consegne.edi.view.fragments.reportDelfor",
-                  controller: this,
-                }).then(
-                  function (oFragment) {
-                    this._fragment = oFragment;
-                    this._fragment.setModel(modelloReport);
-                    this.getView().addDependent(this._fragment);
-
-                    this._fragment.open();
-                  }.bind(this)
-                );
-              } else {
-                this._fragment.setModel(modelloReport);
-                this._fragment.open();
+              } catch (error) {
+                MessageBox.error("Errore durante la ricezione dei dati")
+              
+              }finally {
+                that.hideBusy(0);
               }
-            } else {
-              // sap.ui.core.BusyIndicator.hide(0);
             }
           }.bind(this),
         });
