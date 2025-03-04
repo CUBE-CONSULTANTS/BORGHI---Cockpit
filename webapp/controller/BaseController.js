@@ -13,13 +13,13 @@ sap.ui.define(
     "sap/ui/core/format/DateFormat",
     "../model/API",
     "../model/mapper",
-    "../model/formatter",
     "sap/m/p13n/Engine",
     "sap/m/p13n/SelectionController",
     "sap/m/p13n/SortController",
     "sap/m/p13n/GroupController",
     "sap/m/p13n/MetadataHelper",
     "sap/ui/core/library",
+    "../model/formatter",
   ],
   function (
     Controller,
@@ -35,19 +35,20 @@ sap.ui.define(
     DateFormat,
     API,
     mapper,
-    formatter,
     Engine,
     SelectionController,
     SortController,
     GroupController,
     MetadataHelper,
     CoreLibrary,
+    formatter,
   ) {
     "use strict";
 
     return Controller.extend(
       "programmi.consegne.edi.controller.BaseController",
       {
+       
         /**
          * Convenience method for accessing the component of the controller's view.
          * @returns {sap.ui.core.Component} The component of the controller's view
@@ -313,10 +314,10 @@ sap.ui.define(
               modelMeta = new JSONModel(metadata.results);
               modelMeta.getProperty("/").forEach((testata) => {
                 testata.posizioni = Object.values(testata.posizioni.results);
-                
+                testata.master.data_ricezione = this.formatter.formatDateString(testata.master.data_ricezione)
+                debugger
               });
               this.getOwnerComponent().setModel(modelMeta, "master3");
-              debugger
             }else if(key === "02"){
               modelMeta = new JSONModel(metadata.results);
               modelMeta.getProperty("/").forEach((testata) => {

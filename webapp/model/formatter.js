@@ -24,12 +24,13 @@ sap.ui.define([
   
       return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
     },
-    formatMs: function(ms) {
-      debugger
-      
-      let newDate = new Date(ms)
-      let Time = newDate.toISOString().slice(11, 19)
-      return Time
+    formatDateString: function (dateString) {
+      if (!dateString) return ""; 
+      const timestampMatch = dateString.match(/\d+/);
+      if (!timestampMatch) return "";
+      const timestamp = parseInt(timestampMatch[0], 10);
+      const date = new Date(timestamp);
+      return date
     },
     parseDate: function (dateStr) {
       let parts = dateStr.split("/");
