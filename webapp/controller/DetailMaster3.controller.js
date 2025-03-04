@@ -26,25 +26,27 @@ sap.ui.define(
             .getRoute("detailMaster3")
             .attachPatternMatched(this._onProductMatched, this);
         },
-        _onProductMatched: function (oEvent) {
+        _onProductMatched: async function (oEvent) {
           debugger;
-          this._product =
-            oEvent.getParameter("arguments").product || this._product || "0";
-          if (this.getOwnerComponent().getModel("master3") !== undefined) {
-            let datiElementoSelect = this.getOwnerComponent()
-              .getModel("master3")
-              .getProperty("/")
-              .find((x) => (x.id = this._product));
-            this.getView().setModel(
-              new sap.ui.model.json.JSONModel(),
-              "detailData"
-            );
-            this.getView()
-              .getModel("detailData")
-              .setProperty("/DettaglioMaster3", datiElementoSelect);
-            // this._registerForP13n(oEvent);
-            this._registerForP13n(oEvent, "tablePos");
-          }
+          this._id = oEvent.getParameter("arguments").id || this._id || "0";
+          this._idMaster = oEvent.getParameter("arguments").idmaster || this._id || "0";
+          try {
+            this.showBusy(0)
+            let dettaglio = await 
+            API.readByKey(  this.getOwnerComponent().getModel("modelloV2"), "/Testata", {id: this._id, id_master: this._idMaster}, [], [
+              "posizioni($filter=stato ne '53'),posizioni($expand=log,schedulazioni,testata),master",
+            ])
+            let detailModel = new JSONModel(dettaglio);
+            detailModel.getProperty("/posizioni/results").forEach((pos) => {  
+              pos.log = Object.values(pos.log.results);
+            });
+            this.setModel(detailModel,"detailData");
+            this._registerForP13n(oEvent, "tablePos")
+          } catch (error) {
+            MessageBox.error("Errore durante la ricezione dei Dati")
+          } finally {
+            this.hideBusy(0)
+          }  
         },
         onProcessaButton: function (oEvent) {
           debugger;

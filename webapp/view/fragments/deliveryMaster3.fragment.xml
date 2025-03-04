@@ -98,7 +98,7 @@
     selectionBehavior="Row"
     
   >
-    <!-- cellClick=".rowDetailPress" -->
+
     <ui:extension>
       <OverflowToolbar style="Clear">
         <Title />
@@ -207,12 +207,12 @@
       <!-- posizioni -->
       <ui:Column
         width="11rem"
-        tooltip="Matateriale fornitore"
+        tooltip="Codice Materiale"
       >
-        <Label text="Mat. fornitore" />
+        <Label text="Codice Mat." />
         <ui:template>
           <ObjectIdentifier
-            title="{master3>codice_materiale_fornitore}"
+            title="{master3>codice_cliente_materiale}"
             text="{master3>descrizione_materiale}"
           />
         </ui:template>

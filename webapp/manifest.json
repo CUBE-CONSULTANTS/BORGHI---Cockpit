@@ -240,7 +240,7 @@
 					]
 				},
 				{
-					"pattern": "detailMaster3/{product}/{layout}",
+					"pattern": "detailMaster3/{id}/{idmaster}/{layout}",
 					"name": "detailMaster3",
 					"target": [
 						

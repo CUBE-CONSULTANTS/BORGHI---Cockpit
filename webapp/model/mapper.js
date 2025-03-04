@@ -243,7 +243,7 @@ sap.ui.define(
           if (oFilterSet.cliente && oFilterSet.cliente.value) {
             aFilters.push(
               new sap.ui.model.Filter(
-                "codice_seller",
+                "codice_cliente",
                 sap.ui.model.FilterOperator.EQ,
                 oFilterSet.cliente.value
               )
@@ -252,7 +252,7 @@ sap.ui.define(
           if (oFilterSet.materiale && oFilterSet.materiale.value) {
             aFilters.push(
               new sap.ui.model.Filter(
-                "posizioni/codice_materiale_fornitore",
+                "posizioni/codice_cliente_materiale",
                 sap.ui.model.FilterOperator.EQ,
                 oFilterSet.materiale.value
               )
@@ -369,11 +369,14 @@ sap.ui.define(
         aData.forEach((item) => {
           let row = this._cleanAndFormatData(item);
           let positions =
-            item.posizioni ||
+            item.posizioni || item.posizioni.results ||
             item.posizioni_testata ||
             item.dettaglio_fattura ||
             [];
 
+          if(positions.results ){
+            positions = (Object.values(positions.results))
+          }  
           positions.forEach((position) => {
             debugger;
             let positionRow = { ...row, ...this._cleanAndFormatData(position) };
@@ -441,6 +444,7 @@ sap.ui.define(
           "id_posizione",
           "id_testata",
           "testata",
+          "schedulazioni"
         ].forEach((key) => delete cleanedData[key]);
         if (cleanedData.master) {
           ["edi", "payload_db", "id"].forEach(

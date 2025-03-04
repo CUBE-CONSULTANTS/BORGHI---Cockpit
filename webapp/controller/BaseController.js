@@ -146,14 +146,14 @@ sap.ui.define(
         onFiltersBuilding: function (oEvent, key) {
           if (key === "01") {
             let aData = this.getModel("master3").getProperty("/");
-            let aClienti = [...new Set(aData.map((item) => item.codice_seller))];
+            let aClienti = [...new Set(aData.map((item) => item.codice_cliente))];
             let aNumProgInvio = [...new Set(aData.map((item) => item.numero_progressivo_invio))];
             let aMateriali = [];
             aData.forEach((item) => {
               if (item.posizioni) {
                 item.posizioni.forEach((pos) => {
-                  if (pos.codice_materiale_fornitore) {
-                    aMateriali.push(pos.codice_materiale_fornitore);
+                  if (pos.codice_cliente_materiale) {
+                    aMateriali.push(pos.codice_cliente_materiale);
                   }
                 });
               }
@@ -321,7 +321,6 @@ sap.ui.define(
               modelMeta = new JSONModel(metadata.results);
               modelMeta.getProperty("/").forEach((testata) => {
                 testata.posizioni_testata = Object.values(testata.posizioni_testata.results);
-                testata.master
               });
               this.getOwnerComponent().setModel(modelMeta, "master3CO");
             }else if(key === '03'){
@@ -350,7 +349,7 @@ sap.ui.define(
         },
         downloadExcelFileDett: function (oEvent){
           let oModel = this.getModel("detailData")
-          let aData = oModel.getProperty("/DettaglioMaster3"); 
+          let aData = oModel.getProperty("/"); 
             if (!aData || aData.length === 0) {
               MessageToast.show("Nessun dato disponibile per l'esportazione");
               return;

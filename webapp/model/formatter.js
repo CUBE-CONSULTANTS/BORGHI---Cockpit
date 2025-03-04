@@ -16,6 +16,21 @@ sap.ui.define([
       }
       return "";
     },
+    formatTime: function(ms) {
+      const totalSeconds = Math.floor(ms / 1000);
+      const hours = Math.floor(totalSeconds / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+  
+      return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    },
+    formatMs: function(ms) {
+      debugger
+      
+      let newDate = new Date(ms)
+      let Time = newDate.toISOString().slice(11, 19)
+      return Time
+    },
     parseDate: function (dateStr) {
       let parts = dateStr.split("/");
       return new Date(parts[2], parts[1] - 1, parts[0]);

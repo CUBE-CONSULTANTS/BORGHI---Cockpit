@@ -264,25 +264,7 @@ sap.ui.define(
           this._oDialog2.open();
         }
       },
-      rowDetailPress: function (detailPath) {
-        // var detailPath = oEvent.getParameter("rowBindingContext").getPath()
-        let detailRowIndex = detailPath.split("/").slice(-1).pop();
-        let detail = this.getView()
-          .getModel("master3")
-          .getProperty(`/Master3/${detailRowIndex}/DelforTestata/id`);
-        let oNextUIState;
-        this.getOwnerComponent()
-          .getHelper()
-          .then(
-            function (oHelper) {
-              oNextUIState = oHelper.getNextUIState(1);
-              this.getRouter().navTo("detailMaster3", {
-                product: detail,
-                layout: oNextUIState.layout,
-              });
-            }.bind(this)
-          );
-      },
+
       dettaglioNav: function (oEvent) {
         let level, detailPath, detail;
         if ( oEvent.getSource().getParent().getBindingContext("master3") !== undefined) {
@@ -312,9 +294,11 @@ sap.ui.define(
                   }.bind(this)
                 );
           } else {
+            debugger
             detailPath = oEvent.getSource().getParent().getBindingContext("master3").getPath();
             this.getRouter().navTo("detailMaster3", {
-              product: detail.id,
+              id: detail.id,
+              idmaster: detail.id_master,
               layout: "OneColumn",
             });
           }
@@ -343,12 +327,9 @@ sap.ui.define(
 
       statoButtonPress: function (oEvent) {
         debugger;
-        MessageBox.error("Errori nel processamento delle posizioni.", {
-          title: "Error",
-          details: "<p><strong>This can happen if:</strong></p>",
-          contentWidth: "100px",
-          dependentOn: this.getView(),
-        });
+        let lastIndexMessage = oEvent.getSource().getBindingContext("master3").getObject().log.results.length -1
+        let message = oEvent.getSource().getBindingContext("master3").getObject().log.results[lastIndexMessage].messaggio
+        MessageBox.error(message);
       },
 
       onCollapseAll: function () {

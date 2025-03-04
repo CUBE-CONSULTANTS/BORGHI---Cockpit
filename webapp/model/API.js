@@ -28,7 +28,13 @@ sap.ui.define(
         });
       },
 
-      readByKey: function (oModel, Entity, keyValue) {
+      readByKey: function (
+        oModel,
+        Entity,
+        keyValue,
+        aFilters = [],
+        Expands = []
+      ) {
         let keyString =
           typeof keyValue === "object"
             ? Object.entries(keyValue)
@@ -36,8 +42,15 @@ sap.ui.define(
                 .join(",")
             : `'${keyValue}'`;
 
+        let urlParameters = {};
+        if (Expands.length > 0) {
+          urlParameters.$expand = Expands.join(",");
+        }
+
         return new Promise((resolve, reject) => {
           oModel.read(`${Entity}(${keyString})`, {
+            filters: aFilters.length > 0 ? aFilters : undefined,
+            urlParameters: urlParameters,
             success: function (data) {
               resolve(data);
             },
