@@ -224,7 +224,6 @@ sap.ui.define(
               }
             );
           } else {
-            debugger;
             this.processaItems(selectedPos);
           }
         } else {
@@ -382,7 +381,8 @@ sap.ui.define(
                 let obj = { id: payload };
                 let oModel = this.getOwnerComponent().getModel("modelloV2");
                 let res = await API.createEntity(oModel, "/Processamento", obj);
-                let modelloReport = new JSONModel({ successo: "", errore: "" });
+                if(res.results.length >0){
+                  let modelloReport = new JSONModel({ successo: "", errore: "" });
                 that.setModel(modelloReport, "modelloReport");
                 let success = [];
                 let error = [];
@@ -413,6 +413,10 @@ sap.ui.define(
                   that._fragment.setModel("modelloReport");
                   that._fragment.open();
                 }
+                }else {
+                  MessageBox.error("Elaborazione non andata a buon fine")
+                }
+                
               } catch (error) {
                 MessageBox.error("Errore durante la ricezione dei dati")              
               }finally {
