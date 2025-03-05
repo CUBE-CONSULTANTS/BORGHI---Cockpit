@@ -443,6 +443,71 @@ sap.ui.define(
           });
           return columns;
       },
+      onDeletePosition: async function(oEvent){
+        debugger
+        let oTable = oEvent.getSource().getParent().getParent()
+        try {
+          let arrayToProcess = await this._returnPayload(oTable);
+          if (arrayToProcess.length > 0) {
+            this.processaItems(arrayToProcess);
+          }
+        } catch (error) {
+          console.error("Errore durante la selezione delle posizioni:", error);
+        }
+        let oPayload = await this._returnPayload(oTable);
+      },
+      _returnPayload: async function(table) {
+        let indices = table.getSelectedIndices();
+        let testate = []; 
+        let selectedPos = []; 
+        let flag = false; 
+    
+        if (indices.length !== 0) {
+            let aSelectedItems = indices.map(function(iIndex) {
+                return table.getContextByIndex(iIndex).getObject();
+            });
+
+            aSelectedItems.forEach((element) => {
+                if (element.hasOwnProperty("posizioni")) {
+                    testate.push(element); 
+                    flag = true; 
+                } else {
+                    selectedPos.push(element); 
+                }
+            });
+    
+            if (flag) {
+                return new Promise((resolve) => {
+                    MessageBox.confirm(
+                        "Verranno processate tutte le posizioni della Testata selezionata, continuare?", {
+                            title: "Continuare?",
+                            onClose: (oAction) => {
+                                if (oAction === sap.m.MessageBox.Action.OK) {
+                                    testate.forEach((x) => {
+                                        selectedPos = selectedPos.concat(x.posizioni);
+                                    });
+                                    let uniqueArray = selectedPos.reduce((acc, currentValue) => {
+                                        if (!acc.some((item) => item.id === currentValue.id)) {
+                                            acc.push(currentValue);
+                                        }
+                                        return acc;
+                                    }, []);
+                                    resolve(uniqueArray);
+                                } else {
+                                    resolve([]);
+                                }
+                            },
+                        }
+                    );
+                });
+            } else {
+                return selectedPos;
+            }
+        } else {
+            MessageBox.alert("Si prega di selezionare almeno una posizione");
+            return []; 
+        }
+      },
       //engine dinamico
       _registerForP13n: function (oEvent, tableId) {
         debugger

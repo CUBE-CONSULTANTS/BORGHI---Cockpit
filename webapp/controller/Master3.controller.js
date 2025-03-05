@@ -198,59 +198,16 @@ sap.ui.define(
         this.buildSpreadSheet(aData);
       },
 
-      onProcessaButton: function (oEvent) {
+      onProcessaButton:async  function (oEvent) {
         debugger;
         let table = this.getView().byId("treetableMain");
-        let indices = this.getView().byId("treetableMain").getSelectedIndices();
-        let testate = [];
-        let selectedPos = [];
-        let self = this;
-        let flag = false;
-
-        if (indices.length != 0) {
-          let aSelectedItems = indices.map(function (iIndex) {
-            return table.getContextByIndex(iIndex).getObject();
-          });
-
-          aSelectedItems.forEach((element) => {
-            if (element.hasOwnProperty("posizioni")) {
-              testate.push(element);
-              flag = true;
-            } else {
-              selectedPos.push(element);
-            }
-          });
-
-          if (flag) {
-            //selezionata testata
-            MessageBox.confirm(
-              "Verranno processate tutte le posizioni della Testata selezionata, continuare?",
-              {
-                title: "Continuare?",
-                onClose: (oAction) => {
-                  if (oAction === sap.m.MessageBox.Action.OK) {
-                    testate.forEach((x) => {
-                      selectedPos = selectedPos.concat(x.posizioni);
-                    });
-                    let uniqueArray = selectedPos.reduce(
-                      (acc, currentValue) => {
-                        if (!acc.some((item) => item.id === currentValue.id)) {
-                          acc.push(currentValue);
-                        }
-                        return acc;
-                      },
-                      []
-                    );
-                    this.processaItems(uniqueArray);
-                  }
-                },
-              }
-            );
-          } else {
-            this.processaItems(selectedPos);
+        try {       
+          let arrayToProcess = await this._returnPayload(table);
+          if (arrayToProcess.length > 0) {
+            this.processaItems(arrayToProcess);
           }
-        } else {
-          MessageBox.alert("Si prega di selezionare almeno una posizione");
+        } catch (error) {
+          console.error("Errore durante la selezione delle posizioni:", error);
         }
       },
 
@@ -278,40 +235,17 @@ sap.ui.define(
           oEvent.getSource().getParent().getBindingContext("master3") !==
           undefined
         ) {
-          level = oEvent
-            .getSource()
-            .getParent()
-            .getBindingContext("master3")
-            .getPath()
-            .includes("posizioni");
-          detailPath = oEvent
-            .getSource()
-            .getParent()
-            .getBindingContext("master3")
-            .getPath();
-          detail = this.getView()
-            .getModel("master3")
-            .getProperty(`${detailPath}`);
-          this.getOwnerComponent()
-            .getModel("datiAppoggio")
-            .setProperty("/testata", detail);
-          this.getOwnerComponent()
-            .getModel("datiAppoggio")
-            .setProperty("/posizioni", detail.posizioni);
+          level = oEvent.getSource().getParent().getBindingContext("master3").getPath().includes("posizioni");
+          detailPath = oEvent.getSource().getParent().getBindingContext("master3").getPath();
+          detail = this.getView().getModel("master3").getProperty(`${detailPath}`);
+          this.getOwnerComponent().getModel("datiAppoggio").setProperty("/testata", detail);
+          this.getOwnerComponent().getModel("datiAppoggio").setProperty("/posizioni", detail.posizioni);
           if (level) {
-            this.getOwnerComponent()
-              .getModel("datiAppoggio")
-              .setProperty("/posizioneCorrente", detail);
-            this.getOwnerComponent()
-              .getModel("datiAppoggio")
-              .setProperty("/schedulazioni", detail.schedulazioni.results);
-            this.getOwnerComponent()
-              .getModel("datiAppoggio")
-              .setProperty(
+            this.getOwnerComponent().getModel("datiAppoggio").setProperty("/posizioneCorrente", detail);
+            this.getOwnerComponent().getModel("datiAppoggio").setProperty("/schedulazioni", detail.schedulazioni.results);
+            this.getOwnerComponent().getModel("datiAppoggio").setProperty(
                 "/testata",
-                this.getView()
-                  .getModel("master3")
-                  .getProperty(`${detailPath[0] + detailPath[1]}`)
+                this.getModel("master3").getProperty(`${detailPath[0] + detailPath[1]}`)
               );
             let oNextUIState;
             this.getOwnerComponent()
@@ -326,11 +260,7 @@ sap.ui.define(
                 }.bind(this)
               );
           } else {
-            detailPath = oEvent
-              .getSource()
-              .getParent()
-              .getBindingContext("master3")
-              .getPath();
+            detailPath = oEvent.getSource().getParent().getBindingContext("master3").getPath();
             this.getRouter().navTo("detailMaster3", {
               id: detail.id,
               idmaster: detail.id_master,
@@ -341,14 +271,8 @@ sap.ui.define(
           oEvent.getSource().getParent().getBindingContext("master3CO") !==
           undefined
         ) {
-          detailPath = oEvent
-            .getSource()
-            .getParent()
-            .getBindingContext("master3CO")
-            .getPath();
-          detail = this.getView()
-            .getModel("master3CO")
-            .getProperty(`${detailPath}`);
+          detailPath = oEvent.getSource().getParent().getBindingContext("master3CO").getPath();
+          detail = this.getView().getModel("master3CO").getProperty(`${detailPath}`);
           this.getRouter().navTo("dettCallOff", {
             id: detail.id,
             idmaster: detail.id_master,
@@ -358,14 +282,8 @@ sap.ui.define(
           oEvent.getSource().getParent().getBindingContext("master3SB") !==
           undefined
         ) {
-          detailPath = oEvent
-            .getSource()
-            .getParent()
-            .getBindingContext("master3SB")
-            .getPath();
-          detail = this.getView()
-            .getModel("master3SB")
-            .getProperty(`${detailPath}`);
+          detailPath = oEvent.getSource().getParent().getBindingContext("master3SB").getPath();
+          detail = this.getModel("master3SB").getProperty(`${detailPath}`);
           this.getRouter().navTo("dettSelfBilling", {
             id: detail.id,
             layout: "OneColumn",
@@ -374,13 +292,8 @@ sap.ui.define(
       },
 
       statoButtonPress: function (oEvent) {
-        let lastIndexMessage =
-          oEvent.getSource().getBindingContext("master3").getObject().log
-            .results.length - 1;
-        let message = oEvent
-          .getSource()
-          .getBindingContext("master3")
-          .getObject().log.results[lastIndexMessage].messaggio;
+        let lastIndexMessage =oEvent.getSource().getBindingContext("master3").getObject().log.results.length - 1;
+        let message = oEvent.getSource().getBindingContext("master3").getObject().log.results[lastIndexMessage].messaggio;
         MessageBox.error(message);
       },
 
@@ -426,12 +339,7 @@ sap.ui.define(
       },
 
       navToAPP: function (oEvent) {
-        let level = oEvent
-          .getSource()
-          .getParent()
-          .getParent()
-          .getBindingContext("master3")
-          .getPath();
+        let level = oEvent.getSource().getParent().getParent().getBindingContext("master3").getPath();
         if (level.includes("posizioni")) {
           this.getRouter().navTo("master", { monitor: "monitor" });
         } else {
@@ -516,12 +424,7 @@ sap.ui.define(
 
       onCumulativi: async function (oEvent) {
         debugger;
-        let obj = oEvent
-          .getSource()
-          .getParent()
-          .getParent()
-          .getBindingContext("modelloReport")
-          .getObject();
+        let obj = oEvent.getSource().getParent().getParent().getBindingContext("modelloReport").getObject();
         let numIdoc = obj.numero_idoc;
         let dest = obj.destinatario;
 
@@ -530,7 +433,6 @@ sap.ui.define(
           oModel,
           `/DELFOR_CUMULATIVI(IdocNum='${numIdoc}',Stabilimento='${dest}')`
         );
-        debugger;
         console.log(res);
       },
     });
