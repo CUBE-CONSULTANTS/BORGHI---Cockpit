@@ -160,12 +160,10 @@
                     id="tablePos"
                     selectionMode="MultiToggle"
                     rows="{detailData>/posizioni/results}"
-                    cellClick=".rowDetailPress"
                     autoPopinMode="true"
                     fixedLayout="false"
                     sort="onSort"
                     ariaLabelledBy="title"
-                    showColumnVisibilityMenu="true"
                     sap.ui.fl:flexibility="sap/m/flexibility/EngineFlex"
                   >
                     <!--try-->
@@ -186,7 +184,7 @@
                         <m:Button
                           text="Elimina"
                           icon="sap-icon://delete"
-                          press=""
+                          press="onDeletePosition"
                           type="Reject"
                         />
                         <m:Button

@@ -150,7 +150,9 @@ sap.ui.define(
           tablePosCO: [
             { key: "cliente_col", label: "Cliente", path: "posizione_77_86" },
             { key: "reason_col", label: "Reason", path: "posizione_43_44" },
-            { key: "DDT_col_35", label: "DDT 35", path: "posizione_6_13" },
+            { key: "progr_prelievo_col", label: "Progressivo Prelievo", path: "posizione_6_13" },
+            { key: "data_progr_prelievo_col", label: "Data Prelievo per mov mag.", path: "posizione_14_19" },
+            { key: "data_messaggio_col", label: "Data Messaggio", path: "posizione_14_19" },
             { key: "DDT_col", label: "DDT", path: "posizione_121_128" },
             { key: "data_DDT_col", label: "Data DDT", path: "posizione_14_19" },
             {

@@ -354,7 +354,6 @@ sap.ui.define(
               modelMeta.getProperty("/").forEach((testata) => {
                 testata.posizioni = Object.values(testata.posizioni.results);
                 // testata.master.data_ricezione = this.formatter.formatDateString(testata.master.data_ricezione)
-                debugger
               });
               this.getOwnerComponent().setModel(modelMeta, "master3");
             }else if(key === "02"){
@@ -446,6 +445,7 @@ sap.ui.define(
       },
       //engine dinamico
       _registerForP13n: function (oEvent, tableId) {
+        debugger
         let columnConfig = mapper.getColumnConfig(tableId)
         let oTable = this.byId(tableId); 
         this.oMetadataHelper = new MetadataHelper(columnConfig); 
@@ -492,6 +492,7 @@ sap.ui.define(
       },
 
       handleStateChange: function (tableId, oEvt){
+        debugger
         const oTable = this.getView().byId(tableId);
         const oState = oEvt.getParameter("state");
 
