@@ -261,7 +261,7 @@
 					"target": "archivio"
 				},
         {
-					"pattern": "dettCallOff/{id}",
+					"pattern": "dettCallOff/{id}/{idmaster}/{layout}",
 					"name": "dettCallOff",
 					"target": [
 						

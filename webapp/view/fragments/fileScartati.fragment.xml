@@ -16,7 +16,7 @@ class="sapUiSmallMarginBottom"
 <fb:filterGroupItems>
 
    
-<fb:FilterGroupItem
+<!-- <fb:FilterGroupItem
 name="Data Ricezione"
 label="Data Ricezione"
 groupName="gr1"
@@ -32,7 +32,7 @@ visibleInFilterBar="true"
   displayFormat="dd/MM/yyyy"
 />
 </fb:control>
-</fb:FilterGroupItem>  
+</fb:FilterGroupItem>   -->
   <fb:FilterGroupItem
         name="Nome File"
         label="Nome File"
@@ -60,11 +60,11 @@ ariaLabelledBy="title"
 <ui:extension>
   <OverflowToolbar style="Clear">
     <ToolbarSpacer/>
-    <Button
+    <!-- <Button
     icon="sap-icon://sort"
     text="Ordinamento"
     press="sortCategories"
-  />
+  /> -->
   <Button
   text="Esporta excel"
   icon="sap-icon://excel-attachment"
@@ -89,7 +89,7 @@ ariaLabelledBy="title"
 </ui:extension>
 <ui:columns>
   
-  <ui:Column >
+  <!-- <ui:Column >
     <Label text="Data Ricezione" />
     <ui:template>
       <DatePicker 
@@ -104,7 +104,7 @@ ariaLabelledBy="title"
       valueFormat="dd/MM/yyyy"
       displayFormat="dd/MM/yyyy"  />
     </ui:template>
-  </ui:Column>
+  </ui:Column> -->
   <ui:Column >
     <Label text="Nome File" />
     <ui:template>
@@ -112,7 +112,7 @@ ariaLabelledBy="title"
     </ui:template>
   </ui:Column>
   
-  <ui:Column >
+  <!-- <ui:Column >
     <Label text="Tipo" />
     <ui:template>
       <Text text="{master3Scart>tipo}" wrapping="false" />
@@ -126,7 +126,7 @@ ariaLabelledBy="title"
     </ui:template>
   </ui:Column>
   
- 
+  -->
   <ui:Column >
     
     <ui:template>

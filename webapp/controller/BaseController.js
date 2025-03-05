@@ -353,7 +353,7 @@ sap.ui.define(
               modelMeta = new JSONModel(metadata.results);
               modelMeta.getProperty("/").forEach((testata) => {
                 testata.posizioni = Object.values(testata.posizioni.results);
-                testata.master.data_ricezione = this.formatter.formatDateString(testata.master.data_ricezione)
+                // testata.master.data_ricezione = this.formatter.formatDateString(testata.master.data_ricezione)
                 debugger
               });
               this.getOwnerComponent().setModel(modelMeta, "master3");

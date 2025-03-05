@@ -290,6 +290,7 @@ sap.ui.define(
           detail = this.getView().getModel("master3CO").getProperty(`${detailPath}`);
           this.getRouter().navTo("dettCallOff", {
             id: detail.id,
+            idmaster: detail.id_master,
             layout: "OneColumn",
           });
         } else if (
