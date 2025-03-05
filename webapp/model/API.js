@@ -100,7 +100,7 @@ sap.ui.define(
           });
         });
       },
-
+      
       //esempio batchOP: const batchOperations = [
       //   { path: "/Products", method: "GET" },
       //   { path: "/Products", method: "POST", data: { ID: 1003, Name: "Smartphone", Price: 800 }},

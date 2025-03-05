@@ -37,10 +37,12 @@ sap.ui.define(
         this.setModel(models.createCountModel(),"count");
         this.setModel(models.createEdiFiltersModel(), "filtersModel");
         this.getRouter().getRoute("master3").attachPatternMatched(this._onObjectMatched, this);
+      },
+      _onObjectMatched: async function (oEvent) {
         await this._getCounters();
+        this.onFilterSelect(null, "01");
       },
       _getCounters: async function(){
-        debugger
         this.showBusy(0)
         try {
           let del = await API.getEntity(this.getOwnerComponent().getModel("modelloV2"), "/Testata/$count", [], []);
@@ -57,9 +59,6 @@ sap.ui.define(
           this.hideBusy(0);
         }
       },
-      _onObjectMatched: function (oEvent) {
-        this.onFilterSelect(null, "01");
-      },
       onFilterSelect: async function (oEvent, key) {
         this.showBusy(0);
         let selectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
@@ -72,7 +71,6 @@ sap.ui.define(
               oModel,
               "/Testata",
               [],
-              //modifica $filter
               [
                 "posizioni($filter=stato ne '53'),posizioni($expand=log,schedulazioni,testata),master",
               ],
@@ -426,10 +424,6 @@ sap.ui.define(
             }
           }.bind(this),
         });
-      },
-      onCloseReportDelfor: function(oEvent){
-        debugger
-        oEvent.getSource().getParent().close()
       }
     });
   }

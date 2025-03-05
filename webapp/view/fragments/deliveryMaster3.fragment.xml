@@ -122,9 +122,7 @@
     selectionMode="{=${datiAppoggio>/currentPage} === 'archivio' ? 'Single':'MultiToggle'}"
     enableSelectAll="false"
     ariaLabelledBy="title"
-    rowSelectionChange="prova2"
     selectionBehavior="Row"
-    
   >
 
     <ui:extension>
@@ -168,7 +166,7 @@
         <Button
           text="Elimina"
           icon="sap-icon://delete"
-          press=""
+          press="onDeletePosition"
           type="Reject"
           visible="{=${datiAppoggio>/currentPage} === 'archivio' ? false:true}"
         />

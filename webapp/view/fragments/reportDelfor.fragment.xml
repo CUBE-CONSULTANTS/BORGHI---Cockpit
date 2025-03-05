@@ -89,7 +89,7 @@
         </VBox>
 
         <buttons>
-            <Button type="Emphasized"  text="Chiudi" press="onCloseReportDelfor"/>
+            <Button type="Emphasized"  text="Chiudi" press="onClose"/>
         </buttons>
    
 </Dialog>

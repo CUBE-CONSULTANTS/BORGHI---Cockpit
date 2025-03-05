@@ -184,7 +184,7 @@
                         <m:Button
                           text="Elimina"
                           icon="sap-icon://delete"
-                          press=""
+                          press="onDeletePosition"
                           type="Reject"
                         />
                         <m:Button
