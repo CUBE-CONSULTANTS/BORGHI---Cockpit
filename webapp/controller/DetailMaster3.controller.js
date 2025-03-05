@@ -36,7 +36,7 @@ sap.ui.define(
             API.readByKey(  this.getOwnerComponent().getModel("modelloV2"), "/Testata", {id: this._id, id_master: this._idMaster}, [], [
               "posizioni($filter=stato ne '53'),posizioni($expand=log,schedulazioni,testata),master",
             ])
-            dettaglio.master.data_ricezione = formatter.formatDateString(dettaglio.master.data_ricezione)
+            // dettaglio.master.data_ricezione = formatter.formatDateString(dettaglio.master.data_ricezione)
             let detailModel = new JSONModel(dettaglio);
             detailModel.getProperty("/posizioni/results").forEach((pos) => {  
               pos.log = Object.values(pos.log.results);
