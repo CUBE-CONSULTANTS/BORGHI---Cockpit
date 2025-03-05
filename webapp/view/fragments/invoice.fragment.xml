@@ -30,11 +30,25 @@ class="sapUiSmallMarginBottom"
         label="Num Fattura di Vendita"
         groupName="gr1"
         visibleInFilterBar="true"
-    >
+    > 
         <fb:control>
            <Input/>
         </fb:control>
     </fb:FilterGroupItem>
+    <fb:FilterGroupItem
+    name="Data Fattura"
+    label="Data Fattura"
+    groupName="gr1"
+    visibleInFilterBar="true"
+>
+    <fb:control>
+    <DatePicker
+    tooltip="..."
+    secondaryCalendarType="Gregorian"
+    change="handleChange"
+    />
+    </fb:control>
+</fb:FilterGroupItem> 
     <fb:FilterGroupItem
         name="Num Doc Contabile"
         label="Num Doc Contabile"
@@ -46,8 +60,8 @@ class="sapUiSmallMarginBottom"
         </fb:control>
     </fb:FilterGroupItem>
     <fb:FilterGroupItem
-    name="BP (Destinatario fattura)"
-    label="BP (Destinatario fattura)"
+    name="BP"
+    label="BP"
     groupName="gr1"
     visibleInFilterBar="true"
 >
@@ -55,16 +69,7 @@ class="sapUiSmallMarginBottom"
        <Input/>
     </fb:control>
 </fb:FilterGroupItem>
-<fb:FilterGroupItem
-name="Num BP"
-label="Num BP"
-groupName="gr1"
-visibleInFilterBar="true"
->
-<fb:control>
-   <Input/>
-</fb:control>
-</fb:FilterGroupItem>
+
     <fb:FilterGroupItem
         name="Data Creazione Doc Contabile"
         label="Data Creazione Doc"
@@ -79,12 +84,8 @@ visibleInFilterBar="true"
         />
         </fb:control>
     </fb:FilterGroupItem>                
-
-    
 </fb:filterGroupItems>
 </fb:FilterBar>
-
-
 
 
 <ui:Table
@@ -126,6 +127,12 @@ ariaLabelledBy="title">
     </ui:template>
   </ui:Column>
   <ui:Column width="9rem">
+    <Label text="Data Fattura" />
+    <ui:template>
+      <Text text="{Name}" wrapping="false" />
+    </ui:template>
+  </ui:Column>
+  <ui:Column width="9rem">
     <Label text="Num. DDT" />
     <ui:template>
       <Text text="{Name}" wrapping="false" />
@@ -133,7 +140,7 @@ ariaLabelledBy="title">
   </ui:Column>
   
   <ui:Column width="11rem">
-    <Label text="BP (Destinatario Fattura)" />
+    <Label text="BP" />
     <ui:template>
       <Text text="{Name}" wrapping="false" />
     </ui:template>

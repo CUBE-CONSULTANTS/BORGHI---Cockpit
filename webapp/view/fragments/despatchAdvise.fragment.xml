@@ -48,6 +48,20 @@ class="sapUiSmallMarginBottom"
         </fb:control>
     </fb:FilterGroupItem>
     <fb:FilterGroupItem
+    name="Data DDT"
+    label="Data DDT"
+    groupName="gr1"
+    visibleInFilterBar="true"
+>
+    <fb:control>
+    <DatePicker
+    tooltip="..."
+    secondaryCalendarType="Gregorian"
+    change="handleChange"
+    />
+    </fb:control>
+</fb:FilterGroupItem> 
+    <fb:FilterGroupItem
     name="Num DDT Cliente"
     label="Num DDT Cliente"
     groupName="gr1"
@@ -58,8 +72,8 @@ class="sapUiSmallMarginBottom"
     </fb:control>
 </fb:FilterGroupItem>
 <fb:FilterGroupItem
-name="Num BP"
-label="Num BP"
+name="BP"
+label="BP"
 groupName="gr1"
 visibleInFilterBar="true"
 >
@@ -121,6 +135,12 @@ ariaLabelledBy="title">
       <Text text="{Name}" wrapping="false" />
     </ui:template>
   </ui:Column>
+  <ui:Column width="11rem">
+    <Label text="Data DDT" />
+    <ui:template>
+      <Text text="{Name}" wrapping="false" />
+    </ui:template>
+  </ui:Column>
   <ui:Column width="9rem">
     <Label text="Num. DDT" />
     <ui:template>
@@ -129,7 +149,7 @@ ariaLabelledBy="title">
   </ui:Column>
   
   <ui:Column width="11rem">
-    <Label text="Num. BP" />
+    <Label text="BP" />
     <ui:template>
       <Text text="{Name}" wrapping="false" />
     </ui:template>
