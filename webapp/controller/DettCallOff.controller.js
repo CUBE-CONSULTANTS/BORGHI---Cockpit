@@ -33,7 +33,7 @@ sap.ui.define(
           
           let detailModel = new JSONModel(dettaglio);
           detailModel.getProperty("/posizioni_testata/results").forEach((pos) => {  
-            pos.log = Object.values(pos.log.results);
+            pos.posizione_14_19 = this.formatter.returnDate(pos.posizione_14_19,"yyyyMMdd","dd/MM/yyyy");
           });
           this.setModel(detailModel,"detailData");
           this._registerForP13n(oEvent, "tablePosCO")

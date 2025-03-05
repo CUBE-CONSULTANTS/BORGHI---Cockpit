@@ -427,6 +427,10 @@ sap.ui.define(
           }.bind(this),
         });
       },
+      onCloseReportDelfor: function(oEvent){
+        debugger
+        oEvent.getSource().getParent().close()
+      }
     });
   }
 );

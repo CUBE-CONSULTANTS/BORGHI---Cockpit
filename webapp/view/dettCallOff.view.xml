@@ -33,7 +33,7 @@
             <ObjectPageDynamicHeaderTitle>
                 <expandedHeading>
                     <m:Title
-                        text="{detailData>/DettaglioMaster3/sender_id}  {detailData>/DettaglioMaster3/progressivo_invio}"
+                        text="{detailData>/sender_id}  {detailData>/progressivo_invio}"
                         wrapping="true"
                         class="sapUiSmallMarginEnd"
                     />
@@ -52,7 +52,7 @@
                             class="sapUiTinyMarginEnd"
                         >
                             <m:Title
-                                text="{detailData>/DettaglioMaster3/sender_id}"
+                                text="{detailData>/sender_id}"
                                 wrapping="true"
                             />
                         </m:FlexBox>
@@ -83,7 +83,7 @@
                             design="Bold"
                         />
                         <m:Text
-                            text="{detailData>/DettaglioMaster3/codice_terre_cliente}"
+                            text="{detailData>/codice_terre_cliente}"
                         />
                     </m:VBox>
                     <m:VBox class="sapUiTinyMarginBottom">
@@ -92,7 +92,7 @@
                             design="Bold"
                         />
                         <m:Text
-                            text="{detailData>/DettaglioMaster3/master/nome_file}"
+                            text="{detailData>/master/nome_file}"
                         />
                     </m:VBox>
                     <m:VBox>
@@ -101,7 +101,7 @@
                             design="Bold"
                         />
                         <m:Text
-                            text="{path:'detailData>/DettaglioMaster3/master/data_ricezione', formatter: '.formatter.formatDate'}"
+                            text="{path:'detailData>/master/data_ricezione', formatter: '.formatter.formatDate'}"
                         />
                     </m:VBox>
                 </m:VBox>
@@ -112,7 +112,7 @@
                             design="Bold"
                         />
                         <m:Text
-                            text="{detailData>/DettaglioMaster3/progressivo_invio}"
+                            text="{detailData>/progressivo_invio}"
                         />
                     </m:VBox>
                     <m:VBox class="sapUiTinyMarginBottom">
@@ -121,7 +121,7 @@
                             design="Bold"
                         />
                         <m:Text
-                            text="{path:'detailData>/DettaglioMaster3/data_progressivo_invio', formatter: '.formatter.formatDate'}"
+                            text="{path:'detailData>/data_progressivo_invio', formatter: '.formatter.formatDate'}"
                         />
                     </m:VBox>
                 </m:VBox>
@@ -144,7 +144,7 @@
                                     <ui:Table
                                         id="tablePosCO"
                                         selectionMode="MultiToggle"
-                                        rows="{detailData>/DettaglioMaster3/posizioni_testata}"                                       
+                                        rows="{detailData>/posizioni_testata/results}"                                       
                                         sort="onSort"
                                         ariaLabelledBy="title"
                                         
@@ -209,14 +209,43 @@
                                             <ui:Column
                                                 width="10rem"
                                                 showSortMenuEntry="false"
-                                                tooltip="DDT 35"
-                                                app:p13nKey="DDT_col_35"
-                                                sortProperty="DDT 35"
+                                                tooltip="Progressivo Prelievo"
+                                                app:p13nKey="progr_prelievo_col"
+                                                sortProperty="Progressivo Prelievo"
                                             >
-                                                <m:Label text="DDT 35" />
+                                                <m:Label text="Progressivo Prelievo" />
                                                 <ui:template>
                                                     <m:ObjectIdentifier
-                                                        text="{detailData>posizione_6_13}"
+                                                    text="{= ${detailData>posizione_43_44} === '36' ? ${detailData>posizione_6_13} : '' }"
+                                                    />
+                                                </ui:template>
+                                            </ui:Column>
+                                            <ui:Column
+                                                width="14rem"
+                                                showSortMenuEntry="false"
+                                                tooltip="Data Prelievo per mov mag."
+                                                app:p13nKey="data_progr_prelievo_col"
+                                                sortProperty="Data Prelievo per mov mag."
+                                            >
+                                                <m:Label text="Data Prelievo per mov mag." />
+                                                <ui:template>
+                                                    <m:ObjectIdentifier
+                                                    text="{= ${detailData>posizione_43_44} === '36' ? ${detailData>posizione_14_19}: '' }"
+                                                    />
+                                                </ui:template>
+                                            </ui:Column>
+                                            <ui:Column
+                                                width="10rem"
+                                                showSortMenuEntry="false"
+                                                tooltip="Data Messaggio"
+                                                app:p13nKey="data_messaggio_col"
+                                                sortProperty="Data Messaggio"
+                                            >
+                                                <m:Label text="Data Messaggio" />
+                                                <ui:template>
+                                                  
+                                                    <m:ObjectIdentifier
+                                                    text="{= ${detailData>posizione_43_44} === '35' ? ${detailData>posizione_14_19}: '' }"
                                                     />
                                                 </ui:template>
                                             </ui:Column>
@@ -230,7 +259,8 @@
                                             <m:Label text="DDT" />
                                             <ui:template>
                                                 <m:ObjectIdentifier
-                                                    text="{detailData>posizione_121_128}"
+                                                text="{= ${detailData>posizione_43_44} === '36' ? ${detailData>posizione_121_128}: 
+                                                ${detailData>posizione_43_44} === '30' || ${detailData>posizione_43_44} === '33'? ${detailData>posizione_6_13} : ''}"
                                                 />
                                             </ui:template>
                                         </ui:Column>
@@ -244,7 +274,7 @@
                                                 <m:Label text="Data DDT" />
                                                 <ui:template>
                                                     <m:ObjectIdentifier
-                                                        text="{path:'detailData>posizione_14_19'}"
+                                                    text= "{=${detailData>posizione_43_44} === '30' || ${detailData>posizione_43_44} === '33'? ${detailData>posizione_14_19} : ''}"
                                                     />
                                                 </ui:template>
                                             </ui:Column>
@@ -259,7 +289,7 @@
                                                 />
                                                 <ui:template>
                                                     <m:ObjectIdentifier
-                                                        text="{detailData>posizione_6_13}"
+                                                    text="{= ${detailData>posizione_43_44} === '35' ? ${detailData>posizione_6_13}: ''}"
                                                     />
                                                 </ui:template>
                                             </ui:Column>
@@ -380,13 +410,79 @@
             </ObjectPageSection>
 
             <ObjectPageSection title="LOG">
-                <subSections>
-                    <ObjectPageSubSection>
-                        <blocks>
-                            <m:Text text="Processamento" />
-                        </blocks>
-                    </ObjectPageSubSection>
-                </subSections>
+              <subSections>
+                <ObjectPageSubSection>
+                  <blocks>
+                    <ui:TreeTable rows="{
+                      path: 'detailData>/posizioni/results',
+                      parameters: {
+                        arrayNames: ['log']
+                      }
+                    }">
+                    <ui:columns>
+                  
+                      <ui:Column
+                        width="9rem"
+                        hAlign="Center"
+                        showSortMenuEntry="false"
+                        tooltip="Stato"
+                      >
+                        <m:Label text="Stato" />
+                        <ui:template>
+                          <m:Button
+                          class="sapUiTinyMarginBegin"
+                            icon="{= ${detailData>stato} === '53' ? 'sap-icon://status-positive' : ${detailData>stato} === '51' ? 'sap-icon://status-negative' : 'sap-icon://in-progress'}"
+                            type="{= ${detailData>stato} === '53' ? 'Success' : ${detailData>stato} === '51' ? 'Negative' : 'Ghost'}"
+                          />
+                        </ui:template>
+                      </ui:Column>
+                      <ui:Column
+                      
+                      tooltip="Messaggio"
+                    >
+                      <m:Label text="Messaggio" />
+                      <ui:template>
+                        <m:ObjectIdentifier text="{detailData>messaggio}" />
+                      </ui:template>
+                    </ui:Column>
+                    <ui:Column
+                    width="10rem" 
+                      tooltip="Data"            
+                    >
+                      <m:Label text="Data" />
+                      <ui:template>
+                        <m:ObjectIdentifier 
+                          text="{
+                            path: 'detailData>data',
+                            formatter: '.formatter.formatDate'
+                          }" />
+                      </ui:template>
+                    </ui:Column>
+                    <ui:Column
+                      width="10rem"
+                      tooltip="Ora"            
+                    >
+                      <m:Label text="Ora" />
+                      <ui:template>
+                        <m:ObjectIdentifier
+                          visible="{= ${detailData>ora/ms} !== undefined }"
+                         text="{path: 'detailData>ora/ms', formatter: '.formatter.formatTime'}"/>
+                      </ui:template>
+                    </ui:Column>
+                    <ui:Column
+                    width="16rem"
+                    tooltip="Utente"            
+                  >
+                    <m:Label text="Utente" />
+                    <ui:template>
+                      <m:ObjectIdentifier text="{detailData>utente}" />
+                    </ui:template>
+                  </ui:Column>
+                    </ui:columns>
+                    </ui:TreeTable>
+                  </blocks>
+                </ObjectPageSubSection>
+              </subSections>
             </ObjectPageSection>
         </sections>
     </ObjectPageLayout>
