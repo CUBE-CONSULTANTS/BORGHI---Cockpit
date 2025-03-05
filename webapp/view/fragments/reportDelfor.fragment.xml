@@ -42,8 +42,8 @@
                     <Label text="Download" />
                     <ui:template>
                         <HBox>
-                            <Button icon="sap-icon://delete" />
-                            <Button icon="sap-icon://download" />
+                            <Button icon="sap-icon://download"  text="Report cumulativi" press="onCumulativi"/>
+                            <Button icon="sap-icon://download"  text="Report progressivi"/>
                            
                         </HBox>
                     </ui:template>

@@ -31,29 +31,54 @@ sap.ui.define(
 
     return BaseController.extend("programmi.consegne.edi.controller.Master3", {
       formatter: formatter,
-      
+
       onInit: async function () {
         this.setModel(models.createMainModel(), "main");
-        this.setModel(models.createCountModel(),"count");
+        this.setModel(models.createCountModel(), "count");
         this.setModel(models.createEdiFiltersModel(), "filtersModel");
-        this.getRouter().getRoute("master3").attachPatternMatched(this._onObjectMatched, this);
+        this.getRouter()
+          .getRoute("master3")
+          .attachPatternMatched(this._onObjectMatched, this);
         await this._getCounters();
       },
-      _getCounters: async function(){
-        debugger
-        this.showBusy(0)
+      _getCounters: async function () {
+        debugger;
+        this.showBusy(0);
         try {
-          let del = await API.getEntity(this.getOwnerComponent().getModel("modelloV2"), "/Testata/$count", [], []);
+          let del = await API.getEntity(
+            this.getOwnerComponent().getModel("modelloV2"),
+            "/Testata/$count",
+            [],
+            []
+          );
           this.getModel("count").setProperty("/delivery", del.results);
-          let cal = await API.getEntity(this.getOwnerComponent().getModel("calloffV2"), "/Testata/$count", [], []);
+          let cal = await API.getEntity(
+            this.getOwnerComponent().getModel("calloffV2"),
+            "/Testata/$count",
+            [],
+            []
+          );
           this.getModel("count").setProperty("/calloff", cal.results);
-          let selfb = await API.getEntity(this.getOwnerComponent().getModel("selfBillingV2"), "/Testata/$count", [], []);
+          let selfb = await API.getEntity(
+            this.getOwnerComponent().getModel("selfBillingV2"),
+            "/Testata/$count",
+            [],
+            []
+          );
           this.getModel("count").setProperty("/selfbilling", selfb.results);
-          let fileScart = await API.getEntity(this.getOwnerComponent().getModel("fileScartatiV2"), "/FileScartati/$count", [], []);
-          this.getModel("count").setProperty("/fileScartati", fileScart.results);
+          let fileScart = await API.getEntity(
+            this.getOwnerComponent().getModel("fileScartatiV2"),
+            "/FileScartati/$count",
+            [],
+            []
+          );
+          this.getModel("count").setProperty(
+            "/fileScartati",
+            fileScart.results
+          );
         } catch (error) {
-          MessageBox.error("Errore durante il recupero dei Dati")
-        }finally {
+          MessageBox.error("Errore durante il recupero dei Dati");
+        } finally {
           this.hideBusy(0);
         }
       },
@@ -164,7 +189,7 @@ sap.ui.define(
             break;
           case "06":
             oModel = this.getModel("master3Scart");
-            break;  
+            break;
           default:
         }
         let aData = oModel.getProperty("/");
@@ -251,33 +276,63 @@ sap.ui.define(
 
       dettaglioNav: function (oEvent) {
         let level, detailPath, detail;
-        if ( oEvent.getSource().getParent().getBindingContext("master3") !== undefined) {
-          level = oEvent.getSource().getParent().getBindingContext("master3").getPath().includes("posizioni");
-          detailPath = oEvent.getSource().getParent().getBindingContext("master3").getPath();
-          detail = this.getView().getModel("master3").getProperty(`${detailPath}`);
-          this.getOwnerComponent().getModel("datiAppoggio").setProperty("/testata", detail);
-          this.getOwnerComponent().getModel("datiAppoggio").setProperty("/posizioni", detail.posizioni);
+        if (
+          oEvent.getSource().getParent().getBindingContext("master3") !==
+          undefined
+        ) {
+          level = oEvent
+            .getSource()
+            .getParent()
+            .getBindingContext("master3")
+            .getPath()
+            .includes("posizioni");
+          detailPath = oEvent
+            .getSource()
+            .getParent()
+            .getBindingContext("master3")
+            .getPath();
+          detail = this.getView()
+            .getModel("master3")
+            .getProperty(`${detailPath}`);
+          this.getOwnerComponent()
+            .getModel("datiAppoggio")
+            .setProperty("/testata", detail);
+          this.getOwnerComponent()
+            .getModel("datiAppoggio")
+            .setProperty("/posizioni", detail.posizioni);
           if (level) {
-            this.getOwnerComponent().getModel("datiAppoggio").setProperty("/posizioneCorrente", detail);
-            this.getOwnerComponent().getModel("datiAppoggio").setProperty("/schedulazioni", detail.schedulazioni.results);
-            this.getOwnerComponent().getModel("datiAppoggio").setProperty(
+            this.getOwnerComponent()
+              .getModel("datiAppoggio")
+              .setProperty("/posizioneCorrente", detail);
+            this.getOwnerComponent()
+              .getModel("datiAppoggio")
+              .setProperty("/schedulazioni", detail.schedulazioni.results);
+            this.getOwnerComponent()
+              .getModel("datiAppoggio")
+              .setProperty(
                 "/testata",
-                this.getView().getModel("master3").getProperty(`${detailPath[0] + detailPath[1]}`)
+                this.getView()
+                  .getModel("master3")
+                  .getProperty(`${detailPath[0] + detailPath[1]}`)
               );
-              let oNextUIState;
-              this.getOwnerComponent()
-                .getHelper()
-                .then(
-                  function (oHelper) {
-                    oNextUIState = oHelper.getNextUIState(1);
-                    this.getRouter().navTo("Detail2Master3", {
-                      product: detail.id,
-                      layout: oNextUIState.layout,
-                    });
-                  }.bind(this)
-                );
+            let oNextUIState;
+            this.getOwnerComponent()
+              .getHelper()
+              .then(
+                function (oHelper) {
+                  oNextUIState = oHelper.getNextUIState(1);
+                  this.getRouter().navTo("Detail2Master3", {
+                    product: detail.id,
+                    layout: oNextUIState.layout,
+                  });
+                }.bind(this)
+              );
           } else {
-            detailPath = oEvent.getSource().getParent().getBindingContext("master3").getPath();
+            detailPath = oEvent
+              .getSource()
+              .getParent()
+              .getBindingContext("master3")
+              .getPath();
             this.getRouter().navTo("detailMaster3", {
               id: detail.id,
               idmaster: detail.id_master,
@@ -285,18 +340,34 @@ sap.ui.define(
             });
           }
         } else if (
-          oEvent.getSource().getParent().getBindingContext("master3CO") !== undefined) {
-          detailPath = oEvent.getSource().getParent().getBindingContext("master3CO").getPath();
-          detail = this.getView().getModel("master3CO").getProperty(`${detailPath}`);
+          oEvent.getSource().getParent().getBindingContext("master3CO") !==
+          undefined
+        ) {
+          detailPath = oEvent
+            .getSource()
+            .getParent()
+            .getBindingContext("master3CO")
+            .getPath();
+          detail = this.getView()
+            .getModel("master3CO")
+            .getProperty(`${detailPath}`);
           this.getRouter().navTo("dettCallOff", {
             id: detail.id,
             idmaster: detail.id_master,
             layout: "OneColumn",
           });
         } else if (
-          oEvent.getSource().getParent().getBindingContext("master3SB") !==undefined) {
-          detailPath = oEvent.getSource().getParent().getBindingContext("master3SB").getPath();
-          detail = this.getView().getModel("master3SB").getProperty(`${detailPath}`);
+          oEvent.getSource().getParent().getBindingContext("master3SB") !==
+          undefined
+        ) {
+          detailPath = oEvent
+            .getSource()
+            .getParent()
+            .getBindingContext("master3SB")
+            .getPath();
+          detail = this.getView()
+            .getModel("master3SB")
+            .getProperty(`${detailPath}`);
           this.getRouter().navTo("dettSelfBilling", {
             id: detail.id,
             layout: "OneColumn",
@@ -305,8 +376,13 @@ sap.ui.define(
       },
 
       statoButtonPress: function (oEvent) {
-        let lastIndexMessage = oEvent.getSource().getBindingContext("master3").getObject().log.results.length -1
-        let message = oEvent.getSource().getBindingContext("master3").getObject().log.results[lastIndexMessage].messaggio
+        let lastIndexMessage =
+          oEvent.getSource().getBindingContext("master3").getObject().log
+            .results.length - 1;
+        let message = oEvent
+          .getSource()
+          .getBindingContext("master3")
+          .getObject().log.results[lastIndexMessage].messaggio;
         MessageBox.error(message);
       },
 
@@ -352,7 +428,12 @@ sap.ui.define(
       },
 
       navToAPP: function (oEvent) {
-        let level = oEvent.getSource().getParent().getParent().getBindingContext("master3").getPath();
+        let level = oEvent
+          .getSource()
+          .getParent()
+          .getParent()
+          .getBindingContext("master3")
+          .getPath();
         if (level.includes("posizioni")) {
           this.getRouter().navTo("master", { monitor: "monitor" });
         } else {
@@ -360,11 +441,14 @@ sap.ui.define(
         }
       },
       processaItems: function (items) {
-        let itemList = items.map((item) =>
-           `Codice cliente materiale: ${item.codice_cliente_materiale} - ID: ${item.id} - Codice materiale fornitore: ${item.codice_materiale_fornitore}\n`
-          ).join("");
+        let itemList = items
+          .map(
+            (item) =>
+              `Codice cliente materiale: ${item.codice_cliente_materiale} - ID: ${item.id} - Codice materiale fornitore: ${item.codice_materiale_fornitore}\n`
+          )
+          .join("");
         let message = `Vuoi continuare con questi elementi? \n ${itemList}`;
-        let that = this
+        let that = this;
 
         sap.m.MessageBox.confirm(message, {
           icon: sap.m.MessageBox.Icon.WARNING,
@@ -374,7 +458,7 @@ sap.ui.define(
           onClose: async function (oAction) {
             if (oAction == "YES") {
               try {
-                that.showBusy(0)
+                that.showBusy(0);
                 let payload = [];
                 items.forEach((x) => {
                   payload.push(x.id);
@@ -382,50 +466,74 @@ sap.ui.define(
                 let obj = { id: payload };
                 let oModel = this.getOwnerComponent().getModel("modelloV2");
                 let res = await API.createEntity(oModel, "/Processamento", obj);
-                if(res.results.length >0){
-                  let modelloReport = new JSONModel({ successo: "", errore: "" });
-                that.setModel(modelloReport, "modelloReport");
-                let success = [];
-                let error = [];
-                res.results.forEach((x) => {
-                  if (x.status === "51") {
-                    debugger;
-                    let el = items.find((y) => x.id === y.id);
-                    error.push(el);
+                if (res.results.length > 0) {
+                  let modelloReport = new JSONModel({
+                    successo: "",
+                    errore: "",
+                  });
+                  that.setModel(modelloReport, "modelloReport");
+                  let success = [];
+                  let error = [];
+                  res.results.forEach((x) => {
+                    if (x.status === "51") {
+                      debugger;
+                      let el = items.find((y) => x.id === y.id);
+                      error.push(el);
+                    } else {
+                      let el = items.find((y) => x.id === y.id);
+                      success.push(el);
+                    }
+                  });
+                  that
+                    .getModel("modelloReport")
+                    .setProperty("/successo", success);
+                  that.getModel("modelloReport").setProperty("/errore", error);
+                  if (!that._fragment) {
+                    Fragment.load({
+                      name: "programmi.consegne.edi.view.fragments.reportDelfor",
+                      controller: this,
+                    }).then(
+                      function (oFragment) {
+                        this._fragment = oFragment;
+                        this.getView().addDependent(this._fragment);
+                        this._fragment.open();
+                      }.bind(this)
+                    );
                   } else {
-                    let el = items.find((y) => x.id === y.id);
-                    success.push(el);
+                    that._fragment.setModel("modelloReport");
+                    that._fragment.open();
                   }
-                });  
-                that.getModel("modelloReport").setProperty("/successo", success);
-                that.getModel("modelloReport").setProperty("/errore", error);
-                if (!that._fragment) {
-                  Fragment.load({
-                    name: "programmi.consegne.edi.view.fragments.reportDelfor",
-                    controller:this,
-                  }).then(
-                    function (oFragment) {
-                      this._fragment = oFragment;
-                      this.getView().addDependent(this._fragment);
-                      this._fragment.open();
-                    }.bind(this)
-                  );
                 } else {
-                  that._fragment.setModel("modelloReport");
-                  that._fragment.open();
+                  MessageBox.error("Elaborazione non andata a buon fine");
                 }
-                }else {
-                  MessageBox.error("Elaborazione non andata a buon fine")
-                }
-                
               } catch (error) {
-                MessageBox.error("Errore durante la ricezione dei dati")              
-              }finally {
+                MessageBox.error("Errore durante la ricezione dei dati");
+              } finally {
                 that.hideBusy(0);
               }
             }
           }.bind(this),
         });
+      },
+
+      onCumulativi: async function (oEvent) {
+        debugger;
+        let obj = oEvent
+          .getSource()
+          .getParent()
+          .getParent()
+          .getBindingContext("modelloReport")
+          .getObject();
+        let numIdoc = obj.numero_idoc;
+        let dest = obj.destinatario;
+
+        let oModel = this.getOwnerComponent().getModel("modelloV2");
+        let res = await API.getEntity(
+          oModel,
+          `/DELFOR_CUMULATIVI(IdocNum='${numIdoc}',Stabilimento='${dest}')`
+        );
+        debugger;
+        console.log(res);
       },
     });
   }
