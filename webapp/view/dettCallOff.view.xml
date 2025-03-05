@@ -147,7 +147,7 @@
                                         rows="{detailData>/DettaglioMaster3/posizioni_testata}"                                       
                                         sort="onSort"
                                         ariaLabelledBy="title"
-                                        sap.ui.fl:flexibility="sap/m/flexibility/EngineFlex"
+                                        
                                     >
                                         <ui:extension>
                                             <m:OverflowToolbar>
@@ -157,7 +157,12 @@
                                                   icon="sap-icon://excel-attachment"
                                                   press="downloadExcelFileDett"
                                               />
-          
+                                              <m:Button
+                                              text="Elabora"
+                                              icon="sap-icon://process"
+                                              press="onProcessaButton"
+                                              type="Emphasized"
+                                            />
                                               <m:Button
                                                   text="Elimina"
                                                   icon="sap-icon://delete"

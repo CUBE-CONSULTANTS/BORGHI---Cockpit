@@ -236,7 +236,7 @@
               press="downloadEdi"          
             />
             <Button
-              text="Archivia"
+              class="sapUiTinyMarginBegin"
               icon="sap-icon://bbyd-active-sales"
               press=""
               type="Emphasized"

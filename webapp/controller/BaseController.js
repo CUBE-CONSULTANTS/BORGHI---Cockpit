@@ -279,6 +279,7 @@ sap.ui.define(
           }
           this.getModel("filtersModel").refresh(true);
           let modelMeta
+          debugger
           if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("delivery")) {
             modelMeta = await this.callData(this.getOwnerComponent().getModel("modelloV2"), "/Testata", [], [`posizioni($filter=stato ne '53'),posizioni($expand=log,schedulazioni,testata),master`],"01")
           }
@@ -288,7 +289,7 @@ sap.ui.define(
           if(oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("selfBilling")){
             modelMeta = await this.callData(this.getOwnerComponent().getModel("selfBillingV2"), "/Testata", [],[ "dettaglio_fattura,log_testata,dettaglio_fattura/riferimento_ddt,dettaglio_fattura/riferimento_ddt/riga_fattura"],"03")
           }
-          if(oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("fileScartati")){
+          if(oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("scartati")){
             modelMeta = await this.callData(this.getOwnerComponent().getModel("fileScartatiV2"), "/FileScartati", [],[],"06")
           }
           // oBinding.filter([]);
@@ -301,27 +302,31 @@ sap.ui.define(
           if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("delivery")) {
             oFilterSet = this.getModel("filtersModel").getProperty("/delivery");
             let aFilters = mapper.buildFilters(oFilterSet,key = "01")
-            let findStato = aFilters.find(filter => filter.sPath === "posizioni/stato")
-            let findMessaggio = aFilters.find(filter => filter.sPath === "posizioni/log/messaggio")
-            if (findStato && findMessaggio) {
-              let index = aFilters.findIndex(filter => filter.sPath === "posizioni/stato")
-              aFilters.splice(index,1)
-              let indexMess = aFilters.findIndex(filter => filter.sPath === "posizioni/log/messaggio")
-              aFilters.splice(indexMess,1)
-              await this.callData(this.getOwnerComponent().getModel("modelloV2"),"/Testata",aFilters,[`posizioni($filter=stato eq '${findStato.oValue1}'),posizioni($expand=log($filter=messaggio eq '${findMessaggio.oValue1}'),schedulazioni,testata),master`],"01")         
-            }else if(findStato){
-              let index = aFilters.findIndex(filter => filter.sPath === "posizioni/stato")
-              aFilters.splice(index,1)
-              await this.callData(this.getOwnerComponent().getModel("modelloV2"),"/Testata",aFilters,[`posizioni($filter=stato eq '${findStato.oValue1}'),posizioni($expand=log,schedulazioni,testata),master`],"01")   
+            let filters = {
+              data_ricezione: aFilters.find(f => f.sPath === 'data_ricezione'),
+              stato: aFilters.find(f => f.sPath === "stato"),
+              messaggio: aFilters.find(f => f.sPath === "messaggio")
             }
-            else if(findMessaggio){
-              let indexMess = aFilters.findIndex(filter => filter.sPath === "posizioni/log/messaggio")
-              aFilters.splice(indexMess,1)
-              await this.callData(this.getOwnerComponent().getModel("modelloV2"),"/Testata",aFilters,[`posizioni($filter=stato ne '53'),posizioni($expand=log($filter=messaggio eq '${findMessaggio.oValue1}'),schedulazioni,testata),master`],"01")
+            Object.keys(filters).forEach(key => {
+              if (filters[key]) {
+                let index = aFilters.findIndex(f => f.sPath === key);
+                if (index !== -1) aFilters.splice(index, 1);
+              }
+            })
+            let expandQuery = "posizioni($filter=stato ne '53'),posizioni($expand=log,schedulazioni,testata),master";
+            if (filters.stato) {
+              expandQuery = `posizioni($filter=stato eq '${filters.stato.oValue1}'),posizioni($expand=log,schedulazioni,testata),master`;
             }
-            else{
-              await this.callData(this.getOwnerComponent().getModel("modelloV2"),"/Testata",aFilters,[`posizioni($filter=stato ne '53'),posizioni($expand=log,schedulazioni,testata),master`],"01") 
+            if (filters.messaggio) {
+              expandQuery = `posizioni($filter=stato ne '53'),posizioni($expand=log($filter=messaggio eq '${filters.messaggio.oValue1}'),schedulazioni,testata),master`;
             }
+            if (filters.data_ricezione) {
+              expandQuery = `posizioni($filter=stato ne '53'),posizioni($expand=log,schedulazioni,testata),master($filter=data_ricezione eq '${filters.data_ricezione.oValue1}')`;
+            }
+            if (filters.stato && filters.messaggio && filters.data_ricezione) {
+              expandQuery = `posizioni($filter=stato eq '${filters.stato.oValue1}'),posizioni($expand=log($filter=messaggio eq '${filters.messaggio.oValue1}'),schedulazioni,testata),master($filter=data_ricezione eq '${filters.data_ricezione.oValue1}')`;
+            }
+            await this.callData(this.getOwnerComponent().getModel("modelloV2"),"/Testata",aFilters,[expandQuery],"01");
           }else if(oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("callOff")){
             oFilterSet = this.getModel("filtersModel").getProperty("/callOff");
             let aFilters = mapper.buildFilters(oFilterSet,key = "02")
