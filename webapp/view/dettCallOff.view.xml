@@ -147,7 +147,7 @@
                                         rows="{detailData>/posizioni_testata/results}"                                       
                                         sort="onSort"
                                         ariaLabelledBy="title"
-                                        
+                                        sap.ui.fl:flexibility="sap/m/flexibility/EngineFlex"
                                     >
                                         <ui:extension>
                                             <m:OverflowToolbar>

@@ -445,6 +445,7 @@ sap.ui.define(
       },
       //engine dinamico
       _registerForP13n: function (oEvent, tableId) {
+        debugger
         let columnConfig = mapper.getColumnConfig(tableId)
         let oTable = this.byId(tableId); 
         this.oMetadataHelper = new MetadataHelper(columnConfig); 

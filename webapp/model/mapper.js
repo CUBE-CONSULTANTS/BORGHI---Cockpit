@@ -153,7 +153,7 @@ sap.ui.define(
             { key: "progr_prelievo_col", label: "Progressivo Prelievo", path: "posizione_6_13" },
             { key: "data_progr_prelievo_col", label: "Data Prelievo per mov mag.", path: "posizione_14_19" },
             { key: "data_messaggio_col", label: "Data Messaggio", path: "posizione_14_19" },
-            { key: "DDT_col", label: "DDT", path: ["posizione_121_128", "posizione_6_13"] },
+            { key: "DDT_col", label: "DDT", path: "posizione_121_128" },
             { key: "data_DDT_col", label: "Data DDT", path: "posizione_14_19" },
             {
               key: "progressivo_invio_col",
