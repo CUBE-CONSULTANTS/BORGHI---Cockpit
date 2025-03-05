@@ -454,7 +454,7 @@ sap.ui.define(
         } catch (error) {
           console.error("Errore durante la selezione delle posizioni:", error);
         }
-        let oPayload = await this._returnPayload(oTable);
+        
       },
       _returnPayload: async function(table) {
         let indices = table.getSelectedIndices();
