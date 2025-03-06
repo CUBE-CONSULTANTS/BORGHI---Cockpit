@@ -48,7 +48,7 @@ sap.ui.define(
     return Controller.extend(
       "programmi.consegne.edi.controller.BaseController",
       {
-       
+
         /**
          * Convenience method for accessing the component of the controller's view.
          * @returns {sap.ui.core.Component} The component of the controller's view
@@ -127,28 +127,28 @@ sap.ui.define(
           // sap.ui.core.BusyIndicator.hide(delay || 0);
           sap.ui.core.BusyIndicator.hide(delay);
         },
-        onOpenDialog: function (dialName, fragmName, self, ...oModel) {        
+        onOpenDialog: function (dialName, fragmName, self, ...oModel) {
           let oView = self.getView();
           if (!self[dialName]) {
             Fragment.load({
-                id: oView.getId(),
-                name: fragmName,
-                controller: self
+              id: oView.getId(),
+              name: fragmName,
+              controller: self
             }).then((oDialog) => {
-                oView.addDependent(oDialog);
-                oDialog.setModel(self.getModel(...oModel));
-                self[dialName] = oDialog;
-                oDialog.open();
+              oView.addDependent(oDialog);
+              oDialog.setModel(self.getModel(...oModel));
+              self[dialName] = oDialog;
+              oDialog.open();
             });
           } else {
-              self[dialName].open();
+            self[dialName].open();
           }
-        }, 
+        },
         onFiltersBuilding: function (oEvent, key) {
           if (key === "01") {
             debugger
             let aData = this.getModel("master3").getProperty("/");
-            let aStato = aData.map(item => [...new Set(item.posizioni.map(pos =>pos.stato))])
+            let aStato = aData.map(item => [...new Set(item.posizioni.map(pos => pos.stato))])
             let aClienti = [...new Set(aData.map((item) => item.codice_cliente))];
             let aNumProgInvio = [...new Set(aData.map((item) => item.numero_progressivo_invio))];
             let aMateriali = [];
@@ -159,9 +159,9 @@ sap.ui.define(
                   if (pos.codice_cliente_materiale) {
                     aMateriali.push(pos.codice_cliente_materiale);
                   }
-                  if(pos.log){
+                  if (pos.log) {
                     debugger
-                    pos.log.results.forEach(res=> aMessaggi.push(res.messaggio))
+                    pos.log.results.forEach(res => aMessaggi.push(res.messaggio))
                   }
                 });
               }
@@ -188,7 +188,7 @@ sap.ui.define(
               "/delivery/messaggio/items",
               aMessaggi.map((n) => ({ Key: n, Text: n }))
             );
-          }else if(key === "02"){
+          } else if (key === "02") {
             let aData = this.getModel("master3CO").getProperty("/");
             let aClienti = [...new Set(aData.map((item) => item.codice_terre_cliente))];
             let aReason = [];
@@ -199,7 +199,7 @@ sap.ui.define(
                   if (pos.posizione_6_28) {
                     aMateriali.push(pos.posizione_6_28);
                   }
-                  if(pos.posizione_43_44){
+                  if (pos.posizione_43_44) {
                     aReason.push(pos.posizione_43_44);
                   }
                 });
@@ -220,7 +220,7 @@ sap.ui.define(
               "/callOff/clienti/items",
               aClienti.map((m) => ({ Key: m, Text: m }))
             );
-          }else if(key === "03"){
+          } else if (key === "03") {
             let aData = this.getModel("master3SB").getProperty("/");
             let aClienti = [...new Set(aData.map((item) => item.customer))];
             let aFornitori = [...new Set(aData.map((item) => item.supplier))];
@@ -247,7 +247,7 @@ sap.ui.define(
               "/selfBilling/fornitori/items",
               aFornitori.map((m) => ({ Key: m, Text: m }))
             );
-          }else if(key === "06"){
+          } else if (key === "06") {
             let aData = this.getModel("master3Scart").getProperty("/");
             let aFile = [...new Set(aData.map((item) => item.filename))];
             this.getModel("filtersModel").setProperty(
@@ -281,16 +281,16 @@ sap.ui.define(
           let modelMeta
           debugger
           if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("delivery")) {
-            modelMeta = await this.callData(this.getOwnerComponent().getModel("modelloV2"), "/Testata", [], [`posizioni($filter=stato ne '53'),posizioni($expand=log,schedulazioni,testata),master`],"01")
+            modelMeta = await this.callData(this.getOwnerComponent().getModel("modelloV2"), "/Testata", [], [`posizioni($filter=stato ne '53'),posizioni($expand=log,schedulazioni,testata),master`], "01")
           }
           if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("callOff")) {
-            modelMeta = await this.callData(this.getOwnerComponent().getModel("calloffV2"), "/Testata", [], ["master,posizioni_testata,log_testata"],"02")
+            modelMeta = await this.callData(this.getOwnerComponent().getModel("calloffV2"), "/Testata", [], ["master,posizioni_testata,log_testata"], "02")
           }
-          if(oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("selfBilling")){
-            modelMeta = await this.callData(this.getOwnerComponent().getModel("selfBillingV2"), "/Testata", [],[ "dettaglio_fattura,log_testata,dettaglio_fattura/riferimento_ddt,dettaglio_fattura/riferimento_ddt/riga_fattura"],"03")
+          if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("selfBilling")) {
+            modelMeta = await this.callData(this.getOwnerComponent().getModel("selfBillingV2"), "/Testata", [], ["dettaglio_fattura,log_testata,dettaglio_fattura/riferimento_ddt,dettaglio_fattura/riferimento_ddt/riga_fattura"], "03")
           }
-          if(oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("scartati")){
-            modelMeta = await this.callData(this.getOwnerComponent().getModel("fileScartatiV2"), "/FileScartati", [],[],"06")
+          if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("scartati")) {
+            modelMeta = await this.callData(this.getOwnerComponent().getModel("fileScartatiV2"), "/FileScartati", [], [], "06")
           }
           // oBinding.filter([]);
           // oBinding.sort([]);
@@ -301,7 +301,7 @@ sap.ui.define(
           let key
           if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("delivery")) {
             oFilterSet = this.getModel("filtersModel").getProperty("/delivery");
-            let aFilters = mapper.buildFilters(oFilterSet,key = "01")
+            let aFilters = mapper.buildFilters(oFilterSet, key = "01")
             let filters = {
               data_ricezione: aFilters.find(f => f.sPath === 'data_ricezione'),
               stato: aFilters.find(f => f.sPath === "stato"),
@@ -326,83 +326,83 @@ sap.ui.define(
             if (filters.stato && filters.messaggio && filters.data_ricezione) {
               expandQuery = `posizioni($filter=stato eq '${filters.stato.oValue1}'),posizioni($expand=log($filter=messaggio eq '${filters.messaggio.oValue1}'),schedulazioni,testata),master($filter=data_ricezione eq '${filters.data_ricezione.oValue1}')`;
             }
-            await this.callData(this.getOwnerComponent().getModel("modelloV2"),"/Testata",aFilters,[expandQuery],"01");
-          }else if(oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("callOff")){
+            await this.callData(this.getOwnerComponent().getModel("modelloV2"), "/Testata", aFilters, [expandQuery], "01");
+          } else if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("callOff")) {
             oFilterSet = this.getModel("filtersModel").getProperty("/callOff");
-            let aFilters = mapper.buildFilters(oFilterSet,key = "02")
-            await this.callData(this.getOwnerComponent().getModel("calloffV2"), "/Testata", aFilters, ["master,posizioni_testata,log_testata"],"02") 
-          }else if(oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("selfBilling")){
+            let aFilters = mapper.buildFilters(oFilterSet, key = "02")
+            await this.callData(this.getOwnerComponent().getModel("calloffV2"), "/Testata", aFilters, ["master,posizioni_testata,log_testata"], "02")
+          } else if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("selfBilling")) {
             oFilterSet = this.getModel("filtersModel").getProperty("/selfBilling");
-            let aFilters = mapper.buildFilters(oFilterSet,key = "03")
-            await this.callData(this.getOwnerComponent().getModel("selfBillingV2"), "/Testata",aFilters, [
-                "dettaglio_fattura,log_testata,dettaglio_fattura/riferimento_ddt,dettaglio_fattura/riferimento_ddt/riga_fattura",
-              ],"03") 
-          }else if(oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("scartati")){
+            let aFilters = mapper.buildFilters(oFilterSet, key = "03")
+            await this.callData(this.getOwnerComponent().getModel("selfBillingV2"), "/Testata", aFilters, [
+              "dettaglio_fattura,log_testata,dettaglio_fattura/riferimento_ddt,dettaglio_fattura/riferimento_ddt/riga_fattura",
+            ], "03")
+          } else if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("scartati")) {
             oFilterSet = this.getModel("filtersModel").getProperty("/scartati");
-            let aFilters = mapper.buildFilters(oFilterSet,key = "06")
-            await this.callData(this.getOwnerComponent().getModel("fileScartatiV2"), "/FileScartati", aFilters, [],"06") 
+            let aFilters = mapper.buildFilters(oFilterSet, key = "06")
+            await this.callData(this.getOwnerComponent().getModel("fileScartatiV2"), "/FileScartati", aFilters, [], "06")
           }
         },
-        
-        callData : async function(oModel,entity,aFilters,Expands, key){
+
+        callData: async function (oModel, entity, aFilters, Expands, key) {
           debugger
           let metadata, modelMeta
           try {
-            metadata = await API.getEntity(oModel,entity,aFilters,Expands);
-            if(key === '01'){
+            metadata = await API.getEntity(oModel, entity, aFilters, Expands);
+            if (key === '01') {
               modelMeta = new JSONModel(metadata.results);
               modelMeta.getProperty("/").forEach((testata) => {
                 testata.posizioni = Object.values(testata.posizioni.results);
                 // testata.master.data_ricezione = this.formatter.formatDateString(testata.master.data_ricezione)
               });
               this.getOwnerComponent().setModel(modelMeta, "master3");
-            }else if(key === "02"){
+            } else if (key === "02") {
               modelMeta = new JSONModel(metadata.results);
               modelMeta.getProperty("/").forEach((testata) => {
                 testata.posizioni_testata = Object.values(testata.posizioni_testata.results);
               });
               this.getOwnerComponent().setModel(modelMeta, "master3CO");
-            }else if(key === '03'){
+            } else if (key === '03') {
               modelMeta = new JSONModel(metadata.results);
               modelMeta.getProperty("/").forEach((testata) => {
                 testata.dettaglio_fattura = Object.values(testata.dettaglio_fattura.results);
               });
               this.getOwnerComponent().setModel(modelMeta, "master3SB");
-            }else if(key == "06"){
+            } else if (key == "06") {
               debugger
               modelMeta = new JSONModel(metadata.results);
               this.getOwnerComponent().setModel(modelMeta, "master3Scart");
             }
           } catch (error) {
             MessageBox.error("Errore durante la ricezione dei dati")
-          }finally {
+          } finally {
             this.hideBusy(0)
           }
         },
-        sortTables: function(table,aSortFields) {
+        sortTables: function (table, aSortFields) {
           let oBinding = table.getBinding("rows");
           let aCurrentSorters = oBinding.aSorters || [];
           let bDescending = aCurrentSorters.length > 0 ? !aCurrentSorters[0].bDescending : false;
           let aSorters = aSortFields.map(field => new sap.ui.model.Sorter(field, bDescending));
           oBinding.sort(aSorters)
         },
-        downloadExcelFileDett: function (oEvent){
+        downloadExcelFileDett: function (oEvent) {
           let oModel = this.getModel("detailData")
-          let aData = oModel.getProperty("/"); 
-            if (!aData || aData.length === 0) {
-              MessageToast.show("Nessun dato disponibile per l'esportazione");
-              return;
-            }
+          let aData = oModel.getProperty("/");
+          if (!aData || aData.length === 0) {
+            MessageToast.show("Nessun dato disponibile per l'esportazione");
+            return;
+          }
           this.buildSpreadSheet(aData)
         },
-        buildSpreadSheet: function(aExportData){
-          let exportData = Array.isArray(aExportData) ? aExportData : [aExportData]; 
+        buildSpreadSheet: function (aExportData) {
+          let exportData = Array.isArray(aExportData) ? aExportData : [aExportData];
           let flatExportData = mapper._formatExcelData(exportData);
           let oSpreadsheet = new Spreadsheet({
             dataSource: flatExportData,
             workbook: {
-            columns: this._getExcelColumns(flatExportData),
-            hierarchyLevel: 'Level'
+              columns: this._getExcelColumns(flatExportData),
+              hierarchyLevel: 'Level'
             },
             fileName: "Export",
             showProgress: true,
@@ -410,23 +410,23 @@ sap.ui.define(
           });
           oSpreadsheet.build().then(function () {
             MessageToast.show("Esportazione completata!");
-          });  
-        },
-        _getExcelColumns: function(aExportData) {
-        debugger;
-        let columns = [];
-        let fields = new Set();  
-        aExportData.forEach(item => {
-          Object.keys(item).forEach(field => fields.add(field));
-        });
-        aExportData.forEach(item => {
-          let positions = item.posizioni || [];
-          positions.forEach(position => {
-          Object.keys(position).forEach(field => fields.add(field));
           });
-        });
-        aExportData.forEach(item => {
-          let positions = item.posizioni || [];
+        },
+        _getExcelColumns: function (aExportData) {
+          debugger;
+          let columns = [];
+          let fields = new Set();
+          aExportData.forEach(item => {
+            Object.keys(item).forEach(field => fields.add(field));
+          });
+          aExportData.forEach(item => {
+            let positions = item.posizioni || [];
+            positions.forEach(position => {
+              Object.keys(position).forEach(field => fields.add(field));
+            });
+          });
+          aExportData.forEach(item => {
+            let positions = item.posizioni || [];
             positions.forEach(position => {
               let schedules = position.schedulazioni.results || [];
               schedules.forEach(schedule => {
@@ -435,206 +435,234 @@ sap.ui.define(
             });
           });
           fields.forEach(field => {
-              columns.push({
-                  label: field.replace(/_/g, " "), 
-                  property: field,  
-                  type: "Edm.String"
-              });
+            columns.push({
+              label: field.replace(/_/g, " "),
+              property: field,
+              type: "Edm.String"
+            });
           });
           return columns;
-      },
-      onDeletePosition: async function(oEvent){
-        debugger
-        let oTable = oEvent.getSource().getParent().getParent()
-        try {
-          let arrayToProcess = await this._returnPayload(oTable);
-          if (arrayToProcess.length > 0) {
-            debugger
-            this.showBusy(0);
-            let payload = arrayToProcess.map((x) => {
-              return {
+        },
+        onDeletePosition: async function (oEvent) {
+          let oTable = oEvent.getSource().getParent().getParent()
+          try {
+            let arrayToProcess = await this._returnPayload(oTable);
+            if (arrayToProcess.length > 0) {
+              this.showBusy(0);
+              let payload = arrayToProcess.map((x) => {
+                return {
                   id_testata: x.id_testata,
                   id_posizione: x.id
+                }
+              })
+              let obj = { id: payload }
+              let oModel = this.getOwnerComponent().getModel("modelloV2")
+              let res = await API.createEntity(oModel, "/DeletePosizioni", obj)
+              if (res.results.length > 0) {
+                MessageBox.success("Operazione andata a buon fine.", {
+                  title: "Operazione completata",
+                  onClose: async () => {
+                    let selectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
+                    await this._refreshData(selectedKey);
+                  }
+                })
               }
-            })
-            let obj = { id: payload }
-            let oModel = this.getOwnerComponent().getModel("modelloV2")
-            let res = await API.createEntity(oModel, "/DeletePosizioni", obj)
-            if(res.results.length > 0) {
-              MessageBox.success("Operazione andata a buon fine.");
             }
+          } catch (error) {
+            MessageBox.error("Errore durante l'eliminazione delle posizioni.");
+          } finally {
+            this.hideBusy(0)
           }
-        } catch (error) {
-          MessageBox.error("Errore durante l'eliminazione delle posizioni.");
-        }finally {
-          this.hideBusy(0)
-          //refreshDAta 
-        }
-      },
-      _returnPayload: async function(table) {
-        let indices = table.getSelectedIndices();
-        let testate = []; 
-        let selectedPos = []; 
-        let flag = false; 
-    
-        if (indices.length !== 0) {
-            let aSelectedItems = indices.map(function(iIndex) {
-                return table.getContextByIndex(iIndex).getObject();
+        },
+        _returnPayload: async function (table) {
+          let indices = table.getSelectedIndices();
+          let testate = [];
+          let selectedPos = [];
+          let flag = false;
+
+          if (indices.length !== 0) {
+            let aSelectedItems = indices.map(function (iIndex) {
+              return table.getContextByIndex(iIndex).getObject();
             });
 
             aSelectedItems.forEach((element) => {
-                if (element.hasOwnProperty("posizioni")) {
-                    testate.push(element); 
-                    flag = true; 
-                } else {
-                    selectedPos.push(element); 
-                }
+              if (element.hasOwnProperty("posizioni")) {
+                testate.push(element);
+                flag = true;
+              } else {
+                selectedPos.push(element);
+              }
             });
-    
+
             if (flag) {
-                return new Promise((resolve) => {
-                    MessageBox.confirm(
-                        "Verranno processate tutte le posizioni della Testata selezionata, continuare?", {
-                            title: "Continuare?",
-                            onClose: (oAction) => {
-                                if (oAction === sap.m.MessageBox.Action.OK) {
-                                    testate.forEach((x) => {
-                                        selectedPos = selectedPos.concat(x.posizioni);
-                                    });
-                                    let uniqueArray = selectedPos.reduce((acc, currentValue) => {
-                                        if (!acc.some((item) => item.id === currentValue.id)) {
-                                            acc.push(currentValue);
-                                        }
-                                        return acc;
-                                    }, []);
-                                    resolve(uniqueArray);
-                                } else {
-                                    resolve([]);
-                                }
-                            },
+              return new Promise((resolve) => {
+                MessageBox.confirm(
+                  "Verranno processate tutte le posizioni della Testata selezionata, continuare?", {
+                  title: "Continuare?",
+                  onClose: (oAction) => {
+                    if (oAction === sap.m.MessageBox.Action.OK) {
+                      testate.forEach((x) => {
+                        selectedPos = selectedPos.concat(x.posizioni);
+                      });
+                      let uniqueArray = selectedPos.reduce((acc, currentValue) => {
+                        if (!acc.some((item) => item.id === currentValue.id)) {
+                          acc.push(currentValue);
                         }
-                    );
-                });
+                        return acc;
+                      }, []);
+                      resolve(uniqueArray);
+                    } else {
+                      resolve([]);
+                    }
+                  },
+                }
+                );
+              });
             } else {
-                return selectedPos;
+              return selectedPos;
             }
-        } else {
+          } else {
             MessageBox.alert("Selezionare almeno una posizione");
-            return []; 
-        }
-      },
-      // refresh data dopo post
-      _refreshData: function(){
+            return [];
+          }
+        },
+        // refresh data dopo post
+        _refreshData: async function (selectedKey) {
+          this.showBusy(0);
+          try {
+            await this._getCounters();
+            switch (selectedKey) {
+              case "01":
+                await this.onFilterSelect(null, "01"); 
+                break;
+              case "02":
+                await this.onFilterSelect(null, "02"); 
+                break;
+              case "03":
+                await this.onFilterSelect(null, "03"); 
+                break;
+              case "06":
+                await this.onFilterSelect(null, "06"); 
+                break;
+              
+              default:
+                console.warn("Chiave della tabella non riconosciuta:", selectedKey);
+                break;
+            }
+          } catch (error) {
+            console.error("Errore durante il refresh dei dati:", error);
+          } finally {
+            this.hideBusy(0);
+          }
+        },
+        //engine dinamico
+        _registerForP13n: function (oEvent, tableId) {
+          debugger
+          let columnConfig = mapper.getColumnConfig(tableId)
+          let oTable = this.byId(tableId);
+          this.oMetadataHelper = new MetadataHelper(columnConfig);
 
-      },
-      //engine dinamico
-      _registerForP13n: function (oEvent, tableId) {
-        debugger
-        let columnConfig = mapper.getColumnConfig(tableId)
-        let oTable = this.byId(tableId); 
-        this.oMetadataHelper = new MetadataHelper(columnConfig); 
-        
-        this._mIntialWidth = columnConfig.reduce((acc, column) => {
-          acc[column.key] = column.initialWidth || "11rem"; 
-          return acc;
-        }, {});
-      
-        Engine.getInstance().register(oTable, {
-          helper: this.oMetadataHelper,
-          controller: {
-            Columns: new SelectionController({
-              targetAggregation: "columns",
-              control: oTable,
-            }),
-            Sorter: new SortController({
-              control: oTable,
-            }),
-            Groups: new GroupController({
-              control: oTable,
-            }),
-          },
-        });
-      
-        Engine.getInstance().attachStateChange(
-          this.handleStateChange.bind(this,tableId) 
-        );
-      },
-      openPosizioniDialog: function (oEvent) {
-        debugger
-        let tableId = oEvent.getSource().getParent().getParent().getId().split('--').pop()
-        let oTable = this.byId(tableId);
-        Engine.getInstance().show(oTable, ["Columns", "Sorter"], {
-          contentHeight: "35rem",
-          contentWidth: "32rem",
-          source: oEvent.getSource(),
-        });
-      },
-      _getKey: function (oControl) {
-        let aCustomData = oControl.getCustomData();
-        let sKey = aCustomData.find(data => data.getKey() === "p13nKey");
-        return sKey ? sKey.getValue() : null;
-      },
+          this._mIntialWidth = columnConfig.reduce((acc, column) => {
+            acc[column.key] = column.initialWidth || "11rem";
+            return acc;
+          }, {});
 
-      handleStateChange: function (tableId, oEvt){
-        debugger
-        const oTable = this.getView().byId(tableId);
-        const oState = oEvt.getParameter("state");
+          Engine.getInstance().register(oTable, {
+            helper: this.oMetadataHelper,
+            controller: {
+              Columns: new SelectionController({
+                targetAggregation: "columns",
+                control: oTable,
+              }),
+              Sorter: new SortController({
+                control: oTable,
+              }),
+              Groups: new GroupController({
+                control: oTable,
+              }),
+            },
+          });
 
-        if (!oState) {
-          return;
-        }
+          Engine.getInstance().attachStateChange(
+            this.handleStateChange.bind(this, tableId)
+          );
+        },
+        openPosizioniDialog: function (oEvent) {
+          debugger
+          let tableId = oEvent.getSource().getParent().getParent().getId().split('--').pop()
+          let oTable = this.byId(tableId);
+          Engine.getInstance().show(oTable, ["Columns", "Sorter"], {
+            contentHeight: "35rem",
+            contentWidth: "32rem",
+            source: oEvent.getSource(),
+          });
+        },
+        _getKey: function (oControl) {
+          let aCustomData = oControl.getCustomData();
+          let sKey = aCustomData.find(data => data.getKey() === "p13nKey");
+          return sKey ? sKey.getValue() : null;
+        },
 
-        oTable.getColumns().forEach(oColumn => {
-          const sKey = this._getKey(oColumn);
-          const sColumnWidth = oState.ColumnWidth ? oState.ColumnWidth[sKey] : undefined;
-          oColumn.setWidth(sColumnWidth || this._mIntialWidth[sKey] || "10rem");
-          oColumn.setVisible(false);
-          oColumn.setSortOrder(CoreLibrary.SortOrder.None);
-        });
-      
-        oState.Columns.forEach((oProp, iIndex) => {
-          const oCol = oTable.getColumns().find(oColumn => this._getKey(oColumn) === oProp.key);
+        handleStateChange: function (tableId, oEvt) {
+          debugger
+          const oTable = this.getView().byId(tableId);
+          const oState = oEvt.getParameter("state");
+
+          if (!oState) {
+            return;
+          }
+
+          oTable.getColumns().forEach(oColumn => {
+            const sKey = this._getKey(oColumn);
+            const sColumnWidth = oState.ColumnWidth ? oState.ColumnWidth[sKey] : undefined;
+            oColumn.setWidth(sColumnWidth || this._mIntialWidth[sKey] || "10rem");
+            oColumn.setVisible(false);
+            oColumn.setSortOrder(CoreLibrary.SortOrder.None);
+          });
+
+          oState.Columns.forEach((oProp, iIndex) => {
+            const oCol = oTable.getColumns().find(oColumn => this._getKey(oColumn) === oProp.key);
             if (oCol) {
               oCol.setVisible(true);
               oTable.removeColumn(oCol);
               oTable.insertColumn(oCol, iIndex);
             }
-        });
-        if (oState.Sorter) {
-        const aSorter = [];
-          oState.Sorter.forEach(oSorter => {
-            const oColumn = oTable.getColumns().find(oColumn => this._getKey(oColumn) === oSorter.key);
+          });
+          if (oState.Sorter) {
+            const aSorter = [];
+            oState.Sorter.forEach(oSorter => {
+              const oColumn = oTable.getColumns().find(oColumn => this._getKey(oColumn) === oSorter.key);
 
-            if (oColumn) {
-              oColumn.setSorted(true);
-              oColumn.setSortOrder(
+              if (oColumn) {
+                oColumn.setSorted(true);
+                oColumn.setSortOrder(
                   oSorter.descending ? CoreLibrary.SortOrder.Descending : CoreLibrary.SortOrder.Ascending
-              );
+                );
 
-              const oProperty = this.oMetadataHelper.getProperty(oSorter.key);
+                const oProperty = this.oMetadataHelper.getProperty(oSorter.key);
                 if (oProperty) {
                   aSorter.push(new Sorter(oProperty.path, oSorter.descending));
                 }
+              }
+            });
+            if (oTable.getBinding("rows")) {
+              oTable.getBinding("rows").sort(aSorter);
             }
-          });
-          if (oTable.getBinding("rows")) {
-            oTable.getBinding("rows").sort(aSorter);
           }
-        }          
-      },
-      //fine configurazione Engine x tutte tabelle, da richiamare nei controller dei dettagli, 
-      // dopo aver mappato le colonne in mapper e definite il custData nelle view di dettaglio
-      navToHome: function () {
-        this.getRouter().navTo("home");
-      },
-      handleCloseDetail: function () {
-        this.getRouter().navTo("master3");
-      },
-      onClose: function (oEvent) {
-        oEvent.getSource().getParent().close();
-      },
+        },
+        //fine configurazione Engine x tutte tabelle, da richiamare nei controller dei dettagli, 
+        // dopo aver mappato le colonne in mapper e definite il custData nelle view di dettaglio
+        navToHome: function () {
+          this.getRouter().navTo("home");
+        },
+        handleCloseDetail: function () {
+          this.getRouter().navTo("master3");
+        },
+        onClose: function (oEvent) {
+          oEvent.getSource().getParent().close();
+        },
 
-      
+
       }
     );
   }
