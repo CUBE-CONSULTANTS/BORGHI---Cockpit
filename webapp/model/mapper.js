@@ -221,6 +221,11 @@ sap.ui.define(
       },
       buildFilters: function (oFilterSet, key) {
         let aFilters = [];
+        aFilters.push(new sap.ui.model.Filter(
+          "archiviazione",
+          sap.ui.model.FilterOperator.EQ,
+          false
+        ))
         if (key === "01") {
           if (oFilterSet.dataRic) {
             let oDataRic = formatter.returnDate(oFilterSet.dataRic,"dd/MM/yyyy","yyyyMMdd");

@@ -50,28 +50,47 @@ sap.ui.define(
           let del = await API.getEntity(
             this.getOwnerComponent().getModel("modelloV2"),
             "/Testata/$count",
-            [],
+            [new sap.ui.model.Filter(
+              "archiviazione",
+              sap.ui.model.FilterOperator.EQ,
+              false
+            )],
             []
           );
           this.getModel("count").setProperty("/delivery", del.results);
           let cal = await API.getEntity(
             this.getOwnerComponent().getModel("calloffV2"),
             "/Testata/$count",
-            [],
+            [new sap.ui.model.Filter(
+              "archiviazione",
+              sap.ui.model.FilterOperator.EQ,
+              false
+            )],
             []
           );
           this.getModel("count").setProperty("/calloff", cal.results);
           let selfb = await API.getEntity(
             this.getOwnerComponent().getModel("selfBillingV2"),
             "/Testata/$count",
-            [],
+            [], 
+            // new sap.ui.model.Filter(
+            //   "archiviazione",
+            //   sap.ui.model.FilterOperator.EQ,
+            //   false
+            // )
             []
           );
           this.getModel("count").setProperty("/selfbilling", selfb.results);
           let fileScart = await API.getEntity(
             this.getOwnerComponent().getModel("fileScartatiV2"),
             "/FileScartati/$count",
-            [],
+            [
+              ],
+              // new sap.ui.model.Filter(
+              //   "archiviazione",
+              //   sap.ui.model.FilterOperator.EQ,
+              //   false
+              // )
             []
           );
           this.getModel("count").setProperty(
@@ -95,7 +114,13 @@ sap.ui.define(
             await this.callData(
               oModel,
               "/Testata",
-              [],
+              [
+                new sap.ui.model.Filter(
+                  "archiviazione",
+                  sap.ui.model.FilterOperator.EQ,
+                  false
+                )
+              ],
               [
                 "posizioni($filter=stato ne '53'),posizioni($expand=log,schedulazioni,testata),master",
               ],
@@ -108,7 +133,13 @@ sap.ui.define(
             await this.callData(
               oModel,
               "/Testata",
-              [],
+              [
+                new sap.ui.model.Filter(
+                  "archiviazione",
+                  sap.ui.model.FilterOperator.EQ,
+                  false
+                )
+              ],
               ["master,posizioni_testata,log_testata"],
               selectedKey
             );
@@ -118,8 +149,14 @@ sap.ui.define(
             oModel = this.getOwnerComponent().getModel("selfBillingV2");
             await this.callData(
               oModel,
-              "/Testata",
-              [],
+              "/Testata",  
+              [
+                new sap.ui.model.Filter(
+                  "archiviazione",
+                  sap.ui.model.FilterOperator.EQ,
+                  false
+                )
+              ],
               [
                 "dettaglio_fattura,log_testata,dettaglio_fattura/riferimento_ddt,dettaglio_fattura/riferimento_ddt/riga_fattura",
               ],
@@ -133,7 +170,13 @@ sap.ui.define(
             break;
           case "06":
             oModel = this.getOwnerComponent().getModel("fileScartatiV2");
-            await this.callData(oModel, "/FileScartati", [], [], selectedKey);
+            await this.callData(oModel, "/FileScartati", [
+              new sap.ui.model.Filter(
+                "archiviazione",
+                sap.ui.model.FilterOperator.EQ,
+                false
+              )
+            ], [], selectedKey);
             this.onFiltersBuilding(oEvent, selectedKey);
             break;
         }

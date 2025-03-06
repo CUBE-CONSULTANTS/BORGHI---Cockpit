@@ -281,16 +281,33 @@ sap.ui.define(
           let modelMeta
           debugger
           if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("delivery")) {
-            modelMeta = await this.callData(this.getOwnerComponent().getModel("modelloV2"), "/Testata", [], [`posizioni($filter=stato ne '53'),posizioni($expand=log,schedulazioni,testata),master`], "01")
+            modelMeta = await this.callData(this.getOwnerComponent().getModel("modelloV2"), "/Testata",  
+            [new sap.ui.model.Filter(
+              "archiviazione",
+              sap.ui.model.FilterOperator.EQ,
+              false
+            )], [`posizioni($filter=stato ne '53'),posizioni($expand=log,schedulazioni,testata),master`], "01")
           }
           if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("callOff")) {
-            modelMeta = await this.callData(this.getOwnerComponent().getModel("calloffV2"), "/Testata", [], ["master,posizioni_testata,log_testata"], "02")
+            modelMeta = await this.callData(this.getOwnerComponent().getModel("calloffV2"), "/Testata",  [new sap.ui.model.Filter(
+              "archiviazione",
+              sap.ui.model.FilterOperator.EQ,
+              false
+            )], ["master,posizioni_testata,log_testata"], "02")
           }
           if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("selfBilling")) {
-            modelMeta = await this.callData(this.getOwnerComponent().getModel("selfBillingV2"), "/Testata", [], ["dettaglio_fattura,log_testata,dettaglio_fattura/riferimento_ddt,dettaglio_fattura/riferimento_ddt/riga_fattura"], "03")
+            modelMeta = await this.callData(this.getOwnerComponent().getModel("selfBillingV2"), "/Testata",  [new sap.ui.model.Filter(
+              "archiviazione",
+              sap.ui.model.FilterOperator.EQ,
+              false
+            )], ["dettaglio_fattura,log_testata,dettaglio_fattura/riferimento_ddt,dettaglio_fattura/riferimento_ddt/riga_fattura"], "03")
           }
           if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("scartati")) {
-            modelMeta = await this.callData(this.getOwnerComponent().getModel("fileScartatiV2"), "/FileScartati", [], [], "06")
+            modelMeta = await this.callData(this.getOwnerComponent().getModel("fileScartatiV2"), "/FileScartati",  [new sap.ui.model.Filter(
+              "archiviazione",
+              sap.ui.model.FilterOperator.EQ,
+              false
+            )], [], "06")
           }
           // oBinding.filter([]);
           // oBinding.sort([]);
@@ -326,21 +343,21 @@ sap.ui.define(
             if (filters.stato && filters.messaggio && filters.data_ricezione) {
               expandQuery = `posizioni($filter=stato eq '${filters.stato.oValue1}'),posizioni($expand=log($filter=messaggio eq '${filters.messaggio.oValue1}'),schedulazioni,testata),master($filter=data_ricezione eq '${filters.data_ricezione.oValue1}')`;
             }
-            await this.callData(this.getOwnerComponent().getModel("modelloV2"), "/Testata", aFilters, [expandQuery], "01");
+            await this.callData(this.getOwnerComponent().getModel("modelloV2"), "/Testata",   aFilters, [expandQuery], "01");
           } else if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("callOff")) {
             oFilterSet = this.getModel("filtersModel").getProperty("/callOff");
             let aFilters = mapper.buildFilters(oFilterSet, key = "02")
-            await this.callData(this.getOwnerComponent().getModel("calloffV2"), "/Testata", aFilters, ["master,posizioni_testata,log_testata"], "02")
+            await this.callData(this.getOwnerComponent().getModel("calloffV2"), "/Testata",   aFilters, ["master,posizioni_testata,log_testata"], "02")
           } else if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("selfBilling")) {
             oFilterSet = this.getModel("filtersModel").getProperty("/selfBilling");
             let aFilters = mapper.buildFilters(oFilterSet, key = "03")
-            await this.callData(this.getOwnerComponent().getModel("selfBillingV2"), "/Testata", aFilters, [
+            await this.callData(this.getOwnerComponent().getModel("selfBillingV2"), "/Testata",   aFilters, [
               "dettaglio_fattura,log_testata,dettaglio_fattura/riferimento_ddt,dettaglio_fattura/riferimento_ddt/riga_fattura",
             ], "03")
           } else if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("scartati")) {
             oFilterSet = this.getModel("filtersModel").getProperty("/scartati");
             let aFilters = mapper.buildFilters(oFilterSet, key = "06")
-            await this.callData(this.getOwnerComponent().getModel("fileScartatiV2"), "/FileScartati", aFilters, [], "06")
+            await this.callData(this.getOwnerComponent().getModel("fileScartatiV2"), "/FileScartati",   aFilters, [], "06")
           }
         },
 
