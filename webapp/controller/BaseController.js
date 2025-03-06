@@ -41,14 +41,13 @@ sap.ui.define(
     GroupController,
     MetadataHelper,
     CoreLibrary,
-    formatter,
+    formatter
   ) {
     "use strict";
 
     return Controller.extend(
       "programmi.consegne.edi.controller.BaseController",
       {
-
         /**
          * Convenience method for accessing the component of the controller's view.
          * @returns {sap.ui.core.Component} The component of the controller's view
@@ -111,7 +110,7 @@ sap.ui.define(
          * If not, it will replace the current entry of the browser history with the main route.
          */
         onNavBack: function () {
-          debugger
+          debugger;
           var sPreviousHash = History.getInstance().getPreviousHash();
           if (sPreviousHash !== undefined) {
             window.history.go(-1);
@@ -133,7 +132,7 @@ sap.ui.define(
             Fragment.load({
               id: oView.getId(),
               name: fragmName,
-              controller: self
+              controller: self,
             }).then((oDialog) => {
               oView.addDependent(oDialog);
               oDialog.setModel(self.getModel(...oModel));
@@ -146,13 +145,19 @@ sap.ui.define(
         },
         onFiltersBuilding: function (oEvent, key) {
           if (key === "01") {
-            debugger
+            debugger;
             let aData = this.getModel("master3").getProperty("/");
-            let aStato = aData.map(item => [...new Set(item.posizioni.map(pos => pos.stato))])
-            let aClienti = [...new Set(aData.map((item) => item.codice_cliente))];
-            let aNumProgInvio = [...new Set(aData.map((item) => item.numero_progressivo_invio))];
+            let aStato = aData.map((item) => [
+              ...new Set(item.posizioni.map((pos) => pos.stato)),
+            ]);
+            let aClienti = [
+              ...new Set(aData.map((item) => item.codice_cliente)),
+            ];
+            let aNumProgInvio = [
+              ...new Set(aData.map((item) => item.numero_progressivo_invio)),
+            ];
             let aMateriali = [];
-            let aMessaggi = []
+            let aMessaggi = [];
             aData.forEach((item) => {
               if (item.posizioni) {
                 item.posizioni.forEach((pos) => {
@@ -160,8 +165,10 @@ sap.ui.define(
                     aMateriali.push(pos.codice_cliente_materiale);
                   }
                   if (pos.log) {
-                    debugger
-                    pos.log.results.forEach(res => aMessaggi.push(res.messaggio))
+                    debugger;
+                    pos.log.results.forEach((res) =>
+                      aMessaggi.push(res.messaggio)
+                    );
                   }
                 });
               }
@@ -190,7 +197,9 @@ sap.ui.define(
             );
           } else if (key === "02") {
             let aData = this.getModel("master3CO").getProperty("/");
-            let aClienti = [...new Set(aData.map((item) => item.codice_terre_cliente))];
+            let aClienti = [
+              ...new Set(aData.map((item) => item.codice_terre_cliente)),
+            ];
             let aReason = [];
             let aMateriali = [];
             aData.forEach((item) => {
@@ -205,7 +214,7 @@ sap.ui.define(
                 });
               }
             });
-            aReason = [...new Set(aReason)]
+            aReason = [...new Set(aReason)];
             aMateriali = [...new Set(aMateriali)];
 
             this.getModel("filtersModel").setProperty(
@@ -234,7 +243,7 @@ sap.ui.define(
                 });
               }
             });
-            aFatture = [...new Set(aFatture)]
+            aFatture = [...new Set(aFatture)];
             this.getModel("filtersModel").setProperty(
               "/selfBilling/fatture/items",
               aFatture.map((m) => ({ Key: m, Text: m }))
@@ -278,36 +287,91 @@ sap.ui.define(
             }
           }
           this.getModel("filtersModel").refresh(true);
-          let modelMeta
-          debugger
-          if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("delivery")) {
-            modelMeta = await this.callData(this.getOwnerComponent().getModel("modelloV2"), "/Testata",  
-            [new sap.ui.model.Filter(
-              "archiviazione",
-              sap.ui.model.FilterOperator.EQ,
-              false
-            )], [`posizioni($filter=stato ne '53'),posizioni($expand=log,schedulazioni,testata),master`], "01")
+          let modelMeta;
+          debugger;
+          if (
+            oEvent
+              .getParameters()
+              .selectionSet[0].getBindingInfo("value")
+              .parts[0].path.includes("delivery")
+          ) {
+            modelMeta = await this.callData(
+              this.getOwnerComponent().getModel("modelloV2"),
+              "/Testata",
+              [
+                new sap.ui.model.Filter(
+                  "archiviazione",
+                  sap.ui.model.FilterOperator.EQ,
+                  false
+                ),
+              ],
+              [
+                `posizioni($filter=stato ne '53'),posizioni($expand=log,schedulazioni,testata),master`,
+              ],
+              "01"
+            );
           }
-          if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("callOff")) {
-            modelMeta = await this.callData(this.getOwnerComponent().getModel("calloffV2"), "/Testata",  [new sap.ui.model.Filter(
-              "archiviazione",
-              sap.ui.model.FilterOperator.EQ,
-              false
-            )], ["master,posizioni_testata,log_testata"], "02")
+          if (
+            oEvent
+              .getParameters()
+              .selectionSet[0].getBindingInfo("value")
+              .parts[0].path.includes("callOff")
+          ) {
+            modelMeta = await this.callData(
+              this.getOwnerComponent().getModel("calloffV2"),
+              "/Testata",
+              [
+                new sap.ui.model.Filter(
+                  "archiviazione",
+                  sap.ui.model.FilterOperator.EQ,
+                  false
+                ),
+              ],
+              ["master,posizioni_testata,log_testata"],
+              "02"
+            );
           }
-          if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("selfBilling")) {
-            modelMeta = await this.callData(this.getOwnerComponent().getModel("selfBillingV2"), "/Testata",  [new sap.ui.model.Filter(
-              "archiviazione",
-              sap.ui.model.FilterOperator.EQ,
-              false
-            )], ["dettaglio_fattura,log_testata,dettaglio_fattura/riferimento_ddt,dettaglio_fattura/riferimento_ddt/riga_fattura"], "03")
+          if (
+            oEvent
+              .getParameters()
+              .selectionSet[0].getBindingInfo("value")
+              .parts[0].path.includes("selfBilling")
+          ) {
+            modelMeta = await this.callData(
+              this.getOwnerComponent().getModel("selfBillingV2"),
+              "/Testata",
+              [
+                new sap.ui.model.Filter(
+                  "archiviazione",
+                  sap.ui.model.FilterOperator.EQ,
+                  false
+                ),
+              ],
+              [
+                "dettaglio_fattura,log_testata,dettaglio_fattura/riferimento_ddt,dettaglio_fattura/riferimento_ddt/riga_fattura",
+              ],
+              "03"
+            );
           }
-          if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("scartati")) {
-            modelMeta = await this.callData(this.getOwnerComponent().getModel("fileScartatiV2"), "/FileScartati",  [new sap.ui.model.Filter(
-              "archiviazione",
-              sap.ui.model.FilterOperator.EQ,
-              false
-            )], [], "06")
+          if (
+            oEvent
+              .getParameters()
+              .selectionSet[0].getBindingInfo("value")
+              .parts[0].path.includes("scartati")
+          ) {
+            modelMeta = await this.callData(
+              this.getOwnerComponent().getModel("fileScartatiV2"),
+              "/FileScartati",
+              [
+                new sap.ui.model.Filter(
+                  "archiviazione",
+                  sap.ui.model.FilterOperator.EQ,
+                  false
+                ),
+              ],
+              [],
+              "06"
+            );
           }
           // oBinding.filter([]);
           // oBinding.sort([]);
@@ -315,22 +379,30 @@ sap.ui.define(
         onSearchData: async function (oEvent) {
           //ricerca filtrata
           let oFilterSet;
-          let key
-          if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("delivery")) {
+          let key;
+          if (
+            oEvent
+              .getParameters()
+              .selectionSet[0].getBindingInfo("value")
+              .parts[0].path.includes("delivery")
+          ) {
             oFilterSet = this.getModel("filtersModel").getProperty("/delivery");
-            let aFilters = mapper.buildFilters(oFilterSet, key = "01")
+            let aFilters = mapper.buildFilters(oFilterSet, (key = "01"));
             let filters = {
-              data_ricezione: aFilters.find(f => f.sPath === 'data_ricezione'),
-              stato: aFilters.find(f => f.sPath === "stato"),
-              messaggio: aFilters.find(f => f.sPath === "messaggio")
-            }
-            Object.keys(filters).forEach(key => {
+              data_ricezione: aFilters.find(
+                (f) => f.sPath === "data_ricezione"
+              ),
+              stato: aFilters.find((f) => f.sPath === "stato"),
+              messaggio: aFilters.find((f) => f.sPath === "messaggio"),
+            };
+            Object.keys(filters).forEach((key) => {
               if (filters[key]) {
-                let index = aFilters.findIndex(f => f.sPath === key);
+                let index = aFilters.findIndex((f) => f.sPath === key);
                 if (index !== -1) aFilters.splice(index, 1);
               }
-            })
-            let expandQuery = "posizioni($filter=stato ne '53'),posizioni($expand=log,schedulazioni,testata),master";
+            });
+            let expandQuery =
+              "posizioni($filter=stato ne '53'),posizioni($expand=log,schedulazioni,testata),master";
             if (filters.stato) {
               expandQuery = `posizioni($filter=stato eq '${filters.stato.oValue1}'),posizioni($expand=log,schedulazioni,testata),master`;
             }
@@ -343,30 +415,70 @@ sap.ui.define(
             if (filters.stato && filters.messaggio && filters.data_ricezione) {
               expandQuery = `posizioni($filter=stato eq '${filters.stato.oValue1}'),posizioni($expand=log($filter=messaggio eq '${filters.messaggio.oValue1}'),schedulazioni,testata),master($filter=data_ricezione eq '${filters.data_ricezione.oValue1}')`;
             }
-            await this.callData(this.getOwnerComponent().getModel("modelloV2"), "/Testata",   aFilters, [expandQuery], "01");
-          } else if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("callOff")) {
+            await this.callData(
+              this.getOwnerComponent().getModel("modelloV2"),
+              "/Testata",
+              aFilters,
+              [expandQuery],
+              "01"
+            );
+          } else if (
+            oEvent
+              .getParameters()
+              .selectionSet[0].getBindingInfo("value")
+              .parts[0].path.includes("callOff")
+          ) {
             oFilterSet = this.getModel("filtersModel").getProperty("/callOff");
-            let aFilters = mapper.buildFilters(oFilterSet, key = "02")
-            await this.callData(this.getOwnerComponent().getModel("calloffV2"), "/Testata",   aFilters, ["master,posizioni_testata,log_testata"], "02")
-          } else if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("selfBilling")) {
-            oFilterSet = this.getModel("filtersModel").getProperty("/selfBilling");
-            let aFilters = mapper.buildFilters(oFilterSet, key = "03")
-            await this.callData(this.getOwnerComponent().getModel("selfBillingV2"), "/Testata",   aFilters, [
-              "dettaglio_fattura,log_testata,dettaglio_fattura/riferimento_ddt,dettaglio_fattura/riferimento_ddt/riga_fattura",
-            ], "03")
-          } else if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("scartati")) {
+            let aFilters = mapper.buildFilters(oFilterSet, (key = "02"));
+            await this.callData(
+              this.getOwnerComponent().getModel("calloffV2"),
+              "/Testata",
+              aFilters,
+              ["master,posizioni_testata,log_testata"],
+              "02"
+            );
+          } else if (
+            oEvent
+              .getParameters()
+              .selectionSet[0].getBindingInfo("value")
+              .parts[0].path.includes("selfBilling")
+          ) {
+            oFilterSet =
+              this.getModel("filtersModel").getProperty("/selfBilling");
+            let aFilters = mapper.buildFilters(oFilterSet, (key = "03"));
+            await this.callData(
+              this.getOwnerComponent().getModel("selfBillingV2"),
+              "/Testata",
+              aFilters,
+              [
+                "dettaglio_fattura,log_testata,dettaglio_fattura/riferimento_ddt,dettaglio_fattura/riferimento_ddt/riga_fattura",
+              ],
+              "03"
+            );
+          } else if (
+            oEvent
+              .getParameters()
+              .selectionSet[0].getBindingInfo("value")
+              .parts[0].path.includes("scartati")
+          ) {
             oFilterSet = this.getModel("filtersModel").getProperty("/scartati");
-            let aFilters = mapper.buildFilters(oFilterSet, key = "06")
-            await this.callData(this.getOwnerComponent().getModel("fileScartatiV2"), "/FileScartati",   aFilters, [], "06")
+            let aFilters = mapper.buildFilters(oFilterSet, (key = "06"));
+            await this.callData(
+              this.getOwnerComponent().getModel("fileScartatiV2"),
+              "/FileScartati",
+              aFilters,
+              [],
+              "06"
+            );
           }
         },
 
         callData: async function (oModel, entity, aFilters, Expands, key) {
-          debugger
-          let metadata, modelMeta
+          debugger;
+          let metadata, modelMeta;
           try {
             metadata = await API.getEntity(oModel, entity, aFilters, Expands);
-            if (key === '01') {
+            if (key === "01") {
               modelMeta = new JSONModel(metadata.results);
               modelMeta.getProperty("/").forEach((testata) => {
                 testata.posizioni = Object.values(testata.posizioni.results);
@@ -376,54 +488,65 @@ sap.ui.define(
             } else if (key === "02") {
               modelMeta = new JSONModel(metadata.results);
               modelMeta.getProperty("/").forEach((testata) => {
-                testata.posizioni_testata = Object.values(testata.posizioni_testata.results);
+                testata.posizioni_testata = Object.values(
+                  testata.posizioni_testata.results
+                );
               });
               this.getOwnerComponent().setModel(modelMeta, "master3CO");
-            } else if (key === '03') {
+            } else if (key === "03") {
               modelMeta = new JSONModel(metadata.results);
               modelMeta.getProperty("/").forEach((testata) => {
-                testata.dettaglio_fattura = Object.values(testata.dettaglio_fattura.results);
+                testata.dettaglio_fattura = Object.values(
+                  testata.dettaglio_fattura.results
+                );
               });
               this.getOwnerComponent().setModel(modelMeta, "master3SB");
             } else if (key == "06") {
-              debugger
+              debugger;
               modelMeta = new JSONModel(metadata.results);
               this.getOwnerComponent().setModel(modelMeta, "master3Scart");
             }
           } catch (error) {
-            MessageBox.error("Errore durante la ricezione dei dati")
+            MessageBox.error("Errore durante la ricezione dei dati");
           } finally {
-            this.hideBusy(0)
+            this.hideBusy(0);
           }
         },
         sortTables: function (table, aSortFields) {
           let oBinding = table.getBinding("rows");
           let aCurrentSorters = oBinding.aSorters || [];
-          let bDescending = aCurrentSorters.length > 0 ? !aCurrentSorters[0].bDescending : false;
-          let aSorters = aSortFields.map(field => new sap.ui.model.Sorter(field, bDescending));
-          oBinding.sort(aSorters)
+          let bDescending =
+            aCurrentSorters.length > 0
+              ? !aCurrentSorters[0].bDescending
+              : false;
+          let aSorters = aSortFields.map(
+            (field) => new sap.ui.model.Sorter(field, bDescending)
+          );
+          oBinding.sort(aSorters);
         },
         downloadExcelFileDett: function (oEvent) {
-          let oModel = this.getModel("detailData")
+          let oModel = this.getModel("detailData");
           let aData = oModel.getProperty("/");
           if (!aData || aData.length === 0) {
             MessageToast.show("Nessun dato disponibile per l'esportazione");
             return;
           }
-          this.buildSpreadSheet(aData)
+          this.buildSpreadSheet(aData);
         },
         buildSpreadSheet: function (aExportData) {
-          let exportData = Array.isArray(aExportData) ? aExportData : [aExportData];
+          let exportData = Array.isArray(aExportData)
+            ? aExportData
+            : [aExportData];
           let flatExportData = mapper._formatExcelData(exportData);
           let oSpreadsheet = new Spreadsheet({
             dataSource: flatExportData,
             workbook: {
               columns: this._getExcelColumns(flatExportData),
-              hierarchyLevel: 'Level'
+              hierarchyLevel: "Level",
             },
             fileName: "Export",
             showProgress: true,
-            worker: true
+            worker: true,
           });
           oSpreadsheet.build().then(function () {
             MessageToast.show("Esportazione completata!");
@@ -433,35 +556,35 @@ sap.ui.define(
           debugger;
           let columns = [];
           let fields = new Set();
-          aExportData.forEach(item => {
-            Object.keys(item).forEach(field => fields.add(field));
+          aExportData.forEach((item) => {
+            Object.keys(item).forEach((field) => fields.add(field));
           });
-          aExportData.forEach(item => {
+          aExportData.forEach((item) => {
             let positions = item.posizioni || [];
-            positions.forEach(position => {
-              Object.keys(position).forEach(field => fields.add(field));
+            positions.forEach((position) => {
+              Object.keys(position).forEach((field) => fields.add(field));
             });
           });
-          aExportData.forEach(item => {
+          aExportData.forEach((item) => {
             let positions = item.posizioni || [];
-            positions.forEach(position => {
+            positions.forEach((position) => {
               let schedules = position.schedulazioni.results || [];
-              schedules.forEach(schedule => {
-                Object.keys(schedule).forEach(field => fields.add(field));
+              schedules.forEach((schedule) => {
+                Object.keys(schedule).forEach((field) => fields.add(field));
               });
             });
           });
-          fields.forEach(field => {
+          fields.forEach((field) => {
             columns.push({
               label: field.replace(/_/g, " "),
               property: field,
-              type: "Edm.String"
+              type: "Edm.String",
             });
           });
           return columns;
         },
         onDeletePosition: async function (oEvent) {
-          let oTable = oEvent.getSource().getParent().getParent()
+          let oTable = oEvent.getSource().getParent().getParent();
           try {
             let arrayToProcess = await this._returnPayload(oTable);
             if (arrayToProcess.length > 0) {
@@ -469,31 +592,35 @@ sap.ui.define(
               let payload = arrayToProcess.map((x) => {
                 return {
                   id_testata: x.id_testata,
-                  id_posizione: x.id
-                }
-              })
-              let obj = { id: payload }
-              let oModel = this.getOwnerComponent().getModel("modelloV2")
-              let res = await API.createEntity(oModel, "/DeletePosizioni", obj)
+                  id_posizione: x.id,
+                };
+              });
+              let obj = { id: payload };
+              let oModel = this.getOwnerComponent().getModel("modelloV2");
+              let res = await API.createEntity(oModel, "/DeletePosizioni", obj);
               if (res.results.length > 0) {
                 MessageBox.success("Operazione andata a buon fine.", {
                   title: "Operazione completata",
                   onClose: async () => {
-                    let selectedKey 
-                    this.getView().byId("idIconTabBar")? selectedKey = this.getView().byId("idIconTabBar").getSelectedKey() : undefined
-                    if(selectedKey !== undefined){
+                    let selectedKey;
+                    this.getView().byId("idIconTabBar")
+                      ? (selectedKey = this.getView()
+                          .byId("idIconTabBar")
+                          .getSelectedKey())
+                      : undefined;
+                    if (selectedKey !== undefined) {
                       await this._refreshData(selectedKey);
-                    }else{
-                     await this._refreshDetailData()
+                    } else {
+                      await this._refreshDetailData();
                     }
-                  }
-                })
+                  },
+                });
               }
             }
           } catch (error) {
             MessageBox.error("Errore durante l'eliminazione delle posizioni.");
           } finally {
-            this.hideBusy(0)
+            this.hideBusy(0);
           }
         },
         _returnPayload: async function (table) {
@@ -519,25 +646,31 @@ sap.ui.define(
             if (flag) {
               return new Promise((resolve) => {
                 MessageBox.confirm(
-                  "Verranno processate tutte le posizioni della Testata selezionata, continuare?", {
-                  title: "Continuare?",
-                  onClose: (oAction) => {
-                    if (oAction === sap.m.MessageBox.Action.OK) {
-                      testate.forEach((x) => {
-                        selectedPos = selectedPos.concat(x.posizioni);
-                      });
-                      let uniqueArray = selectedPos.reduce((acc, currentValue) => {
-                        if (!acc.some((item) => item.id === currentValue.id)) {
-                          acc.push(currentValue);
-                        }
-                        return acc;
-                      }, []);
-                      resolve(uniqueArray);
-                    } else {
-                      resolve([]);
-                    }
-                  },
-                }
+                  "Verranno processate tutte le posizioni della Testata selezionata, continuare?",
+                  {
+                    title: "Continuare?",
+                    onClose: (oAction) => {
+                      if (oAction === sap.m.MessageBox.Action.OK) {
+                        testate.forEach((x) => {
+                          selectedPos = selectedPos.concat(x.posizioni);
+                        });
+                        let uniqueArray = selectedPos.reduce(
+                          (acc, currentValue) => {
+                            if (
+                              !acc.some((item) => item.id === currentValue.id)
+                            ) {
+                              acc.push(currentValue);
+                            }
+                            return acc;
+                          },
+                          []
+                        );
+                        resolve(uniqueArray);
+                      } else {
+                        resolve([]);
+                      }
+                    },
+                  }
                 );
               });
             } else {
@@ -555,20 +688,23 @@ sap.ui.define(
             await this._getCounters();
             switch (selectedKey) {
               case "01":
-                await this.onFilterSelect(null, "01"); 
+                await this.onFilterSelect(null, "01");
                 break;
               case "02":
-                await this.onFilterSelect(null, "02"); 
+                await this.onFilterSelect(null, "02");
                 break;
               case "03":
-                await this.onFilterSelect(null, "03"); 
+                await this.onFilterSelect(null, "03");
                 break;
               case "06":
-                await this.onFilterSelect(null, "06"); 
+                await this.onFilterSelect(null, "06");
                 break;
-              
+
               default:
-                console.warn("Chiave della tabella non riconosciuta:", selectedKey);
+                console.warn(
+                  "Chiave della tabella non riconosciuta:",
+                  selectedKey
+                );
                 break;
             }
           } catch (error) {
@@ -577,13 +713,19 @@ sap.ui.define(
             this.hideBusy(0);
           }
         },
-        _refreshDetailData: async function(){
+        _refreshDetailData: async function () {
           this.showBusy(0);
           try {
-            if(this.getView().getControllerName().includes('Master3')){
-              let dettaglio = await API.readByKey( this.getOwnerComponent().getModel("modelloV2"), "/Testata", {id: this._id, id_master: this._idMaster}, [], [
-                "posizioni($filter=stato ne '53'),posizioni($expand=log,schedulazioni,testata),master",
-              ])
+            if (this.getView().getControllerName().includes("Master3")) {
+              let dettaglio = await API.readByKey(
+                this.getOwnerComponent().getModel("modelloV2"),
+                "/Testata",
+                { id: this._id, id_master: this._idMaster },
+                [],
+                [
+                  "posizioni($filter=stato ne '53'),posizioni($expand=log,schedulazioni,testata),master",
+                ]
+              );
               let detailModel = this.getModel("detailData");
               detailModel.setData(dettaglio);
               detailModel.getProperty("/posizioni/results").forEach((pos) => {
@@ -598,8 +740,8 @@ sap.ui.define(
         },
         //engine dinamico
         _registerForP13n: function (oEvent, tableId) {
-          debugger
-          let columnConfig = mapper.getColumnConfig(tableId)
+          debugger;
+          let columnConfig = mapper.getColumnConfig(tableId);
           let oTable = this.byId(tableId);
           this.oMetadataHelper = new MetadataHelper(columnConfig);
 
@@ -629,8 +771,14 @@ sap.ui.define(
           );
         },
         openPosizioniDialog: function (oEvent) {
-          debugger
-          let tableId = oEvent.getSource().getParent().getParent().getId().split('--').pop()
+          debugger;
+          let tableId = oEvent
+            .getSource()
+            .getParent()
+            .getParent()
+            .getId()
+            .split("--")
+            .pop();
           let oTable = this.byId(tableId);
           Engine.getInstance().show(oTable, ["Columns", "Sorter"], {
             contentHeight: "35rem",
@@ -640,12 +788,12 @@ sap.ui.define(
         },
         _getKey: function (oControl) {
           let aCustomData = oControl.getCustomData();
-          let sKey = aCustomData.find(data => data.getKey() === "p13nKey");
+          let sKey = aCustomData.find((data) => data.getKey() === "p13nKey");
           return sKey ? sKey.getValue() : null;
         },
 
         handleStateChange: function (tableId, oEvt) {
-          debugger
+          debugger;
           const oTable = this.getView().byId(tableId);
           const oState = oEvt.getParameter("state");
 
@@ -653,16 +801,22 @@ sap.ui.define(
             return;
           }
 
-          oTable.getColumns().forEach(oColumn => {
+          oTable.getColumns().forEach((oColumn) => {
             const sKey = this._getKey(oColumn);
-            const sColumnWidth = oState.ColumnWidth ? oState.ColumnWidth[sKey] : undefined;
-            oColumn.setWidth(sColumnWidth || this._mIntialWidth[sKey] || "10rem");
+            const sColumnWidth = oState.ColumnWidth
+              ? oState.ColumnWidth[sKey]
+              : undefined;
+            oColumn.setWidth(
+              sColumnWidth || this._mIntialWidth[sKey] || "10rem"
+            );
             oColumn.setVisible(false);
             oColumn.setSortOrder(CoreLibrary.SortOrder.None);
           });
 
           oState.Columns.forEach((oProp, iIndex) => {
-            const oCol = oTable.getColumns().find(oColumn => this._getKey(oColumn) === oProp.key);
+            const oCol = oTable
+              .getColumns()
+              .find((oColumn) => this._getKey(oColumn) === oProp.key);
             if (oCol) {
               oCol.setVisible(true);
               oTable.removeColumn(oCol);
@@ -671,13 +825,17 @@ sap.ui.define(
           });
           if (oState.Sorter) {
             const aSorter = [];
-            oState.Sorter.forEach(oSorter => {
-              const oColumn = oTable.getColumns().find(oColumn => this._getKey(oColumn) === oSorter.key);
+            oState.Sorter.forEach((oSorter) => {
+              const oColumn = oTable
+                .getColumns()
+                .find((oColumn) => this._getKey(oColumn) === oSorter.key);
 
               if (oColumn) {
                 oColumn.setSorted(true);
                 oColumn.setSortOrder(
-                  oSorter.descending ? CoreLibrary.SortOrder.Descending : CoreLibrary.SortOrder.Ascending
+                  oSorter.descending
+                    ? CoreLibrary.SortOrder.Descending
+                    : CoreLibrary.SortOrder.Ascending
                 );
 
                 const oProperty = this.oMetadataHelper.getProperty(oSorter.key);
@@ -691,38 +849,112 @@ sap.ui.define(
             }
           }
         },
-        //fine configurazione Engine x tutte tabelle, da richiamare nei controller dei dettagli, 
+        //fine configurazione Engine x tutte tabelle, da richiamare nei controller dei dettagli,
         // dopo aver mappato le colonne in mapper e definite il custData nelle view di dettaglio
-        downloadEdi: async function (oEvent){
-          debugger
-          let oBindingContext
-          if(oEvent.getSource().getBindingContext("master3") !== undefined){
-            oBindingContext = oEvent.getSource().getBindingContext("master3")
-          }// altri modelli 
-          let objId = oBindingContext.getObject().id
+        downloadEdi: async function (oEvent) {
+          debugger;
+          let oBindingContext;
+          if (oEvent.getSource().getBindingContext("master3") !== undefined) {
+            oBindingContext = oEvent.getSource().getBindingContext("master3");
+          } // altri modelli
+          let objId = oBindingContext.getObject().id;
           try {
-            this.showBusy(0)
-            let base64Edi = await API.readByKey(this.getOwnerComponent().getModel("modelloV2"), "/GetFileEdi", {id_testata: objId}, [], [])
-            debugger
+            this.showBusy(0);
+            let base64Edi = await API.readByKey(
+              this.getOwnerComponent().getModel("modelloV2"),
+              "/GetFileEdi",
+              { id_testata: objId },
+              [],
+              []
+            );
+            debugger;
           } catch (error) {
-           MessageBox.error('Errore durante il download del File') 
-          }finally{
-            this.hideBusy(0)
+            MessageBox.error("Errore durante il download del File");
+          } finally {
+            this.hideBusy(0);
           }
         },
         getBase64: function (file) {
-          debugger
-					return new Promise((resolve, reject) => {
-						const reader = new FileReader();
-						reader.readAsDataURL(file);
-						reader.onload = () => resolve(reader.result);
-						reader.onerror = (error) => reject(error);
-					});
-				},
-        moveToArchive: function (oEvent){
+          debugger;
+          return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = (error) => reject(error);
+          });
+        },
+        moveToArchive: async function (oEvent) {
           // UPDATE X ARCHIVIO CHIAMATA IN CHIAVE /ENTITY(KEY ES: ID = 'CICCIO')
           //  BODY  { ARCHIVIAZIONE : TRUE , DATA_ARCHIVIAZIONE : NEW dATE() }
-          debugger
+          debugger;
+          let tableID;
+          let oModel;
+          let part = oEvent
+            .getSource()
+            .getParent()
+            .getParent()
+            .getParent()
+            .getParent()
+            .getParent()
+            .getSelectedKey();
+          if (part === "06") {
+            tableID = "tableScartati";
+            oModel = this.getOwnerComponent().getModel("fileScartatiV2");
+          } else if (part === "05") {
+            tableID = "tableInvoice";
+          } else if (part === "04") {
+            tableID = "treetableSB";
+          }
+          let table = this.getView().byId(tableID);
+          let indices = this.getView().byId(tableID).getSelectedIndices();
+
+          if (indices.length > 0) {
+            let aSelectedItems = indices.map(function (iIndex) {
+              return table.getContextByIndex(iIndex).getObject();
+            });
+
+            debugger;
+
+            // let oRecord = aSelectedItems[0];
+            // let res = API.updateEntity(
+            //   oModel,
+            //   `/FileScartati(id=${oRecord.id})`,
+            //   { archiviazione: true, data_archiviazione: new Date() },
+            //   "PUT"
+            // );
+            let promises = [];
+            aSelectedItems.forEach((el) => {
+              promises.push(
+                new Promise((resolve, reject) =>
+                  resolve(
+                    API.updateEntity(
+                      oModel,
+                      `/FileScartati(id=${el.id})`,
+                      { archiviazione: true, data_archiviazione: new Date() },
+                      "PUT"
+                    )
+                  )
+                )
+              );
+            });
+            let out = await Promise.allSettled(promises);
+            let flag = false;
+            out.forEach((x) => {
+              if (x.status != "fulfilled") {
+                flag = true;
+              }
+            });
+
+            if (flag) {
+              return MessageBox.error("Errore nell'archiviazione dei file");
+            } else {
+              return MessageBox.success("Files archiviati con successo");
+            }
+            this._refreshData();
+            debugger;
+          } else {
+            return MessageBox.error("Selezionare almeno un elemento");
+          }
         },
         navToHome: function () {
           this.getRouter().navTo("home");
@@ -733,8 +965,6 @@ sap.ui.define(
         onClose: function (oEvent) {
           oEvent.getSource().getParent().close();
         },
-
-
       }
     );
   }

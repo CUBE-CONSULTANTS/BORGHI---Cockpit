@@ -92,7 +92,8 @@ class="sapUiSmallMarginBottom"
 rows="{/ProductCollection}"
 selectionMode="MultiToggle"
 paste="onPaste"
-ariaLabelledBy="title">
+ariaLabelledBy="title"
+id="tableInvoice">
 <ui:extension>
   <OverflowToolbar style="Clear">
     <ToolbarSpacer
