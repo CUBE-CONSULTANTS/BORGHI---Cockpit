@@ -294,14 +294,14 @@
               icon="sap-icon://display"
               type="Emphasized"
               press="dettaglioNav"
-              tooltip="{= ${master3>codice_cliente} ? 'Dettaglio posizioni' : 'Dettaglio schedulazioni'}"
+              tooltip="{= ${master3>numero_progressivo_invio} ? 'Dettaglio posizioni' : 'Dettaglio schedulazioni'}"
             />
             <Button
               icon="sap-icon://commission-check"
               type="Emphasized"
               class="sapUiTinyMarginBegin"
               press="navToAPP"
-              tooltip="{= ${master3>codice_cliente} ? 'Confronto Programmazione Cliente' : 'Confronto Programmazione Materiale'}"
+              tooltip="{= ${master3>numero_progressivo_invio} ? 'Confronto Programmazione Cliente' : 'Confronto Programmazione Materiale'}"
             />
             <Button
               icon="sap-icon://download"
@@ -309,7 +309,7 @@
               type="Default"
               class="sapUiTinyMarginBegin"
               press="downloadEdi"
-              visible="{= ${master3>codice_cliente} ? true : false}"
+              visible="{= ${master3>numero_progressivo_invio} ? true : false}"
             />
           </HBox>
         </ui:template>

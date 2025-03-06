@@ -479,8 +479,13 @@ sap.ui.define(
                 MessageBox.success("Operazione andata a buon fine.", {
                   title: "Operazione completata",
                   onClose: async () => {
-                    let selectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
-                    await this._refreshData(selectedKey);
+                    let selectedKey 
+                    this.getView().byId("idIconTabBar")? selectedKey = this.getView().byId("idIconTabBar").getSelectedKey() : undefined
+                    if(selectedKey !== undefined){
+                      await this._refreshData(selectedKey);
+                    }else{
+                     await this._refreshDetailData()
+                    }
                   }
                 })
               }
@@ -568,6 +573,25 @@ sap.ui.define(
             }
           } catch (error) {
             console.error("Errore durante il refresh dei dati:", error);
+          } finally {
+            this.hideBusy(0);
+          }
+        },
+        _refreshDetailData: async function(){
+          this.showBusy(0);
+          try {
+            if(this.getView().getControllerName().includes('Master3')){
+              let dettaglio = await API.readByKey( this.getOwnerComponent().getModel("modelloV2"), "/Testata", {id: this._id, id_master: this._idMaster}, [], [
+                "posizioni($filter=stato ne '53'),posizioni($expand=log,schedulazioni,testata),master",
+              ])
+              let detailModel = this.getModel("detailData");
+              detailModel.setData(dettaglio);
+              detailModel.getProperty("/posizioni/results").forEach((pos) => {
+                pos.log = Object.values(pos.log.results);
+              });
+            }
+          } catch (error) {
+            MessageBox.error("Errore durante il recupero dei dati dettaglio");
           } finally {
             this.hideBusy(0);
           }

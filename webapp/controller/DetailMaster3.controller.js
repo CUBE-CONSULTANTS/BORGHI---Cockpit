@@ -32,8 +32,7 @@ sap.ui.define(
           this._idMaster = oEvent.getParameter("arguments").idmaster || this._id || "0";
           try {
             this.showBusy(0)
-            let dettaglio = await 
-            API.readByKey(  this.getOwnerComponent().getModel("modelloV2"), "/Testata", {id: this._id, id_master: this._idMaster}, [], [
+            let dettaglio = await API.readByKey( this.getOwnerComponent().getModel("modelloV2"), "/Testata", {id: this._id, id_master: this._idMaster}, [], [
               "posizioni($filter=stato ne '53'),posizioni($expand=log,schedulazioni,testata),master",
             ])
             // dettaglio.master.data_ricezione = formatter.formatDateString(dettaglio.master.data_ricezione)
