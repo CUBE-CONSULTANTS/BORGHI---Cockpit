@@ -693,6 +693,37 @@ sap.ui.define(
         },
         //fine configurazione Engine x tutte tabelle, da richiamare nei controller dei dettagli, 
         // dopo aver mappato le colonne in mapper e definite il custData nelle view di dettaglio
+        downloadEdi: async function (oEvent){
+          debugger
+          let oBindingContext
+          if(oEvent.getSource().getBindingContext("master3") !== undefined){
+            oBindingContext = oEvent.getSource().getBindingContext("master3")
+          }// altri modelli 
+          let objId = oBindingContext.getObject().id
+          try {
+            this.showBusy(0)
+            let base64Edi = await API.readByKey(this.getOwnerComponent().getModel("modelloV2"), "/GetFileEdi", {id_testata: objId}, [], [])
+            debugger
+          } catch (error) {
+           MessageBox.error('Errore durante il download del File') 
+          }finally{
+            this.hideBusy(0)
+          }
+        },
+        getBase64: function (file) {
+          debugger
+					return new Promise((resolve, reject) => {
+						const reader = new FileReader();
+						reader.readAsDataURL(file);
+						reader.onload = () => resolve(reader.result);
+						reader.onerror = (error) => reject(error);
+					});
+				},
+        moveToArchive: function (oEvent){
+          // UPDATE X ARCHIVIO CHIAMATA IN CHIAVE /ENTITY(KEY ES: ID = 'CICCIO')
+          //  BODY  { ARCHIVIAZIONE : TRUE , DATA_ARCHIVIAZIONE : NEW dATE() }
+          debugger
+        },
         navToHome: function () {
           this.getRouter().navTo("home");
         },

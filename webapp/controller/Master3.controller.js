@@ -151,11 +151,11 @@ sap.ui.define(
               oModel,
               "/Testata",  
               [
-                new sap.ui.model.Filter(
-                  "archiviazione",
-                  sap.ui.model.FilterOperator.EQ,
-                  false
-                )
+                // new sap.ui.model.Filter(
+                //   "archiviazione",
+                //   sap.ui.model.FilterOperator.EQ,
+                //   false
+                // )
               ],
               [
                 "dettaglio_fattura,log_testata,dettaglio_fattura/riferimento_ddt,dettaglio_fattura/riferimento_ddt/riga_fattura",
