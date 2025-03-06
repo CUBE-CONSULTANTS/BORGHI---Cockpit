@@ -68,18 +68,6 @@ sap.ui.define(
               )
               .join("");
             let message = `Vuoi continuare con questi elementi? \n ${itemList}`;
-
-            // MessageBox.confirm(message, {
-            //   title: "Riepilogo",
-            //   onClose: (oAction) => {
-            //     debugger;
-            //     if (oAction === sap.m.MessageBox.Action.OK) {
-            //       debugger;
-            //     }
-            //   },
-            // });
-
-            //prova
             sap.m.MessageBox.confirm(message, {
               icon: sap.m.MessageBox.Icon.WARNING,
               title: "Riepilogo",

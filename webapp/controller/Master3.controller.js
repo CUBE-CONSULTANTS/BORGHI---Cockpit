@@ -199,7 +199,6 @@ sap.ui.define(
       },
 
       onProcessaButton:async  function (oEvent) {
-        debugger;
         let table = this.getView().byId("treetableMain");
         try {       
           let arrayToProcess = await this._returnPayload(table);
@@ -350,7 +349,7 @@ sap.ui.define(
         let itemList = items
           .map(
             (item) =>
-              `Codice cliente materiale: ${item.codice_cliente_materiale} - ID: ${item.id} - Codice materiale fornitore: ${item.codice_materiale_fornitore}\n`
+             `Codice cliente materiale: ${item.codice_cliente_materiale} - ID: ${item.id} - Codice materiale fornitore: ${item.codice_materiale_fornitore}\n`
           )
           .join("");
         let message = `Vuoi continuare con questi elementi? \n ${itemList}`;

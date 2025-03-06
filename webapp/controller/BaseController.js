@@ -449,12 +449,27 @@ sap.ui.define(
         try {
           let arrayToProcess = await this._returnPayload(oTable);
           if (arrayToProcess.length > 0) {
-            this.processaItems(arrayToProcess);
+            debugger
+            this.showBusy(0);
+            let payload = arrayToProcess.map((x) => {
+              return {
+                  id_testata: x.id_testata,
+                  id_posizione: x.id
+              }
+            })
+            let obj = { id: payload }
+            let oModel = this.getOwnerComponent().getModel("modelloV2")
+            let res = await API.createEntity(oModel, "/DeletePosizioni", obj)
+            if(res.results.length > 0) {
+              MessageBox.success("Operazione andata a buon fine.");
+            }
           }
         } catch (error) {
-          console.error("Errore durante la selezione delle posizioni:", error);
+          MessageBox.error("Errore durante l'eliminazione delle posizioni.");
+        }finally {
+          this.hideBusy(0)
+          //refreshDAta 
         }
-        
       },
       _returnPayload: async function(table) {
         let indices = table.getSelectedIndices();
@@ -504,9 +519,13 @@ sap.ui.define(
                 return selectedPos;
             }
         } else {
-            MessageBox.alert("Si prega di selezionare almeno una posizione");
+            MessageBox.alert("Selezionare almeno una posizione");
             return []; 
         }
+      },
+      // refresh data dopo post
+      _refreshData: function(){
+
       },
       //engine dinamico
       _registerForP13n: function (oEvent, tableId) {
