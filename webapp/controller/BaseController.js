@@ -722,6 +722,7 @@ sap.ui.define(
         moveToArchive: function (oEvent){
           // UPDATE X ARCHIVIO CHIAMATA IN CHIAVE /ENTITY(KEY ES: ID = 'CICCIO')
           //  BODY  { ARCHIVIAZIONE : TRUE , DATA_ARCHIVIAZIONE : NEW dATE() }
+          //promise All
           debugger
         },
         navToHome: function () {
