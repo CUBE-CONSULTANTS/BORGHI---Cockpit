@@ -703,22 +703,31 @@ sap.ui.define(
           try {
             this.showBusy(0)
             let base64Edi = await API.readByKey(this.getOwnerComponent().getModel("modelloV2"), "/GetFileEdi", {id_testata: objId}, [], [])
-            debugger
+            const blob = this.base64ToBlob(base64Edi.contenuto_base64,'text/plain')
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = base64Edi.nome_file 
+            document.body.appendChild(a);
+            a.click(); 
+            document.body.removeChild(a); 
+            window.URL.revokeObjectURL(url);
           } catch (error) {
            MessageBox.error('Errore durante il download del File') 
           }finally{
             this.hideBusy(0)
           }
         },
-        getBase64: function (file) {
-          debugger
-					return new Promise((resolve, reject) => {
-						const reader = new FileReader();
-						reader.readAsDataURL(file);
-						reader.onload = () => resolve(reader.result);
-						reader.onerror = (error) => reject(error);
-					});
-				},
+        base64ToBlob: function (base64,mimeType) {
+          base64 = base64.replaceAll("-", "+").replaceAll("_", "/")
+          const binaryString = window.atob(base64);
+          const len = binaryString.length;
+          const bytes = new Uint8Array(len);
+          for (let i = 0; i < len; ++i) {
+              bytes[i] = binaryString.charCodeAt(i);
+          }
+          return new Blob([bytes], { type: mimeType })
+        },
         moveToArchive: function (oEvent){
           // UPDATE X ARCHIVIO CHIAMATA IN CHIAVE /ENTITY(KEY ES: ID = 'CICCIO')
           //  BODY  { ARCHIVIAZIONE : TRUE , DATA_ARCHIVIAZIONE : NEW dATE() }
