@@ -143,6 +143,71 @@ sap.ui.define(
             self[dialName].open();
           }
         },
+        _getCounters: async function (filterVal) {
+          debugger
+          this.showBusy(0);
+          try {
+            let del = await API.getEntity(
+              this.getOwnerComponent().getModel("modelloV2"),
+              "/Testata/$count",
+              [
+                new sap.ui.model.Filter(
+                  "archiviazione",
+                  sap.ui.model.FilterOperator.EQ,
+                  filterVal
+                ),
+              ],
+              []
+            );
+            this.getModel("count").setProperty("/delivery", del.results);
+            let cal = await API.getEntity(
+              this.getOwnerComponent().getModel("calloffV2"),
+              "/Testata/$count",
+              [
+                new sap.ui.model.Filter(
+                  "archiviazione",
+                  sap.ui.model.FilterOperator.EQ,
+                  filterVal
+                ),
+              ],
+              []
+            );
+            this.getModel("count").setProperty("/calloff", cal.results);
+            let selfb = await API.getEntity(
+              this.getOwnerComponent().getModel("selfBillingV2"),
+              "/Testata/$count",
+              [],
+              // new sap.ui.model.Filter(
+              //   "archiviazione",
+              //   sap.ui.model.FilterOperator.EQ,
+              //   true
+              // )
+              []
+            );
+            this.getModel("count").setProperty("/selfbilling", selfb.results);
+            let fileScart = await API.getEntity(
+              this.getOwnerComponent().getModel("fileScartatiV2"),
+              "/FileScartati/$count",
+              [ new sap.ui.model.Filter(
+                "archiviazione",
+                sap.ui.model.FilterOperator.EQ,
+                filterVal
+              )],
+             
+              []
+            );
+            this.getModel("count").setProperty(
+              "/fileScartati",
+              fileScart.results
+            );
+          } catch (error) {
+            MessageBox.error("Errore durante il recupero dei Dati");
+          } finally {
+            this.hideBusy(0);
+          }
+        },
+        
+     
         onFiltersBuilding: function (oEvent, key) {
           if (key === "01") {
             debugger;
@@ -288,13 +353,8 @@ sap.ui.define(
           }
           this.getModel("filtersModel").refresh(true);
           let modelMeta;
-          debugger;
           if (
-            oEvent
-              .getParameters()
-              .selectionSet[0].getBindingInfo("value")
-              .parts[0].path.includes("delivery")
-          ) {
+            oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("delivery")) {
             modelMeta = await this.callData(
               this.getOwnerComponent().getModel("modelloV2"),
               "/Testata",
@@ -485,6 +545,7 @@ sap.ui.define(
                 // testata.master.data_ricezione = this.formatter.formatDateString(testata.master.data_ricezione)
               });
               this.getOwnerComponent().setModel(modelMeta, "master3");
+              this.getModel("master3").setSizeLimit(1000000)
             } else if (key === "02") {
               modelMeta = new JSONModel(metadata.results);
               modelMeta.getProperty("/").forEach((testata) => {
@@ -493,6 +554,7 @@ sap.ui.define(
                 );
               });
               this.getOwnerComponent().setModel(modelMeta, "master3CO");
+              this.getModel("master3CO").setSizeLimit(1000000)
             } else if (key === "03") {
               modelMeta = new JSONModel(metadata.results);
               modelMeta.getProperty("/").forEach((testata) => {
@@ -501,10 +563,12 @@ sap.ui.define(
                 );
               });
               this.getOwnerComponent().setModel(modelMeta, "master3SB");
+              this.getModel("master3SB").setSizeLimit(1000000)
             } else if (key == "06") {
               debugger;
               modelMeta = new JSONModel(metadata.results);
               this.getOwnerComponent().setModel(modelMeta, "master3Scart");
+              this.getModel("master3Scart").setSizeLimit(1000000)
             }
           } catch (error) {
             MessageBox.error("Errore durante la ricezione dei dati");
@@ -886,20 +950,13 @@ sap.ui.define(
           }
           return new Blob([bytes], { type: mimeType })
         },
-        moveToArchive: function (oEvent){
+        moveToArchive: async function (oEvent){
           // UPDATE X ARCHIVIO CHIAMATA IN CHIAVE /ENTITY(KEY ES: ID = 'CICCIO')
           //  BODY  { ARCHIVIAZIONE : TRUE , DATA_ARCHIVIAZIONE : NEW dATE() }
           debugger;
           let tableID;
           let oModel;
-          let part = oEvent
-            .getSource()
-            .getParent()
-            .getParent()
-            .getParent()
-            .getParent()
-            .getParent()
-            .getSelectedKey();
+          let part = oEvent.getSource().getParent().getParent().getParent().getParent().getParent().getSelectedKey();
           if (part === "06") {
             tableID = "tableScartati";
             oModel = this.getOwnerComponent().getModel("fileScartatiV2");
@@ -915,16 +972,6 @@ sap.ui.define(
             let aSelectedItems = indices.map(function (iIndex) {
               return table.getContextByIndex(iIndex).getObject();
             });
-
-            debugger;
-
-            // let oRecord = aSelectedItems[0];
-            // let res = API.updateEntity(
-            //   oModel,
-            //   `/FileScartati(id=${oRecord.id})`,
-            //   { archiviazione: true, data_archiviazione: new Date() },
-            //   "PUT"
-            // );
             let promises = [];
             aSelectedItems.forEach((el) => {
               promises.push(
@@ -947,16 +994,24 @@ sap.ui.define(
                 flag = true;
               }
             });
-
+            let that = this
             if (flag) {
-              return MessageBox.error("Errore nell'archiviazione dei file");
+              MessageBox.error("Errore nell'archiviazione dei file");
             } else {
-              return MessageBox.success("Files archiviati con successo");
+              MessageBox.success("File archiviati con successo",{
+                  onClose: async () => {
+                    let selectedKey;
+                    that.byId("idIconTabBar")? selectedKey = that.byId("idIconTabBar").getSelectedKey()
+                      : undefined;
+                    if (selectedKey !== undefined) {
+                      table.clearSelection()
+                      await that._refreshData(selectedKey);                
+                    } 
+                  }
+                  });
             }
-            this._refreshData();
-            debugger;
           } else {
-            return MessageBox.error("Selezionare almeno un elemento");
+            MessageBox.error("Selezionare almeno un elemento");
           }
         },
         navToHome: function () {

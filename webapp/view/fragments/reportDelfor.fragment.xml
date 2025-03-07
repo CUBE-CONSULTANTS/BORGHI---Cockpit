@@ -42,9 +42,7 @@
                     <Label text="Download" />
                     <ui:template>
                         <HBox>
-                            <Button icon="sap-icon://download"  text="Report cumulativi" press="onCumulativi"/>
-                            <Button icon="sap-icon://download"  text="Report progressivi"/>
-                           
+                            <Button icon="sap-icon://download"  text="Report cumulativi" press="onCumulativi"/>        
                         </HBox>
                     </ui:template>
                 </ui:Column>

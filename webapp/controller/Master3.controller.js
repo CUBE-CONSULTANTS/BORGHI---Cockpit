@@ -33,79 +33,20 @@ sap.ui.define(
       formatter: formatter,
 
       onInit: async function () {
+        debugger
         this.setModel(models.createMainModel(), "main");
         this.setModel(models.createCountModel(), "count");
         this.setModel(models.createEdiFiltersModel(), "filtersModel");
+        this.getOwnerComponent().getModel("datiAppoggio").setProperty("/currentPage", "monitor");
         this.getRouter()
           .getRoute("master3")
           .attachPatternMatched(this._onObjectMatched, this);
       },
       _onObjectMatched: async function (oEvent) {
-        await this._getCounters();
+        await this._getCounters(false);
         this.onFilterSelect(null, "01");
       },
-      _getCounters: async function () {
-        this.showBusy(0);
-        try {
-          let del = await API.getEntity(
-            this.getOwnerComponent().getModel("modelloV2"),
-            "/Testata/$count",
-            [
-              new sap.ui.model.Filter(
-                "archiviazione",
-                sap.ui.model.FilterOperator.EQ,
-                false
-              ),
-            ],
-            []
-          );
-          this.getModel("count").setProperty("/delivery", del.results);
-          let cal = await API.getEntity(
-            this.getOwnerComponent().getModel("calloffV2"),
-            "/Testata/$count",
-            [
-              new sap.ui.model.Filter(
-                "archiviazione",
-                sap.ui.model.FilterOperator.EQ,
-                false
-              ),
-            ],
-            []
-          );
-          this.getModel("count").setProperty("/calloff", cal.results);
-          let selfb = await API.getEntity(
-            this.getOwnerComponent().getModel("selfBillingV2"),
-            "/Testata/$count",
-            [],
-            // new sap.ui.model.Filter(
-            //   "archiviazione",
-            //   sap.ui.model.FilterOperator.EQ,
-            //   false
-            // )
-            []
-          );
-          this.getModel("count").setProperty("/selfbilling", selfb.results);
-          let fileScart = await API.getEntity(
-            this.getOwnerComponent().getModel("fileScartatiV2"),
-            "/FileScartati/$count",
-            [],
-            // new sap.ui.model.Filter(
-            //   "archiviazione",
-            //   sap.ui.model.FilterOperator.EQ,
-            //   false
-            // )
-            []
-          );
-          this.getModel("count").setProperty(
-            "/fileScartati",
-            fileScart.results
-          );
-        } catch (error) {
-          MessageBox.error("Errore durante il recupero dei Dati");
-        } finally {
-          this.hideBusy(0);
-        }
-      },
+     
       onFilterSelect: async function (oEvent, key) {
         this.showBusy(0);
         let selectedKey = this.getView().byId("idIconTabBar").getSelectedKey();

@@ -22,7 +22,6 @@ sap.ui.define(
 
       init: function () {
         UIComponent.prototype.init.apply(this, arguments);
-        // this.getRouter().attachBeforeRouteMatched(this._onBeforeRouteMatched, this);
         this.getRouter().initialize();
         this.getRouter().attachRouteMatched(this._onRouteMatched, this);
         this.setModel(models.createLayoutModel(), "layout");
@@ -45,15 +44,12 @@ sap.ui.define(
           oModel.setProperty("/layout", oArgs.layout);
         }
       },
-
       onStateChanged: function (oEvent) {
-        debugger;
         var bIsNavigationArrow = oEvent.getParameter("isNavigationArrow"),
           sLayout = oEvent.getParameter("layout");
 
         this._updateUIElements();
 
-        // Replace the URL with the new layout if a navigation arrow was used
         if (bIsNavigationArrow) {
           this.getRouter().navTo(
             this.currentRouteName,
@@ -91,24 +87,6 @@ sap.ui.define(
           );
         });
       },
-
-      // _onBeforeRouteMatched: function (oEvent) {
-      //   debugger
-      //   var oModel = this.getModel("layout"),
-      //     sLayout = oEvent.getParameters().arguments.layout,
-      //     oNextUIState;
-
-      //   // If there is no layout parameter, query for the default level 0 layout (normally OneColumn)
-      //   if (!sLayout) {
-      //     this.getHelper().then(function (oHelper) {
-      //       oNextUIState = oHelper.getNextUIState(0);
-      //       oModel.setProperty("/layout", oNextUIState.layout);
-      //     });
-      //     return;
-      //   }
-
-      //   oModel.setProperty("/layout", sLayout);
-      // },
 
       _getFcl: function () {
         return new Promise(

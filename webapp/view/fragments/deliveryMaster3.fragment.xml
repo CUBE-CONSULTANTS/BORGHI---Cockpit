@@ -85,7 +85,7 @@
         name="Stato"
         label="Stato"
         groupName="Group1"
-        visibleInFilterBar="true"
+        visibleInFilterBar="{=${datiAppoggio>/currentPage} === 'archivio' ? false:true}"
       >
         <fb:control>
           <ComboBox 
@@ -99,7 +99,8 @@
         name="Messaggio"
         label="Messaggio"
         groupName="Group1"
-        visibleInFilterBar="true"
+        visibleInFilterBar="{=${datiAppoggio>/currentPage} === 'archivio' ? false:true}"
+
       >
         <fb:control>
           <ComboBox 
@@ -119,7 +120,7 @@
         arrayNames: ['posizioni']
       }
     }"
-    selectionMode="{=${datiAppoggio>/currentPage} === 'archivio' ? 'Single':'MultiToggle'}"
+    selectionMode="MultiToggle" 
     enableSelectAll="false"
     ariaLabelledBy="title"
     selectionBehavior="Row"
@@ -145,7 +146,7 @@
           text="Ordinamento"
           press="sortCategories"
         />
-       
+        
         <Button
           text="Esporta excel"
           icon="sap-icon://excel-attachment"
@@ -155,7 +156,8 @@
         <Button icon="sap-icon://upload"
         type="Emphasized"
         text="Caricamento Manuale"
-        press="importaPress" />
+        press="importaPress"
+        visible="{=${datiAppoggio>/currentPage} === 'archivio' ? false:true}" />
         <Button
           text="Elabora"
           icon="sap-icon://process"
@@ -311,6 +313,14 @@
               press="downloadEdi"
               visible="{= ${master3>numero_progressivo_invio} ? true : false}"
             />
+            <Button
+              tooltip="Report Cumulativi"
+              icon="sap-icon://excel-attachment"
+              press=""
+              class="sapUiTinyMarginBegin"
+              type="Emphasized"
+              visible="{=${datiAppoggio>/currentPage} === 'archivio' &amp;&amp; !${master3>numero_progressivo_invio} ? true:false}"
+              />
           </HBox>
         </ui:template>
       </ui:Column>

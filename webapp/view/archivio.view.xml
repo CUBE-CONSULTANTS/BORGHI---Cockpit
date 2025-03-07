@@ -55,8 +55,7 @@
                         class="prova"
                         icon="sap-icon://shipping-status"
                         iconColor="Default"
-                        
-                        count="2"
+                        count="{count>/delivery}"
                         text="Delivery Forecast"
                         key="01"
                         
@@ -70,7 +69,7 @@
                     <IconTabFilter
                         icon="sap-icon://time-off"
                         iconColor="Default"
-                        
+                        count="{count>/calloff}"
                         text="Call-Off"
                         key="02"
                         
@@ -83,7 +82,7 @@
                     <IconTabFilter
                         icon="sap-icon://monitor-payments"
                         iconColor="Default"
-                        
+                        count="{count>/selfbilling}"
                         text="Self Billing"
                         key="03"
                        
@@ -118,7 +117,7 @@
                     <IconTabFilter
                     icon="sap-icon://delete"
                     iconColor="Default"
-                    
+                    count="{count>/fileScartati}"
                     text="File Scartati"
                     key="06"
                     
@@ -126,18 +125,8 @@
                     <core:Fragment fragmentName="programmi.consegne.edi.view.fragments.fileScartati"
                 type="XML" />
                 </IconTabFilter>
-                <IconTabFilter
-                icon="sap-icon://excel-attachment"
-                iconColor="Default"
-                
-                text="Caricamento Manuale"
-                key="07"
-                
-              >
-           <!-- importaPress-->
-                <core:Fragment fragmentName="programmi.consegne.edi.view.fragments.importMaster3"
-            type="XML" />
-            </IconTabFilter>
+               
+
                 </items>
 
                 <content />

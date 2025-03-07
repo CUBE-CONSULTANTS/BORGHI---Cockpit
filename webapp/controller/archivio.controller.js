@@ -6,7 +6,8 @@ sap.ui.define(
     "sap/ui/core/library",
     "sap/ui/core/Fragment",
     "sap/m/MessageBox",
-    "../model/models"
+    "../model/models",
+    "../model/API"
   ],
   function (
     BaseController,
@@ -15,7 +16,8 @@ sap.ui.define(
     CoreLibrary,
     Fragment,
     MessageBox,
-    models
+    models,
+    API
   ) {
     "use strict";
 
@@ -24,247 +26,134 @@ sap.ui.define(
     return BaseController.extend("programmi.consegne.edi.controller.archivio", {
       onInit: function () {
         this.setModel(models.createMainModel(), "main");
-        // var oMaster3Model = new JSONModel(sap.ui.require.toUrl('programmi/consegne/edi/mockdata/master3.json'));
-        // this.getView().setModel(oMaster3Model, 'master3');
-        
-        // this.onFilterSelect(null, "01");
-        // this.onFilterSelect();
-        // this.getRouter()
-        //   .getRoute("Detail2Master3")
-        //   .attachPatternMatched(this._onObjectMatched, this);
+        this.setModel(models.createCountModel(), "count");
+        this.setModel(models.createEdiFiltersModel(), "filtersModel");
+        this.getOwnerComponent().getModel("datiAppoggio").setProperty("/currentPage", "archivio");
+        this.getRouter().getRoute("archivio").attachPatternMatched(this._onObjectMatched.bind(this));      
       },
-      _onObjectMatched: function (oEvent) {
-        // this.onFilterSelect(null, "01");
+      _onObjectMatched: async function (oEvent) {
+        await this._getCounters(true);
+        this.onFilterSelect(null, "01");
       },
       onFilterSelect: async function (oEvent, key) {
-        debugger
         this.showBusy(0);
-        var selectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
+        let selectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
         !selectedKey ? (selectedKey = key) : (selectedKey = selectedKey);
-        // this.getView().getContent()[0].getContent().getContent()[0].destroy();
-
+        let oModel;
         switch (selectedKey) {
           case "01":
-            var oMaster3Model = new JSONModel(
-              await sap.ui.require.toUrl(
-                "programmi/consegne/edi/mockdata/dataMaster3.json"
-              )
+            oModel = this.getOwnerComponent().getModel("modelloV2");
+            await this.callData(
+              oModel,
+              "/Testata",
+              [
+                new sap.ui.model.Filter(
+                  "archiviazione",
+                  sap.ui.model.FilterOperator.EQ,
+                  true
+                ),
+              ],
+              [
+                "posizioni($filter=stato eq '53'),posizioni($expand=log,schedulazioni,testata),master",
+              ],
+              selectedKey
             );
-            this.getOwnerComponent().setModel(oMaster3Model, "master3");
-            // this.getOwnerComponent().getModel("master3").getProperty("/Master3").map(x=> x = x.DelforTestata).forEach(element=> {element.isVisible = true})
-            // this.getOwnerComponent().getModel("master3").getProperty("/Master3").map(x=> x = x.DelforPosizioni).forEach(ar=>{ ar.forEach(el=>{el.isVisible = false})})
-
+            this.onFiltersBuilding(oEvent, selectedKey);
             break;
           case "02":
-            this.getOwnerComponent().setModel(new JSONModel({}), "master3");
-
+            oModel = this.getOwnerComponent().getModel("calloffV2");
+            await this.callData(
+              oModel,
+              "/Testata",
+              [
+                new sap.ui.model.Filter(
+                  "archiviazione",
+                  sap.ui.model.FilterOperator.EQ,
+                  true
+                ),
+              ],
+              ["master,posizioni_testata,log_testata"],
+              selectedKey
+            );
+            this.onFiltersBuilding(oEvent, selectedKey);
             break;
           case "03":
-            var oMaster3Model = new JSONModel(
-              sap.ui.require.toUrl(
-                "programmi/consegne/edi/mockdata/dataMaster3.json"
-              )
+            oModel = this.getOwnerComponent().getModel("selfBillingV2");
+            await this.callData(
+              oModel,
+              "/Testata",
+              [
+                // new sap.ui.model.Filter(
+                //   "archiviazione",
+                //   sap.ui.model.FilterOperator.EQ,
+                //   true
+                // )
+              ],
+              [
+                "dettaglio_fattura,log_testata,dettaglio_fattura/riferimento_ddt,dettaglio_fattura/riferimento_ddt/riga_fattura",
+              ],
+              selectedKey
             );
-            this.getOwnerComponent().setModel(oMaster3Model, "master3");
-            // this.getOwnerComponent().setModel(new JSONModel({}), "master3");
+            this.onFiltersBuilding(oEvent, selectedKey);
             break;
           case "04":
-            this.getOwnerComponent().setModel(new JSONModel({}), "master3");
-            this.byId("idDataConsegna").setProperty(
-              "label",
-              "Data di uscita merci"
-            );
-            this.byId("idDataConsegna").setProperty(
-              "name",
-              "Data di uscita merci"
-            );
             break;
           case "05":
-            this.getOwnerComponent().setModel(new JSONModel({}), "master3");
             break;
           case "06":
-            this.getOwnerComponent().setModel(new JSONModel({}), "master3");
-            break;
-          case "07":
-            this.getOwnerComponent().setModel(new JSONModel({}), "master3");
+            oModel = this.getOwnerComponent().getModel("fileScartatiV2");
+            await this.callData(
+              oModel,
+              "/FileScartati",
+              [
+                new sap.ui.model.Filter(
+                  "archiviazione",
+                  sap.ui.model.FilterOperator.EQ,
+                  true
+                ),
+              ],
+              [],
+              selectedKey
+            );
+            this.onFiltersBuilding(oEvent, selectedKey);
             break;
         }
         this.hideBusy(0);
       },
-
-      sortCategoriesAndName: function (oEvent) {
-        const oView = this.getView();
-        const oTable = oView.byId("table");
-        oTable.sort(oView.byId("cliente"), SortOrder.Ascending, false);
-        oTable.sort(oView.byId("dataRicezione"), SortOrder.Ascending, true);
-      },
       sortCategories: function (oEvent) {
-        const oView = this.getView();
-        const oTable = oView.byId("table");
-        const oCategoriesColumn = oView.byId("cliente");
-
-        oTable.sort(
-          oCategoriesColumn,
-          this._bSortColumnDescending
-            ? SortOrder.Descending
-            : SortOrder.Ascending,
-          /*extend existing sorting*/ true
-        );
-        this._bSortColumnDescending = !this._bSortColumnDescending;
-      },
-
-      deletePress: function (oEvent) {
-        this.getView().byId("table");
-      },
-
-      onPressRow: function (oEvent) {
-        var index = oEvent.getParameter("rowIndex");
-        if (index === 0) {
-          this.getView().byId("buttonDelete").setProperty("enabled", false);
-        } else {
-          this.getView().byId("buttonDelete").setProperty("enabled", true);
+        let oTable;
+        let aSorters = [];
+        switch (this.getView().byId("idIconTabBar").getSelectedKey()) {
+          case "01":
+            oTable = this.byId("treetableMain");
+            aSorters = this.sortTables(oTable, [
+              "codice_seller",
+              "numero_progressivo_invio",
+            ]);
+            break;
+          case "02":
+            oTable = this.byId("treetableCallOff");
+            aSorters = this.sortTables(oTable, [
+              "codice_terre_cliente",
+              "progressivo_invio",
+            ]);
+            break;
+          case "03":
+            oTable = this.byId("treetableSB");
+            aSorters = this.sortTables(oTable, ["customer", "data_ricezione"]);
+            break;
+          case "06":
+            oTable = this.byId("tableScartati");
+            aSorters = this.sortTables(oTable, ["filename", "data_ricezione"]);
+            break;
+          default:
+            return;
         }
       },
-
       navToHome: function () {
         this.getRouter().navTo("home");
       },
 
-      onProcessaButton: function (oEvent) {
-        debugger;
-        // let indici = oEvent
-        //   .getSource()
-        //   .getParent()
-        //   .getParent()
-        //   .getSelectedIndices();
-        // let data = this.getView().getModel("master3").getData().Master3;
-        // let selected = [];
-        // indici.forEach((x) => {
-        //   selected.push(data[x]);
-        // });
-        // let flag = 0;
-        // selected.forEach((y) => {
-        //   if (y.Stato == "KO") {
-        //     flag++;
-        //   }
-        // });
-        // if (flag > 0) {
-        //   console.log("errori nel processo");
-        // } else {
-        //   if (!this._oDialog) {
-        //     Fragment.load({
-        //       id: this.getView().getId(),
-        //       name: "programmi.consegne.edi.view.fragments.linkDialogMaster3",
-        //       controller: this,
-        //     }).then(
-        //       function (oDialog) {
-        //         this._oDialog = oDialog;
-        //         this.getView().addDependent(this._oDialog);
-        //         this._oDialog.open();
-        //       }.bind(this)
-        //     );
-        //   } else {
-        //     this._oDialog.open();
-        //   }
-        // }
-
-        let table = this.getView().byId("treetableMain");
-        let indices = this.getView().byId("treetableMain").getSelectedIndices();
-        let selectedOBJS = [];
-        let self = this;
-
-        if (indices) {
-          indices.forEach((element) => {
-            debugger;
-            let obj = self
-              .getView()
-              .byId("treetableMain")
-              .getContextByIndex(element)
-              .getObject();
-
-            if (obj.hasOwnProperty("DelforTestata")) {
-              MessageBox.alert(
-                "Essendo stata selezionata una riga di testata verranno processate tutte le posizioni collegate"
-              );
-              selectedOBJS = obj.DelforPosizioni;
-            } else {
-              selectedOBJS.push(obj);
-            }
-          });
-
-          debugger;
-          let textMessage = "";
-          selectedOBJS.forEach((item) => {
-            textMessage += `Progressivo invio: ${item.progressivo_invio}; Codice cliente: ${item.codice_cliente_materiale}; Materiale: ${item.descrizione_materiale}; Destinatario: ${item.destinatario} \n`;
-          });
-
-          MessageBox.confirm(textMessage, {
-            title: "Riepilogo",
-            onClose: (oAction) => {
-              if (oAction === sap.m.MessageBox.Action.OK) {
-                if (!this._oDialog) {
-                  Fragment.load({
-                    id: this.getView().getId(),
-                    name: "programmi.consegne.edi.view.fragments.linkDialogMaster3",
-                    controller: this,
-                  }).then(
-                    function (oDialog) {
-                      this._oDialog = oDialog;
-                      this.getView().addDependent(this._oDialog);
-                      this._oDialog.open();
-                    }.bind(this)
-                  );
-                } else {
-                  this._oDialog.open();
-                }
-              } else {
-                console.log("Annullato");
-              }
-            },
-          });
-        } else {
-          MessageBox.alert("Si prega di selezionare almeno una posizione");
-        }
-      },
-
-     
-
-      importaPress: function (oEvent) {
-        if (!this._oDialog2) {
-          Fragment.load({
-            id: this.getView().getId(),
-            name: "programmi.consegne.edi.view.fragments.importMaster3",
-            controller: this,
-          }).then(
-            function (oDialog2) {
-              this._oDialog2 = oDialog2;
-              this.getView().addDependent(this._oDialog2);
-              this._oDialog2.open();
-            }.bind(this)
-          );
-        } else {
-          this._oDialog2.open();
-        }
-      },
-      rowDetailPress: function (detailPath) {
-        // var detailPath = oEvent.getParameter("rowBindingContext").getPath()
-        let detailRowIndex = detailPath.split("/").slice(-1).pop();
-        let detail = this.getView()
-          .getModel("master3")
-          .getProperty(`/Master3/${detailRowIndex}/DelforTestata/id`);
-        let oNextUIState;
-        this.getOwnerComponent()
-          .getHelper()
-          .then(
-            function (oHelper) {
-              oNextUIState = oHelper.getNextUIState(1);
-              this.getRouter().navTo("detailMaster3", {
-                product: detail,
-                layout: oNextUIState.layout,
-              });
-            }.bind(this)
-          );
-      },
       dettaglioNav: function (oEvent) {
         debugger;
         let level = oEvent
@@ -326,11 +215,6 @@ sap.ui.define(
           dependentOn: this.getView(),
         });
       },
-
-      formatData: function (data) {
-        debugger;
-      },
-
       onCollapseAll: function () {
         const oTreeTable = this.byId("treetableMain");
         oTreeTable.collapseAll();
@@ -365,37 +249,6 @@ sap.ui.define(
           this.getRouter().navTo("master2");
         }
       },
-
-      prova2: function (oEvent) {
-        debugger;
-        let table = this.byId("treetableMain");
-        let row = oEvent.getParameter("rowContext").getObject();
-      },
-      // loadFragment: function (oEvent) {
-      //   if (!this._oMyFragment) {
-      //     this._oMyFragment = sap.ui.xmlfragment(
-      //       // this.getView().getId(),
-      //       "programmi.consegne.edi.view.fragments.deliveryMaster3",
-      //       this
-      //     );
-
-      //     // this.getView()
-      //     //   .getContent()[0]
-      //     //   .getContent()
-      //     //   .getContent()[0]
-      //     //   .addContent(this._oMyFragment.oFragment);
-      //     // this.getView()
-      //     //   .getContent()[0]
-      //     //   .getContent()
-      //     //   .getContent()
-      //     //   .addContent(this._oMyFragment.oFragment);
-
-      //     this.getView()
-      //       .getContent()[0]
-      //       .getContent()
-      //       .addDependent(this._oMyFragment.oFragment);
-      //   }
-      // },
     });
   }
 );
