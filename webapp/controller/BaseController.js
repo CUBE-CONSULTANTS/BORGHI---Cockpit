@@ -261,9 +261,11 @@ sap.ui.define(
           if (key === "01") {
             debugger;
             let aData = this.getModel("master3").getProperty("/");
-            let aStato = aData.map((item) => [
-              ...new Set(item.posizioni.map((pos) => pos.stato)),
-            ]);
+            let aStato = [
+              ...new Set(
+                aData.flatMap((item) => item.posizioni.map((pos) => pos.stato))
+              ),
+            ];
             let aClienti = [
               ...new Set(aData.map((item) => item.codice_cliente)),
             ];
@@ -603,7 +605,9 @@ sap.ui.define(
               modelMeta.getProperty("/").forEach((testata) => {
                 testata.posizioni = Object.values(testata.posizioni.results);
                 // testata.master.data_ricezione = this.formatter.formatDateString(testata.master.data_ricezione)
+              
               });
+
               this.getOwnerComponent().setModel(modelMeta, "master3");
               this.getModel("master3").setSizeLimit(1000000)
             } else if (key === "02") {
