@@ -120,35 +120,14 @@ sap.ui.define(
         }
         this.hideBusy(0);
       },
-      
-    
-
-      statoButtonPress: function (oEvent) {
-        debugger;
-        MessageBox.error("Errori nel processamento delle posizioni.", {
-          title: "Error",
-
-          details: "<p><strong>This can happen if:</strong></p>",
-          contentWidth: "100px",
-          dependentOn: this.getView(),
-        });
+      onDownloadCumulativi: async function(oEvent){
+        debugger
+        let numIdoc = oEvent.getSource().getBindingContext("master3").getObject().numero_idoc
+        let dest = oEvent.getSource().getBindingContext("master3").getObject().destinatario
+        await this.getReportCumulativi(dest, numIdoc)
       },
-  
-
-      // navToAPP: function (oEvent) {
-      //   debugger;
-      //   let level = oEvent
-      //     .getSource()
-      //     .getParent()
-      //     .getParent()
-      //     .getBindingContext("master3")
-      //     .getPath();
-      //   if (level.includes("DelforPosizioni")) {
-      //     this.getRouter().navTo("master");
-      //   } else {
-      //     this.getRouter().navTo("master2");
-      //   }
-      // },
+      
+      
     });
   }
 );

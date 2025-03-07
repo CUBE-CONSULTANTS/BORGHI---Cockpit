@@ -281,22 +281,11 @@ sap.ui.define(
 
       onCumulativi: async function (oEvent) {
         debugger;
-        let obj = oEvent
-          .getSource()
-          .getParent()
-          .getParent()
-          .getBindingContext("modelloReport")
-          .getObject();
+        let obj = oEvent.getSource().getParent().getParent().getBindingContext("modelloReport").getObject();
         let numIdoc = obj.numero_idoc;
         let dest = obj.destinatario;
-
-        let oModel = this.getOwnerComponent().getModel("modelloV2");
-        let res = await API.getEntity(
-          oModel,
-          `/DELFOR_CUMULATIVI(IdocNum='${numIdoc}',Stabilimento='${dest}')`
-        );
-        console.log(res);
-        this.buildSpreadSheet(res.results);
+        await this.getReportCumulativi(dest, numIdoc)
+        
       },
     });
   }

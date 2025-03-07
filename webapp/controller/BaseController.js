@@ -1009,6 +1009,23 @@ sap.ui.define(
           }
           return new Blob([bytes], { type: mimeType })
         },
+        getReportCumulativi: async function (dest, numIdoc){
+          try {
+            this.showBusy(0);
+            let oModel = this.getOwnerComponent().getModel("modelloV2");
+            let res = await API.getEntity(
+              oModel,
+              `/DELFOR_CUMULATIVI(IdocNum='${numIdoc}',Stabilimento='${dest}')`
+            );
+            console.log(res);
+            this.buildSpreadSheet(res.results);
+          } catch (error) {
+            MessageBox.error("Errore durante il download del Report")
+          }
+          finally {
+            this.hideBusy(0);
+          }
+        },
         moveToArchive: async function (oEvent){
           // UPDATE X ARCHIVIO CHIAMATA IN CHIAVE /ENTITY(KEY ES: ID = 'CICCIO')
           //  BODY  { ARCHIVIAZIONE : TRUE , DATA_ARCHIVIAZIONE : NEW dATE() }

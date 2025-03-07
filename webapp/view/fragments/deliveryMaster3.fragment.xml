@@ -316,7 +316,7 @@
             <Button
               tooltip="Report Cumulativi"
               icon="sap-icon://excel-attachment"
-              press=""
+              press="onDownloadCumulativi"
               class="sapUiTinyMarginBegin"
               type="Emphasized"
               visible="{=${datiAppoggio>/currentPage} === 'archivio' &amp;&amp; !${master3>numero_progressivo_invio} ? true:false}"
