@@ -597,7 +597,7 @@ sap.ui.define(
 
         callData: async function (oModel, entity, aFilters, Expands, key) {
           debugger;
-          let metadata, modelMeta;
+          let metadata, modelMeta
           try {
             metadata = await API.getEntity(oModel, entity, aFilters, Expands);
             if (key === "01") {
@@ -665,7 +665,14 @@ sap.ui.define(
           let exportData = Array.isArray(aExportData)
             ? aExportData
             : [aExportData];
-          let flatExportData = mapper._formatExcelData(exportData);
+          debugger
+          let flatExportData 
+          if(!aExportData.RFFON){
+           flatExportData = mapper._formatExcelData(exportData);
+          }else{
+            flatExportData = exportData
+          }
+          
           let oSpreadsheet = new Spreadsheet({
             dataSource: flatExportData,
             workbook: {
@@ -686,22 +693,16 @@ sap.ui.define(
           let fields = new Set();
           aExportData.forEach((item) => {
             Object.keys(item).forEach((field) => fields.add(field));
-          });
-          aExportData.forEach((item) => {
             let positions = item.posizioni || [];
             positions.forEach((position) => {
               Object.keys(position).forEach((field) => fields.add(field));
-            });
-          });
-          aExportData.forEach((item) => {
-            let positions = item.posizioni || [];
-            positions.forEach((position) => {
               let schedules = position.schedulazioni.results || [];
               schedules.forEach((schedule) => {
                 Object.keys(schedule).forEach((field) => fields.add(field));
               });
             });
           });
+         
           fields.forEach((field) => {
             columns.push({
               label: field.replace(/_/g, " "),
@@ -761,7 +762,7 @@ sap.ui.define(
             let aSelectedItems = indices.map(function (iIndex) {
               return table.getContextByIndex(iIndex).getObject();
             });
-
+            debugger
             aSelectedItems.forEach((element) => {
               if (element.hasOwnProperty("posizioni")) {
                 testate.push(element);
@@ -780,6 +781,7 @@ sap.ui.define(
                     onClose: (oAction) => {
                       if (oAction === sap.m.MessageBox.Action.OK) {
                         testate.forEach((x) => {
+                          x.posizioni.forEach(pos=> pos['numero_progressivo_invio'] = x.numero_progressivo_invio)
                           selectedPos = selectedPos.concat(x.posizioni);
                         });
                         let uniqueArray = selectedPos.reduce(
@@ -811,9 +813,11 @@ sap.ui.define(
         },
         // refresh data dopo post
         _refreshData: async function (selectedKey) {
+          debugger
+
           this.showBusy(0);
           try {
-            await this._getCounters();
+            await this._getCounters(false);
             switch (selectedKey) {
               case "01":
                 await this.onFilterSelect(null, "01");
@@ -1022,7 +1026,7 @@ sap.ui.define(
             let oModel = this.getOwnerComponent().getModel("modelloV2");
             let res = await API.getEntity(
               oModel,
-              `/DELFOR_CUMULATIVI(IdocNum='${numIdoc}',Stabilimento='${dest}, RFFON ='${rffon}')`
+              `/DELFOR_CUMULATIVI(IdocNum='${numIdoc}',Stabilimento='${dest}', RFFON ='${rffon}')`
             );
             console.log(res);
             this.buildSpreadSheet(res.results);

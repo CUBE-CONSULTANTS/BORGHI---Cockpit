@@ -35,7 +35,7 @@
             <ui:Column >
                 <Label text="IDoc" />
                 <ui:template>
-                    <Text text="{modelloReport>numero_idoc}" wrapping="false" />
+                    <Text text="{modelloReport>idoc_number}" wrapping="false" />
                 </ui:template>
             </ui:Column>
                 <ui:Column >
@@ -54,6 +54,18 @@
             <ui:Table rows="{modelloReport>/errore}"  paste="onPaste" ariaLabelledBy="title" >
            
             <ui:columns>
+              <ui:Column >
+                    <Label text="Stato" />
+                    <ui:template>
+                        <Text text="{modelloReport>status}" wrapping="false" />
+                    </ui:template>
+                </ui:Column>
+              <ui:Column >
+                    <Label text="Messaggio" />
+                    <ui:template>
+                        <Text text="{modelloReport>message}" wrapping="false" />
+                    </ui:template>
+                </ui:Column>
                 <ui:Column >
                     <Label text="Cliente" />
                     <ui:template>
@@ -74,7 +86,12 @@
                         <Text text="{modelloReport>codice_cliente_materiale}" wrapping="false" />
                     </ui:template>
                 </ui:Column>
-
+                <ui:Column >
+                    <Label text="N Ord Acquisto" />
+                    <ui:template>
+                        <Text text="{modelloReport>numero_ordine_acquisto}" wrapping="false" />
+                    </ui:template>
+                </ui:Column>
                 <ui:Column >
                     <Label text="IDoc" />
                     <ui:template>

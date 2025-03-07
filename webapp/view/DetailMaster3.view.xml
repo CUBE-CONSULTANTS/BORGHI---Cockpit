@@ -276,6 +276,7 @@
                           <m:ObjectIdentifier text="{detailData>descrizione_materiale}" />
                         </ui:template>
                       </ui:Column>
+                    
                       <ui:Column
                         width="10rem"
                         sortProperty="Punto di scarico"
@@ -423,6 +424,17 @@
                           }" />
                         </ui:template>
                       </ui:Column>
+                      <ui:Column
+                      width="10rem"
+                      tooltip="Cumulativo Quantità Ord"
+                      app:p13nKey="cumulativo_quantita_ordinata_col"
+                      sortProperty="Cumulativo Quantità Ord"
+                    >
+                      <m:Label text="Cumulativo Quant Ord" />
+                      <ui:template>
+                        <m:ObjectIdentifier text="{detailData>cumulativo_quantita_ordinata}" />
+                      </ui:template>
+                    </ui:Column>
                       <ui:Column
                         width="13rem"
                         tooltip="Quantità cumulativa ricevuta"

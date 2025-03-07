@@ -167,6 +167,7 @@ sap.ui.define(
           let arrayToProcess = await this._returnPayload(table);
           if (arrayToProcess.length > 0) {
             this.processaItems(arrayToProcess);
+            debugger
           }
         } catch (error) {
           console.error("Errore durante la selezione delle posizioni:", error);
@@ -203,7 +204,7 @@ sap.ui.define(
       },
       processaItems: function (items) {
         debugger
-        let itemList = items.map((item) =>`Codice Cliente: ${item.codice_cliente} - Codice cliente materiale: ${item.codice_cliente_materiale} - Progressivo Invio: ${item.progressivo_invio} \n`).join("");
+        let itemList = items.map((item) =>`Codice Cliente: ${item.codice_cliente} - Codice cliente materiale: ${item.codice_cliente_materiale} - Progressivo Invio: ${item.numero_progressivo_invio} \n`).join("");
         let message = `Vuoi continuare con questi elementi? \n ${itemList}`;
         let that = this;
 
@@ -235,16 +236,15 @@ sap.ui.define(
                     if (x.status === "51") {
                       debugger;
                       let el = items.find((y) => x.id === y.id);
-                      error.push(el);
+                      error.push(Object.assign(el,x));
                     } else {
                       let el = items.find((y) => x.id === y.id);
-                      success.push(el);
+                      success.push(Object.assign(el,x));
                     }
                   });
-                  that
-                    .getModel("modelloReport")
-                    .setProperty("/successo", success);
+                  that.getModel("modelloReport").setProperty("/successo", success);
                   that.getModel("modelloReport").setProperty("/errore", error);
+                  that._refreshData("01");
                   if (!that._fragment) {
                     Fragment.load({
                       name: "programmi.consegne.edi.view.fragments.reportDelfor",
@@ -260,7 +260,7 @@ sap.ui.define(
                     that._fragment.setModel("modelloReport");
                     that._fragment.open();
                   }
-                  this._refreshData("01");
+                
                 } else {
                   MessageBox.error("Elaborazione non andata a buon fine");
                 }
@@ -277,7 +277,7 @@ sap.ui.define(
       onCumulativi: async function (oEvent) {
         debugger;
         let obj = oEvent.getSource().getParent().getParent().getBindingContext("modelloReport").getObject();
-        let numIdoc = obj.numero_idoc;
+        let numIdoc = obj.idoc_number;
         let dest = obj.destinatario;  
         let rffon = obj.numero_ordine_acquisto;
         await this.getReportCumulativi(dest, numIdoc, rffon)

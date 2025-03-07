@@ -102,6 +102,11 @@ sap.ui.define(
               path: "quantita_cumulativa_ricevuta",
             },
             {
+              key: "cumulativo_quantita_ordinata_col",
+              label: "Cumulativo Quant Ord",
+              path: "cumulativo_quantita_ordinata",
+            },
+            {
               key: "ultima_quantita_ordinata_col",
               label: "Ultima quantità ordinata",
               path: "",
@@ -395,6 +400,7 @@ sap.ui.define(
         let aExportData = [];
         aData.forEach((item) => {
           let row = this._cleanAndFormatData(item);
+          
           let positions =
             item.posizioni || item.posizioni.results ||
             item.posizioni_testata ||
