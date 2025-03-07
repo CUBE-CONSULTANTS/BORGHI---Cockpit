@@ -98,21 +98,23 @@ sap.ui.define(
             "/actionButtonsInfo/midColumn/closeColumn"
           );
           //prova chiusura colonna e nav
-          if (currentBegColViewName === undefined) {
-            sNextLayout = this.getRouter().navTo("master3", {
-              layout: sNextLayout,
-              product: this._product,
-            });
-          } else {
-            oEvent
-              .getSource()
-              .getParent()
-              .getParent()
-              .getParent()
-              .getParent()
-              .getParent()
-              .setLayout();
-          }
+          
+            if(currentBegColViewName.includes('archivio')){
+              sNextLayout = this.getRouter().navTo("archivio", {
+                layout: oEvent.getSource().getParent().getParent().getParent().getParent().getParent().setLayout(),
+                product: this._product,
+              });
+            }
+            if(currentBegColViewName.includes('master3')){
+              sNextLayout = this.getRouter().navTo("master3", {
+                layout: oEvent.getSource().getParent().getParent().getParent().getParent().getParent().setLayout(),
+                product: this._product,
+              });
+            }
+            if(currentBegColViewName.includes('DetailMaster3')){
+              oEvent.getSource().getParent().getParent().getParent().getParent().getParent().setLayout(sNextLayout);
+              
+            }
         },
 
         onExit: function () {

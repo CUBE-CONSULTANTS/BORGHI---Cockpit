@@ -61,7 +61,7 @@
           <m:OverflowToolbarButton
             type="Emphasized"
             icon="sap-icon://decline"
-            press=".onNavBack"
+            press="onReturn"
             tooltip="Close"
             visible="true"
           />

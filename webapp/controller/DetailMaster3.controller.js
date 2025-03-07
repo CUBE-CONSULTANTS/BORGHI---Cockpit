@@ -31,11 +31,11 @@ sap.ui.define(
         _onProductMatched: async function (oEvent) {
           debugger;
           const oHistory = History.getInstance();
-          const prevHash = oHistory.getPreviousHash()
+          this.prevHash = oHistory.getPreviousHash()
           let operator
-          if(prevHash === 'master3'){
+          if(this.prevHash === 'master3'){
            operator = 'ne' 
-          }else if (prevHash === 'archivio'){
+          }else if (this.prevHash === 'archivio'){
             operator = 'eq'
           }
           this._id = oEvent.getParameter("arguments").id || this._id || "0";
@@ -58,6 +58,9 @@ sap.ui.define(
           } finally {
             this.hideBusy(0)
           }  
+        },
+        onReturn: function(){
+          this.prevHash === 'archivio'? this.navToArchive(): this.handleCloseDetail()
         },
         onProcessaButton: function (oEvent) {
           debugger;
