@@ -105,13 +105,13 @@ sap.ui.define(
                 product: this._product,
               });
             }
-            if(currentBegColViewName.includes('master3')){
+            if(currentBegColViewName==='programmi.consegne.edi.view.Master3'){
               sNextLayout = this.getRouter().navTo("master3", {
                 layout: oEvent.getSource().getParent().getParent().getParent().getParent().getParent().setLayout(),
                 product: this._product,
               });
             }
-            if(currentBegColViewName.includes('DetailMaster3')){
+            if(currentBegColViewName ==='programmi.consegne.edi.view.DetailMaster3'){
               oEvent.getSource().getParent().getParent().getParent().getParent().getParent().setLayout(sNextLayout);
               
             }
