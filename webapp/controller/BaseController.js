@@ -143,6 +143,54 @@ sap.ui.define(
             self[dialName].open();
           }
         },
+        onCollapseAll: function () {
+          let oTable;
+          let selectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
+          !selectedKey ? (selectedKey = key) : (selectedKey = selectedKey);
+          switch (selectedKey) {
+            case "01":
+              oTable = this.byId("treetableMain");
+              oTable.collapseAll();
+              break;
+            case "02":
+              oTable = this.byId("treetableCallOff");
+              oTable.collapseAll();
+              break;
+            case "03":
+              oTable = this.byId("treetableSB");
+              oTable.collapseAll();
+              break;
+            default:
+          }
+        },
+        onExpandFirstLevel: function () {
+          let oTable;
+          let selectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
+          !selectedKey ? (selectedKey = key) : (selectedKey = selectedKey);
+          switch (selectedKey) {
+            case "01":
+              oTable = this.byId("treetableMain");
+              oTable.expandToLevel(1);
+              break;
+            case "02":
+              oTable = this.byId("treetableCallOff");
+              oTable.expandToLevel(1);
+              break;
+            case "03":
+              oTable = this.byId("treetableSB");
+              oTable.expandToLevel(1);
+              break;
+            default:
+          }
+        },
+        navToAPP: function (oEvent) {
+          let level = oEvent.getSource().getParent().getParent().getBindingContext("master3").getPath();
+          if (level.includes("posizioni")) {
+            this.getRouter().navTo("master", { monitor: "monitor" });
+          } else {
+            this.getRouter().navTo("master2", { monitor: "monitor" });
+          }
+        },
         _getCounters: async function (filterVal) {
           debugger
           this.showBusy(0);
@@ -331,6 +379,9 @@ sap.ui.define(
           }
         },
         onFilterBarClear: async function (oEvent) {
+          let operator, archivVal
+          this.getModel("datiAppoggio").getProperty("/currentPage") === 'archivio' ? operator = 'eq' : operator = 'ne'
+          this.getModel("datiAppoggio").getProperty("/currentPage") === 'archivio' ? archivVal = true : archivVal = false
           let oFilterData = this.getModel("filtersModel").getData();
           for (let sView in oFilterData) {
             if (oFilterData.hasOwnProperty(sView)) {
@@ -353,8 +404,8 @@ sap.ui.define(
           }
           this.getModel("filtersModel").refresh(true);
           let modelMeta;
-          if (
-            oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("delivery")) {
+          if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("delivery")) {
+              debugger
             modelMeta = await this.callData(
               this.getOwnerComponent().getModel("modelloV2"),
               "/Testata",
@@ -362,21 +413,16 @@ sap.ui.define(
                 new sap.ui.model.Filter(
                   "archiviazione",
                   sap.ui.model.FilterOperator.EQ,
-                  false
+                  archivVal
                 ),
               ],
               [
-                `posizioni($filter=stato ne '53'),posizioni($expand=log,schedulazioni,testata),master`,
+                `posizioni($filter=stato ${operator} '53'),posizioni($expand=log,schedulazioni,testata),master`,
               ],
               "01"
             );
           }
-          if (
-            oEvent
-              .getParameters()
-              .selectionSet[0].getBindingInfo("value")
-              .parts[0].path.includes("callOff")
-          ) {
+          if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("callOff")) {
             modelMeta = await this.callData(
               this.getOwnerComponent().getModel("calloffV2"),
               "/Testata",
@@ -384,7 +430,7 @@ sap.ui.define(
                 new sap.ui.model.Filter(
                   "archiviazione",
                   sap.ui.model.FilterOperator.EQ,
-                  false
+                  archivVal
                 ),
               ],
               ["master,posizioni_testata,log_testata"],
@@ -392,10 +438,7 @@ sap.ui.define(
             );
           }
           if (
-            oEvent
-              .getParameters()
-              .selectionSet[0].getBindingInfo("value")
-              .parts[0].path.includes("selfBilling")
+            oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("selfBilling")
           ) {
             modelMeta = await this.callData(
               this.getOwnerComponent().getModel("selfBillingV2"),
@@ -404,7 +447,7 @@ sap.ui.define(
                 new sap.ui.model.Filter(
                   "archiviazione",
                   sap.ui.model.FilterOperator.EQ,
-                  false
+                  archivVal
                 ),
               ],
               [
@@ -414,10 +457,7 @@ sap.ui.define(
             );
           }
           if (
-            oEvent
-              .getParameters()
-              .selectionSet[0].getBindingInfo("value")
-              .parts[0].path.includes("scartati")
+            oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("scartati")
           ) {
             modelMeta = await this.callData(
               this.getOwnerComponent().getModel("fileScartatiV2"),
@@ -426,7 +466,7 @@ sap.ui.define(
                 new sap.ui.model.Filter(
                   "archiviazione",
                   sap.ui.model.FilterOperator.EQ,
-                  false
+                  archivVal
                 ),
               ],
               [],
@@ -436,18 +476,44 @@ sap.ui.define(
           // oBinding.filter([]);
           // oBinding.sort([]);
         },
+        sortCategories: function () {
+          let oTable;
+          let aSorters = [];
+          switch (this.getView().byId("idIconTabBar").getSelectedKey()) {
+            case "01":
+              oTable = this.byId("treetableMain");
+              aSorters = this.sortTables(oTable, [
+                "codice_seller",
+                "numero_progressivo_invio",
+              ]);
+              break;
+            case "02":
+              oTable = this.byId("treetableCallOff");
+              aSorters = this.sortTables(oTable, [
+                "codice_terre_cliente",
+                "progressivo_invio",
+              ]);
+              break;
+            case "03":
+              oTable = this.byId("treetableSB");
+              aSorters = this.sortTables(oTable, ["customer", "data_ricezione"]);
+              break;
+            case "06":
+              oTable = this.byId("tableScartati");
+              aSorters = this.sortTables(oTable, ["filename", "data_ricezione"]);
+              break;
+            default:
+              return;
+          }
+        },
         onSearchData: async function (oEvent) {
-          //ricerca filtrata
           let oFilterSet;
           let key;
-          if (
-            oEvent
-              .getParameters()
-              .selectionSet[0].getBindingInfo("value")
-              .parts[0].path.includes("delivery")
-          ) {
+          let operator
+          this.getModel("datiAppoggio").getProperty("/currentPage") === 'archivio' ? operator = 'eq' : operator = 'ne'
+          if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("delivery")) {
             oFilterSet = this.getModel("filtersModel").getProperty("/delivery");
-            let aFilters = mapper.buildFilters(oFilterSet, (key = "01"));
+            let aFilters = mapper.buildFilters(oFilterSet, (key = "01"),operator);
             let filters = {
               data_ricezione: aFilters.find(
                 (f) => f.sPath === "data_ricezione"
@@ -462,7 +528,7 @@ sap.ui.define(
               }
             });
             let expandQuery =
-              "posizioni($filter=stato ne '53'),posizioni($expand=log,schedulazioni,testata),master";
+              `posizioni($filter=stato ${operator} '53'),posizioni($expand=log,schedulazioni,testata),master`
             if (filters.stato) {
               expandQuery = `posizioni($filter=stato eq '${filters.stato.oValue1}'),posizioni($expand=log,schedulazioni,testata),master`;
             }
@@ -470,7 +536,7 @@ sap.ui.define(
               expandQuery = `posizioni($filter=stato ne '53'),posizioni($expand=log($filter=messaggio eq '${filters.messaggio.oValue1}'),schedulazioni,testata),master`;
             }
             if (filters.data_ricezione) {
-              expandQuery = `posizioni($filter=stato ne '53'),posizioni($expand=log,schedulazioni,testata),master($filter=data_ricezione eq '${filters.data_ricezione.oValue1}')`;
+              expandQuery = `posizioni($filter=stato ${operator} '53'),posizioni($expand=log,schedulazioni,testata),master($filter=data_ricezione eq '${filters.data_ricezione.oValue1}')`;
             }
             if (filters.stato && filters.messaggio && filters.data_ricezione) {
               expandQuery = `posizioni($filter=stato eq '${filters.stato.oValue1}'),posizioni($expand=log($filter=messaggio eq '${filters.messaggio.oValue1}'),schedulazioni,testata),master($filter=data_ricezione eq '${filters.data_ricezione.oValue1}')`;
@@ -483,10 +549,7 @@ sap.ui.define(
               "01"
             );
           } else if (
-            oEvent
-              .getParameters()
-              .selectionSet[0].getBindingInfo("value")
-              .parts[0].path.includes("callOff")
+            oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("callOff")
           ) {
             oFilterSet = this.getModel("filtersModel").getProperty("/callOff");
             let aFilters = mapper.buildFilters(oFilterSet, (key = "02"));
@@ -498,11 +561,7 @@ sap.ui.define(
               "02"
             );
           } else if (
-            oEvent
-              .getParameters()
-              .selectionSet[0].getBindingInfo("value")
-              .parts[0].path.includes("selfBilling")
-          ) {
+            oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("selfBilling")) {
             oFilterSet =
               this.getModel("filtersModel").getProperty("/selfBilling");
             let aFilters = mapper.buildFilters(oFilterSet, (key = "03"));
@@ -1014,6 +1073,63 @@ sap.ui.define(
             MessageBox.error("Selezionare almeno un elemento");
           }
         },
+        dettaglioNav: function (oEvent) {
+          let level, detailPath, detail;
+          if (
+            oEvent.getSource().getParent().getBindingContext("master3") !==
+            undefined
+          ) {
+            level = oEvent.getSource().getParent().getBindingContext("master3").getPath().includes("posizioni");
+            detailPath = oEvent.getSource().getParent().getBindingContext("master3").getPath();
+            detail = this.getView().getModel("master3").getProperty(`${detailPath}`);
+            this.getOwnerComponent().getModel("datiAppoggio").setProperty("/testata", detail);
+            this.getOwnerComponent().getModel("datiAppoggio").setProperty("/posizioni", detail.posizioni);
+            if (level) {
+              this.getOwnerComponent().getModel("datiAppoggio").setProperty("/posizioneCorrente", detail);
+              this.getOwnerComponent().getModel("datiAppoggio").setProperty("/schedulazioni", detail.schedulazioni.results);
+              this.getOwnerComponent().getModel("datiAppoggio").setProperty(
+                  "/testata",
+                  this.getModel("master3").getProperty(
+                    `${detailPath[0] + detailPath[1]}`
+                  )
+                );
+              let oNextUIState;
+              this.getOwnerComponent().getHelper().then(
+                  function (oHelper) {
+                    oNextUIState = oHelper.getNextUIState(1);
+                    this.getRouter().navTo("Detail2Master3", {
+                      product: detail.id,
+                      layout: oNextUIState.layout,
+                    });
+                  }.bind(this)
+                );
+            } else {
+              detailPath = oEvent.getSource().getParent().getBindingContext("master3").getPath();
+              this.getRouter().navTo("detailMaster3", {
+                id: detail.id,
+                idmaster: detail.id_master,
+                layout: "OneColumn",
+              });
+            }
+          } else if (oEvent.getSource().getParent().getBindingContext("master3CO") !==undefined
+          ) {
+            detailPath = oEvent.getSource().getParent().getBindingContext("master3CO").getPath();
+            detail = this.getView().getModel("master3CO").getProperty(`${detailPath}`);
+            this.getRouter().navTo("dettCallOff", {
+              id: detail.id,
+              idmaster: detail.id_master,
+              layout: "OneColumn",
+            });
+          } else if (oEvent.getSource().getParent().getBindingContext("master3SB") !==undefined
+          ) {
+            detailPath = oEvent.getSource().getParent().getBindingContext("master3SB").getPath();
+            detail = this.getModel("master3SB").getProperty(`${detailPath}`);
+            this.getRouter().navTo("dettSelfBilling", {
+              id: detail.id,
+              layout: "OneColumn",
+            });
+          }
+        },  
         navToHome: function () {
           this.getRouter().navTo("home");
         },

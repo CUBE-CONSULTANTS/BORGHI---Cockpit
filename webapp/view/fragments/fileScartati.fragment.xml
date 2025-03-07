@@ -83,7 +83,7 @@ ariaLabelledBy="title"
     icon="sap-icon://bbyd-active-sales"
     press="moveToArchive"
     type="Emphasized"
-   
+    visible="{=${datiAppoggio>/currentPage} === 'archivio' ? false:true}"
   />
   </OverflowToolbar>
 </ui:extension>

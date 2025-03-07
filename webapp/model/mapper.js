@@ -219,12 +219,14 @@ sap.ui.define(
         };
         return columnMapper[tableId] || [];
       },
-      buildFilters: function (oFilterSet, key) {
+      buildFilters: function (oFilterSet, key,operator) {
         let aFilters = [];
+        let archivVal
+        operator === 'eq'? archivVal = true : archivVal = false
         aFilters.push(new sap.ui.model.Filter(
           "archiviazione",
           sap.ui.model.FilterOperator.EQ,
-          false
+          archivVal
         ))
         if (key === "01") {
           if (oFilterSet.dataRic) {

@@ -127,6 +127,7 @@ xmlns:mvc="sap.ui.core.mvc">
             icon="sap-icon://bbyd-active-sales"
             press=""
             type="Emphasized"
+            visible="{=${datiAppoggio>/currentPage} === 'archivio' ? false:true}"
            
           />            
             <Button
