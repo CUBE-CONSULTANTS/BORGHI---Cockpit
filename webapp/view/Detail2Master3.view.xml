@@ -22,21 +22,24 @@
                 icon="sap-icon://full-screen"
                 press=".handleFullScreen"
                 tooltip="Enter Full Screen Mode"
-                visible="{= ${/actionButtonsInfo/midColumn/fullScreen} !== null }" />
+                visible="false" />
             <m:Button
                 type="Transparent"
                 icon="sap-icon://exit-full-screen"
                 press=".handleExitFullScreen"
                 tooltip="Exit Full Screen Mode"
-                visible="{= ${/actionButtonsInfo/midColumn/exitFullScreen} !== null }" />
+                visible="false" />
             <m:Button
                 type="Emphasized"
                 icon="sap-icon://decline"
                 press=".handleClose"
                 tooltip="Close column"
-                visible="{= ${/actionButtonsInfo/midColumn/closeColumn} !== null }" />
+                />
            
         </f:actions>
+        <!-- visible="{= ${/actionButtonsInfo/midColumn/fullScreen} !== null }" -->
+        <!-- visible="{= ${/actionButtonsInfo/midColumn/exitFullScreen} !== null }" -->
+        <!-- visible="{= ${/actionButtonsInfo/midColumn/closeColumn} !== null }" -->
             </f:DynamicPageTitle>
         </f:title>
         <f:header>

@@ -70,19 +70,7 @@ sap.ui.define(
           oObjectPage.setShowFooter(!bCurrentShowFooterState);
         },
 
-        handleFullScreen: function (oEvent) {
-          this.getRouter().navTo("Detail2Master3", {
-            layout:  oEvent.getSource().getParent().getParent().getParent().getParent().getParent().setLayout(sap.f.LayoutType.MidColumnFullScreen),
-            product: this._product,
-          });
-        },
-
-        handleExitFullScreen: function (oEvent) {
-          this.getRouter().navTo("Detail2Master3", {
-            layout: oEvent.getSource().getParent().getParent().getParent().getParent().getParent().setLayout(sap.f.LayoutType.MidColumnExitFullScreen),
-            product: this._product,
-          });
-        },
+        
 
         handleClose: function (oEvent) {
           debugger;
