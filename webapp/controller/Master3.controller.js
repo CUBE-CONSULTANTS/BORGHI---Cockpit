@@ -202,12 +202,8 @@ sap.ui.define(
         MessageBox.error(message);
       },
       processaItems: function (items) {
-        let itemList = items
-          .map(
-            (item) =>
-              `Codice cliente materiale: ${item.codice_cliente_materiale} - ID: ${item.id} - Codice materiale fornitore: ${item.codice_materiale_fornitore}\n`
-          )
-          .join("");
+        debugger
+        let itemList = items.map((item) =>`Codice Cliente: ${item.codice_cliente} - Codice cliente materiale: ${item.codice_cliente_materiale} - Progressivo Invio: ${item.progressivo_invio} \n`).join("");
         let message = `Vuoi continuare con questi elementi? \n ${itemList}`;
         let that = this;
 
@@ -264,13 +260,13 @@ sap.ui.define(
                     that._fragment.setModel("modelloReport");
                     that._fragment.open();
                   }
+                  this._refreshData("01");
                 } else {
                   MessageBox.error("Elaborazione non andata a buon fine");
                 }
               } catch (error) {
                 MessageBox.error("Errore durante la ricezione dei dati");
               } finally {
-                this._refreshData("01");
                 that.hideBusy(0);
               }
             }

@@ -984,7 +984,9 @@ sap.ui.define(
           let oBindingContext;
           if (oEvent.getSource().getBindingContext("master3") !== undefined) {
             oBindingContext = oEvent.getSource().getBindingContext("master3");
-          } // altri modelli
+          } else if(oEvent.getSource().getBindingContext("master3CO") !== undefined){
+            oBindingContext = oEvent.getSource().getBindingContext("master3CO");
+          }
           let objId = oBindingContext.getObject().id;
           try {
             this.showBusy(0)
