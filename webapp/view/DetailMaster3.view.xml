@@ -61,7 +61,7 @@
           <m:OverflowToolbarButton
             type="Emphasized"
             icon="sap-icon://decline"
-            press=".handleCloseDetail"
+            press=".onNavBack"
             tooltip="Close"
             visible="true"
           />
@@ -174,18 +174,21 @@
                           text="Esporta excel"
                           icon="sap-icon://excel-attachment"
                           press="downloadExcelFileDett"
+                          visible="{=${datiAppoggio>/currentPage} === 'archivio' ? false:true}"
                         />
                         <m:Button
                           text="Elabora"
                           icon="sap-icon://process"
                           press="onProcessaButton"
                           type="Emphasized"
+                          visible="{=${datiAppoggio>/currentPage} === 'archivio' ? false:true}"
                         />
                         <m:Button
                           text="Elimina"
                           icon="sap-icon://delete"
                           press="onDeletePosition"
                           type="Reject"
+                          visible="{=${datiAppoggio>/currentPage} === 'archivio' ? false:true}"
                         />
                         <m:Button
                           icon="sap-icon://action-settings"

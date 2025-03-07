@@ -190,7 +190,6 @@ sap.ui.define(
           this._oDialog2.open();
         }
       },
-
       
       statoButtonPress: function (oEvent) {
         let lastIndexMessage =
@@ -283,8 +282,9 @@ sap.ui.define(
         debugger;
         let obj = oEvent.getSource().getParent().getParent().getBindingContext("modelloReport").getObject();
         let numIdoc = obj.numero_idoc;
-        let dest = obj.destinatario;
-        await this.getReportCumulativi(dest, numIdoc)
+        let dest = obj.destinatario;  
+        let rffon = obj.numero_ordine_acquisto;
+        await this.getReportCumulativi(dest, numIdoc, rffon)
         
       },
     });

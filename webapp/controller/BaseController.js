@@ -185,10 +185,11 @@ sap.ui.define(
         },
         navToAPP: function (oEvent) {
           let level = oEvent.getSource().getParent().getParent().getBindingContext("master3").getPath();
+          debugger
           if (level.includes("posizioni")) {
-            this.getRouter().navTo("master", { monitor: "monitor" });
+            this.getRouter().navTo("master", { prevApp: this.getOwnerComponent().getModel("datiAppoggio").getProperty("/currentPage") });
           } else {
-            this.getRouter().navTo("master2", { monitor: "monitor" });
+            this.getRouter().navTo("master2", { prevApp: this.getOwnerComponent().getModel("datiAppoggio").getProperty("/currentPage") });
           }
         },
         _getCounters: async function (filterVal) {
@@ -1009,13 +1010,13 @@ sap.ui.define(
           }
           return new Blob([bytes], { type: mimeType })
         },
-        getReportCumulativi: async function (dest, numIdoc){
+        getReportCumulativi: async function (dest, numIdoc, rffon){
           try {
             this.showBusy(0);
             let oModel = this.getOwnerComponent().getModel("modelloV2");
             let res = await API.getEntity(
               oModel,
-              `/DELFOR_CUMULATIVI(IdocNum='${numIdoc}',Stabilimento='${dest}')`
+              `/DELFOR_CUMULATIVI(IdocNum='${numIdoc}',Stabilimento='${dest}, RFFON ='${rffon}')`
             );
             console.log(res);
             this.buildSpreadSheet(res.results);
@@ -1091,11 +1092,9 @@ sap.ui.define(
           }
         },
         dettaglioNav: function (oEvent) {
+          debugger
           let level, detailPath, detail;
-          if (
-            oEvent.getSource().getParent().getBindingContext("master3") !==
-            undefined
-          ) {
+          if (oEvent.getSource().getParent().getBindingContext("master3") !== undefined) {
             level = oEvent.getSource().getParent().getBindingContext("master3").getPath().includes("posizioni");
             detailPath = oEvent.getSource().getParent().getBindingContext("master3").getPath();
             detail = this.getView().getModel("master3").getProperty(`${detailPath}`);
@@ -1152,6 +1151,9 @@ sap.ui.define(
         },
         handleCloseDetail: function () {
           this.getRouter().navTo("master3");
+        },
+        navToArchive: function () {
+          this.getRouter().navTo("archivio");
         },
         onClose: function (oEvent) {
           oEvent.getSource().getParent().close();

@@ -19,5 +19,12 @@
       type="Emphasized"
       visible="{= ${main>/backToMon}}"
   />
+  <Button
+      press="navToArchive"
+      icon="sap-icon://navigation-right-arrow"
+      text="Archivio"
+      type="Emphasized"
+      visible="{= ${main>/backToArch}}"
+  />
 </OverflowToolbar>
 </c:FragmentDefinition>

@@ -217,12 +217,12 @@
 					"target": "home"
 				},
 				{
-					"pattern": "master/:monitor:",
+					"pattern": "master/:prevApp:",
 					"name": "master",
 					"target": "master"
 				},
 				{
-					"pattern": "master2/:monitor:",
+					"pattern": "master2/:prevApp:",
 					"name": "master2",
 					"target": "master2"
 				},

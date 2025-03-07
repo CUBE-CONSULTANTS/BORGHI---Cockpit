@@ -20,8 +20,14 @@ sap.ui.define(
       },
       _onObjectMatched: function (oEvent) { 
         debugger
-        oEvent.getParameters().arguments.monitor !== undefined ? this.getModel("main").setProperty("/backToMon", true) : 
-        this.getModel("main").setProperty("/backToMon", false);
+        if(oEvent.getParameters().arguments.prevApp === 'monitor') {
+          this.getModel("main").setProperty("/backToMon", true)
+        }else if(oEvent.getParameters().arguments.prevApp === 'archivio'){
+          this.getModel("main").setProperty("/backToArch", true)
+        }else{
+          this.getModel("main").setProperty("/backToMon", false);
+          this.getModel("main").setProperty("/backToArch", false);
+        }
       },
       onSearch: function (oEvent) {
         // Ottieni l'ID del cliente selezionato dal ComboBox

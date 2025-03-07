@@ -26,7 +26,8 @@ sap.ui.define(
 					enabled: false,
 					busy: false,
 					selected: false,
-          backToMon: false
+          backToMon: false,
+          backToArch: false
 				});
 			},
       createCountModel: function () {

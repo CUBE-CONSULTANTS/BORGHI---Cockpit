@@ -92,15 +92,7 @@ sap.ui.define(
 
         handleClose: function (oEvent) {
           debugger;
-          let currentBegColViewName = oEvent
-            .getSource()
-            .getParent()
-            .getParent()
-            .getParent()
-            .getParent()
-            .getParent()
-            .getCurrentBeginColumnPage()
-            .getProperty("viewName");
+          let currentBegColViewName = oEvent.getSource().getParent().getParent().getParent().getParent().getParent().getCurrentBeginColumnPage().getProperty("viewName");
 
           var sNextLayout = this.getOwnerComponent().getModel("layout").getProperty(
             "/actionButtonsInfo/midColumn/closeColumn"

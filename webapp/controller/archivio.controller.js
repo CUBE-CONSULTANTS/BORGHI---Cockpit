@@ -124,9 +124,9 @@ sap.ui.define(
         debugger
         let numIdoc = oEvent.getSource().getBindingContext("master3").getObject().numero_idoc
         let dest = oEvent.getSource().getBindingContext("master3").getObject().destinatario
-        await this.getReportCumulativi(dest, numIdoc)
-      },
-      
+        let rffon = oEvent.getSource().getBindingContext("master3").getObject().numero_ordine_acquisto
+        await this.getReportCumulativi(dest, numIdoc,rffon);
+      }, 
       
     });
   }

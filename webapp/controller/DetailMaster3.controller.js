@@ -6,6 +6,7 @@ sap.ui.define(
     "../model/formatter",
     "sap/m/MessageBox",
     "../model/API",
+    "sap/ui/core/routing/History"
   ],
   function (
     BaseController,
@@ -14,6 +15,7 @@ sap.ui.define(
     formatter,
     MessageBox,
     API,
+    History
   ) {
     "use strict";
 
@@ -28,12 +30,21 @@ sap.ui.define(
         },
         _onProductMatched: async function (oEvent) {
           debugger;
+          const oHistory = History.getInstance();
+          const prevHash = oHistory.getPreviousHash()
+          let operator
+          if(prevHash === 'master3'){
+           operator = 'ne' 
+          }else if (prevHash === 'archivio'){
+            operator = 'eq'
+          }
           this._id = oEvent.getParameter("arguments").id || this._id || "0";
           this._idMaster = oEvent.getParameter("arguments").idmaster || this._id || "0";
+          
           try {
             this.showBusy(0)
             let dettaglio = await API.readByKey( this.getOwnerComponent().getModel("modelloV2"), "/Testata", {id: this._id, id_master: this._idMaster}, [], [
-              "posizioni($filter=stato ne '53'),posizioni($expand=log,schedulazioni,testata),master",
+              `posizioni($filter=stato ${operator} '53'),posizioni($expand=log,schedulazioni,testata),master`,
             ])
             // dettaglio.master.data_ricezione = formatter.formatDateString(dettaglio.master.data_ricezione)
             let detailModel = new JSONModel(dettaglio);

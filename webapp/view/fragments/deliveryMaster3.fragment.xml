@@ -267,6 +267,7 @@
         width="4rem"
         hAlign="Center"
         tooltip="Stato"
+        visible="{=${datiAppoggio>/currentPage} === 'archivio' ? false:true}"
       >
         <Label text="Stato" />
         <ui:template>
@@ -285,7 +286,7 @@
         </ui:template>
       </ui:Column>
       <ui:Column
-        width="11rem"
+        width="15rem"
         hAlign="Center"
         tooltip="Dettaglio"
       >
