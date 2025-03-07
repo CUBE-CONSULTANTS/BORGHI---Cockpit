@@ -8,7 +8,7 @@ sap.ui.define(
       {
         formatter: formatter,
         onInit: function () {
-          debugger;
+          
           this.getRouter()
             .getRoute("dettSelfBilling")
             .attachPatternMatched(this._onProductMatched, this);
@@ -34,12 +34,12 @@ sap.ui.define(
           this._registerForP13n(oEvent, "tablePosSB")
         },
         onCollapseAll: function (oEvent) {
-          debugger
+          
           let oTable = oEvent.getSource().getParent().getParent()
             oTable.collapseAll();
         },
         onExpandFirstLevel: function (oEvent) {
-          debugger
+          
           let oTable = oEvent.getSource().getParent().getParent()
           oTable.expandToLevel(2);
           

@@ -29,7 +29,7 @@ sap.ui.define(
             .attachPatternMatched(this._onProductMatched, this);
         },
         _onProductMatched: async function (oEvent) {
-          debugger;
+          
           const oHistory = History.getInstance();
           this.prevHash = oHistory.getPreviousHash()
           let operator
@@ -63,7 +63,7 @@ sap.ui.define(
           this.prevHash === 'archivio'? this.navToArchive(): this.handleCloseDetail()
         },
         onProcessaButton: function (oEvent) {
-          debugger;
+          
 
           let table = this.getView().byId("tablePos");
           let indices = table.getSelectedIndices();
@@ -112,7 +112,7 @@ sap.ui.define(
                     this.hideBusy(0);
                   }
 
-                  debugger;
+                  
 
                   let modelloReport = new JSONModel({
                     successo: "",
@@ -123,7 +123,7 @@ sap.ui.define(
                   let error = [];
                   res.results.forEach((x) => {
                     if (x.status === "51") {
-                      debugger;
+                      
                       let el = items.find((y) => x.id === y.id);
                       success.push(el);
                     } else {
@@ -134,7 +134,7 @@ sap.ui.define(
 
                   this.getModel().setProperty("/successo", success);
                   this.getModel().setProperty("/errore", error);
-                  debugger;
+                  
 
                   if (!this._fragment) {
                     Fragment.load({
@@ -164,7 +164,7 @@ sap.ui.define(
         },
 
         buttonDetailSched: function (oEvent) {
-          debugger;
+          
           let detailPath = oEvent
             .getSource()
             .getParent()

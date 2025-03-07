@@ -7,7 +7,7 @@ sap.ui.define(
       getEntity: function (oModel, Entity, aFilters = [], Expands = []) {
         let urlParameters = {};
         if (Expands.length > 0) {
-          debugger;
+          
           urlParameters.$expand = Expands.join(",");
         }
 

@@ -12,7 +12,7 @@ sap.ui.define(
       },
 
       _onProductMatched: function (oEvent) {
-        debugger;
+        
         this._product =
           oEvent.getParameter("arguments").product || this._product || "0";
         ///prova anthea binding su table

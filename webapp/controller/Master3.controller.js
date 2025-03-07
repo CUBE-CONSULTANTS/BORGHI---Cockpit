@@ -33,7 +33,7 @@ sap.ui.define(
       formatter: formatter,
 
       onInit: async function () {
-        debugger
+        
         this.setModel(models.createMainModel(), "main");
         this.setModel(models.createCountModel(), "count");
         this.setModel(models.createEdiFiltersModel(), "filtersModel");
@@ -167,7 +167,7 @@ sap.ui.define(
           let arrayToProcess = await this._returnPayload(table);
           if (arrayToProcess.length > 0) {
             this.processaItems(arrayToProcess);
-            debugger
+            
           }
         } catch (error) {
           console.error("Errore durante la selezione delle posizioni:", error);
@@ -203,7 +203,7 @@ sap.ui.define(
         MessageBox.error(message);
       },
       processaItems: function (items) {
-        debugger
+        
         let itemList = items.map((item) =>`Codice Cliente: ${item.codice_cliente} - Codice cliente materiale: ${item.codice_cliente_materiale} - Progressivo Invio: ${item.numero_progressivo_invio} \n`).join("");
         let message = `Vuoi continuare con questi elementi? \n ${itemList}`;
         let that = this;
@@ -234,7 +234,7 @@ sap.ui.define(
                   let error = [];
                   res.results.forEach((x) => {
                     if (x.status === "51") {
-                      debugger;
+                      
                       let el = items.find((y) => x.id === y.id);
                       error.push(Object.assign(el,x));
                     } else {
@@ -275,7 +275,7 @@ sap.ui.define(
       },
 
       onCumulativi: async function (oEvent) {
-        debugger;
+        
         let obj = oEvent.getSource().getParent().getParent().getBindingContext("modelloReport").getObject();
         let numIdoc = obj.idoc_number;
         let dest = obj.destinatario;  

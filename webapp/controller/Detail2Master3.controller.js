@@ -8,12 +8,12 @@ sap.ui.define(
       {
         formatter: formatter,
         onInit: function () {
-          debugger;     
+               
           this.getRouter().getRoute("Detail2Master3").attachPatternMatched(this._onProductMatched, this);
         },
 
         _onProductMatched: function (oEvent) {
-          debugger;
+          
           this._product = oEvent.getParameter("arguments").product || this._product || "0";
           let productData = this.getModel("datiAppoggio").getData();
           let codiceClienteMateriale = productData.posizioneCorrente.codice_cliente_materiale;
@@ -73,7 +73,7 @@ sap.ui.define(
         
 
         handleClose: function (oEvent) {
-          debugger;
+          
           let currentBegColViewName = oEvent.getSource().getParent().getParent().getParent().getParent().getParent().getCurrentBeginColumnPage().getProperty("viewName");
 
           var sNextLayout = this.getOwnerComponent().getModel("layout").getProperty(

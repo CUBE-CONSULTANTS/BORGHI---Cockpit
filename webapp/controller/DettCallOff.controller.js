@@ -14,17 +14,17 @@ sap.ui.define(
       {
         formatter: formatter,
         onInit: function () {
-          debugger;
+          
           this.getRouter().getRoute("dettCallOff").attachPatternMatched(this._onProductMatched, this);
         },
 
         _onProductMatched: async function (oEvent) {
-          debugger;
+          
           this._id = oEvent.getParameter("arguments").id || this._id || "0";
           this._idMaster = oEvent.getParameter("arguments").idmaster || this._id || "0";
           try {
             this.showBusy(0);
-            debugger;
+            
             let dettaglio = await API.readByKey(
               this.getOwnerComponent().getModel("calloffV2"),
               "/Testata",

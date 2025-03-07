@@ -396,7 +396,7 @@ sap.ui.define(
         return aFilters;
       },
       _formatExcelData: function (aData) {
-        debugger;
+        
         let aExportData = [];
         aData.forEach((item) => {
           let row = this._cleanAndFormatData(item);
@@ -411,7 +411,7 @@ sap.ui.define(
             positions = (Object.values(positions.results))
           }  
           positions.forEach((position) => {
-            debugger;
+            
             let positionRow = { ...row, ...this._cleanAndFormatData(position) };
             let schedules =
               (position.schedulazioni?.results &&
@@ -450,7 +450,7 @@ sap.ui.define(
         return aExportData;
       },
       _cleanAndFormatData: function (data) {
-        debugger;
+        
         if (!data || typeof data !== "object") return data;
         let cleanedData = { ...data };
         [
@@ -502,7 +502,7 @@ sap.ui.define(
         return cleanedData;
       },
       // flatData: function (data) {
-      //   debugger;
+      //   
       //   const flatData = [];
       //   let dataArray = Array.isArray(data) ? data : [data];
       //   dataArray.forEach((item) => {
@@ -527,7 +527,7 @@ sap.ui.define(
       //     delete testataRow?.master?.payload_db;
       //     delete testataRow?.master;
 
-      //     debugger
+      //     
       //     Object.keys(testataRow).forEach(key => {
       //       if (key.toLowerCase().includes("data")) {
       //           testataRow[key] = formatter.formatDate(testataRow[key]);

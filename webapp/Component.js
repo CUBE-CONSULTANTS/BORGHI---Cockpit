@@ -63,7 +63,7 @@ sap.ui.define(
         }
       },
       _updateUIElements: function () {
-        debugger;
+        
         var oModel = this.getOwnerComponent().getModel("layout"),
           oUIState;
         this.getOwnerComponent()

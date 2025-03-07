@@ -20,7 +20,7 @@ sap.ui.define(
         
       },
       _onObjectMatched: function (oEvent) { 
-        debugger
+        
         if(oEvent.getParameters().arguments.prevApp === 'monitor') {
           this.getModel("main").setProperty("/backToMon", true)
         }else if(oEvent.getParameters().arguments.prevApp === 'archivio'){

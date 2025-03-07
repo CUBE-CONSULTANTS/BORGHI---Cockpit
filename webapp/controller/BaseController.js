@@ -110,7 +110,7 @@ sap.ui.define(
          * If not, it will replace the current entry of the browser history with the main route.
          */
         onNavBack: function () {
-          debugger;
+          
           var sPreviousHash = History.getInstance().getPreviousHash();
           if (sPreviousHash !== undefined) {
             window.history.go(-1);
@@ -185,7 +185,7 @@ sap.ui.define(
         },
         navToAPP: function (oEvent) {
           let level = oEvent.getSource().getParent().getParent().getBindingContext("master3").getPath();
-          debugger
+          
           if (level.includes("posizioni")) {
             this.getRouter().navTo("master", { prevApp: this.getOwnerComponent().getModel("datiAppoggio").getProperty("/currentPage") });
           } else {
@@ -193,7 +193,7 @@ sap.ui.define(
           }
         },
         _getCounters: async function (filterVal) {
-          debugger
+          
           this.showBusy(0);
           try {
             let del = await API.getEntity(
@@ -259,7 +259,7 @@ sap.ui.define(
      
         onFiltersBuilding: function (oEvent, key) {
           if (key === "01") {
-            debugger;
+            
             let aData = this.getModel("master3").getProperty("/");
             let aStato = [
               ...new Set(
@@ -281,7 +281,7 @@ sap.ui.define(
                     aMateriali.push(pos.codice_cliente_materiale);
                   }
                   if (pos.log) {
-                    debugger;
+                    
                     pos.log.results.forEach((res) =>
                       aMessaggi.push(res.messaggio)
                     );
@@ -408,7 +408,7 @@ sap.ui.define(
           this.getModel("filtersModel").refresh(true);
           let modelMeta;
           if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("delivery")) {
-              debugger
+              
             modelMeta = await this.callData(
               this.getOwnerComponent().getModel("modelloV2"),
               "/Testata",
@@ -596,7 +596,7 @@ sap.ui.define(
         },
 
         callData: async function (oModel, entity, aFilters, Expands, key) {
-          debugger;
+          
           let metadata, modelMeta
           try {
             metadata = await API.getEntity(oModel, entity, aFilters, Expands);
@@ -629,7 +629,7 @@ sap.ui.define(
               this.getOwnerComponent().setModel(modelMeta, "master3SB");
               this.getModel("master3SB").setSizeLimit(1000000)
             } else if (key == "06") {
-              debugger;
+              
               modelMeta = new JSONModel(metadata.results);
               this.getOwnerComponent().setModel(modelMeta, "master3Scart");
               this.getModel("master3Scart").setSizeLimit(1000000)
@@ -665,7 +665,7 @@ sap.ui.define(
           let exportData = Array.isArray(aExportData)
             ? aExportData
             : [aExportData];
-          debugger
+          
           let flatExportData 
           if(!aExportData.RFFON){
            flatExportData = mapper._formatExcelData(exportData);
@@ -688,7 +688,7 @@ sap.ui.define(
           });
         },
         _getExcelColumns: function (aExportData) {
-          debugger;
+          
           let columns = [];
           let fields = new Set();
           aExportData.forEach((item) => {
@@ -762,7 +762,7 @@ sap.ui.define(
             let aSelectedItems = indices.map(function (iIndex) {
               return table.getContextByIndex(iIndex).getObject();
             });
-            debugger
+            
             aSelectedItems.forEach((element) => {
               if (element.hasOwnProperty("posizioni")) {
                 testate.push(element);
@@ -813,7 +813,7 @@ sap.ui.define(
         },
         // refresh data dopo post
         _refreshData: async function (selectedKey) {
-          debugger
+          
 
           this.showBusy(0);
           try {
@@ -872,7 +872,7 @@ sap.ui.define(
         },
         //engine dinamico
         _registerForP13n: function (oEvent, tableId) {
-          debugger;
+          
           let columnConfig = mapper.getColumnConfig(tableId);
           let oTable = this.byId(tableId);
           this.oMetadataHelper = new MetadataHelper(columnConfig);
@@ -903,7 +903,7 @@ sap.ui.define(
           );
         },
         openPosizioniDialog: function (oEvent) {
-          debugger;
+          
           let tableId = oEvent
             .getSource()
             .getParent()
@@ -925,7 +925,7 @@ sap.ui.define(
         },
 
         handleStateChange: function (tableId, oEvt) {
-          debugger;
+          
           const oTable = this.getView().byId(tableId);
           const oState = oEvt.getParameter("state");
 
@@ -984,7 +984,7 @@ sap.ui.define(
         //fine configurazione Engine x tutte tabelle, da richiamare nei controller dei dettagli,
         // dopo aver mappato le colonne in mapper e definite il custData nelle view di dettaglio
         downloadEdi: async function (oEvent) {
-          debugger;
+          
           let oBindingContext;
           if (oEvent.getSource().getBindingContext("master3") !== undefined) {
             oBindingContext = oEvent.getSource().getBindingContext("master3");
@@ -1040,7 +1040,7 @@ sap.ui.define(
         moveToArchive: async function (oEvent){
           // UPDATE X ARCHIVIO CHIAMATA IN CHIAVE /ENTITY(KEY ES: ID = 'CICCIO')
           //  BODY  { ARCHIVIAZIONE : TRUE , DATA_ARCHIVIAZIONE : NEW dATE() }
-          debugger;
+          
           let tableID;
           let oModel;
           let part = oEvent.getSource().getParent().getParent().getParent().getParent().getParent().getSelectedKey();
@@ -1102,7 +1102,7 @@ sap.ui.define(
           }
         },
         dettaglioNav: function (oEvent) {
-          debugger
+          
           let level, detailPath, detail;
           if (oEvent.getSource().getParent().getBindingContext("master3") !== undefined) {
             level = oEvent.getSource().getParent().getBindingContext("master3").getPath().includes("posizioni");

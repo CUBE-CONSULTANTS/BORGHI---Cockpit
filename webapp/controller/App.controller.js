@@ -21,7 +21,7 @@ sap.ui.define(["./BaseController"], function (BaseController) {
     // },
 
     // onStateChanged: function (oEvent) {
-    //   debugger;
+    //   
     //   var bIsNavigationArrow = oEvent.getParameter("isNavigationArrow"),
     //     sLayout = oEvent.getParameter("layout");
 
