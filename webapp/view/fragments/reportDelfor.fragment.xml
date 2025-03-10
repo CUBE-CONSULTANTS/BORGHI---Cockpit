@@ -55,15 +55,11 @@ xmlns="sap.m"
             <ui:Table rows="{modelloReport>/errore}"  paste="onPaste" ariaLabelledBy="title" >
            
             <ui:columns>
-              <ui:Column >
+              <ui:Column  width="5rem" hAlign="Center">
                     <Label text="Stato" />
                     <ui:template>
-                        <!-- <Text text="{modelloReport>status}" wrapping="false" /> -->
-                      <Button
-                        icon="{= ${modelloReport>status} === '53' ? 'sap-icon://status-positive' : ${modelloReport>status} === '51' ? 'sap-icon://status-negative' : 'sap-icon://in-progress'}"
-                        type="{= ${modelloReport>status} === '53' ? 'Accept' : ${modelloReport>status} === '51' ? 'Negative' : 'Ghost'}"
-                        tooltip="{modelloReport>status}"
-                      />
+                        <Text text="{modelloReport>status}" wrapping="false" />
+                     
                     </ui:template>
                 </ui:Column>
               <ui:Column >
