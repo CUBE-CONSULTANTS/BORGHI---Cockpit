@@ -184,10 +184,10 @@
         <ui:template>
           <!-- <Button icon="{=${master3>DelforTestata/template} === 'MAN' ? 'sap-icon://attachment' : 'sap-icon://cloud'}"></Button> -->
           <core:Icon
-            src="{=${master3>template} === 'MAN' ? 'sap-icon://attachment' : 'sap-icon://cloud'}"
-            visible="{= ${master3>codice_cliente} ? true : false}"
+            src="{=${master3>master/template} === 'LOCALE' ? 'sap-icon://attachment' : 'sap-icon://cloud'}"
+            visible="{= ${master3>numero_progressivo_invio} ? true : false}"
             size="1rem"
-            tooltip="{=${master3>template} === 'MAN' ? 'Caricamento manuale' : 'Caricamento in cloud'}"
+            tooltip="{=${master3>master/template} === 'LOCALE' ? 'Caricamento manuale' : 'Caricamento in cloud'}"
           />
         </ui:template>
       </ui:Column>

@@ -33,25 +33,26 @@ sap.ui.define(
       formatter: formatter,
 
       onInit: async function () {
-        
         this.setModel(models.createMainModel(), "main");
         this.setModel(models.createCountModel(), "count");
         this.setModel(models.createEdiFiltersModel(), "filtersModel");
-        this.getOwnerComponent().getModel("datiAppoggio").setProperty("/currentPage", "monitor");
+        this.getOwnerComponent()
+          .getModel("datiAppoggio")
+          .setProperty("/currentPage", "monitor");
         this.getRouter()
           .getRoute("master3")
           .attachPatternMatched(this._onObjectMatched, this);
       },
       _onObjectMatched: async function (oEvent) {
-        debugger
+        debugger;
         // let numIdoc='0000000000000030'
-        // let rffon='123456' 
+        // let rffon='123456'
         // let dest='CIAO'
         // await this.getReportCumulativi(dest, numIdoc, rffon)
         await this._getCounters(false);
         this.onFilterSelect(null, "01");
       },
-     
+
       onFilterSelect: async function (oEvent, key) {
         this.showBusy(0);
         let selectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
@@ -70,9 +71,7 @@ sap.ui.define(
                   false
                 ),
               ],
-              [
-                "posizioni($filter=stato ne '53'),posizioni($expand=log,schedulazioni,testata),master",
-              ],
+              ["posizioni,posizioni($expand=log,schedulazioni,testata),master"],
               selectedKey
             );
             this.onFiltersBuilding(oEvent, selectedKey);
@@ -172,7 +171,6 @@ sap.ui.define(
           let arrayToProcess = await this._returnPayload(table);
           if (arrayToProcess.length > 0) {
             this.processaItems(arrayToProcess);
-            
           }
         } catch (error) {
           console.error("Errore durante la selezione delle posizioni:", error);
@@ -196,7 +194,7 @@ sap.ui.define(
           this._oDialog2.open();
         }
       },
-      
+
       statoButtonPress: function (oEvent) {
         let lastIndexMessage =
           oEvent.getSource().getBindingContext("master3").getObject().log
@@ -208,8 +206,12 @@ sap.ui.define(
         MessageBox.error(message);
       },
       processaItems: function (items) {
-        
-        let itemList = items.map((item) =>`Codice Cliente: ${item.codice_cliente} - Codice cliente materiale: ${item.codice_cliente_materiale} - Progressivo Invio: ${item.numero_progressivo_invio} \n`).join("");
+        let itemList = items
+          .map(
+            (item) =>
+              `Codice Cliente: ${item.codice_cliente} - Codice cliente materiale: ${item.codice_cliente_materiale} - Progressivo Invio: ${item.numero_progressivo_invio} \n`
+          )
+          .join("");
         let message = `Vuoi continuare con questi elementi? \n ${itemList}`;
         let that = this;
 
@@ -239,15 +241,16 @@ sap.ui.define(
                   let error = [];
                   res.results.forEach((x) => {
                     if (x.status === "51") {
-                      
                       let el = items.find((y) => x.id === y.id);
-                      error.push(Object.assign(el,x));
+                      error.push(Object.assign(el, x));
                     } else {
                       let el = items.find((y) => x.id === y.id);
-                      success.push(Object.assign(el,x));
+                      success.push(Object.assign(el, x));
                     }
                   });
-                  that.getModel("modelloReport").setProperty("/successo", success);
+                  that
+                    .getModel("modelloReport")
+                    .setProperty("/successo", success);
                   that.getModel("modelloReport").setProperty("/errore", error);
                   that._refreshData("01");
                   if (!that._fragment) {
@@ -265,7 +268,6 @@ sap.ui.define(
                     that._fragment.setModel("modelloReport");
                     that._fragment.open();
                   }
-                
                 } else {
                   MessageBox.error("Elaborazione non andata a buon fine");
                 }
@@ -280,13 +282,32 @@ sap.ui.define(
       },
 
       onCumulativi: async function (oEvent) {
-        
-        let obj = oEvent.getSource().getParent().getParent().getBindingContext("modelloReport").getObject();
+        let obj = oEvent
+          .getSource()
+          .getParent()
+          .getParent()
+          .getBindingContext("modelloReport")
+          .getObject();
         let numIdoc = obj.idoc_number;
-        let dest = obj.destinatario;  
+        let dest = obj.destinatario;
         let rffon = obj.numero_ordine_acquisto;
-        await this.getReportCumulativi(dest, numIdoc, rffon)
-        
+        await this.getReportCumulativi(dest, numIdoc, rffon);
+      },
+
+      onUploadButtonPress: async function (oEvent) {
+        debugger;
+
+        let fileupload = this.getView().byId("FileUploader");
+        let formData = new FormData();
+        try {
+          formData.append("file", fileupload.oFileUpload.files[0]);
+          await fetch("/fiori/upload_excel", {
+            method: "POST",
+            body: formData,
+          });
+        } catch (error) {
+          console.log(error);
+        }
       },
     });
   }
