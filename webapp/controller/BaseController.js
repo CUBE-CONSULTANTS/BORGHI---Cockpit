@@ -601,8 +601,6 @@ sap.ui.define(
           try {
             metadata = await API.getEntity(oModel, entity, aFilters, Expands);
             if (key === "01") {
-              //prova filtro su dati
-              debugger
               let datiFiltrati = metadata.results.filter(x=> x.master !== null || x.posizioni.length > 0)
               
               modelMeta = new JSONModel(datiFiltrati);
@@ -704,7 +702,7 @@ sap.ui.define(
               });
             });
           });
-          debugger
+          
           fields.forEach((field) => {
             columns.push({
               label: field.replace(/_/g, " "),

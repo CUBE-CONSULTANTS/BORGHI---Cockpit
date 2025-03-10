@@ -395,21 +395,93 @@ sap.ui.define(
         }
         return aFilters;
       },
-      _formatCumulativi: function(aData){
+      _formatCumulativi: function (aData) {
         debugger
-        aData.forEach(element => {
-          element.DataFineCalcCumu = formatter.returnDate(element.DataFineCalc, "yyyyMMdd", "dd/MM/yyyy");
+        aData.forEach((element) => {
+          element.DataFineCalcCumu = formatter.returnDate(element.DataFineCalcCumu, "yyyyMMdd", "dd/MM/yyyy");
           element.DataInitCalcCumu = formatter.returnDate(element.DataInitCalcCumu, "yyyyMMdd", "dd/MM/yyyy");
           element.DataLips1 = formatter.returnDate(element.DataLips1, "yyyyMMdd", "dd/MM/yyyy");
           element.DataLips2 = formatter.returnDate(element.DataLips2, "yyyyMMdd", "dd/MM/yyyy");
           element.DataLips3 = formatter.returnDate(element.DataLips3, "yyyyMMdd", "dd/MM/yyyy");
-          element.Kunnr = element.Cliente
-          element.Matnr = element.Materiale
-          element.Meins = element.Quantità
-          element.Name1 = element.Descrizione
-          element.Vbeln = element.PianoConsegna
-        })
-        return aData;
+          delete element.__metadata;
+        });
+
+        let mapping = {
+          IdocNum: "Numero IDOC",
+          DataFineCalcCumu: "Data fine calcolo cumulativi",
+          DataInitCalcCumu: "Data inizio calcolo cumulativi",
+          Vbeln: "Scheduling Agreement",
+          Posnr: "N° pos",
+          Kunnr: "Cliente",
+          Name1: "Ragione sociale",
+          Matnr: "Cod Articolo",
+          RFFON: "Num Ordine",
+          CumuRicevuto: "Cumulativo Ricevuto",
+          CumuSped: "Cumulativo Spedito",
+          CumuTran: "Cumulativo in transito",
+          Stabilimento: "Stabilimento",
+          Meins: "UdM",
+          DataLips1: "Data DDT 1",
+          NumeroLips1: "Numero DDT 1",
+          QuanLips1: "Quantità DDT 1",
+          DataLips2: "Data DDT 2",
+          NumeroLips2: "Numero DDT 2",
+          QuanLips2: "Quantità DDT 2",
+          DataLips3: "Data DDT 3",
+          NumeroLips3: "Numero DDT 3",
+          QuanLips3: "Quantità DDT 3",
+        };
+
+        let newDataset = aData.map((element) => {
+          let newElement = {};
+          for (let key in element) {
+            if (mapping[key]) {
+              newElement[mapping[key]] = element[key];
+            } else {
+              newElement[key] = element[key];
+            }
+          }
+          return newElement;
+        });
+        debugger
+        let output = [];
+        newDataset.forEach((element) => {
+          let cumulativi = {
+            "Dettaglio Cumulativi": "",
+            "Numero IDOC": element["Numero IDOC"],
+            "Data fine calcolo cumulativi": element["Data fine calcolo cumulativi"],
+            "Data inizio calcolo cumulativi": element["Data inizio calcolo cumulativi"],
+            "Scheduling Agreement": element["Scheduling Agreement"],
+            "N° pos": element["N° pos"],
+            "Cliente": element["Cliente"],
+            "Ragione sociale": element["Ragione sociale"],
+            "Cod Articolo": element["Cod Articolo"],
+            "Num Ordine": element["Num Ordine"],
+            "Cumulativo Ricevuto": element["Cumulativo Ricevuto"],
+            "Cumulativo Spedito": element["Cumulativo Spedito"],
+            "Cumulativo in transito": element["Cumulativo in transito"],
+            "Stabilimento": element["Stabilimento"],
+            "UdM": element["UdM"],
+          };
+
+          let ddt = {
+            "Dettaglio DDT": "",
+            "Data DDT 1": element["Data DDT 1"],
+            "Numero DDT 1": element["Numero DDT 1"],
+            "Quantità DDT 1": element["Quantità DDT 1"],
+             "Data DDT 2": element["Data DDT 2"],
+            "Numero DDT 2": element["Numero DDT 2"],
+            "Quantità DDT 2": element["Quantità DDT 2"],
+            "Data DDT 3": element["Data DDT 3"],
+            "Numero DDT 3": element["Numero DDT 3"],
+            "Quantità DDT 3": element["Quantità DDT 3"],
+          };
+
+          output.push(cumulativi);
+          output.push(ddt);
+        });
+      
+        return output;
       },
       _formatExcelData: function (aData) {
         

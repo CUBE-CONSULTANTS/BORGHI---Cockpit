@@ -27,7 +27,9 @@ sap.ui.define(
           });
         });
       },
-
+      uploadExcel: function(file){
+        
+      },
       readByKey: function (
         oModel,
         Entity,
