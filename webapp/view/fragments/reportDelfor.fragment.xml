@@ -57,7 +57,12 @@
               <ui:Column >
                     <Label text="Stato" />
                     <ui:template>
-                        <Text text="{modelloReport>status}" wrapping="false" />
+                        <!-- <Text text="{modelloReport>status}" wrapping="false" /> -->
+                      <Button
+                        icon="{= ${modelloReport>status} === '53' ? 'sap-icon://status-positive' : ${modelloReport>status} === '51' ? 'sap-icon://status-negative' : 'sap-icon://in-progress'}"
+                        type="{= ${modelloReport>status} === '53' ? 'Accept' : ${modelloReport>status} === '51' ? 'Negative' : 'Ghost'}"
+                        tooltip="{modelloReport>status}"
+                      />
                     </ui:template>
                 </ui:Column>
               <ui:Column >
