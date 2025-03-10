@@ -660,7 +660,7 @@ sap.ui.define(
               let datiFiltrati = metadata.results.filter(
                 (x) => (x.master !== null && x.posizioni.results.length > 0  &&
                x.posizioni.results.filter(res =>  res.log.results.length > 0).length > 0));
-              debugger;
+              
               modelMeta = new JSONModel(datiFiltrati);
               modelMeta.getProperty("/").forEach((testata) => {
                 testata.posizioni = Object.values(testata.posizioni.results);

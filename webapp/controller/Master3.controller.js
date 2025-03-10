@@ -44,7 +44,7 @@ sap.ui.define(
           .attachPatternMatched(this._onObjectMatched, this);
       },
       _onObjectMatched: async function (oEvent) {
-        debugger;
+        
         // let numIdoc='0000000000000030'
         // let rffon='123456'
         // let dest='CIAO'
@@ -295,7 +295,7 @@ sap.ui.define(
       },
 
       onUploadButtonPress: async function (oEvent) {
-        debugger;
+        ;
 
         let fileupload = this.getView().byId("FileUploader");
         let formData = new FormData();

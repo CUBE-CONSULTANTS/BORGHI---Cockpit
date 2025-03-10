@@ -396,7 +396,7 @@ sap.ui.define(
         return aFilters;
       },
       _formatCumulativi: function (aData) {
-        debugger
+        
         aData.forEach((element) => {
           element.DataFineCalcCumu = formatter.returnDate(element.DataFineCalcCumu, "yyyyMMdd", "dd/MM/yyyy");
           element.DataInitCalcCumu = formatter.returnDate(element.DataInitCalcCumu, "yyyyMMdd", "dd/MM/yyyy");
@@ -443,7 +443,7 @@ sap.ui.define(
           }
           return newElement;
         });
-        debugger
+        
         let output = [];
         newDataset.forEach((element) => {
           let riga = {
