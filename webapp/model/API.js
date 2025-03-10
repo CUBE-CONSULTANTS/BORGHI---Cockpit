@@ -74,7 +74,7 @@ sap.ui.define(
           });
         });
       },
-
+      // /fiori/upload_excel
       updateEntity: function (oModel, Entity, oRecord, method) {
         return new Promise((resolve, reject) => {
           oModel.update(Entity, oRecord, {

@@ -395,6 +395,22 @@ sap.ui.define(
         }
         return aFilters;
       },
+      _formatCumulativi: function(aData){
+        debugger
+        aData.forEach(element => {
+          element.DataFineCalcCumu = formatter.returnDate(element.DataFineCalc, "yyyyMMdd", "dd/MM/yyyy");
+          element.DataInitCalcCumu = formatter.returnDate(element.DataInitCalcCumu, "yyyyMMdd", "dd/MM/yyyy");
+          element.DataLips1 = formatter.returnDate(element.DataLips1, "yyyyMMdd", "dd/MM/yyyy");
+          element.DataLips2 = formatter.returnDate(element.DataLips2, "yyyyMMdd", "dd/MM/yyyy");
+          element.DataLips3 = formatter.returnDate(element.DataLips3, "yyyyMMdd", "dd/MM/yyyy");
+          element.Kunnr = element.Cliente
+          element.Matnr = element.Materiale
+          element.Meins = element.Quantità
+          element.Name1 = element.Descrizione
+          element.Vbeln = element.PianoConsegna
+        })
+        return aData;
+      },
       _formatExcelData: function (aData) {
         
         let aExportData = [];

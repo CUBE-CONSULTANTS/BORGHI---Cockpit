@@ -14,7 +14,7 @@ xmlns:core="sap.ui.core"
                 />
             </HBox>
             <HBox class="sapUiMediumMarginBottom sapUiSmallMarginBegin">
-                <unified:FileUploader width="350px" />
+                <unified:FileUploader width="350px"  />
                 <Button
                     type="Emphasized"
                     icon="sap-icon://upload"

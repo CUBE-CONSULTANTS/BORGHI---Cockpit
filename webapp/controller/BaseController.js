@@ -601,13 +601,15 @@ sap.ui.define(
           try {
             metadata = await API.getEntity(oModel, entity, aFilters, Expands);
             if (key === "01") {
-              modelMeta = new JSONModel(metadata.results);
+              //prova filtro su dati
+              debugger
+              let datiFiltrati = metadata.results.filter(x=> x.master !== null || x.posizioni.length > 0)
+              
+              modelMeta = new JSONModel(datiFiltrati);
               modelMeta.getProperty("/").forEach((testata) => {
                 testata.posizioni = Object.values(testata.posizioni.results);
-                // testata.master.data_ricezione = this.formatter.formatDateString(testata.master.data_ricezione)
-              
               });
-
+            
               this.getOwnerComponent().setModel(modelMeta, "master3");
               this.getModel("master3").setSizeLimit(1000000)
             } else if (key === "02") {
@@ -670,7 +672,7 @@ sap.ui.define(
           if(!aExportData.RFFON){
            flatExportData = mapper._formatExcelData(exportData);
           }else{
-            flatExportData = exportData
+            flatExportData = mapper._formatCumulativi(exportData)
           }
           
           let oSpreadsheet = new Spreadsheet({
@@ -702,7 +704,7 @@ sap.ui.define(
               });
             });
           });
-         
+          debugger
           fields.forEach((field) => {
             columns.push({
               label: field.replace(/_/g, " "),
