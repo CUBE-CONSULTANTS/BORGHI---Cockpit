@@ -14,7 +14,7 @@
               <ui:Column >
                 <Label text="Cliente" />
                 <ui:template>
-                    <Text text="{modelloReport>codice_cliente}" wrapping="false" />
+                    <Text text="{modelloReport>testata/codice_cliente}" wrapping="false" />
                 </ui:template>
             </ui:Column>
 
@@ -69,7 +69,7 @@
                 <ui:Column >
                     <Label text="Cliente" />
                     <ui:template>
-                        <Text text="{modelloReport>codice_cliente}" wrapping="false" />
+                        <Text text="{modelloReport>testata/codice_cliente}" wrapping="false" />
                     </ui:template>
                 </ui:Column>
     

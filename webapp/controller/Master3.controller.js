@@ -44,7 +44,6 @@ sap.ui.define(
           .attachPatternMatched(this._onObjectMatched, this);
       },
       _onObjectMatched: async function (oEvent) {
-        
         // let numIdoc='0000000000000030'
         // let rffon='123456'
         // let dest='CIAO'
@@ -72,7 +71,8 @@ sap.ui.define(
                 ),
               ],
               ["posizioni,posizioni($expand=log,schedulazioni,testata),master"],
-              selectedKey, false
+              selectedKey,
+              false
             );
             this.onFiltersBuilding(oEvent, selectedKey);
             break;
@@ -89,7 +89,8 @@ sap.ui.define(
                 ),
               ],
               ["master,posizioni_testata,log_testata"],
-              selectedKey, false
+              selectedKey,
+              false
             );
             this.onFiltersBuilding(oEvent, selectedKey);
             break;
@@ -108,7 +109,8 @@ sap.ui.define(
               [
                 "dettaglio_fattura,log_testata,dettaglio_fattura/riferimento_ddt,dettaglio_fattura/riferimento_ddt/riga_fattura",
               ],
-              selectedKey, false
+              selectedKey,
+              false
             );
             this.onFiltersBuilding(oEvent, selectedKey);
             break;
@@ -129,7 +131,8 @@ sap.ui.define(
                 ),
               ],
               [],
-              selectedKey, false
+              selectedKey,
+              false
             );
             this.onFiltersBuilding(oEvent, selectedKey);
             break;
@@ -209,7 +212,7 @@ sap.ui.define(
         let itemList = items
           .map(
             (item) =>
-              `Codice Cliente: ${item.codice_cliente} - Codice cliente materiale: ${item.codice_cliente_materiale} - Progressivo Invio: ${item.numero_progressivo_invio} \n`
+              `Codice Cliente: ${item.testata.codice_cliente} - Codice cliente materiale: ${item.codice_cliente_materiale} - Progressivo Invio: ${item.testata.numero_progressivo_invio} \n`
           )
           .join("");
         let message = `Vuoi continuare con questi elementi? \n ${itemList}`;
@@ -295,8 +298,6 @@ sap.ui.define(
       },
 
       onUploadButtonPress: async function (oEvent) {
-        ;
-
         let fileupload = this.getView().byId("FileUploader");
         let formData = new FormData();
         try {
