@@ -658,8 +658,8 @@ sap.ui.define(
             metadata = await API.getEntity(oModel, entity, aFilters, Expands);
             if (key === "01") {
               let datiFiltrati = metadata.results.filter(
-                (x) => x.master !== null || x.posizioni.length > 0
-              );
+                (x) => (x.master !== null && x.posizioni.results.length > 0  &&
+               x.posizioni.results.filter(res =>  res.log.results.length > 0).length > 0));
               debugger;
               modelMeta = new JSONModel(datiFiltrati);
               modelMeta.getProperty("/").forEach((testata) => {
