@@ -156,21 +156,19 @@
                   vertical="true"
                   horizontal="true"
                 >
-                  <ui:TreeTable
+                  <ui:Table
                     id="tablePos"
                     selectionMode="MultiToggle"
-                    rows="{
-                      path: 'detailData>/posizioni/results',
-                      parameters: {
-                        arrayNames: ['log']
-                      }
-                    }"
+                    rows="{detailData>/posizioni/results}"
                     autoPopinMode="true"
                     fixedLayout="false"
                     sort="onSort"
                     ariaLabelledBy="title"
                     sap.ui.fl:flexibility="sap/m/flexibility/EngineFlex"
                   >
+                  <!-- parameters: {
+                    arrayNames: ['log']
+                  } -->
                     <!--try-->
                     <ui:extension>
                       <m:OverflowToolbar>
@@ -234,10 +232,11 @@
                           <m:Button
                             icon="{= ${detailData>stato} === '53' ? 'sap-icon://status-positive' : ${detailData>stato} === '51' ? 'sap-icon://status-negative' : 'sap-icon://in-progress'}"
                             type="{= ${detailData>stato} === '53' ? 'Accept' : ${detailData>stato} === '51' ? 'Negative' : 'Ghost'}"
-                          />
+                            press="onStatoPress"                                
+                            />
                         </ui:template>
                       </ui:Column>
-                      <ui:Column
+                      <!-- <ui:Column
                       width="9rem"
                       tooltip="Messaggio"
                       app:p13nKey="messaggio_col"
@@ -286,7 +285,7 @@
                     <ui:template>
                       <m:ObjectIdentifier text="{detailData>utente}" />
                     </ui:template>
-                  </ui:Column>
+                  </ui:Column> -->
                       <ui:Column
                         width="10rem"
                         showSortMenuEntry="false"
@@ -614,7 +613,7 @@
                       </ui:template>
                     </ui:Column>
                     </ui:columns>
-                  </ui:TreeTable>
+                  </ui:Table>
                 </m:ScrollContainer>
               </m:VBox>
             </blocks>

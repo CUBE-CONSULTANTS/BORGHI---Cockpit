@@ -62,9 +62,24 @@ sap.ui.define(
         onReturn: function(){
           this.prevHash === 'archivio'? this.navToArchive(): this.handleCloseDetail()
         },
+        onStatoPress: function(oEvent) {
+          let oSource = oEvent.getSource();
+          let oBindingContext = oSource.getBindingContext("detailData");
+          let oData = oBindingContext.getObject();
+          if (!oData.log) {
+            MessageBox.error("Nessun log disponibile per questa posizione");
+            return;
+          }
+          let oModel = new JSONModel();
+          oModel.setData({ logs: oData.log }); 
+          if (!this._oDialog) {
+            this._oDialog = sap.ui.xmlfragment("programmi.consegne.edi.view.fragments.detailStato", this);
+            this.getView().addDependent(this._oDialog);
+          }     
+          this._oDialog.setModel(oModel, "logData");
+          this._oDialog.open();
+        },      
         onProcessaButton: function (oEvent) {
-          
-
           let table = this.getView().byId("tablePos");
           let indices = table.getSelectedIndices();
           let items = [];

@@ -1,0 +1,61 @@
+<c:FragmentDefinition
+xmlns="sap.m"
+	xmlns:c="sap.ui.core"
+  xmlns:ui="sap.ui.table"
+>
+<Dialog
+   title="LOG"
+>
+<VBox>
+<ui:Table rows="{logData>/logs}">
+<ui:columns>
+
+  <ui:Column
+  tooltip="Messaggio"
+>
+  <Label text="Messaggio" />
+  <ui:template>
+    <ObjectIdentifier text="{logData>messaggio}" />
+  </ui:template>
+</ui:Column>
+<ui:Column
+width="10rem" 
+  tooltip="Data"            
+>
+  <Label text="Data" />
+  <ui:template>
+    <ObjectIdentifier 
+      text="{
+        path: 'logData>data',
+        formatter: '.formatter.formatDate'
+      }" />
+  </ui:template>
+</ui:Column>
+<ui:Column
+  width="10rem"
+  tooltip="Ora"            
+>
+  <Label text="Ora" />
+  <ui:template>
+    <ObjectIdentifier
+      visible="{= ${logData>ora/ms} !== undefined }"
+     text="{path: 'logData>ora/ms', formatter: '.formatter.formatTime'}"/>
+  </ui:template>
+</ui:Column>
+<ui:Column
+width="16rem"
+tooltip="Utente"            
+>
+<Label text="Utente" />
+<ui:template>
+  <ObjectIdentifier text="{logData>utente}" />
+</ui:template>
+</ui:Column>
+</ui:columns>
+</ui:Table>
+</VBox>
+<buttons>
+  <Button type="Emphasized"  text="Chiudi" press="onClose"/>
+</buttons>
+</Dialog>
+</c:FragmentDefinition>
