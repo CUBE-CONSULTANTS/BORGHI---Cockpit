@@ -21,7 +21,7 @@
     },
     {
       "source": "^/fiori/(.*)$",
-      "target": "/fiori/$1",
+      "target": "/$1",
       "destination": "borghi-edi-cap",
       "authenticationType": "xsuaa",
       "csrfProtection": false
