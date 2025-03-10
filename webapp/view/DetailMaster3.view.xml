@@ -156,10 +156,15 @@
                   vertical="true"
                   horizontal="true"
                 >
-                  <ui:Table
+                  <ui:TreeTable
                     id="tablePos"
                     selectionMode="MultiToggle"
-                    rows="{detailData>/posizioni/results}"
+                    rows="{
+                      path: 'detailData>/posizioni/results',
+                      parameters: {
+                        arrayNames: ['log']
+                      }
+                    }"
                     autoPopinMode="true"
                     fixedLayout="false"
                     sort="onSort"
@@ -199,7 +204,7 @@
                     </ui:extension>
                     <ui:columns>
                       <ui:Column
-                        width="5rem"
+                        width="7rem"
                         hAlign="Center"
                         tooltip="Dettaglio"
                         app:p13nKey="dettaglio_col"
@@ -208,6 +213,7 @@
                         <m:Label text=" " />
                         <ui:template>
                           <m:Button
+                          visible="{= ${detailData>messaggio} === undefined }"
                             icon="sap-icon://search"
                             tooltip="Schedulazioni"
                             type="Emphasized"
@@ -231,6 +237,56 @@
                           />
                         </ui:template>
                       </ui:Column>
+                      <ui:Column
+                      width="9rem"
+                      tooltip="Messaggio"
+                      app:p13nKey="messaggio_col"
+                      sortProperty="messaggio"
+                    >
+                      <m:Label text="Messaggio" />
+                      <ui:template>
+                        <m:ObjectIdentifier text="{detailData>messaggio}" />
+                      </ui:template>
+                    </ui:Column>
+                    <ui:Column
+                    width="10rem" 
+                    tooltip="Data Errore"
+                    app:p13nKey="data_errore_col"
+                        sortProperty="data errore"            
+                    >
+                      <m:Label text="Data Errore" />
+                      <ui:template>
+                        <m:ObjectIdentifier 
+                          text="{
+                            path: 'detailData>data',
+                            formatter: '.formatter.formatDate'
+                          }" />
+                      </ui:template>
+                    </ui:Column>
+                    <ui:Column
+                      width="10rem"
+                      tooltip="Ora"   
+                      app:p13nKey="ora_errore_col"
+                        sortProperty="ora errore"         
+                    >
+                      <m:Label text="Ora Errore" />
+                      <ui:template>
+                        <m:ObjectIdentifier
+                          visible="{= ${detailData>ora/ms} !== undefined }"
+                         text="{path: 'detailData>ora/ms', formatter: '.formatter.formatTime'}"/>
+                      </ui:template>
+                    </ui:Column>
+                    <ui:Column
+                    width="16rem"
+                    tooltip="Utente" 
+                    app:p13nKey="utente_col"
+                        sortProperty="utente"           
+                  >
+                    <m:Label text="Utente" />
+                    <ui:template>
+                      <m:ObjectIdentifier text="{detailData>utente}" />
+                    </ui:template>
+                  </ui:Column>
                       <ui:Column
                         width="10rem"
                         showSortMenuEntry="false"
@@ -558,14 +614,14 @@
                       </ui:template>
                     </ui:Column>
                     </ui:columns>
-                  </ui:Table>
+                  </ui:TreeTable>
                 </m:ScrollContainer>
               </m:VBox>
             </blocks>
           </ObjectPageSubSection>
         </subSections>
       </ObjectPageSection>
-      <ObjectPageSection title="LOG">
+      <!-- <ObjectPageSection title="LOG">
         <subSections>
           <ObjectPageSubSection>
             <blocks>
@@ -639,7 +695,7 @@
             </blocks>
           </ObjectPageSubSection>
         </subSections>
-      </ObjectPageSection>
+      </ObjectPageSection> -->
     </sections>
     <!-- <footer>
             <m:OverflowToolbar>

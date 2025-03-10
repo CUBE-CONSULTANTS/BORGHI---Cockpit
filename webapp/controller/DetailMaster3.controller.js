@@ -44,7 +44,7 @@ sap.ui.define(
           try {
             this.showBusy(0)
             let dettaglio = await API.readByKey( this.getOwnerComponent().getModel("modelloV2"), "/Testata", {id: this._id, id_master: this._idMaster}, [], [
-              `posizioni($filter=stato ${operator} '53'),posizioni($expand=log,schedulazioni,testata),master`,
+              `posizioni,posizioni($expand=log,schedulazioni,testata),master`,
             ])
             // dettaglio.master.data_ricezione = formatter.formatDateString(dettaglio.master.data_ricezione)
             let detailModel = new JSONModel(dettaglio);

@@ -17,6 +17,26 @@ sap.ui.define(
               path: "",
             },
             {
+              key: "utente_col",
+              label: "Utente",
+              path: "utente",
+            },
+            {
+              key: "ora_errore_col",
+              label: "Ora Errore",
+              path: "ora/ms",
+            },
+            {
+              key: "data_errore_col",
+              label: "Data Errore",
+              path: "data",
+            },
+            {
+              key: "messaggio_col",
+              label: "Messaggio",
+              path: "messaggio",
+            },
+            {
               key: "destinatario_col",
               label: "Destinatario",
               path: "destinatario",

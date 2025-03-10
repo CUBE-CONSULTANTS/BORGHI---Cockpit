@@ -662,9 +662,13 @@ sap.ui.define(
               let datiFiltrati = metadata.results.filter(
                 x => x.master !== null && x.posizioni.results.length > 0  );
               if(filtrato){
-               datiFiltrati = metadata.results.filter(
-                  x => x.master !== null && x.posizioni.results.length > 0 && 
-                  x.posizioni.results.filter(res =>  res.log.results.length > 0).length > 0);
+                datiFiltrati = metadata.results.filter(x => x.master !== null) .map(x => ({
+                  ...x, 
+                  posizioni: { 
+                    results: x.posizioni.results.filter(res => res.log.results.length > 0) 
+                  } 
+                }))
+                .filter(x => x.posizioni.results.length > 0);
               }
               modelMeta = new JSONModel(datiFiltrati);
               modelMeta.getProperty("/").forEach((testata) => {
