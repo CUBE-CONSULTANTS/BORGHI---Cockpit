@@ -72,7 +72,7 @@ sap.ui.define(
                 ),
               ],
               ["posizioni,posizioni($expand=log,schedulazioni,testata),master"],
-              selectedKey
+              selectedKey, false
             );
             this.onFiltersBuilding(oEvent, selectedKey);
             break;
@@ -89,7 +89,7 @@ sap.ui.define(
                 ),
               ],
               ["master,posizioni_testata,log_testata"],
-              selectedKey
+              selectedKey, false
             );
             this.onFiltersBuilding(oEvent, selectedKey);
             break;
@@ -108,7 +108,7 @@ sap.ui.define(
               [
                 "dettaglio_fattura,log_testata,dettaglio_fattura/riferimento_ddt,dettaglio_fattura/riferimento_ddt/riga_fattura",
               ],
-              selectedKey
+              selectedKey, false
             );
             this.onFiltersBuilding(oEvent, selectedKey);
             break;
@@ -129,7 +129,7 @@ sap.ui.define(
                 ),
               ],
               [],
-              selectedKey
+              selectedKey, false
             );
             this.onFiltersBuilding(oEvent, selectedKey);
             break;

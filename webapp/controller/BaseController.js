@@ -444,7 +444,7 @@ sap.ui.define(
                 ),
               ],
               [`posizioni,posizioni($expand=log,schedulazioni,testata),master`],
-              "01"
+              "01",false
             );
           }
           if (
@@ -464,7 +464,7 @@ sap.ui.define(
                 ),
               ],
               ["master,posizioni_testata,log_testata"],
-              "02"
+              "02",false
             );
           }
           if (
@@ -486,7 +486,7 @@ sap.ui.define(
               [
                 "dettaglio_fattura,log_testata,dettaglio_fattura/riferimento_ddt,dettaglio_fattura/riferimento_ddt/riga_fattura",
               ],
-              "03"
+              "03", false
             );
           }
           if (
@@ -506,7 +506,7 @@ sap.ui.define(
                 ),
               ],
               [],
-              "06"
+              "06",false
             );
           }
           // oBinding.filter([]);
@@ -552,6 +552,7 @@ sap.ui.define(
           let oFilterSet;
           let key;
           let operator;
+          let filtrato = false
           this.getModel("datiAppoggio").getProperty("/currentPage") ===
           "archivio"
             ? (operator = "eq")
@@ -586,6 +587,7 @@ sap.ui.define(
               expandQuery = `posizioni($filter=stato eq '${filters.stato.oValue1}'),posizioni($expand=log,schedulazioni,testata),master`;
             }
             if (filters.messaggio) {
+              filtrato = true
               expandQuery = `posizioni,posizioni($expand=log($filter=messaggio eq '${filters.messaggio.oValue1}'),schedulazioni,testata),master`;
             }
             if (filters.data_ricezione) {
@@ -599,7 +601,7 @@ sap.ui.define(
               "/Testata",
               aFilters,
               [expandQuery],
-              "01"
+              "01", filtrato
             );
           } else if (
             oEvent
@@ -614,7 +616,7 @@ sap.ui.define(
               "/Testata",
               aFilters,
               ["master,posizioni_testata,log_testata"],
-              "02"
+              "02", false
             );
           } else if (
             oEvent
@@ -632,7 +634,7 @@ sap.ui.define(
               [
                 "dettaglio_fattura,log_testata,dettaglio_fattura/riferimento_ddt,dettaglio_fattura/riferimento_ddt/riga_fattura",
               ],
-              "03"
+              "03",false
             );
           } else if (
             oEvent
@@ -647,23 +649,27 @@ sap.ui.define(
               "/FileScartati",
               aFilters,
               [],
-              "06"
+              "06",false
             );
           }
         },
 
-        callData: async function (oModel, entity, aFilters, Expands, key) {
+        callData: async function (oModel, entity, aFilters, Expands, key, filtrato) {
           let metadata, modelMeta;
           try {
             metadata = await API.getEntity(oModel, entity, aFilters, Expands);
             if (key === "01") {
               let datiFiltrati = metadata.results.filter(
-                (x) => (x.master !== null && x.posizioni.results.length > 0  &&
-               x.posizioni.results.filter(res =>  res.log.results.length > 0).length > 0));
-              
+                x => x.master !== null && x.posizioni.results.length > 0  );
+              if(filtrato){
+               datiFiltrati = metadata.results.filter(
+                  x => x.master !== null && x.posizioni.results.length > 0 && 
+                  x.posizioni.results.filter(res =>  res.log.results.length > 0).length > 0);
+              }
               modelMeta = new JSONModel(datiFiltrati);
               modelMeta.getProperty("/").forEach((testata) => {
                 testata.posizioni = Object.values(testata.posizioni.results);
+                
               });
 
               this.getOwnerComponent().setModel(modelMeta, "master3");
