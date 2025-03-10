@@ -688,11 +688,12 @@ sap.ui.define(
           });
         },
         _getExcelColumns: function (aExportData) {
-          
           let columns = [];
           let fields = new Set();
+
           aExportData.forEach((item) => {
-            Object.keys(item).forEach((field) => fields.add(field));
+            Object.keys(item).forEach((field) => fields.add(field));  
+          
             let positions = item.posizioni || [];
             positions.forEach((position) => {
               Object.keys(position).forEach((field) => fields.add(field));
@@ -709,7 +710,8 @@ sap.ui.define(
               property: field,
               type: "Edm.String",
             });
-          });
+            
+          }); 
           return columns;
         },
         onDeletePosition: async function (oEvent) {

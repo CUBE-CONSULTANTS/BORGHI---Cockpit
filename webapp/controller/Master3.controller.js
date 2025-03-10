@@ -44,10 +44,10 @@ sap.ui.define(
       },
       _onObjectMatched: async function (oEvent) {
         debugger
-        let numIdoc='0000000000000030'
-        let rffon='123456' 
-        let dest='CIAO'
-        await this.getReportCumulativi(dest, numIdoc, rffon)
+        // let numIdoc='0000000000000030'
+        // let rffon='123456' 
+        // let dest='CIAO'
+        // await this.getReportCumulativi(dest, numIdoc, rffon)
         await this._getCounters(false);
         this.onFilterSelect(null, "01");
       },

@@ -446,8 +446,8 @@ sap.ui.define(
         debugger
         let output = [];
         newDataset.forEach((element) => {
-          let cumulativi = {
-            "Dettaglio Cumulativi": "",
+          let riga = {
+            "Dettaglio Cumulativi": "->",
             "Numero IDOC": element["Numero IDOC"],
             "Data fine calcolo cumulativi": element["Data fine calcolo cumulativi"],
             "Data inizio calcolo cumulativi": element["Data inizio calcolo cumulativi"],
@@ -462,10 +462,8 @@ sap.ui.define(
             "Cumulativo in transito": element["Cumulativo in transito"],
             "Stabilimento": element["Stabilimento"],
             "UdM": element["UdM"],
-          };
-
-          let ddt = {
-            "Dettaglio DDT": "",
+            
+            "Dettaglio DDT": "->",
             "Data DDT 1": element["Data DDT 1"],
             "Numero DDT 1": element["Numero DDT 1"],
             "Quantità DDT 1": element["Quantità DDT 1"],
@@ -475,10 +473,10 @@ sap.ui.define(
             "Data DDT 3": element["Data DDT 3"],
             "Numero DDT 3": element["Numero DDT 3"],
             "Quantità DDT 3": element["Quantità DDT 3"],
-          };
-
-          output.push(cumulativi);
-          output.push(ddt);
+          }
+        
+          output.push(riga);
+          
         });
       
         return output;
