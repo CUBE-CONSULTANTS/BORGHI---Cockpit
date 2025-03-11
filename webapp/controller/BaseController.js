@@ -276,25 +276,25 @@ sap.ui.define(
         onFiltersBuilding: function (oEvent, key) {
           if (key === "01") {
             let aData = this.getModel("master3").getProperty("/");
-            debugger
+            debugger;
             let aStato = [
               ...new Set(
-                  aData.flatMap((item) => 
-                      item.posizioni.map((pos) => {
-                          debugger
-                          if (pos.stato === '51') {
-                              return "In Errore";
-                          } else if (pos.stato === '53') {
-                              return "Elaborato Positivamente";
-                          } else if (pos.stato === null) {
-                              return "Non Elaborato";
-                          }
-                          return pos.stato; // Mantieni il valore originale per altri casi
-                      })
-                  )
-              )
+                aData.flatMap((item) =>
+                  item.posizioni.map((pos) => {
+                    debugger;
+                    if (pos.stato === "51") {
+                      return "In Errore";
+                    } else if (pos.stato === "53") {
+                      return "Elaborato Positivamente";
+                    } else if (pos.stato === null) {
+                      return "Non Elaborato";
+                    }
+                    return pos.stato; // Mantieni il valore originale per altri casi
+                  })
+                )
+              ),
             ];
-          
+
             let aClienti = [
               ...new Set(aData.map((item) => item.codice_cliente)),
             ];
@@ -458,7 +458,8 @@ sap.ui.define(
                 ),
               ],
               [`posizioni,posizioni($expand=log,schedulazioni,testata),master`],
-              "01",false
+              "01",
+              false
             );
           }
           if (
@@ -478,7 +479,8 @@ sap.ui.define(
                 ),
               ],
               ["master,posizioni_testata,log_testata"],
-              "02",false
+              "02",
+              false
             );
           }
           if (
@@ -500,7 +502,8 @@ sap.ui.define(
               [
                 "dettaglio_fattura,log_testata,dettaglio_fattura/riferimento_ddt,dettaglio_fattura/riferimento_ddt/riga_fattura",
               ],
-              "03", false
+              "03",
+              false
             );
           }
           if (
@@ -520,7 +523,8 @@ sap.ui.define(
                 ),
               ],
               [],
-              "06",false
+              "06",
+              false
             );
           }
           // oBinding.filter([]);
@@ -566,21 +570,32 @@ sap.ui.define(
           let oFilterSet;
           let key;
           let operator;
-          let filtrato = false
+          let filtrato = false;
           this.getModel("datiAppoggio").getProperty("/currentPage") ===
           "archivio"
             ? (operator = "eq")
             : (operator = "ne");
-          if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("delivery")) {
+          if (
+            oEvent
+              .getParameters()
+              .selectionSet[0].getBindingInfo("value")
+              .parts[0].path.includes("delivery")
+          ) {
             oFilterSet = this.getModel("filtersModel").getProperty("/delivery");
-            let aFilters = mapper.buildFilters(oFilterSet,(key = "01"),operator);
+            let aFilters = mapper.buildFilters(
+              oFilterSet,
+              (key = "01"),
+              operator
+            );
             let filters = {
               data_ricezione: aFilters.find(
                 (f) => f.sPath === "data_ricezione"
               ),
               stato: aFilters.find((f) => f.sPath === "stato"),
               messaggio: aFilters.find((f) => f.sPath === "messaggio"),
-              materiale : aFilters.find((f) => f.sPath === "posizioni/codice_cliente_materiale"),
+              materiale: aFilters.find(
+                (f) => f.sPath === "posizioni/codice_cliente_materiale"
+              ),
             };
             Object.keys(filters).forEach((key) => {
               if (filters[key]) {
@@ -592,13 +607,16 @@ sap.ui.define(
             if (filters.stato) {
               expandQuery = `posizioni($filter=stato eq ${filters.stato.oValue1}),posizioni($expand=log,schedulazioni,testata),master`;
             }
-            if(filters.materiale) {
-              filtrato = true
+            if (filters.materiale) {
+              filtrato = true;
               expandQuery = `posizioni($filter=codice_cliente_materiale eq '${filters.materiale.oValue1}'),posizioni($expand=log,schedulazioni,testata),master`;
             }
             if (filters.messaggio) {
-              filtrato = true  
-              filters.messaggio.oValue1 = filters.messaggio.oValue1.replace(/'/g, "''")
+              filtrato = true;
+              filters.messaggio.oValue1 = filters.messaggio.oValue1.replace(
+                /'/g,
+                "''"
+              );
               expandQuery = `posizioni,posizioni($expand=log($filter=messaggio eq '${filters.messaggio.oValue1}'),schedulazioni,testata),master`;
             }
             if (filters.data_ricezione) {
@@ -607,20 +625,28 @@ sap.ui.define(
             if (filters.stato && filters.messaggio && filters.data_ricezione) {
               expandQuery = `posizioni($filter=stato eq '${filters.stato.oValue1}'),posizioni($expand=log($filter=messaggio eq '${filters.messaggio.oValue1}'),schedulazioni,testata),master($filter=data_ricezione eq '${filters.data_ricezione.oValue1}')`;
             }
-           
+
             await this.callData(
               this.getOwnerComponent().getModel("modelloV2"),
               "/Testata",
               aFilters,
               [expandQuery],
-              "01", filtrato
+              "01",
+              filtrato
             );
           } else if (
-            oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("callOff")
+            oEvent
+              .getParameters()
+              .selectionSet[0].getBindingInfo("value")
+              .parts[0].path.includes("callOff")
           ) {
-            debugger
+            debugger;
             oFilterSet = this.getModel("filtersModel").getProperty("/callOff");
-            let aFilters = mapper.buildFilters(oFilterSet, (key = "02"),operator);
+            let aFilters = mapper.buildFilters(
+              oFilterSet,
+              (key = "02"),
+              operator
+            );
             // let filters = {
             //   data_ricezione: aFilters.find(
             //     (f) => f.sPath === "data_ricezione"
@@ -642,7 +668,8 @@ sap.ui.define(
               "/Testata",
               aFilters,
               ["posizioni_testata,log_testata,master"],
-              "02", false
+              "02",
+              false
             );
           } else if (
             oEvent
@@ -652,7 +679,11 @@ sap.ui.define(
           ) {
             oFilterSet =
               this.getModel("filtersModel").getProperty("/selfBilling");
-            let aFilters = mapper.buildFilters(oFilterSet, (key = "03"),operator);
+            let aFilters = mapper.buildFilters(
+              oFilterSet,
+              (key = "03"),
+              operator
+            );
             await this.callData(
               this.getOwnerComponent().getModel("selfBillingV2"),
               "/Testata",
@@ -660,7 +691,8 @@ sap.ui.define(
               [
                 "dettaglio_fattura,log_testata,dettaglio_fattura/riferimento_ddt,dettaglio_fattura/riferimento_ddt/riga_fattura",
               ],
-              "03",false
+              "03",
+              false
             );
           } else if (
             oEvent
@@ -675,55 +707,69 @@ sap.ui.define(
               "/FileScartati",
               aFilters,
               [],
-              "06",false
+              "06",
+              false
             );
           }
         },
 
-        callData: async function (oModel, entity, aFilters, Expands, key, filtrato) {
+        callData: async function (
+          oModel,
+          entity,
+          aFilters,
+          Expands,
+          key,
+          filtrato
+        ) {
           let metadata, modelMeta;
           try {
             metadata = await API.getEntity(oModel, entity, aFilters, Expands);
             if (key === "01") {
               let datiFiltrati = metadata.results.filter(
-                x => x.master !== null && x.posizioni.results.length > 0 );
+                (x) => x.master !== null && x.posizioni.results.length > 0
+              );
 
-              if(filtrato){
-                datiFiltrati = metadata.results.filter(x => x.master !== null) .map(x => ({
-                  ...x, 
-                  posizioni: { 
-                    results: x.posizioni.results.filter(res => res.log.results.length > 0) 
-                  } 
-                }))
-                .filter(x => x.posizioni.results.length > 0);
+              if (filtrato) {
+                datiFiltrati = metadata.results
+                  .filter((x) => x.master !== null)
+                  .map((x) => ({
+                    ...x,
+                    posizioni: {
+                      results: x.posizioni.results.filter(
+                        (res) => res.log.results.length > 0
+                      ),
+                    },
+                  }))
+                  .filter((x) => x.posizioni.results.length > 0);
               }
               modelMeta = new JSONModel(datiFiltrati);
               modelMeta.getProperty("/").forEach((testata) => {
                 testata.posizioni = Object.values(testata.posizioni.results);
-                
               });
 
               this.getOwnerComponent().setModel(modelMeta, "master3");
               this.getModel("master3").setSizeLimit(1000000);
             } else if (key === "02") {
-              debugger
+              debugger;
               let datiFiltrati = metadata.results.filter(
-                x => x.master !== null && x.posizioni_testata.results.length > 0 );
+                (x) =>
+                  x.master !== null && x.posizioni_testata.results.length > 0
+              );
 
               if (filtrato) {
-                  debugger;
-                  datiFiltrati = metadata.results
-                    .filter(x => x.master !== null)
-                    .map(x => ({
-                      ...x,
-                      posizioni_testata: {
-                        results: x.posizioni_testata.results 
-                      }
-                    }))
-                    .filter(x => x.posizioni_testata.results.length > 0);
+                debugger;
+                datiFiltrati = metadata.results
+                  .filter((x) => x.master !== null)
+                  .map((x) => ({
+                    ...x,
+                    posizioni_testata: {
+                      results: x.posizioni_testata.results,
+                    },
+                  }))
+                  .filter((x) => x.posizioni_testata.results.length > 0);
               }
               modelMeta = new JSONModel(datiFiltrati);
-         
+
               modelMeta.getProperty("/").forEach((testata) => {
                 testata.posizioni_testata = Object.values(
                   testata.posizioni_testata.results
@@ -876,7 +922,10 @@ sap.ui.define(
             });
 
             aSelectedItems.forEach((element) => {
-              if (element.hasOwnProperty("posizioni")) {
+              if (
+                element.hasOwnProperty("posizioni") ||
+                element.hasOwnProperty("posizioni_testata")
+              ) {
                 testate.push(element);
                 flag = true;
               } else {

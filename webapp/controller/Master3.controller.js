@@ -169,7 +169,20 @@ sap.ui.define(
       },
 
       onProcessaButton: async function (oEvent) {
-        let table = this.getView().byId("treetableMain");
+        let key = this.getView().byId("idIconTabBar").getSelectedKey();
+        let id;
+        switch (key) {
+          case "01":
+            id = "treetableMain";
+            break;
+          case "02":
+            id = "treetableCallOff";
+            break;
+          case "03":
+            id = "treetableSB";
+            break;
+        }
+        let table = this.getView().byId(id);
         try {
           let arrayToProcess = await this._returnPayload(table);
           if (arrayToProcess.length > 0) {
