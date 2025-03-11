@@ -6,6 +6,7 @@ sap.ui.define(
     "sap/ui/core/library",
     "sap/ui/core/Fragment",
     "sap/m/MessageBox",
+    "sap/m/MessageToast",
     "../model/API",
     "../model/models",
     "../model/formatter",
@@ -19,6 +20,7 @@ sap.ui.define(
     CoreLibrary,
     Fragment,
     MessageBox,
+    MessageToast,
     API,
     models,
     formatter,
@@ -334,11 +336,13 @@ sap.ui.define(
             if (!response.ok) {
               let errorText = await response.text(); 
               throw new Error(`Errore ${response.status}: ${errorText}`);
+            }else{
+              debugger
+              oEvent.getSource().getParent().getParent().getParent().close()
+              MessageToast.show("File caricato con Successo")
+              await this._refreshData("01")
             }           
-            sap.m.InstanceManager.closeAllDialogs(() => {
-              console.log("Tutte le dialog sono state chiuse.");
-            });
-            MessageToast.show("File caricato con Successo")
+            
           } catch (error) {
             MessageBox.error("Errore durante il caricamento del File");
           } finally {
