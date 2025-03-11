@@ -70,8 +70,17 @@ sap.ui.define(
             MessageBox.error("Nessun log disponibile per questa posizione");
             return;
           }
+          let sortedLogs = oData.log.sort((a, b) => {
+            let dateA = new Date(a.data).getTime(); 
+            let dateB = new Date(b.data).getTime();
+    
+            if (dateA === dateB) {
+                return b.ora.ms - a.ora.ms;
+            }
+            return dateB - dateA; 
+          });
           let oModel = new JSONModel();
-          oModel.setData({ logs: oData.log }); 
+          oModel.setData({ logs: sortedLogs }); 
           if (!this._oDialog) {
             this._oDialog = sap.ui.xmlfragment("programmi.consegne.edi.view.fragments.detailStato", this);
             this.getView().addDependent(this._oDialog);

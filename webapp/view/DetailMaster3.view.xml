@@ -202,7 +202,7 @@
                     </ui:extension>
                     <ui:columns>
                       <ui:Column
-                        width="7rem"
+                        width="5rem"
                         hAlign="Center"
                         tooltip="Dettaglio"
                         app:p13nKey="dettaglio_col"

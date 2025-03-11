@@ -5,21 +5,26 @@ xmlns="sap.m"
 >
 <Dialog
    title="LOG"
+   icon="sap-icon://list"
+   
 >
-<VBox>
-<ui:Table rows="{logData>/logs}">
+<VBox >
+<ui:Table rows="{logData>/logs}"
+  selectionMode="None"
+  
+  >
 <ui:columns>
 
   <ui:Column
   tooltip="Messaggio"
->
+  >
   <Label text="Messaggio" />
   <ui:template>
     <ObjectIdentifier text="{logData>messaggio}" />
   </ui:template>
 </ui:Column>
 <ui:Column
-width="10rem" 
+
   tooltip="Data"            
 >
   <Label text="Data" />
@@ -32,7 +37,7 @@ width="10rem"
   </ui:template>
 </ui:Column>
 <ui:Column
-  width="10rem"
+  
   tooltip="Ora"            
 >
   <Label text="Ora" />
@@ -43,7 +48,7 @@ width="10rem"
   </ui:template>
 </ui:Column>
 <ui:Column
-width="16rem"
+
 tooltip="Utente"            
 >
 <Label text="Utente" />
