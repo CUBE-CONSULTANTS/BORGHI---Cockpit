@@ -337,7 +337,7 @@ sap.ui.define(
               let errorText = await response.text(); 
               throw new Error(`Errore ${response.status}: ${errorText}`);
             }else{
-              debugger
+              
               oEvent.getSource().getParent().getParent().getParent().close()
               MessageToast.show("File caricato con Successo")
               await this._refreshData("01")
