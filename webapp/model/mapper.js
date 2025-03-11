@@ -293,6 +293,13 @@ sap.ui.define(
             );
           }
           if (oFilterSet.stato && oFilterSet.stato.value) {
+            if(oFilterSet.stato.value === "In Errore"){
+              oFilterSet.stato.value = "51"
+            }else if (oFilterSet.stato.value === "Non Elaborato"){
+              oFilterSet.stato.value = null
+            }else if(oFilterSet.stato.value === "Elaborato Positivamente"){
+              oFilterSet.stato.value = "53"
+            }
             aFilters.push(
               new sap.ui.model.Filter(
                 "stato",

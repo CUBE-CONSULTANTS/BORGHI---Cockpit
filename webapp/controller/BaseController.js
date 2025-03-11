@@ -276,11 +276,25 @@ sap.ui.define(
         onFiltersBuilding: function (oEvent, key) {
           if (key === "01") {
             let aData = this.getModel("master3").getProperty("/");
+            debugger
             let aStato = [
               ...new Set(
-                aData.flatMap((item) => item.posizioni.map((pos) => pos.stato))
-              ),
+                  aData.flatMap((item) => 
+                      item.posizioni.map((pos) => {
+                          debugger
+                          if (pos.stato === '51') {
+                              return "In Errore";
+                          } else if (pos.stato === '53') {
+                              return "Elaborato Positivamente";
+                          } else if (pos.stato === null) {
+                              return "Non Elaborato";
+                          }
+                          return pos.stato; // Mantieni il valore originale per altri casi
+                      })
+                  )
+              )
             ];
+          
             let aClienti = [
               ...new Set(aData.map((item) => item.codice_cliente)),
             ];
@@ -584,7 +598,7 @@ sap.ui.define(
             });
             let expandQuery = `posizioni,posizioni($expand=log,schedulazioni,testata),master`;
             if (filters.stato) {
-              expandQuery = `posizioni($filter=stato eq '${filters.stato.oValue1}'),posizioni($expand=log,schedulazioni,testata),master`;
+              expandQuery = `posizioni($filter=stato eq ${filters.stato.oValue1}),posizioni($expand=log,schedulazioni,testata),master`;
             }
             if (filters.messaggio) {
               filtrato = true
@@ -596,6 +610,7 @@ sap.ui.define(
             if (filters.stato && filters.messaggio && filters.data_ricezione) {
               expandQuery = `posizioni($filter=stato eq '${filters.stato.oValue1}'),posizioni($expand=log($filter=messaggio eq '${filters.messaggio.oValue1}'),schedulazioni,testata),master($filter=data_ricezione eq '${filters.data_ricezione.oValue1}')`;
             }
+           
             await this.callData(
               this.getOwnerComponent().getModel("modelloV2"),
               "/Testata",
@@ -660,7 +675,8 @@ sap.ui.define(
             metadata = await API.getEntity(oModel, entity, aFilters, Expands);
             if (key === "01") {
               let datiFiltrati = metadata.results.filter(
-                x => x.master !== null && x.posizioni.results.length > 0  );
+                x => x.master !== null && x.posizioni.results.length > 0 );
+
               if(filtrato){
                 datiFiltrati = metadata.results.filter(x => x.master !== null) .map(x => ({
                   ...x, 
