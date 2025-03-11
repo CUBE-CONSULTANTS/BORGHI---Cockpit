@@ -11,6 +11,7 @@ xmlns:core="sap.ui.core"
                     type="Emphasized"
                     icon="sap-icon://download"
                     text="Esporta Template Manuale"
+                    press="downloadTemplate"
                 />
             </HBox>
             <HBox class="sapUiMediumMarginBottom sapUiSmallMarginBegin">

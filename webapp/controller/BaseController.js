@@ -621,11 +621,27 @@ sap.ui.define(
             debugger
             oFilterSet = this.getModel("filtersModel").getProperty("/callOff");
             let aFilters = mapper.buildFilters(oFilterSet, (key = "02"),operator);
+            // let filters = {
+            //   data_ricezione: aFilters.find(
+            //     (f) => f.sPath === "data_ricezione"
+            //   ),
+            // };
+            // Object.keys(filters).forEach((key) => {
+            //   if (filters[key]) {
+            //     let index = aFilters.findIndex((f) => f.sPath === key);
+            //     if (index !== -1) aFilters.splice(index, 1);
+            //   }
+            // });
+            // let expandQuery = `posizioni_testata,log_testata,master`;
+            // if (filters.data_ricezione) {
+            //   expandQuery = `posizioni_testata,log_testata,master($filter=data_ricezione eq '${filters.data_ricezione.oValue1}')`;
+            // }
+
             await this.callData(
               this.getOwnerComponent().getModel("calloffV2"),
               "/Testata",
               aFilters,
-              ["master,posizioni_testata,log_testata"],
+              ["posizioni_testata,log_testata,master"],
               "02", false
             );
           } else if (
@@ -636,7 +652,7 @@ sap.ui.define(
           ) {
             oFilterSet =
               this.getModel("filtersModel").getProperty("/selfBilling");
-            let aFilters = mapper.buildFilters(oFilterSet, (key = "03"));
+            let aFilters = mapper.buildFilters(oFilterSet, (key = "03"),operator);
             await this.callData(
               this.getOwnerComponent().getModel("selfBillingV2"),
               "/Testata",
@@ -690,7 +706,24 @@ sap.ui.define(
               this.getOwnerComponent().setModel(modelMeta, "master3");
               this.getModel("master3").setSizeLimit(1000000);
             } else if (key === "02") {
-              modelMeta = new JSONModel(metadata.results);
+              debugger
+              let datiFiltrati = metadata.results.filter(
+                x => x.master !== null && x.posizioni_testata.results.length > 0 );
+
+              if (filtrato) {
+                  debugger;
+                  datiFiltrati = metadata.results
+                    .filter(x => x.master !== null)
+                    .map(x => ({
+                      ...x,
+                      posizioni_testata: {
+                        results: x.posizioni_testata.results 
+                      }
+                    }))
+                    .filter(x => x.posizioni_testata.results.length > 0);
+              }
+              modelMeta = new JSONModel(datiFiltrati);
+         
               modelMeta.getProperty("/").forEach((testata) => {
                 testata.posizioni_testata = Object.values(
                   testata.posizioni_testata.results

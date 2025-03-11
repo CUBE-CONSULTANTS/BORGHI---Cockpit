@@ -296,8 +296,19 @@ sap.ui.define(
         let rffon = obj.numero_ordine_acquisto;
         await this.getReportCumulativi(dest, numIdoc, rffon);
       },
+      downloadTemplate: function (oEvent) {
+        debugger
+        let sExcelFilePath = "cockpit/public/documents/TemplateCaricamentoManuale.xlsx";
+        let link = document.createElement("a");
+        link.href = sap.ui.require.toUrl(sExcelFilePath);
+        link.download = "Template.xlsx";
 
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      },
       onUploadButtonPress: async function (oEvent) {
+        debugger
         let fileupload = this.getView().byId("FileUploader");
         let formData = new FormData();
         try {
@@ -307,7 +318,7 @@ sap.ui.define(
             body: formData,
           });
         } catch (error) {
-          console.log(error);
+          MessageBox.error("Errore durante il caricamento del File")
         }
       },
     });
