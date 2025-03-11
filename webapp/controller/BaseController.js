@@ -276,12 +276,12 @@ sap.ui.define(
         onFiltersBuilding: function (oEvent, key) {
           if (key === "01") {
             let aData = this.getModel("master3").getProperty("/");
-            debugger;
+            
             let aStato = [
               ...new Set(
                 aData.flatMap((item) =>
                   item.posizioni.map((pos) => {
-                    debugger;
+                    
                     if (pos.stato === "51") {
                       return "In Errore";
                     } else if (pos.stato === "53") {
@@ -640,7 +640,7 @@ sap.ui.define(
               .selectionSet[0].getBindingInfo("value")
               .parts[0].path.includes("callOff")
           ) {
-            debugger;
+            
             oFilterSet = this.getModel("filtersModel").getProperty("/callOff");
             let aFilters = mapper.buildFilters(
               oFilterSet,
@@ -750,14 +750,14 @@ sap.ui.define(
               this.getOwnerComponent().setModel(modelMeta, "master3");
               this.getModel("master3").setSizeLimit(1000000);
             } else if (key === "02") {
-              debugger;
+              
               let datiFiltrati = metadata.results.filter(
                 (x) =>
                   x.master !== null && x.posizioni_testata.results.length > 0
               );
 
               if (filtrato) {
-                debugger;
+                
                 datiFiltrati = metadata.results
                   .filter((x) => x.master !== null)
                   .map((x) => ({

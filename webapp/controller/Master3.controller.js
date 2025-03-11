@@ -310,10 +310,7 @@ sap.ui.define(
         await this.getReportCumulativi(dest, numIdoc, rffon);
       },
       downloadTemplate: function (oEvent) {
-        debugger
-        
-        
-        let sExcelFilePath = "public/documents/TemplateCaricamentoManuale.xlsx";
+        let sExcelFilePath = "programmi/consegne/edi/public/TemplateCaricamentoManuale.xlsx";
         let link = document.createElement("a");
         link.href = sap.ui.require.toUrl(sExcelFilePath);
         link.download = "TemplateCaricamentoManuale.xlsx";
@@ -323,19 +320,34 @@ sap.ui.define(
         document.body.removeChild(link);
       },
       onUploadButtonPress: async function (oEvent) {
-        debugger
+        
         let fileupload = this.getView().byId("FileUploader");
         let formData = new FormData();
-        try {
-          formData.append("file", fileupload.oFileUpload.files[0]);
-          await fetch("/fiori/upload_excel", {
-            method: "POST",
-            body: formData,
-          });
-        } catch (error) {
-          MessageBox.error("Errore durante il caricamento del File")
-        }
-      },
+        if(fileupload.oFileUpload.files[0]){
+          try {
+            this.showBusy(0);
+            formData.append("file", fileupload.oFileUpload.files[0]);
+            let response = await fetch("/fiori/upload_excel", {
+              method: "POST",
+              body: formData,
+            });
+            if (!response.ok) {
+              let errorText = await response.text(); 
+              throw new Error(`Errore ${response.status}: ${errorText}`);
+            }           
+            sap.m.InstanceManager.closeAllDialogs(() => {
+              console.log("Tutte le dialog sono state chiuse.");
+            });
+            MessageToast.show("File caricato con Successo")
+          } catch (error) {
+            MessageBox.error("Errore durante il caricamento del File");
+          } finally {
+            this.hideBusy(0);
+          }
+        }else{
+          MessageBox.error("Nessun file selezionato")
+        }   
+      }
     });
   }
 );
