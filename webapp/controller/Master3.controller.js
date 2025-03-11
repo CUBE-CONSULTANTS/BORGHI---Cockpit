@@ -334,9 +334,11 @@ sap.ui.define(
             if (!response.ok) {
               let errorText = await response.text(); 
               throw new Error(`Errore ${response.status}: ${errorText}`);
-            }
-            MessageBox.success("File caricato con successo!")
-            
+            }           
+            sap.m.InstanceManager.closeAllDialogs(() => {
+              console.log("Tutte le dialog sono state chiuse.");
+            });
+            MessageToast.show("File caricato con Successo")
           } catch (error) {
             MessageBox.error("Errore durante il caricamento del File");
           } finally {
