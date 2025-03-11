@@ -298,10 +298,12 @@ sap.ui.define(
       },
       downloadTemplate: function (oEvent) {
         debugger
-        let sExcelFilePath = "cockpit/public/documents/TemplateCaricamentoManuale.xlsx";
+        
+        
+        let sExcelFilePath = "public/documents/TemplateCaricamentoManuale.xlsx";
         let link = document.createElement("a");
         link.href = sap.ui.require.toUrl(sExcelFilePath);
-        link.download = "Template.xlsx";
+        link.download = "TemplateCaricamentoManuale.xlsx";
 
         document.body.appendChild(link);
         link.click();
