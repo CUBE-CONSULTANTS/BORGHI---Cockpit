@@ -310,10 +310,10 @@
             <Button
               icon="sap-icon://download"
               tooltip="Dowload file edi"
-              type="Default"
+              
               class="sapUiTinyMarginBegin"
               press="downloadEdi"
-              visible="{= ${master3>numero_progressivo_invio} ? true : false}"
+              visible="{=${master3>master/template} !== 'LOCALE'  &amp;&amp; ${master3>numero_progressivo_invio} ? true : false}"
             />
             <Button
               tooltip="Report Cumulativi"
