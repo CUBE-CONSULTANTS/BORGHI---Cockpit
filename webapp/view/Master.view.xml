@@ -1,265 +1,246 @@
 <mvc:View
-    controllerName="programmi.consegne.edi.controller.Master"
-    xmlns="sap.m"
-    xmlns:f="sap.f"
-    xmlns:mvc="sap.ui.core.mvc"
-    xmlns:fb="sap.ui.comp.filterbar"
-    xmlns:core="sap.ui.core"
-    xmlns:layout="sap.ui.layout"
+  controllerName="programmi.consegne.edi.controller.Master"
+  xmlns="sap.m"
+  xmlns:f="sap.f"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:fb="sap.ui.comp.filterbar"
+  xmlns:core="sap.ui.core"
+  xmlns:layout="sap.ui.layout"
+  xmlns:ui="sap.ui.table"
 >
-    <f:DynamicPage
-        id="dynamicPageId"
-        toggleHeaderOnTitleClick="false"
-        showFooter="true"
-    >
-        <!-- DynamicPage Title -->
-        <f:title>
-            <f:DynamicPageTitle>
-                <f:heading>
-                    <Title
-                        text="Prodotti"
-                    />
-                </f:heading>
-                <f:actions>
-					<layout:HorizontalLayout allowWrapping="true">
-						<layout:VerticalLayout>
-							<Image 
-								src="public/images/borghiLogo2.png"
-								height="35.00000000px"
-								width="100%"
-							/>
-						</layout:VerticalLayout>
-					</layout:HorizontalLayout>
-				</f:actions>
-            </f:DynamicPageTitle>
-        </f:title>
-        <f:header>
-            <f:DynamicPageHeader pinnable="true">
-                <f:content>
-                    
-
-                    <fb:FilterBar
-                        id="filterbar"
-                        persistencyKey="myPersKey"
-                        useToolbar="false"
-                        search=".onSearch"
-                        filterChange=".onFilterChange"
-                        afterVariantLoad=".onAfterVariantLoad"
-                    >
-                        <fb:filterGroupItems>
-                            <fb:FilterGroupItem
-                                name="Codice Cliente"
-                                label="Codice Cliente"
-                                groupName="Group1"
-                                visibleInFilterBar="true"
-                            >
-                                <fb:control>
-                                    <MultiComboBox
-                                        name=""
-                                        selectionChange=".onSelectionChange"
-                                        items="{
-											path: '/ProductNames',
-											templateShareable: true
-										}"
-                                    >
-                                        <core:Item
-                                            key="{key}"
-                                            text="{name}"
-                                        />
-                                    </MultiComboBox>
-                                </fb:control>
-                            </fb:FilterGroupItem>
-                            <fb:FilterGroupItem
-                                name="Codice Articolo"
-                                label="Codice Articolo"
-                                groupName="Group1"
-                                visibleInFilterBar="true"
-                            >
-                                <fb:control>
-                                    <MultiComboBox
-                                        name="Category"
-                                        selectionChange=".onSelectionChange"
-                                        items="{
-											path: '/ProductCategories',
-											templateShareable: true
-										}"
-                                    >
-                                        <core:Item
-                                            key="{key}"
-                                            text="{name}"
-                                        />
-                                    </MultiComboBox>
-                                </fb:control>
-                            </fb:FilterGroupItem>
-                            <fb:FilterGroupItem
-                                name="Ragione Sociale"
-                                label="Ragione Sociale"
-                                groupName="Group1"
-                                visibleInFilterBar="true"
-                            >
-                                <fb:control>
-                                    <MultiComboBox
-                                        name="SupplierName"
-                                        selectionChange=".onSelectionChange"
-                                        items="{
-											path: '/ProductSuppliers',
-											templateShareable: true
-										}"
-                                    >
-                                        <core:Item
-                                            key="{key}"
-                                            text="{name}"
-                                        />
-                                    </MultiComboBox>
-                                </fb:control>
-                            </fb:FilterGroupItem>
-                        </fb:filterGroupItems>
-                    </fb:FilterBar>
-                </f:content>
-            </f:DynamicPageHeader>
-        </f:header>
-        <!-- DynamicPage Content -->
+  <f:DynamicPage
+    id="dynamicPageId"
+    toggleHeaderOnTitleClick="false"
+    showFooter="true"
+  >
+    <!-- DynamicPage Title -->
+    <f:title>
+      <f:DynamicPageTitle>
+        <f:heading>
+          <Title text="Confronto Variazioni Articolo" />
+        </f:heading>
+        <f:actions>
+          <layout:HorizontalLayout allowWrapping="true">
+            <layout:VerticalLayout>
+              <Image
+                src="public/images/borghiLogo2.png"
+                height="35.00000000px"
+                width="100%"
+              />
+            </layout:VerticalLayout>
+          </layout:HorizontalLayout>
+        </f:actions>
+      </f:DynamicPageTitle>
+    </f:title>
+    <f:header>
+      <f:DynamicPageHeader pinnable="true">
         <f:content>
-            <VBox fitContainer="true">
-                <OverflowToolbar class="sapFDynamicPageAlignContent">
-                    <ToolbarSpacer />
-                    <!-- <SearchField search=".onSearch" width="17.5rem"/> -->
-                    <!-- <OverflowToolbarButton icon="sap-icon://add" text="Add" type="Transparent" press=".onAdd"/> -->
-                    <OverflowToolbarButton
-                        icon="sap-icon://sort"
-                        text="Sort"
-                        type="Transparent"
-                        press=".onSort"
-                    />
-                </OverflowToolbar>
-                <Table
-                    id="productsTable"
-                    inset="false"
+          <fb:FilterBar
+          
+            search="onSearch"
+            persistencyKey="myPersKey"
+            useToolbar="false"
+            showFilterConfiguration="false"
+            showGoOnFB="true"
+            showClearOnFB="true"
+            clear="onFilterBarClear"
+          >
+            <fb:filterGroupItems>
+              <fb:FilterGroupItem
+                name="Codice Cliente"
+                label="Codice Cliente"
+                groupName="Group1"
+                visibleInFilterBar="true"
+              >
+                <fb:control>
+                  <MultiComboBox
+                    name=""
+                    selectionChange=".onSelectionChange"
                     items="{
-						path: 'products>/ProductCollection',
-						sorter: {
-							path: 'Name'
-						}
-					}"
-                    class="sapFDynamicPageAlignContent"
-                    width="auto"
+                      path: '/',
+                      templateShareable: true
+                    }"
+                  >
+                    <core:Item
+                      key="{key}"
+                      text="{name}"
+                    />
+                  </MultiComboBox>
+                </fb:control>
+              </fb:FilterGroupItem>
+              <fb:FilterGroupItem
+              name="Ragione Sociale"
+              label="Ragione Sociale"
+              groupName="Group1"
+              visibleInFilterBar="true"
+            >
+              <fb:control>
+                <MultiComboBox
+                  name="SupplierName"
+                  selectionChange=".onSelectionChange"
+                  items="{
+                    path: '/',
+                    templateShareable: true
+                  }"
                 >
-                    <columns>
-                        <Column width="12em">
-                            <Text text="Cod. Cliente/Rag. Soc." />
-                        </Column>
-                        <Column width="12em">
-                            <Text text="Articolo" />
-                        </Column>
-                        <Column width="6em">
-                            <Text text="1 sett." />
-                        </Column>
-                        <Column width="6em">
-                            <Text text="2 sett" />
-                        </Column>
-                        <Column width="6em">
-                            <Text text="3 sett" />
-                        </Column>
-                        <Column width="6em">
-                            <Text text="4 sett" />
-                        </Column>
-                        <Column width="6em">
-                            <Text text="5 sett" />
-                        </Column>
-                        <Column width="6em">
-                            <Text text="6 sett" />
-                        </Column>
-                        <Column width="6em">
-                            <Text text="7 sett" />
-                        </Column>
-                        <Column width="6em">
-                            <Text text="8 sett" />
-                        </Column>
-                        <Column width="6em">
-                            <Text text="Cod. Tot" />
-                        </Column>
-                        <Column width="6em">
-                            <Text text="Azz" />
-                        </Column>
-                        <Column width="6em">
-                            <Text text="Giac. Finito" />
-                        </Column>
-                        <Column width="6em">
-                            <Text text="Impegno Cong." />
-                        </Column>
-                        <Column width="6em">
-                            <Text text="Giac. Scalato" />
-                        </Column>
-                    </columns>
-                    <items>
-                        <ColumnListItem
-                            type="Navigation"
-                            press=".onListItemPress"
-                        >
-                            <cells>
-                                <ObjectIdentifier
-                                    title="{products>Name}"
-                                    text="{products>ProductId}"
-                                />
-                                <ObjectIdentifier
-                                    text="{products>codice_articolo}"
-                                />
-                                <ObjectIdentifier
-                                    title="{products>variazioni_quantita/0/quantita}"
-                                    text="{products>variazioni_percentuali/0/percentuale}{products>CurrencyCode}"
-                                />
-                                <ObjectIdentifier
-                                    title="{products>variazioni_quantita/1/quantita}"
-                                    text="{products>variazioni_percentuali/1/percentuale}{products>CurrencyCode}"
-                                />
-                                <ObjectIdentifier
-                                    title="{products>variazioni_quantita/2/quantita}"
-                                    text="{products>variazioni_percentuali/2/percentuale}{products>CurrencyCode}"
-                                />
-                                <ObjectIdentifier
-                                    title="{products>variazioni_quantita/3/quantita}"
-                                    text="{products>variazioni_percentuali/3/percentuale}{products>CurrencyCode}"
-                                />
-                                <ObjectIdentifier
-                                    title="{products>variazioni_quantita/4/quantita}"
-                                    text="{products>variazioni_percentuali/4/percentuale}{products>CurrencyCode}"
-                                />
-                                <ObjectIdentifier
-                                    title="{products>variazioni_quantita/5/quantita}"
-                                    text="{products>variazioni_percentuali/5/percentuale}{products>CurrencyCode}"
-                                />
-                                <ObjectIdentifier
-                                    title="{products>variazioni_quantita/6/quantita}"
-                                    text="{products>variazioni_percentuali/6/percentuale}{products>CurrencyCode}"
-                                />
-                                <ObjectIdentifier
-                                    title="{products>variazioni_quantita/7/quantita}"
-                                    text="{products>variazioni_percentuali/7/percentuale}{products>CurrencyCode}"
-                                />
-                                <ObjectIdentifier title="{products>Depth}" />
-                                <ObjectIdentifier title="{products>Azz}" />
-                                <ObjectIdentifier
-                                    title="{products>giac_finito}"
-                                />
-                                <ObjectIdentifier
-                                    title="{products>impegno_cong}"
-                                />
-                                <ObjectIdentifier
-                                    title="{products>giac_scalato}"
-                                />
-                            </cells>
-                        </ColumnListItem>
-                    </items>
-                </Table>
-            </VBox>
-        </f:content>
+                  <core:Item
+                    key="{key}"
+                    text="{name}"
+                  />
+                </MultiComboBox>
+              </fb:control>
+            </fb:FilterGroupItem>
+              <fb:FilterGroupItem
+                name="Codice Articolo"
+                label="Codice Articolo"
+                groupName="Group1"
+                visibleInFilterBar="true"
+              >
+                <fb:control>
+                  <MultiComboBox
+                    name="Category"
+                    selectionChange=".onSelectionChange"
+                    items="{
+                      path: '/',
+                      templateShareable: true
+                    }"
+                  >
+                    <core:Item
+                      key="{key}"
+                      text="{name}"
+                    />
+                  </MultiComboBox>
+                </fb:control>
+              </fb:FilterGroupItem>
 
-        <!-- DynamicPage Footer -->
-        <f:footer>
-          <core:Fragment
-          fragmentName="programmi.consegne.edi.view.fragments.footer"
-          type="XML"
+            </fb:filterGroupItems>
+          </fb:FilterBar>
+        </f:content>
+      </f:DynamicPageHeader>
+    </f:header>
+    <!-- DynamicPage Content -->
+    <f:content>
+      <VBox fitContainer="true">
+        <OverflowToolbar class="sapFDynamicPageAlignContent">
+          <ToolbarSpacer />
+          <Button
+            text="Esporta excel"
+            icon="sap-icon://excel-attachment"
+            press="downloadExcelFile"
+          />
+          <OverflowToolbarButton
+            icon="sap-icon://sort"
+            text="Sort"
+            type="Transparent"
+            press=".onSort"
+          />
+        </OverflowToolbar>
+        <ui:Table
+
+          class="sapFDynamicPageAlignContent"
+   
+        >
+          <ui:columns>
+            <ui:Column width="12em">
+              <Label text="Cod. Cliente/Rag. Soc." />
+              <ui:template>
+                <ObjectIdentifier />
+              </ui:template>
+            </ui:Column>
+            <ui:Column width="12em">
+              <Label text="Articolo" />
+              <ui:template>
+                <ObjectIdentifier />
+              </ui:template>
+            </ui:Column>
+            <ui:Column width="6em">
+              <Label text="1 sett." />
+              <ui:template>
+                <ObjectIdentifier />
+              </ui:template>
+            </ui:Column>
+            <ui:Column width="6em">
+              <Label text="2 sett" />
+              <ui:template>
+                <ObjectIdentifier />
+              </ui:template>
+            </ui:Column>
+            <ui:Column width="6em">
+              <Label text="3 sett" />
+              <ui:template>
+                <ObjectIdentifier />
+              </ui:template>
+            </ui:Column>
+            <ui:Column width="6em">
+              <Label text="4 sett" />
+              <ui:template>
+                <ObjectIdentifier />
+              </ui:template>
+            </ui:Column>
+            <ui:Column width="6em">
+              <Label text="5 sett" />
+              <ui:template>
+                <ObjectIdentifier />
+              </ui:template>
+            </ui:Column>
+            <ui:Column width="6em">
+              <Label text="6 sett" />
+              <ui:template>
+                <ObjectIdentifier />
+              </ui:template>
+            </ui:Column>
+            <ui:Column width="6em">
+              <Label text="7 sett" />
+              <ui:template>
+                <ObjectIdentifier />
+              </ui:template>
+            </ui:Column>
+            <ui:Column width="6em">
+              <Label text="8 sett" />
+              <ui:template>
+                <ObjectIdentifier />
+              </ui:template>
+            </ui:Column>
+            <ui:Column width="6em">
+              <Label text="Cod. Tot" />
+              <ui:template>
+                <ObjectIdentifier />
+              </ui:template>
+            </ui:Column>
+            <ui:Column width="6em">
+              <Label text="Azzeramento" />
+              <ui:template>
+                <ObjectIdentifier />
+              </ui:template>
+            </ui:Column>
+            <ui:Column width="6em">
+              <Label text="Giac. Finito" />
+              <ui:template>
+                <ObjectIdentifier />
+              </ui:template>
+            </ui:Column>
+            <ui:Column width="6em">
+              <Label text="Impegno Cong." />
+              <ui:template>
+                <ObjectIdentifier />
+              </ui:template>
+            </ui:Column>
+            <ui:Column width="6em">
+              <Label text="Giac. Scalato" />
+              <ui:template>
+                <ObjectIdentifier />
+              </ui:template>
+            </ui:Column>
+          </ui:columns>
+        </ui:Table>
+      </VBox>
+    </f:content>
+    <!-- DynamicPage Footer -->
+    <f:footer>
+      <core:Fragment
+        fragmentName="programmi.consegne.edi.view.fragments.footer"
+        type="XML"
       />
-        </f:footer>
-    </f:DynamicPage>
+    </f:footer>
+  </f:DynamicPage>
 </mvc:View>

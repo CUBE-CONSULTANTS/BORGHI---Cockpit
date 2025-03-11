@@ -5,31 +5,14 @@ sap.ui.define(
 
     return BaseController.extend("programmi.consegne.edi.controller.Detail", {
       onInit: function () {
-        this.oModel = this.getOwnerComponent.getModel("layout");
-
-        this.getRouter().getRoute("master").attachPatternMatched(this._onProductMatched, this);
-        this.getRouter().getRoute("detail").attachPatternMatched(this._onProductMatched, this);
+        this.getRouter()
+          .getRoute("detail")
+          .attachPatternMatched(this._onObjectMatched, this);
       },
 
-      _onProductMatched: function (oEvent) {
+      _onObjectMatched: function (oEvent) {
         
-        this._product =
-          oEvent.getParameter("arguments").product || this._product || "0";
-        ///prova anthea binding su table
-        let datiElementoSelect = this.getOwnerComponent()
-          .getModel("products")
-          .getProperty(`/ProductCollection/${this._product}`);
-        this.getView().setModel(
-          new sap.ui.model.json.JSONModel(),
-          "detailData"
-        );
-        this.getView()
-          .getModel("detailData")
-          .setProperty("/ProductCollection", [datiElementoSelect]);
-        // this.getView().bindElement({
-        // 	path: "/ProductCollection/" + this._product,
-        // 	model: "products"
-        // });
+
       },
       // grafico: function () {
       // 	var oModel = this.getOwnerComponent().getModel("ProductModel");
@@ -70,47 +53,11 @@ sap.ui.define(
 
       // },
 
-      onEditToggleButtonPress: function () {
-        var oObjectPage = this.getView().byId("ObjectPageLayout"),
-          bCurrentShowFooterState = oObjectPage.getShowFooter();
-
-        oObjectPage.setShowFooter(!bCurrentShowFooterState);
-      },
-
-      handleFullScreen: function () {
-        var sNextLayout = this.oModel.getProperty(
-          "/actionButtonsInfo/midColumn/fullScreen"
-        );
-        this.getRouter().navTo("detail", {
-          layout: sNextLayout,
-          product: this._product,
-        });
-      },
-
-      handleExitFullScreen: function () {
-        var sNextLayout = this.oModel.getProperty(
-          "/actionButtonsInfo/midColumn/exitFullScreen"
-        );
-        this.getRouter().navTo("detail", {
-          layout: sNextLayout,
-          product: this._product,
-        });
-      },
-
       handleClose: function () {
-        var sNextLayout = this.oModel.getProperty(
-          "/actionButtonsInfo/midColumn/closeColumn"
-        );
-        this.getRouter().navTo("master", { layout: sNextLayout });
-      },
-
-      onExit: function () {
-        this.getRouter()
-          .getRoute("master")
-          .detachPatternMatched(this._onProductMatched, this);
-        this.getRouter()
-          .getRoute("detail")
-          .detachPatternMatched(this._onProductMatched, this);
+        // var sNextLayout = this.oModel.getProperty(
+        //   "/actionButtonsInfo/midColumn/closeColumn"
+        // );
+        // this.getRouter().navTo("master", { layout: sNextLayout });
       },
     });
   }

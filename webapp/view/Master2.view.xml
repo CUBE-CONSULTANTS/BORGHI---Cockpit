@@ -7,7 +7,7 @@
     xmlns:viz="sap.viz.ui5.controls"
     xmlns:viz.data="sap.viz.ui5.data"
     xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
-    
+    xmlns:ui="sap.ui.table"
     xmlns:layout="sap.ui.layout"
     xmlns:fb="sap.ui.comp.filterbar"
     xmlns:form="sap.ui.layout.form">
@@ -38,12 +38,13 @@
                    
 
                     <fb:FilterBar
-                        id="filterbar"
-                        persistencyKey="myPersKey"
-                        useToolbar="false"
-                        search=".onSearch"
-                        filterChange=".onFilterChange"
-                        afterVariantLoad=".onAfterVariantLoad"
+                    search="onSearch"
+                    persistencyKey="myPersKey"
+                    useToolbar="false"
+                    showFilterConfiguration="false"
+                    showGoOnFB="true"
+                    showClearOnFB="true"
+                    clear="onFilterBarClear"
                     >
                         <fb:filterGroupItems>
                             <fb:FilterGroupItem
@@ -56,9 +57,9 @@
                                     <ComboBox
                                         id="customerComboBox"
                                         name=""
-                                        selectionChange=".onSelectionChange"
+                                        
                                         items="{
-											path: 'customers>/Customers',
+											path: '',
 											templateShareable: true
 										}"
                                     >
@@ -81,31 +82,62 @@
         <f:content>
             <VBox visible="{= ${selectedCustomer>/CompanyName} ? true : false }">
                 <!-- Dettaglio Quantità -->
-                <Toolbar class="tableHeader">
-                    <Title text="Dettaglio Quantità (per settimana)" />
-                </Toolbar>
-                <Table items="{selectedCustomer>/Data}">
-                    <columns>
-                        <Column>
-                            <Text text="Settimana" class="tableColumn"/>
-                        </Column>
-                        <Column>
-                            <Text text="Quantità Totale" class="tableColumn"/>
-                        </Column>
-                        <Column>
-                            <Text text="Variazione Totale" class="tableColumn"/>
-                        </Column>
-                        <Column>
-                            <Text text="Variazione Positiva" class="tableColumn"/>
-                        </Column>
-                        <Column>
-                            <Text text="Variazione Negativa" class="tableColumn"/>
-                        </Column>
-                        <Column>
-                            <Text text="Variazione (%)" class="tableColumn"/>
-                        </Column>
-                    </columns>
-                    <items>
+                   
+                <OverflowToolbar >
+                  <Title text="Dettaglio Quantità (per settimana)" />
+                  <ToolbarSpacer />
+                  <Button
+                    text="Esporta excel"
+                    icon="sap-icon://excel-attachment"
+                    press="downloadExcelFile"
+                  />
+                  <OverflowToolbarButton
+                    icon="sap-icon://sort"
+                    text="Sort"
+                    type="Transparent"
+                    press=".onSort"
+                  />
+                </OverflowToolbar>
+                <ui:Table  >
+                    <ui:columns>
+                        <ui:Column>
+                            <Label text="Settimana" />
+                            <ui:template>
+                              <ObjectIdentifier />
+                            </ui:template>
+                        </ui:Column>
+                        <ui:Column>
+                            <Label text="Quantità Totale" />
+                            <ui:template>
+                              <ObjectIdentifier />
+                            </ui:template>
+                        </ui:Column>
+                        <ui:Column>
+                            <Label text="Variazione Totale" />
+                            <ui:template>
+                              <ObjectIdentifier />
+                            </ui:template>
+                        </ui:Column>
+                        <ui:Column>
+                            <Label text="Variazione Positiva" />
+                            <ui:template>
+                              <ObjectIdentifier />
+                            </ui:template>
+                        </ui:Column>
+                        <ui:Column>
+                            <Label text="Variazione Negativa" />
+                            <ui:template>
+                              <ObjectIdentifier />
+                            </ui:template>
+                        </ui:Column>
+                        <ui:Column>
+                            <Label text="Variazione (%)" />
+                            <ui:template>
+                              <ObjectIdentifier />
+                            </ui:template>
+                        </ui:Column>
+                    </ui:columns>
+                    <!-- <items>
                         <ColumnListItem>
                             <cells>
                                 <Text text="{selectedCustomer>Week}" />
@@ -116,8 +148,8 @@
                                 <Text text="{selectedCustomer>VariationPercentage}%" />
                             </cells>
                         </ColumnListItem>
-                    </items>
-                </Table>
+                    </items> -->
+                </ui:Table>
 
                 <!-- Grafici -->
                 <VBox>

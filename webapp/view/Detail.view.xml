@@ -60,7 +60,7 @@
                 </snappedHeading>
 
                 <navigationActions>
-                    <m:OverflowToolbarButton
+                    <!-- <m:OverflowToolbarButton
                         type="Transparent"
                         icon="sap-icon://full-screen"
                         press=".handleFullScreen"
@@ -73,7 +73,7 @@
                         press=".handleExitFullScreen"
                         tooltip="Exit Full Screen Mode"
                         visible="{= ${/actionButtonsInfo/midColumn/exitFullScreen} !== null }"
-                    />
+                    /> -->
                     <m:OverflowToolbarButton
                         type="Transparent"
                         icon="sap-icon://decline"

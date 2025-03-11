@@ -72,15 +72,12 @@ sap.ui.define(
 
         
 
-        handleClose: function (oEvent) {
-          
+        handleClose: function (oEvent) { 
           let currentBegColViewName = oEvent.getSource().getParent().getParent().getParent().getParent().getParent().getCurrentBeginColumnPage().getProperty("viewName");
-
           var sNextLayout = this.getOwnerComponent().getModel("layout").getProperty(
             "/actionButtonsInfo/midColumn/closeColumn"
           );
-          //prova chiusura colonna e nav
-          
+          //prova chiusura colonna e nav        
             if(currentBegColViewName.includes('archivio')){
               sNextLayout = this.getRouter().navTo("archivio", {
                 layout: oEvent.getSource().getParent().getParent().getParent().getParent().getParent().setLayout(),
@@ -95,7 +92,6 @@ sap.ui.define(
             }
             if(currentBegColViewName ==='programmi.consegne.edi.view.DetailMaster3'){
               oEvent.getSource().getParent().getParent().getParent().getParent().getParent().setLayout(sNextLayout);
-              
             }
         },
 
