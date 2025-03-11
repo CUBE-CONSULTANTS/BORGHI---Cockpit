@@ -571,18 +571,9 @@ sap.ui.define(
           "archivio"
             ? (operator = "eq")
             : (operator = "ne");
-          if (
-            oEvent
-              .getParameters()
-              .selectionSet[0].getBindingInfo("value")
-              .parts[0].path.includes("delivery")
-          ) {
+          if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("delivery")) {
             oFilterSet = this.getModel("filtersModel").getProperty("/delivery");
-            let aFilters = mapper.buildFilters(
-              oFilterSet,
-              (key = "01"),
-              operator
-            );
+            let aFilters = mapper.buildFilters(oFilterSet,(key = "01"),operator);
             let filters = {
               data_ricezione: aFilters.find(
                 (f) => f.sPath === "data_ricezione"
@@ -629,7 +620,7 @@ sap.ui.define(
           ) {
             debugger
             oFilterSet = this.getModel("filtersModel").getProperty("/callOff");
-            let aFilters = mapper.buildFilters(oFilterSet, (key = "02"));
+            let aFilters = mapper.buildFilters(oFilterSet, (key = "02"),operator);
             await this.callData(
               this.getOwnerComponent().getModel("calloffV2"),
               "/Testata",

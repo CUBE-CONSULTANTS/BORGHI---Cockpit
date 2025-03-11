@@ -325,7 +325,7 @@ sap.ui.define(
            
             aFilters.push(
               new sap.ui.model.Filter(
-                "master/data_ricezione",
+                "data_ricezione",
                 sap.ui.model.FilterOperator.EQ,
                 oDataRic
               )
@@ -516,7 +516,7 @@ sap.ui.define(
           let row = this._cleanAndFormatData(item);
           
           let positions =
-            item.posizioni || item.posizioni.results ||
+            item.posizioni || 
             item.posizioni_testata ||
             item.dettaglio_fattura ||
             [];
