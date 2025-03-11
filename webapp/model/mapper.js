@@ -309,6 +309,7 @@ sap.ui.define(
             );
           }
           if (oFilterSet.messaggio && oFilterSet.messaggio.value) {
+            
             aFilters.push(
               new sap.ui.model.Filter(
                 "messaggio",

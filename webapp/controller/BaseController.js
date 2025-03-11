@@ -606,7 +606,8 @@ sap.ui.define(
               expandQuery = `posizioni($filter=codice_cliente_materiale eq '${filters.materiale.oValue1}'),posizioni($expand=log,schedulazioni,testata),master`;
             }
             if (filters.messaggio) {
-              filtrato = true
+              filtrato = true  
+              filters.messaggio.oValue1 = filters.messaggio.oValue1.replace(/'/g, "''")
               expandQuery = `posizioni,posizioni($expand=log($filter=messaggio eq '${filters.messaggio.oValue1}'),schedulazioni,testata),master`;
             }
             if (filters.data_ricezione) {
@@ -624,11 +625,9 @@ sap.ui.define(
               "01", filtrato
             );
           } else if (
-            oEvent
-              .getParameters()
-              .selectionSet[0].getBindingInfo("value")
-              .parts[0].path.includes("callOff")
+            oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("callOff")
           ) {
+            debugger
             oFilterSet = this.getModel("filtersModel").getProperty("/callOff");
             let aFilters = mapper.buildFilters(oFilterSet, (key = "02"));
             await this.callData(
