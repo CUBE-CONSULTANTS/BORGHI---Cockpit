@@ -36,7 +36,6 @@
       <f:DynamicPageHeader pinnable="true">
         <f:content>
           <fb:FilterBar
-          
             search="onSearch"
             persistencyKey="myPersKey"
             useToolbar="false"
@@ -69,27 +68,27 @@
                 </fb:control>
               </fb:FilterGroupItem>
               <fb:FilterGroupItem
-              name="Ragione Sociale"
-              label="Ragione Sociale"
-              groupName="Group1"
-              visibleInFilterBar="true"
-            >
-              <fb:control>
-                <MultiComboBox
-                  name="SupplierName"
-                  selectionChange=".onSelectionChange"
-                  items="{
-                    path: '/',
-                    templateShareable: true
-                  }"
-                >
-                  <core:Item
-                    key="{key}"
-                    text="{name}"
-                  />
-                </MultiComboBox>
-              </fb:control>
-            </fb:FilterGroupItem>
+                name="Ragione Sociale"
+                label="Ragione Sociale"
+                groupName="Group1"
+                visibleInFilterBar="true"
+              >
+                <fb:control>
+                  <MultiComboBox
+                    name="SupplierName"
+                    selectionChange=".onSelectionChange"
+                    items="{
+                      path: '/',
+                      templateShareable: true
+                    }"
+                  >
+                    <core:Item
+                      key="{key}"
+                      text="{name}"
+                    />
+                  </MultiComboBox>
+                </fb:control>
+              </fb:FilterGroupItem>
               <fb:FilterGroupItem
                 name="Codice Articolo"
                 label="Codice Articolo"
@@ -112,7 +111,6 @@
                   </MultiComboBox>
                 </fb:control>
               </fb:FilterGroupItem>
-
             </fb:filterGroupItems>
           </fb:FilterBar>
         </f:content>
@@ -121,116 +119,446 @@
     <!-- DynamicPage Content -->
     <f:content>
       <VBox fitContainer="true">
-        <OverflowToolbar class="sapFDynamicPageAlignContent">
-          <ToolbarSpacer />
-          <Button
-            text="Esporta excel"
-            icon="sap-icon://excel-attachment"
-            press="downloadExcelFile"
-          />
-          <OverflowToolbarButton
-            icon="sap-icon://sort"
-            text="Sort"
-            type="Transparent"
-            press=".onSort"
-          />
-        </OverflowToolbar>
         <ui:Table
-
-          class="sapFDynamicPageAlignContent"
-   
+         selectionMode="None"
+          visible="{main>/visibility}"
+          rows="{variazioneArticolo>/}"
+          fixedColumnCount="7"
         >
+          <ui:extension>
+            <OverflowToolbar design="Solid" class="sapUiTinyMarginBottom" >
+              <ToolbarSpacer />
+              <Button
+                text="Esporta excel"
+                icon="sap-icon://excel-attachment"
+                press="downloadExcelFile"
+              />
+              <OverflowToolbarButton
+                icon="sap-icon://sort"
+                text="Sort"
+                press=".onSort"
+                type="Transparent"
+              />
+            </OverflowToolbar>
+          </ui:extension>
           <ui:columns>
-            <ui:Column width="12em">
-              <Label text="Cod. Cliente/Rag. Soc." />
+            <ui:Column  headerSpan="10"
+            width="10em"
+            >
+              <ui:multiLabels>
+                <Label
+                  text=""
+                  textAlign="Center"
+                  width="100%"
+                />
+                <Label text="Cod. Cliente/Rag. Soc." />
+              </ui:multiLabels>
               <ui:template>
-                <ObjectIdentifier />
+                <ObjectIdentifier
+                  title="{variazioneArticolo>CLIENTE}"
+                  text="{variazioneArticolo>descrizione_cliente}"
+                />
               </ui:template>
             </ui:Column>
             <ui:Column width="12em">
-              <Label text="Articolo" />
+              <ui:multiLabels>
+                <Label
+                  text=""
+                  textAlign="Center"
+                  width="100%"
+                />
+                <Label text="Articolo" />
+              </ui:multiLabels>
               <ui:template>
-                <ObjectIdentifier />
+                <ObjectIdentifier title="{variazioneArticolo>MATNR}" />
               </ui:template>
             </ui:Column>
             <ui:Column width="6em">
-              <Label text="1 sett." />
+              <ui:multiLabels>
+                <Label
+                  text=""
+                  textAlign="Center"
+                  width="100%"
+                />
+                <Label text="Cod. Tot" />
+              </ui:multiLabels>
               <ui:template>
-                <ObjectIdentifier />
+                <ObjectIdentifier title="{variazioneArticolo>TOTALE}" />
               </ui:template>
             </ui:Column>
             <ui:Column width="6em">
-              <Label text="2 sett" />
+              <ui:multiLabels>
+                <Label
+                  text=""
+                  textAlign="Center"
+                  width="100%"
+                />
+                <Label text="Azzeramento" />
+              </ui:multiLabels>
               <ui:template>
-                <ObjectIdentifier />
+                <ObjectIdentifier title="{variazioneArticolo>FLAG_AZZ}" />
               </ui:template>
             </ui:Column>
             <ui:Column width="6em">
-              <Label text="3 sett" />
+              <ui:multiLabels>
+                <Label
+                  text=""
+                  textAlign="Center"
+                  width="100%"
+                />
+                <Label text="Giac. Finito" />
+              </ui:multiLabels>
               <ui:template>
-                <ObjectIdentifier />
+                <ObjectIdentifier title="{variazioneArticolo>GIACENZA}" />
               </ui:template>
             </ui:Column>
             <ui:Column width="6em">
-              <Label text="4 sett" />
+              <ui:multiLabels>
+                <Label
+                  text=""
+                  textAlign="Center"
+                  width="100%"
+                />
+                <Label text="Impegno Cong." />
+              </ui:multiLabels>
               <ui:template>
-                <ObjectIdentifier />
+                <ObjectIdentifier title="{variazioneArticolo>IMPEGNO}" />
               </ui:template>
             </ui:Column>
             <ui:Column width="6em">
-              <Label text="5 sett" />
+              <ui:multiLabels>
+                <Label
+                  text=""
+                  textAlign="Center"
+                  width="100%"
+                />
+                <Label text="Giac. Scalato" />
+              </ui:multiLabels>
               <ui:template>
-                <ObjectIdentifier />
+                <ObjectIdentifier title="{variazioneArticolo>SCALATO}" />
               </ui:template>
             </ui:Column>
-            <ui:Column width="6em">
-              <Label text="6 sett" />
+            <!-- GESTIONE SETTIMANe -->
+            <ui:Column
+            headerSpan="2,1"
+              hAlign="Center"
+              width="4rem"
+            >
+              <ui:multiLabels>
+                <Label
+                  text="Settimana 1"
+                  wrapping="true"
+                  textAlign="Center"
+                  width="100%"
+                />
+                <Label
+                  text="{i18n>Qta}"
+                  width="100%"
+                />
+              </ui:multiLabels>
               <ui:template>
-                <ObjectIdentifier />
+                <Text text="{variazioneArticolo>/weeks/QTY}" />
               </ui:template>
             </ui:Column>
-            <ui:Column width="6em">
-              <Label text="7 sett" />
+            <ui:Column
+              width="8rem"
+              hAlign="Center"
+            >
+              <ui:multiLabels>
+                <Label
+                  text=""
+                  width="100%"
+                />
+                <Label
+                  text="{i18n>Percentuale}"
+                  width="100%"
+                />
+              </ui:multiLabels>
               <ui:template>
-                <ObjectIdentifier />
+                <Text text="{}" />
               </ui:template>
             </ui:Column>
-            <ui:Column width="6em">
-              <Label text="8 sett" />
+           
+            <ui:Column
+            headerSpan="2,1"
+              hAlign="Center"
+              width="4rem"
+            >
+              <ui:multiLabels>
+                <Label
+                  text="Settimana 2"
+                  wrapping="true"
+                  textAlign="Center"
+                  width="100%"
+                />
+                <Label
+                  text="{i18n>Qta}"
+                  width="100%"
+                />
+              </ui:multiLabels>
               <ui:template>
-                <ObjectIdentifier />
+                <Text text="{
+                }" />
               </ui:template>
             </ui:Column>
-            <ui:Column width="6em">
-              <Label text="Cod. Tot" />
+            <ui:Column
+              width="8rem"
+              hAlign="Center"
+            >
+              <ui:multiLabels>
+                <Label
+                  text=""
+                  width="100%"
+                />
+                <Label
+                  text="{i18n>Percentuale}"
+                  width="100%"
+                />
+              </ui:multiLabels>
               <ui:template>
-                <ObjectIdentifier />
+                <Text text="{}" />
               </ui:template>
             </ui:Column>
-            <ui:Column width="6em">
-              <Label text="Azzeramento" />
+            <ui:Column
+            headerSpan="2,1"
+              hAlign="Center"
+              width="4rem"
+            >
+              <ui:multiLabels>
+                <Label
+                  text="Settimana 3"
+                  wrapping="true"
+                  textAlign="Center"
+                  width="100%"
+                />
+                <Label
+                  text="{i18n>Qta}"
+                  width="100%"
+                />
+              </ui:multiLabels>
               <ui:template>
-                <ObjectIdentifier />
+                <Text text="{
+                }" />
               </ui:template>
             </ui:Column>
-            <ui:Column width="6em">
-              <Label text="Giac. Finito" />
+            <ui:Column
+              width="8rem"
+              hAlign="Center"
+            >
+              <ui:multiLabels>
+                <Label
+                  text=""
+                  width="100%"
+                />
+                <Label
+                  text="{i18n>Percentuale}"
+                  width="100%"
+                />
+              </ui:multiLabels>
               <ui:template>
-                <ObjectIdentifier />
+                <Text text="{}" />
               </ui:template>
             </ui:Column>
-            <ui:Column width="6em">
-              <Label text="Impegno Cong." />
+            <ui:Column
+            headerSpan="2,1"
+              hAlign="Center"
+              width="4rem"
+            >
+              <ui:multiLabels>
+                <Label
+                  text="Settimana 4"
+                  wrapping="true"
+                  textAlign="Center"
+                  width="100%"
+                />
+                <Label
+                  text="{i18n>Qta}"
+                  width="100%"
+                />
+              </ui:multiLabels>
               <ui:template>
-                <ObjectIdentifier />
+                <Text text="{
+                }" />
               </ui:template>
             </ui:Column>
-            <ui:Column width="6em">
-              <Label text="Giac. Scalato" />
+            <ui:Column
+              width="8rem"
+              hAlign="Center"
+            >
+              <ui:multiLabels>
+                <Label
+                  text=""
+                  width="100%"
+                />
+                <Label
+                  text="{i18n>Percentuale}"
+                  width="100%"
+                />
+              </ui:multiLabels>
               <ui:template>
-                <ObjectIdentifier />
+                <Text text="{}" />
               </ui:template>
             </ui:Column>
+            <ui:Column
+            headerSpan="2,1"
+              hAlign="Center"
+              width="4rem"
+            >
+              <ui:multiLabels>
+                <Label
+                  text="Settimana 5"
+                  wrapping="true"
+                  textAlign="Center"
+                  width="100%"
+                />
+                <Label
+                  text="{i18n>Qta}"
+                  width="100%"
+                />
+              </ui:multiLabels>
+              <ui:template>
+                <Text text="{
+                }" />
+              </ui:template>
+            </ui:Column>
+            <ui:Column
+              width="8rem"
+              hAlign="Center"
+            >
+              <ui:multiLabels>
+                <Label
+                  text=""
+                  width="100%"
+                />
+                <Label
+                  text="{i18n>Percentuale}"
+                  width="100%"
+                />
+              </ui:multiLabels>
+              <ui:template>
+                <Text text="{}" />
+              </ui:template>
+            </ui:Column>
+            <ui:Column
+            headerSpan="2,1"
+              hAlign="Center"
+              width="4rem"
+            >
+              <ui:multiLabels>
+                <Label
+                  text="Settimana 6"
+                  wrapping="true"
+                  textAlign="Center"
+                  width="100%"
+                />
+                <Label
+                  text="{i18n>Qta}"
+                  width="100%"
+                />
+              </ui:multiLabels>
+              <ui:template>
+                <Text text="{
+                }" />
+              </ui:template>
+            </ui:Column>
+            <ui:Column
+              width="8rem"
+              hAlign="Center"
+            >
+              <ui:multiLabels>
+                <Label
+                  text=""
+                  width="100%"
+                />
+                <Label
+                  text="{i18n>Percentuale}"
+                  width="100%"
+                />
+              </ui:multiLabels>
+              <ui:template>
+                <Text text="{}" />
+              </ui:template>
+            </ui:Column>
+            <ui:Column
+            headerSpan="2,1"
+              hAlign="Center"
+              width="4rem"
+            >
+              <ui:multiLabels>
+                <Label
+                  text="Settimana 7"
+                  wrapping="true"
+                  textAlign="Center"
+                  width="100%"
+                />
+                <Label
+                  text="{i18n>Qta}"
+                  width="100%"
+                />
+              </ui:multiLabels>
+              <ui:template>
+                <Text text="{
+                }" />
+              </ui:template>
+            </ui:Column>
+            <ui:Column
+              width="8rem"
+              hAlign="Center"
+            >
+              <ui:multiLabels>
+                <Label
+                  text=""
+                  width="100%"
+                />
+                <Label
+                  text="{i18n>Percentuale}"
+                  width="100%"
+                />
+              </ui:multiLabels>
+              <ui:template>
+                <Text text="{}" />
+              </ui:template>
+            </ui:Column>
+            <ui:Column
+            headerSpan="2,1"
+              hAlign="Center"
+              width="4rem"
+            >
+              <ui:multiLabels>
+                <Label
+                  text="Settimana 8"
+                  wrapping="true"
+                  textAlign="Center"
+                  width="100%"
+                />
+                <Label
+                  text="{i18n>Qta}"
+                  width="100%"
+                />
+              </ui:multiLabels>
+              <ui:template>
+                <Text text="{
+                }" />
+              </ui:template>
+            </ui:Column>
+            <ui:Column
+              width="8rem"
+              hAlign="Center"
+            >
+              <ui:multiLabels>
+                <Label
+                  text=""
+                  width="100%"
+                />
+                <Label
+                  text="{i18n>Percentuale}"
+                  width="100%"
+                />
+              </ui:multiLabels>
+              <ui:template>
+                <Text text="{}" />
+              </ui:template>
+            </ui:Column> 
           </ui:columns>
         </ui:Table>
       </VBox>

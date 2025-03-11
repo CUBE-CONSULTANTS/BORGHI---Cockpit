@@ -5,9 +5,18 @@ sap.ui.define(
     "sap/ui/model/FilterOperator",
     "sap/ui/model/Sorter",
     "sap/m/MessageBox",
-    "../model/models"
+    "../model/models",
+    "../model/API",
+	"sap/ui/model/json/JSONModel"
   ],
-  function (BaseController, Filter, FilterOperator, Sorter, MessageBox, models) {
+  function (BaseController,
+	Filter,
+	FilterOperator,
+	Sorter,
+	MessageBox,
+	models,
+	API,
+	JSONModel) {
     "use strict";
 
     return BaseController.extend("programmi.consegne.edi.controller.Master", {
@@ -26,6 +35,23 @@ sap.ui.define(
         }
       },
       onSearch: function (oEvent) {      
+      //  /delivery-forecast/EIGHTWEEK_MAT?$expand=WEEKS&$filter=CLIENTE eq '0000200137' and KDMAT eq 'BRESSANS_2ND_TEST'
+        let aFilters = []
+        this._searchVarArticolo(aFilters)
+      },
+      _searchVarArticolo: async function (aFilters) {
+        debugger
+        try {
+          this.showBusy(0)
+          let weekCall = await API.getEntity(this.getOwnerComponent().getModel("modelloV2"), "/EIGHTWEEK_MAT", aFilters, ['WEEKS'])         
+          this.setModel(new JSONModel(weekCall.results),"variazioneArticolo" )
+
+          this.getModel("main").setProperty("/visibility",true)
+        } catch (error) {
+          MessageBox.error("Errore durante la ricezione dei dati ",error)
+        }finally {
+          this.hideBusy(0);
+        }
       },
       onSort: function () {     
       },
