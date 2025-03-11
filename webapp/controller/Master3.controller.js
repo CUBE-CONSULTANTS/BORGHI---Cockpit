@@ -323,16 +323,29 @@ sap.ui.define(
         
         let fileupload = this.getView().byId("FileUploader");
         let formData = new FormData();
-        try {
-          formData.append("file", fileupload.oFileUpload.files[0]);
-          await fetch("/fiori/upload_excel", {
-            method: "POST",
-            body: formData,
-          });
-        } catch (error) {
-          MessageBox.error("Errore durante il caricamento del File")
-        }
-      },
+        if(fileupload.oFileUpload.files[0]){
+          try {
+            this.showBusy(0);
+            formData.append("file", fileupload.oFileUpload.files[0]);
+            let response = await fetch("/fiori/upload_excel", {
+              method: "POST",
+              body: formData,
+            });
+            if (!response.ok) {
+              let errorText = await response.text(); 
+              throw new Error(`Errore ${response.status}: ${errorText}`);
+            }
+            MessageBox.success("File caricato con successo!")
+            
+          } catch (error) {
+            MessageBox.error("Errore durante il caricamento del File");
+          } finally {
+            this.hideBusy(0);
+          }
+        }else{
+          MessageBox.error("Nessun file selezionato")
+        }   
+      }
     });
   }
 );
