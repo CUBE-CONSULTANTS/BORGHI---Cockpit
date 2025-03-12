@@ -52,6 +52,14 @@ sap.ui.define(
         }
       },
       onSearch: function (oEvent) {
+        debugger
+        oEvent.getSource().getFilterGroupItems().forEach(filter =>{
+          let value = filter.getValue();
+          let path = filter.getKey();
+          if(value && value.length>0){
+            aFilters.push(new Filter(path, FilterOperator.EQ, value));
+          }
+        })
         //  /delivery-forecast/EIGHTWEEK_MAT?$expand=WEEKS&$filter=CLIENTE eq '0000200137' and KDMAT eq 'BRESSANS_2ND_TEST'
         let aFilters = [];
         this._searchVarArticolo(aFilters);

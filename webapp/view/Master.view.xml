@@ -61,7 +61,7 @@
                   >
                     <core:Item
                       key="{matchcode>KUNNR}"
-                      text="{matchcode>KUNNR_DESCR}"
+                      text="{matchcode>KUNNR}"
                     />
                   </ComboBox>
                 </fb:control>
@@ -73,19 +73,18 @@
                 visibleInFilterBar="true"
               >
                 <fb:control>
-                  <MultiComboBox
-                    name="SupplierName"
-                    selectionChange=".onSelectionChange"
+                  <ComboBox
+                    name=""
                     items="{
-                      path: '/',
+                      path: 'matchcode>/clienti',
                       templateShareable: true
                     }"
                   >
                     <core:Item
-                      key="{key}"
-                      text="{name}"
+                      key="{matchcode>KUNNR_DESCR}"
+                      text="{matchcode>KUNNR_DESCR}"
                     />
-                  </MultiComboBox>
+                  </ComboBox>
                 </fb:control>
               </fb:FilterGroupItem>
               <fb:FilterGroupItem

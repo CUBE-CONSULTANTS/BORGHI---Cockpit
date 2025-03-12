@@ -410,7 +410,6 @@ sap.ui.define(
           }
         },
         onFilterBarVariazioniClear: function(oEvent) {
-          debugger
           let oFilterBar = oEvent.getSource()
           let aFilterItems = oFilterBar.getFilterGroupItems();
     
