@@ -77,18 +77,17 @@
                 <fb:control>
                   <ComboBox
                   id="idMatComboBox"
-                    name="Category"
-                    selectionChange=".onSelectionChange"
-                    items="{
-                      path: '/',
-                      templateShareable: true
-                    }"
-                  >
-                    <core:Item
-                      key="{key}"
-                      text="{name}"
-                    />
-                  </ComboBox>
+                  name=""
+                  items="{
+                    path: 'matchcode>/materiali',
+                    templateShareable: true
+                  }"
+                >
+                  <core:Item
+                    key="{matchcode>Kdmat}"
+                    text="{matchcode>Kdmat} - {matchcode>Maktx}"
+                  />
+                </ComboBox>
                 </fb:control>
               </fb:FilterGroupItem>
             </fb:filterGroupItems>

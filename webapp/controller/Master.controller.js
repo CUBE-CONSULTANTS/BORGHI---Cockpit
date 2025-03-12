@@ -39,17 +39,7 @@ sap.ui.define(
           this.getModel("main").setProperty("/backToMon", false);
           this.getModel("main").setProperty("/backToArch", false);
         }
-        try {
-          this.showBusy(0)
-          this.setModel(new JSONModel(), "matchcode");
-          let model = this.getOwnerComponent().getModel("modelloV2");
-          let clienti = await API.getEntity(model, "/T661W", [], []);   
-          this.getModel("matchcode").setProperty("/clienti", clienti.results);
-        } catch (error) {
-          MessageBox.error("Errore durante il recupero dei dati")
-        }finally{
-          this.hideBusy(0);
-        }
+        await this._getMatchCode()
         let oFiltriNav = this.getOwnerComponent().getModel("datiAppoggio").getProperty("/filtriNav")
         if(oFiltriNav){
           let oCodArtComboBox = this.byId("idMatComboBox");

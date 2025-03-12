@@ -4,8 +4,9 @@ sap.ui.define(
     "sap/ui/model/json/JSONModel",
     "../model/models",
     "../model/API",
+    "sap/m/MessageBox",
   ],
-  function (BaseController, JSONModel, models, API) {
+  function (BaseController, JSONModel, models, API, MessageBox) {
     "use strict";
 
     return BaseController.extend("programmi.consegne.edi.controller.Master2", {
@@ -24,18 +25,7 @@ sap.ui.define(
           this.getModel("main").setProperty("/backToMon", false);
           this.getModel("main").setProperty("/backToArch", false);
         }
-
-        try {
-          this.showBusy(0)
-          this.setModel(new JSONModel(), "matchcode");
-          let model = this.getOwnerComponent().getModel("modelloV2");
-          let clienti = await API.getEntity(model, "/T661W", [], []);   
-          this.getModel("matchcode").setProperty("/clienti", clienti.results);
-        } catch (error) {
-          MessageBox.error("Errore durante il recupero dei dati")
-        }finally{
-          this.hideBusy(0);
-        }
+        await this._getMatchCode()
         let oFiltriNav = this.getOwnerComponent().getModel("datiAppoggio").getProperty("/filtriNav")
         if(oFiltriNav){
           let oCodClienteComboBox = this.byId("idClientiComboBox2"); 
@@ -47,7 +37,11 @@ sap.ui.define(
       },
       onSearch: function (oEvent) {
         let aFilters = this.getFiltersVariazioni(oEvent.getSource())
-        this._searchVarCliente(aFilters);
+        if(aFilters.length > 0) {
+        this._searchVarCliente(aFilters)
+        }else{
+          MessageBox.error("Inserire il filtro di ricerca Cliente");
+        }
         // /odata/v2/delivery-forecast/EIGHTWEEK_CLI?$expand=RETURN_DATA&$filter=CLIENTE eq '0000200191'
       },
       _searchVarCliente: async function (aFilters) {

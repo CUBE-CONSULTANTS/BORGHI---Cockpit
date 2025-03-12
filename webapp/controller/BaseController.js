@@ -213,6 +213,22 @@ sap.ui.define(
             });
           }
         },
+        _getMatchCode: async function(){
+          try {
+            this.showBusy(0)
+            this.setModel(new JSONModel(), "matchcode");
+            let model = this.getOwnerComponent().getModel("modelloV2");
+            let clienti = await API.getEntity(model, "/T661W", [], []);
+            // let materiali = await API.getEntity(model, "", [], [])   
+            this.getModel("matchcode").setProperty("/clienti", clienti.results);
+            // this.getModel("matchcode").setProperty("/materiali", materiali.results);
+          } catch (error) {
+            MessageBox.error("Errore durante il recupero dei dati")
+          }finally{
+            this.hideBusy(0);
+          }
+        },
+       
         _getCounters: async function (filterVal) {
           this.showBusy(0);
           try {
