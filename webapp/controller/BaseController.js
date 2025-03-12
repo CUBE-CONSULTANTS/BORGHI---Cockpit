@@ -216,7 +216,9 @@ sap.ui.define(
         _getMatchCode: async function(){
           try {
             this.showBusy(0)
-            this.setModel(new JSONModel(), "matchcode");
+            let matchcode = new JSONModel()
+            matchcode.setSizeLimit(100000000)
+            this.setModel(matchcode, "matchcode");
             let model = this.getOwnerComponent().getModel("modelloV2");
             let clienti = await API.getEntity(model, "/T661W", [], []);
             // let materiali = await API.getEntity(model, "", [], [])   

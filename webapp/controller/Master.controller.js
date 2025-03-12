@@ -67,34 +67,40 @@ sap.ui.define(
             aFilters,
             ["WEEKS"]
           );
-          let labels = [];
-          let formattedData = weekCall.results.map((item) => {
-            return {
-              CLIENTE: item.CLIENTE,
-              KDMAT: item.KDMAT,
-              MATNR: item.MATNR,
-              GIACENZA: item.GIACENZA.trim(),
-              IMPEGNO: item.IMPEGNO.trim(),
-              TOTALE: item.TOTALE.trim(),
-              WEEKS: item.WEEKS.results.map((week) => ({
-                N_WEEK: week.N_WEEK.trim(),
-                WEEK: week.WEEK.trim(),
-                QTY: week.QTY.trim(),
-                PERC: week.PERC.trim(),
-              })),
-            };
-          });
-          formattedData.forEach((element) => {
-            element.WEEKS.forEach((week) => {
-              if (!labels.includes(week.WEEK)) {
-                labels.push(week.WEEK.slice(0, 4) + "/" + week.WEEK.slice(4));
-              }
-              week.PERC = formatter.formattedPerc(week.PERC);
+          if(weekCall.results.length){
+            let labels = [];
+            let formattedData = weekCall.results.map((item) => {
+              return {
+                CLIENTE: item.CLIENTE,
+                KDMAT: item.KDMAT,
+                MATNR: item.MATNR,
+                GIACENZA: item.GIACENZA.trim(),
+                IMPEGNO: item.IMPEGNO.trim(),
+                TOTALE: item.TOTALE.trim(),
+                WEEKS: item.WEEKS.results.map((week) => ({
+                  N_WEEK: week.N_WEEK.trim(),
+                  WEEK: week.WEEK.trim(),
+                  QTY: week.QTY.trim(),
+                  PERC: week.PERC.trim(),
+                })),
+              };
             });
-          });
-          this.createWeekLabels(labels, this.byId("artTable"));
-          this.setModel(new JSONModel(formattedData), "variazioneArticolo");
-          this.getModel("main").setProperty("/visibility", true);
+            formattedData.forEach((element) => {
+              element.WEEKS.forEach((week) => {
+                if (!labels.includes(week.WEEK)) {
+                  labels.push(week.WEEK.slice(0, 4) + "/" + week.WEEK.slice(4));
+                }
+                week.PERC = formatter.formattedPerc(week.PERC);
+              });
+            });
+            this.createWeekLabels(labels, this.byId("artTable"));
+            this.setModel(new JSONModel(formattedData), "variazioneArticolo");
+            this.getModel("main").setProperty("/visibility", true);
+          }else{
+            this.getModel("main").setProperty("/visibility", false);
+            MessageBox.error("Nessun dato trovato per la ricerca");
+          }
+         
         } catch (error) {
           MessageBox.error("Errore durante la ricezione dei dati ", error);
         } finally {
