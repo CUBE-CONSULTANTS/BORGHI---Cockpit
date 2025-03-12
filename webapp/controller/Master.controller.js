@@ -39,9 +39,9 @@ sap.ui.define(
           this.getModel("main").setProperty("/backToMon", false);
           this.getModel("main").setProperty("/backToArch", false);
         }
-        this.setModel(new JSONModel(), "matchcode");
         try {
           this.showBusy(0)
+          this.setModel(new JSONModel(), "matchcode");
           let model = this.getOwnerComponent().getModel("modelloV2");
           let clienti = await API.getEntity(model, "/T661W", [], []);   
           this.getModel("matchcode").setProperty("/clienti", clienti.results);
@@ -49,6 +49,19 @@ sap.ui.define(
           MessageBox.error("Errore durante il recupero dei dati")
         }finally{
           this.hideBusy(0);
+        }
+        let oFiltriNav = this.getOwnerComponent().getModel("datiAppoggio").getProperty("/filtriNav")
+        if(oFiltriNav){
+          let oCodArtComboBox = this.byId("idMatComboBox");
+          let oCodClienteComboBox = this.byId("idClientiComboBox"); 
+          if (oFiltriNav.codice_articolo && oCodArtComboBox) {
+            oCodArtComboBox.setSelectedKey(oFiltriNav.codice_articolo);
+            oCodArtComboBox.setValue(oFiltriNav.codice_articolo);
+          }
+          if (oFiltriNav.codice_cliente && oCodClienteComboBox) {
+            oCodClienteComboBox.setSelectedKey(oFiltriNav.codice_cliente);
+            oCodClienteComboBox.setValue(oFiltriNav.codice_cliente);
+          }
         }
       },
       onSearch: function (oEvent) {
@@ -135,6 +148,12 @@ sap.ui.define(
                 );
       },
       navToHome: function () {
+        this.getOwnerComponent().getModel("datiAppoggio").setProperty("/filtriNav","")
+        this.byId("idMatComboBox").setSelectedKey("")
+        this.byId("idMatComboBox").setValue("")
+        this.byId("idClientiComboBox").setSelectedKey("")
+        this.byId("idClientiComboBox").setValue("")
+        this.getModel("main").setProperty("/visibility",false)
         this.getRouter().navTo("home");
       },
     });

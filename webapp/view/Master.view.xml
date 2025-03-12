@@ -53,6 +53,7 @@
               >
                 <fb:control>
                   <ComboBox
+                    id="idClientiComboBox"
                     name=""
                     items="{
                       path: 'matchcode>/clienti',
@@ -74,7 +75,8 @@
                 visibleInFilterBar="true"
               >
                 <fb:control>
-                  <MultiComboBox
+                  <ComboBox
+                  id="idMatComboBox"
                     name="Category"
                     selectionChange=".onSelectionChange"
                     items="{
@@ -86,7 +88,7 @@
                       key="{key}"
                       text="{name}"
                     />
-                  </MultiComboBox>
+                  </ComboBox>
                 </fb:control>
               </fb:FilterGroupItem>
             </fb:filterGroupItems>

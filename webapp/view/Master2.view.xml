@@ -1,143 +1,139 @@
 <mvc:View
-    controllerName="programmi.consegne.edi.controller.Master2"
-    xmlns="sap.m"
-    xmlns:f="sap.f"
-    xmlns:mvc="sap.ui.core.mvc"
-    xmlns:core="sap.ui.core"
-    xmlns:viz="sap.viz.ui5.controls"
-    xmlns:viz.data="sap.viz.ui5.data"
-    xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
-    xmlns:ui="sap.ui.table"
-    xmlns:layout="sap.ui.layout"
-    xmlns:fb="sap.ui.comp.filterbar"
-    xmlns:form="sap.ui.layout.form">
-
-    <f:DynamicPage id="dynamicPageId" showFooter="true">
-        <!-- Header Title -->
-        <f:title>
-            <f:DynamicPageTitle>
-                <f:heading>
-                    <Title text="Confronto Programmazioni Clienti" />
-                </f:heading>
-                <f:actions>
-                  <layout:HorizontalLayout allowWrapping="true">
-                    <layout:VerticalLayout>
-                      <Image 
-                        src="public/images/borghiLogo2.png"
-                        height="35.00000000px"
-                        width="100%"
-                      />
-                    </layout:VerticalLayout>
-                  </layout:HorizontalLayout>
-                </f:actions>
-            </f:DynamicPageTitle>
-        </f:title>
-        <f:header>
-            <f:DynamicPageHeader pinnable="true">
-                <f:content>
-                   
-
-                    <fb:FilterBar
-                    search="onSearch"
-                    persistencyKey="myPersKey"
-                    useToolbar="false"
-                    showFilterConfiguration="false"
-                    showGoOnFB="true"
-                    showClearOnFB="true"
-                    clear="onFilterBarClear"
-                    >
-                        <fb:filterGroupItems>
-                            <fb:FilterGroupItem
-                                name="CustomerID"
-                                label="Cliente"
-                                groupName="Group1"
-                                visibleInFilterBar="true"
-                            >
-                                <fb:control>
-                                    <ComboBox
-                                        id="customerComboBox"
-                                        name=""
-                                        
-                                        items="{
-											path: 'matchcode>/clienti',
-											templateShareable: true
-										}"
-                                    >
-                                        <core:Item
-                                            key="{matchcode>KUNNR}"
-                                            text="{matchcode>KUNNR_DESCR}"
-                                        />
-                                    </ComboBox>
-                                </fb:control>
-                            </fb:FilterGroupItem>
-                           
-                        </fb:filterGroupItems>
-                    </fb:FilterBar>
-                </f:content>
-            </f:DynamicPageHeader>
-        </f:header>
- 
-        
-        <!-- Main Content -->
+  controllerName="programmi.consegne.edi.controller.Master2"
+  xmlns="sap.m"
+  xmlns:f="sap.f"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:core="sap.ui.core"
+  xmlns:viz="sap.viz.ui5.controls"
+  xmlns:viz.data="sap.viz.ui5.data"
+  xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+  xmlns:ui="sap.ui.table"
+  xmlns:layout="sap.ui.layout"
+  xmlns:fb="sap.ui.comp.filterbar"
+  xmlns:form="sap.ui.layout.form"
+>
+  <f:DynamicPage
+    id="dynamicPageId"
+    showFooter="true"
+  >
+    <!-- Header Title -->
+    <f:title>
+      <f:DynamicPageTitle>
+        <f:heading>
+          <Title text="Confronto Programmazioni Clienti" />
+        </f:heading>
+        <f:actions>
+          <layout:HorizontalLayout allowWrapping="true">
+            <layout:VerticalLayout>
+              <Image
+                src="public/images/borghiLogo2.png"
+                height="35.00000000px"
+                width="100%"
+              />
+            </layout:VerticalLayout>
+          </layout:HorizontalLayout>
+        </f:actions>
+      </f:DynamicPageTitle>
+    </f:title>
+    <f:header>
+      <f:DynamicPageHeader pinnable="true">
         <f:content>
-            <VBox visible="{= ${selectedCustomer>/CompanyName} ? true : false }">
-                <!-- Dettaglio Quantità -->
-                   
-                <OverflowToolbar >
-                  <Title text="Dettaglio Quantità (per settimana)" />
-                  <ToolbarSpacer />
-                  <Button
-                    text="Esporta excel"
-                    icon="sap-icon://excel-attachment"
-                    press="downloadExcelFile"
-                  />
-                  <OverflowToolbarButton
-                    icon="sap-icon://sort"
-                    text="Sort"
-                    type="Transparent"
-                    press=".onSort"
-                  />
-                </OverflowToolbar>
-                <ui:Table  >
-                    <ui:columns>
-                        <ui:Column>
-                            <Label text="Settimana" />
-                            <ui:template>
-                              <ObjectIdentifier />
-                            </ui:template>
-                        </ui:Column>
-                        <ui:Column>
-                            <Label text="Quantità Totale" />
-                            <ui:template>
-                              <ObjectIdentifier />
-                            </ui:template>
-                        </ui:Column>
-                        <ui:Column>
-                            <Label text="Variazione Totale" />
-                            <ui:template>
-                              <ObjectIdentifier />
-                            </ui:template>
-                        </ui:Column>
-                        <ui:Column>
-                            <Label text="Variazione Positiva" />
-                            <ui:template>
-                              <ObjectIdentifier />
-                            </ui:template>
-                        </ui:Column>
-                        <ui:Column>
-                            <Label text="Variazione Negativa" />
-                            <ui:template>
-                              <ObjectIdentifier />
-                            </ui:template>
-                        </ui:Column>
-                        <ui:Column>
-                            <Label text="Variazione (%)" />
-                            <ui:template>
-                              <ObjectIdentifier />
-                            </ui:template>
-                        </ui:Column>
-                    </ui:columns>
-                    <!-- <items>
+          <fb:FilterBar
+            search="onSearch"
+            persistencyKey="myPersKey"
+            useToolbar="false"
+            showFilterConfiguration="false"
+            showGoOnFB="true"
+            showClearOnFB="true"
+            clear="onFilterBarClear"
+          >
+            <fb:filterGroupItems>
+              <fb:FilterGroupItem
+                name="CustomerID"
+                label="Cliente"
+                groupName="Group1"
+                visibleInFilterBar="true"
+              >
+                <fb:control>
+                  <ComboBox
+                    id="idClientiComboBox2"
+                    name=""
+                    items="{
+                      path: 'matchcode>/clienti',
+                      templateShareable: true
+                    }"
+                  >
+                    <core:Item
+                      key="{matchcode>KUNNR}"
+                      text="{matchcode>KUNNR_DESCR}"
+                    />
+                  </ComboBox>
+                </fb:control>
+              </fb:FilterGroupItem>
+            </fb:filterGroupItems>
+          </fb:FilterBar>
+        </f:content>
+      </f:DynamicPageHeader>
+    </f:header>
+    <!-- Main Content -->
+    <f:content>
+      <VBox visible="{= ${selectedCustomer>/CompanyName} ? true : false }">
+        <!-- Dettaglio Quantità -->
+        <OverflowToolbar>
+          <Title text="Dettaglio Quantità (per settimana)" />
+          <ToolbarSpacer />
+          <Button
+            text="Esporta excel"
+            icon="sap-icon://excel-attachment"
+            press="downloadExcelFile"
+          />
+          <OverflowToolbarButton
+            icon="sap-icon://sort"
+            text="Sort"
+            type="Transparent"
+            press=".onSort"
+          />
+        </OverflowToolbar>
+        <ui:Table>
+          <ui:columns>
+            <ui:Column>
+              <Label text="Settimana" />
+              <ui:template>
+                <ObjectIdentifier />
+              </ui:template>
+            </ui:Column>
+            <ui:Column>
+              <Label text="Quantità Totale" />
+              <ui:template>
+                <ObjectIdentifier />
+              </ui:template>
+            </ui:Column>
+            <ui:Column>
+              <Label text="Variazione Totale" />
+              <ui:template>
+                <ObjectIdentifier />
+              </ui:template>
+            </ui:Column>
+            <ui:Column>
+              <Label text="Variazione Positiva" />
+              <ui:template>
+                <ObjectIdentifier />
+              </ui:template>
+            </ui:Column>
+            <ui:Column>
+              <Label text="Variazione Negativa" />
+              <ui:template>
+                <ObjectIdentifier />
+              </ui:template>
+            </ui:Column>
+            <ui:Column>
+              <Label text="Variazione (%)" />
+              <ui:template>
+                <ObjectIdentifier />
+              </ui:template>
+            </ui:Column>
+          </ui:columns>
+          <!-- <items>
                         <ColumnListItem>
                             <cells>
                                 <Text text="{selectedCustomer>Week}" />
@@ -149,97 +145,170 @@
                             </cells>
                         </ColumnListItem>
                     </items> -->
-                </ui:Table>
-
-                <!-- Grafici -->
-                <VBox>
-                    <!-- Grafico Quantità Totali -->
-                    <VBox width="100%" class="chartContainer">
-                        <Title text="Quantità Totali" level="H2" />
-                        <viz:VizFrame
-                            id="quantitaChart"
-                            uiConfig="{applicationSet:'fiori'}"
-                            vizType="column"
-                            width="100%"
-                            height="400px">
-                            <viz:dataset>
-                                <viz.data:FlattenedDataset data="{selectedCustomer>/Data}">
-                                    <viz.data:dimensions>
-                                        <viz.data:DimensionDefinition name="Settimana" value="{selectedCustomer>Week}" />
-                                    </viz.data:dimensions>
-                                    <viz.data:measures>
-                                        <viz.data:MeasureDefinition name="Quantità Totale" value="{selectedCustomer>TotalQuantity}" />
-                                    </viz.data:measures>
-                                </viz.data:FlattenedDataset>
-                            </viz:dataset>
-                            <viz:feeds>
-                                <viz.feeds:FeedItem uid="valueAxis" type="Measure" values="Quantità Totale" />
-                                <viz.feeds:FeedItem uid="categoryAxis" type="Dimension" values="Settimana" />
-                            </viz:feeds>
-                        </viz:VizFrame>
-                    </VBox>
-
-                    <!-- Grafico Variazioni Positive e Negative -->
-                    <VBox width="100%" class="chartContainer">
-                        <Title text="Variazioni Positive e Negative" level="H2" />
-                        <viz:VizFrame
-                            id="variazioniChart"
-                            uiConfig="{applicationSet:'fiori'}"
-                            vizType="column"
-                            width="100%"
-                            height="400px">
-                            <viz:dataset>
-                                <viz.data:FlattenedDataset data="{selectedCustomer>/Data}">
-                                    <viz.data:dimensions>
-                                        <viz.data:DimensionDefinition name="Settimana" value="{selectedCustomer>Week}" />
-                                    </viz.data:dimensions>
-                                    <viz.data:measures>
-                                        <viz.data:MeasureDefinition name="Variazione Positiva" value="{selectedCustomer>PositiveVariation}" />
-                                        <viz.data:MeasureDefinition name="Variazione Negativa" value="{selectedCustomer>NegativeVariation}" />
-                                    </viz.data:measures>
-                                </viz.data:FlattenedDataset>
-                            </viz:dataset>
-                            <viz:feeds>
-                                <viz.feeds:FeedItem uid="valueAxis" type="Measure" values="Variazione Positiva" />
-                                <viz.feeds:FeedItem uid="valueAxis" type="Measure" values="Variazione Negativa" />
-                                <viz.feeds:FeedItem uid="categoryAxis" type="Dimension" values="Settimana" />
-                            </viz:feeds>
-                        </viz:VizFrame>
-                    </VBox>
-
-                    <!-- Grafico Variazione Percentuale -->
-                    <VBox width="100%" class="chartContainer">
-                        <Title text="Variazione Percentuale (%)" level="H2" />
-                        <viz:VizFrame
-                            id="percentualeChart"
-                            uiConfig="{applicationSet:'fiori'}"
-                            vizType="column"
-                            width="100%"
-                            height="400px">
-                            <viz:dataset>
-                                <viz.data:FlattenedDataset data="{selectedCustomer>/Data}">
-                                    <viz.data:dimensions>
-                                        <viz.data:DimensionDefinition name="Settimana" value="{selectedCustomer>Week}" />
-                                    </viz.data:dimensions>
-                                    <viz.data:measures>
-                                        <viz.data:MeasureDefinition name="Variazione Percentuale" value="{selectedCustomer>VariationPercentage}" />
-                                    </viz.data:measures>
-                                </viz.data:FlattenedDataset>
-                            </viz:dataset>
-                            <viz:feeds>
-                                <viz.feeds:FeedItem uid="valueAxis" type="Measure" values="Variazione Percentuale" />
-                                <viz.feeds:FeedItem uid="categoryAxis" type="Dimension" values="Settimana" />
-                            </viz:feeds>
-                        </viz:VizFrame>
-                    </VBox>
-                </VBox>
-            </VBox>
-        </f:content>
-        <f:footer>
-          <core:Fragment
-          fragmentName="programmi.consegne.edi.view.fragments.footer"
-          type="XML"
+        </ui:Table>
+        <!-- Grafici -->
+        <VBox>
+          <!-- Grafico Quantità Totali -->
+          <VBox
+            width="100%"
+            class="chartContainer"
+          >
+            <Title
+              text="Quantità Totali"
+              level="H2"
+            />
+            <viz:VizFrame
+              id="quantitaChart"
+              uiConfig="{
+                applicationSet: 'fiori'
+              }"
+              vizType="column"
+              width="100%"
+              height="400px"
+            >
+              <viz:dataset>
+                <viz.data:FlattenedDataset data="{selectedCustomer>/Data}">
+                  <viz.data:dimensions>
+                    <viz.data:DimensionDefinition
+                      name="Settimana"
+                      value="{selectedCustomer>Week}"
+                    />
+                  </viz.data:dimensions>
+                  <viz.data:measures>
+                    <viz.data:MeasureDefinition
+                      name="Quantità Totale"
+                      value="{selectedCustomer>TotalQuantity}"
+                    />
+                  </viz.data:measures>
+                </viz.data:FlattenedDataset>
+              </viz:dataset>
+              <viz:feeds>
+                <viz.feeds:FeedItem
+                  uid="valueAxis"
+                  type="Measure"
+                  values="Quantità Totale"
+                />
+                <viz.feeds:FeedItem
+                  uid="categoryAxis"
+                  type="Dimension"
+                  values="Settimana"
+                />
+              </viz:feeds>
+            </viz:VizFrame>
+          </VBox>
+          <!-- Grafico Variazioni Positive e Negative -->
+          <VBox
+            width="100%"
+            class="chartContainer"
+          >
+            <Title
+              text="Variazioni Positive e Negative"
+              level="H2"
+            />
+            <viz:VizFrame
+              id="variazioniChart"
+              uiConfig="{
+                applicationSet: 'fiori'
+              }"
+              vizType="column"
+              width="100%"
+              height="400px"
+            >
+              <viz:dataset>
+                <viz.data:FlattenedDataset data="{selectedCustomer>/Data}">
+                  <viz.data:dimensions>
+                    <viz.data:DimensionDefinition
+                      name="Settimana"
+                      value="{selectedCustomer>Week}"
+                    />
+                  </viz.data:dimensions>
+                  <viz.data:measures>
+                    <viz.data:MeasureDefinition
+                      name="Variazione Positiva"
+                      value="{selectedCustomer>PositiveVariation}"
+                    />
+                    <viz.data:MeasureDefinition
+                      name="Variazione Negativa"
+                      value="{selectedCustomer>NegativeVariation}"
+                    />
+                  </viz.data:measures>
+                </viz.data:FlattenedDataset>
+              </viz:dataset>
+              <viz:feeds>
+                <viz.feeds:FeedItem
+                  uid="valueAxis"
+                  type="Measure"
+                  values="Variazione Positiva"
+                />
+                <viz.feeds:FeedItem
+                  uid="valueAxis"
+                  type="Measure"
+                  values="Variazione Negativa"
+                />
+                <viz.feeds:FeedItem
+                  uid="categoryAxis"
+                  type="Dimension"
+                  values="Settimana"
+                />
+              </viz:feeds>
+            </viz:VizFrame>
+          </VBox>
+          <!-- Grafico Variazione Percentuale -->
+          <VBox
+            width="100%"
+            class="chartContainer"
+          >
+            <Title
+              text="Variazione Percentuale (%)"
+              level="H2"
+            />
+            <viz:VizFrame
+              id="percentualeChart"
+              uiConfig="{
+                applicationSet: 'fiori'
+              }"
+              vizType="column"
+              width="100%"
+              height="400px"
+            >
+              <viz:dataset>
+                <viz.data:FlattenedDataset data="{selectedCustomer>/Data}">
+                  <viz.data:dimensions>
+                    <viz.data:DimensionDefinition
+                      name="Settimana"
+                      value="{selectedCustomer>Week}"
+                    />
+                  </viz.data:dimensions>
+                  <viz.data:measures>
+                    <viz.data:MeasureDefinition
+                      name="Variazione Percentuale"
+                      value="{selectedCustomer>VariationPercentage}"
+                    />
+                  </viz.data:measures>
+                </viz.data:FlattenedDataset>
+              </viz:dataset>
+              <viz:feeds>
+                <viz.feeds:FeedItem
+                  uid="valueAxis"
+                  type="Measure"
+                  values="Variazione Percentuale"
+                />
+                <viz.feeds:FeedItem
+                  uid="categoryAxis"
+                  type="Dimension"
+                  values="Settimana"
+                />
+              </viz:feeds>
+            </viz:VizFrame>
+          </VBox>
+        </VBox>
+      </VBox>
+    </f:content>
+    <f:footer>
+      <core:Fragment
+        fragmentName="programmi.consegne.edi.view.fragments.footer"
+        type="XML"
       />
-        </f:footer>
-    </f:DynamicPage>
+    </f:footer>
+  </f:DynamicPage>
 </mvc:View>
