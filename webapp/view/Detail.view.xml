@@ -84,7 +84,7 @@
       </m:FlexBox>
     </headerContent>
     <sections>
-      <ObjectPageSection>
+      <ObjectPageSection title="Dettaglio Variazioni">
         <subSections>
           <ObjectPageSubSection>
             <blocks>
