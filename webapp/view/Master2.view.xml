@@ -77,24 +77,26 @@
     </f:header>
     <!-- Main Content -->
     <f:content>
-      <VBox visible="{= ${selectedCustomer>/CompanyName} ? true : false }">
+      <VBox fitContainer="true">
         <!-- Dettaglio Quantità -->
-        <OverflowToolbar>
-          <Title text="Dettaglio Quantità (per settimana)" />
-          <ToolbarSpacer />
-          <Button
-            text="Esporta excel"
-            icon="sap-icon://excel-attachment"
-            press="downloadExcelFile"
-          />
-          <OverflowToolbarButton
-            icon="sap-icon://sort"
-            text="Sort"
-            type="Transparent"
-            press=".onSort"
-          />
-        </OverflowToolbar>
-        <ui:Table>
+        <ui:Table >
+          <ui:extension>
+            <OverflowToolbar>
+              <Title text="Dettaglio Quantità (per settimana)" />
+              <ToolbarSpacer />
+              <Button
+                text="Esporta excel"
+                icon="sap-icon://excel-attachment"
+                press="downloadExcelFile"
+              />
+              <OverflowToolbarButton
+                icon="sap-icon://sort"
+                text="Sort"
+                type="Transparent"
+                press=".onSort"
+              />
+            </OverflowToolbar>
+          </ui:extension>
           <ui:columns>
             <ui:Column>
               <Label text="Settimana" />

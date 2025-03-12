@@ -105,11 +105,11 @@
           visible="{main>/visibility}"
           rows="{variazioneArticolo>/}"
           fixedColumnCount="8"
-          
-          
         >
           <ui:extension>
-            <OverflowToolbar design="Solid" class="sapUiTinyMarginBottom" >
+            
+            <OverflowToolbar design="Solid">
+              <Title text="Dettaglio Quantità (per settimana)" />
               <ToolbarSpacer />
               <Button
                 text="Esporta excel"
