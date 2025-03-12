@@ -11,32 +11,30 @@ sap.ui.define(
       },
 
       _onObjectMatched: function (oEvent) {
-        debugger
         let detailData = this.getModel("datiAppoggio").getProperty("/");
         let oDetailModel = new JSONModel(detailData);
         this.setModel(oDetailModel, "detailData");
         this.grafico()
       },
       grafico: function () {
-        debugger
         let oDetailData = this.getModel("detailData").getData()
         let dataChart = []
         let dataChartPercentuali = []
         oDetailData.WEEKS.forEach(function (weekData) {
             dataChart.push({
-                "Settimane": weekData.WEEK,  
-                "Valore Ricavo": parseFloat(weekData.QTY) 
+                "Settimane": weekData.WEEK.slice(0, 4) + "/" + weekData.WEEK.slice(4),  
+                "ValoreRicavo": parseFloat(weekData.QTY) 
             })
             if (weekData.PREV_QTY && weekData.QTY) {
               let percentuale = ((weekData.QTY - weekData.PREV_QTY) / weekData.PREV_QTY) * 100;
               dataChartPercentuali.push({
-                  "Settimane": weekData.WEEK,
-                  "Variazione Percentuale": percentuale
+                  "Settimane": weekData.WEEK.slice(0, 4) + "/" + weekData.WEEK.slice(4),
+                  "VariazionePercentuale": percentuale
               });
           } else {
               dataChartPercentuali.push({
-                  "Settimane": weekData.WEEK,
-                  "Variazione Percentuale": 0 
+                  "Settimane": weekData.WEEK.slice(0, 4) + "/" + weekData.WEEK.slice(4),
+                  "VariazionePercentuale": 0 
               });
           }
         })

@@ -112,17 +112,14 @@ sap.ui.define(
         // SORT X CODICE CLIENTE E CODICE ARTICOLO
       },
       onOpenDetail: function (oEvent) {
-        debugger
+        
         let detailPath = oEvent.getSource().getBindingContext("variazioneArticolo").getPath()
         let detail = this.getModel("variazioneArticolo").getProperty(`${detailPath}`);
         let detailMat = oEvent.getSource().getBindingContext("variazioneArticolo").getObject().MATNR
         let currentDetail = this.getOwnerComponent().getModel("datiAppoggio").getProperty("/");
           if (JSON.stringify(currentDetail) === JSON.stringify(detail)) {
-              // I dati sono uguali, quindi non fare nulla
               return;
           }
-
-          // Aggiorna il modello con i nuovi dati
           this.getOwnerComponent().getModel("datiAppoggio").setProperty("/", detail);
         let oNextUIState;
               this.getOwnerComponent()

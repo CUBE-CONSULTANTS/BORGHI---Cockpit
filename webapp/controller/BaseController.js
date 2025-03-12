@@ -456,7 +456,7 @@ sap.ui.define(
           "archivio"
             ? (archivVal = true)
             : (archivVal = false);
-          debugger
+          
           let oFilterData = this.getModel("filtersModel").getData();
           for (let sView in oFilterData) {
             if (oFilterData.hasOwnProperty(sView)) {
