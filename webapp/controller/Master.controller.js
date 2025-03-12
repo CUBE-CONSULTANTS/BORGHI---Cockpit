@@ -52,16 +52,9 @@ sap.ui.define(
         }
       },
       onSearch: function (oEvent) {
-        debugger
-        oEvent.getSource().getFilterGroupItems().forEach(filter =>{
-          let value = filter.getValue();
-          let path = filter.getKey();
-          if(value && value.length>0){
-            aFilters.push(new Filter(path, FilterOperator.EQ, value));
-          }
-        })
+        debugger 
         //  /delivery-forecast/EIGHTWEEK_MAT?$expand=WEEKS&$filter=CLIENTE eq '0000200137' and KDMAT eq 'BRESSANS_2ND_TEST'
-        let aFilters = [];
+        let aFilters = this.getFiltersVariazioni(oEvent.getSource())
         this._searchVarArticolo(aFilters);
       },
       _searchVarArticolo: async function (aFilters) {

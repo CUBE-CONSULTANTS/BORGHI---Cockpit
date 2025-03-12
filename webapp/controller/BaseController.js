@@ -20,6 +20,9 @@ sap.ui.define(
     "sap/m/p13n/MetadataHelper",
     "sap/ui/core/library",
     "../model/formatter",
+    "sap/ui/model/Filter",
+    "sap/ui/model/FilterOperator",
+
   ],
   function (
     Controller,
@@ -41,7 +44,9 @@ sap.ui.define(
     GroupController,
     MetadataHelper,
     CoreLibrary,
-    formatter
+    formatter,
+    Filter,
+    FilterOperator
   ) {
     "use strict";
 
@@ -408,6 +413,21 @@ sap.ui.define(
               aFile.map((m) => ({ Key: m, Text: m }))
             );
           }
+        },
+        getFiltersVariazioni: function(filterbar) {
+          const filterMap = {
+              "Codice Cliente": "CLIENTE",
+              "Codice Articolo": "KDMAT"
+          }
+          let aFilters = []
+          filterbar.getFilterGroupItems().forEach(filter => {
+             let value = filter.getControl().getValue().split(' -')[0]
+            let label = filter.getLabel();  
+              if (value && value.length > 0 && filterMap[label]) {
+                  aFilters.push(new Filter(filterMap[label], FilterOperator.EQ, value));
+              }
+          });
+          return aFilters;
         },
         onFilterBarVariazioniClear: function(oEvent) {
           let oFilterBar = oEvent.getSource()

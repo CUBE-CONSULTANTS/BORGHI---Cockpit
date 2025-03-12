@@ -61,32 +61,12 @@
                   >
                     <core:Item
                       key="{matchcode>KUNNR}"
-                      text="{matchcode>KUNNR}"
+                      text="{matchcode>KUNNR} - {matchcode>KUNNR_DESCR}"
                     />
                   </ComboBox>
                 </fb:control>
               </fb:FilterGroupItem>
-              <fb:FilterGroupItem
-                name="Ragione Sociale"
-                label="Ragione Sociale"
-                groupName="Group1"
-                visibleInFilterBar="true"
-              >
-                <fb:control>
-                  <ComboBox
-                    name=""
-                    items="{
-                      path: 'matchcode>/clienti',
-                      templateShareable: true
-                    }"
-                  >
-                    <core:Item
-                      key="{matchcode>KUNNR_DESCR}"
-                      text="{matchcode>KUNNR_DESCR}"
-                    />
-                  </ComboBox>
-                </fb:control>
-              </fb:FilterGroupItem>
+          
               <fb:FilterGroupItem
                 name="Codice Articolo"
                 label="Codice Articolo"
