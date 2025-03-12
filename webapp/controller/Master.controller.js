@@ -5,18 +5,20 @@ sap.ui.define(
     "sap/ui/model/FilterOperator",
     "sap/ui/model/Sorter",
     "sap/m/MessageBox",
+    "sap/ui/model/json/JSONModel",
     "../model/models",
     "../model/API",
-	"sap/ui/model/json/JSONModel"
+    "../model/formatter"
   ],
   function (BaseController,
 	Filter,
 	FilterOperator,
 	Sorter,
 	MessageBox,
+  JSONModel,
 	models,
 	API,
-	JSONModel) {
+  formatter) {
     "use strict";
 
     return BaseController.extend("programmi.consegne.edi.controller.Master", {
@@ -40,7 +42,6 @@ sap.ui.define(
         this._searchVarArticolo(aFilters)
       },
       _searchVarArticolo: async function (aFilters) {
-        debugger
         try {
           this.showBusy(0)
           let weekCall = await API.getEntity(this.getOwnerComponent().getModel("modelloV2"), "/EIGHTWEEK_MAT", aFilters, ['WEEKS'])         
@@ -61,11 +62,14 @@ sap.ui.define(
               }))
             };
           });
-          formattedData[0].WEEKS.forEach(week => {
+          formattedData.forEach(element => {
+            element.WEEKS.forEach(week => {
               if (!labels.includes(week.WEEK)) {
                 labels.push(week.WEEK.slice(0, 4) + "/" + week.WEEK.slice(4));
               }
-            })         
+              week.PERC = formatter.formattedPerc(week.PERC)
+            })     
+          })  
           this.createWeekLabels(labels, this.byId("artTable"))
           this.setModel(new JSONModel(formattedData),"variazioneArticolo" )
           this.getModel("main").setProperty("/visibility",true)
