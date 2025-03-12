@@ -44,6 +44,7 @@ sap.ui.define(
         try {
           this.showBusy(0)
           let weekCall = await API.getEntity(this.getOwnerComponent().getModel("modelloV2"), "/EIGHTWEEK_MAT", aFilters, ['WEEKS'])         
+          let labels = []
           let formattedData = weekCall.results.map((item) => {
             return {
               CLIENTE: item.CLIENTE,
@@ -60,6 +61,12 @@ sap.ui.define(
               }))
             };
           });
+          formattedData[0].WEEKS.forEach(week => {
+              if (!labels.includes(week.WEEK)) {
+                labels.push(week.WEEK.slice(0, 4) + "/" + week.WEEK.slice(4));
+              }
+            })         
+          this.createWeekLabels(labels, this.byId("artTable"))
           this.setModel(new JSONModel(formattedData),"variazioneArticolo" )
           this.getModel("main").setProperty("/visibility",true)
         } catch (error) {
@@ -68,9 +75,18 @@ sap.ui.define(
           this.hideBusy(0);
         }
       },
+      createWeekLabels: function (labels, table) {
+        table.getColumns()[7].getMultiLabels()[0].setText(labels[0])
+        table.getColumns()[9].getMultiLabels()[0].setText(labels[1])
+        table.getColumns()[11].getMultiLabels()[0].setText(labels[2])
+        table.getColumns()[13].getMultiLabels()[0].setText(labels[3])
+        table.getColumns()[15].getMultiLabels()[0].setText(labels[4])
+        table.getColumns()[17].getMultiLabels()[0].setText(labels[5])
+        table.getColumns()[19].getMultiLabels()[0].setText(labels[6])
+        table.getColumns()[21].getMultiLabels()[0].setText(labels[7])
+      },
       onSort: function () {     
       },
-
       onListItemPress: function (oEvent) {
         //apri dettaglio
         // var productPath = oEvent.getSource().getBindingContext("products").getPath(),

@@ -120,6 +120,7 @@
     <f:content>
       <VBox fitContainer="true">
         <ui:Table
+          id="artTable"
          selectionMode="None"
           visible="{main>/visibility}"
           rows="{variazioneArticolo>/}"
@@ -246,7 +247,7 @@
             >
               <ui:multiLabels>
                 <Label
-                  text="Settimana 1"
+                  id="idLabel1"
                   wrapping="true"
                   textAlign="Center"
                   width="100%"
@@ -286,7 +287,7 @@
             >
               <ui:multiLabels>
                 <Label
-                  text="Settimana 2" 
+                  id="idLabel2"
                   wrapping="true"
                   textAlign="Center"
                   width="100%"
@@ -325,7 +326,7 @@
             >
               <ui:multiLabels>
                 <Label
-                  text="Settimana 3"
+                  id="idLabel3"
                   wrapping="true"
                   textAlign="Center"
                   width="100%"
@@ -358,14 +359,14 @@
               </ui:template>
             </ui:Column>
             <ui:Column
+            
             headerSpan="2,1"
               hAlign="Center"
               width="4rem"
             >
               <ui:multiLabels>
                 <Label
-                  text="Settimana 4"
-                 
+                  id="idLabel4"
                   textAlign="Center"
                   width="100%"
                 />
@@ -403,7 +404,7 @@
             >
               <ui:multiLabels>
                 <Label
-                  text="Settimana 5"
+                  id="idLabel5"
                   wrapping="true"
                   textAlign="Center"
                   width="100%"
@@ -442,7 +443,7 @@
             >
               <ui:multiLabels>
                 <Label
-                  text="Settimana 6"
+                 id="idLabel6"
                   wrapping="true"
                   textAlign="Center"
                   width="100%"
@@ -481,7 +482,7 @@
             >
               <ui:multiLabels>
                 <Label
-                  text="Settimana 7"
+                  id="idLabel7"
                   wrapping="true"
                   textAlign="Center"
                   width="100%"
@@ -520,7 +521,7 @@
             >
               <ui:multiLabels>
                 <Label
-                  text="Settimana 8"
+                  id="idLabel8"
                   wrapping="true"
                   textAlign="Center"
                   width="100%"
