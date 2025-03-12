@@ -958,12 +958,15 @@ sap.ui.define(
             let aSelectedItems = indices.map(function (iIndex) {
               return table.getContextByIndex(iIndex).getObject();
             });
-            aSelectedItems = aSelectedItems.filter(item => {
-              let hasInvalidStatus = 
-                  (item.stato === '64' || item.stato === '53') ||
-                  (item.posizioni && item.posizioni.some(pos => pos.stato === '64' || pos.stato === '53'));
-              return !hasInvalidStatus; 
-            });
+            aSelectedItems = aSelectedItems.map(item => {
+              if (item.posizioni) {
+                  item.posizioni = item.posizioni.filter(pos => pos.stato !== '53' && pos.stato !== '64');
+              }
+              if ((item.stato !== '53' && item.stato !== '64') || (item.posizioni && item.posizioni.length > 0)) {
+                return item;
+              }
+              return null;
+            }).filter(item => item !== null)
             if (aSelectedItems.length === 0) {
               MessageBox.error("Non è possibile Rielaborare elementi già processati");
               return [];
@@ -983,7 +986,7 @@ sap.ui.define(
             if (flag) {
               return new Promise((resolve) => {
                 MessageBox.confirm(
-                  "Verranno processate tutte le posizioni della Testata selezionata, continuare?",
+                  "Verranno processate tutte le posizioni non ancora elaborate della Testata selezionata, continuare?",
                   {
                     title: "Continuare?",
                     onClose: (oAction) => {

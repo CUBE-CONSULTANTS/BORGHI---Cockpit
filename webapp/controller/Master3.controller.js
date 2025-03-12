@@ -250,45 +250,55 @@ sap.ui.define(
                 let oModel = this.getOwnerComponent().getModel("modelloV2");
                 let res = await API.createEntity(oModel, "/Processamento", obj);
                 if (res.results.length > 0) {
-                  let modelloReport = new JSONModel({
-                    successo: "",
-                    errore: "",
-                  });
-                  that.setModel(modelloReport, "modelloReport");
-                  let success = [];
-                  let error = [];
-                  res.results.forEach((x) => {
-                    if (x.status === "51") {
-                      let el = items.find((y) => x.id === y.id);
-                      error.push(Object.assign(el, x));
-                    } else {
-                      let el = items.find((y) => x.id === y.id);
-                      success.push(Object.assign(el, x));
+                  MessageBox.show("Elaborazione in corso",{
+                    title: "Processo di Elaborazione",
+                    icon: sap.m.MessageBox.Icon.INFORMATION,
+                    actions: [sap.m.MessageBox.Action.CLOSE],
+                    emphasizedAction: sap.m.MessageBox.Action.CLOSE,
+                    onClose: async function (oAction) {
+                      that._refreshData("01");
                     }
-                  });
-                  that
-                    .getModel("modelloReport")
-                    .setProperty("/successo", success);
-                  that.getModel("modelloReport").setProperty("/errore", error);
-                  that._refreshData("01");
-                  if (!that._fragment) {
-                    Fragment.load({
-                      name: "programmi.consegne.edi.view.fragments.reportDelfor",
-                      controller: this,
-                    }).then(
-                      function (oFragment) {
-                        this._fragment = oFragment;
-                        this.getView().addDependent(this._fragment);
-                        this._fragment.open();
-                      }.bind(this)
-                    );
-                  } else {
-                    that._fragment.setModel("modelloReport");
-                    that._fragment.open();
-                  }
+                  })      
+                //   let modelloReport = new JSONModel({
+                //     successo: "",
+                //     errore: "",
+                //   });
+                //   that.setModel(modelloReport, "modelloReport");
+                //   let success = [];
+                //   let error = [];
+                //   res.results.forEach((x) => {
+                //     if (x.status === "51") {
+                //       let el = items.find((y) => x.id === y.id);
+                //       error.push(Object.assign(el, x));
+                //     } else {
+                //       let el = items.find((y) => x.id === y.id);
+                //       success.push(Object.assign(el, x));
+                //     }
+                //   });
+                //   that
+                //     .getModel("modelloReport")
+                //     .setProperty("/successo", success);
+                //   that.getModel("modelloReport").setProperty("/errore", error);
+                
+                //   if (!that._fragment) {
+                //     Fragment.load({
+                //       name: "programmi.consegne.edi.view.fragments.reportDelfor",
+                //       controller: this,
+                //     }).then(
+                //       function (oFragment) {
+                //         this._fragment = oFragment;
+                //         this.getView().addDependent(this._fragment);
+                //         this._fragment.open();
+                //       }.bind(this)
+                    // );
+                //   } else {
+                //     that._fragment.setModel("modelloReport");
+                //     that._fragment.open();
+                //   }
                 } else {
                   MessageBox.error("Elaborazione non andata a buon fine");
                 }
+                 
               } catch (error) {
                 MessageBox.error("Errore durante la ricezione dei dati");
               } finally {
