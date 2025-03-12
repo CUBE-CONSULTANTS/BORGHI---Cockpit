@@ -45,7 +45,7 @@
             showFilterConfiguration="false"
             showGoOnFB="true"
             showClearOnFB="true"
-            clear="onFilterBarClear"
+            clear="onFilterBarVariazioniClear"
           >
             <fb:filterGroupItems>
               <fb:FilterGroupItem
@@ -65,7 +65,7 @@
                   >
                     <core:Item
                       key="{matchcode>KUNNR}"
-                      text="{matchcode>KUNNR_DESCR}"
+                      text="{matchcode>KUNNR} - {matchcode>KUNNR_DESCR}"
                     />
                   </ComboBox>
                 </fb:control>

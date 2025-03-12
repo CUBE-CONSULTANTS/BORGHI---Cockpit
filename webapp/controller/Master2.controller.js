@@ -45,7 +45,28 @@ sap.ui.define(
           }
         }
       },
-      onSearch: function (oEvent) {},
+      onSearch: function (oEvent) {
+        let aFilters = this.getFiltersVariazioni(oEvent.getSource())
+        this._searchVarCliente(aFilters);
+        // /odata/v2/delivery-forecast/EIGHTWEEK_CLI?$expand=RETURN_DATA&$filter=CLIENTE eq '0000200191'
+      },
+      _searchVarCliente: async function (aFilters) {
+        try {
+          this.showBusy(0);
+          let dataCall = await API.getEntity(
+            this.getOwnerComponent().getModel("modelloV2"),
+            "/EIGHTWEEK_CLI",
+            aFilters,
+            ["RETURN_DATA"]
+          );
+          // this.setModel(new JSONModel(formattedData), "variazioneArticolo");
+          // this.getModel("main").setProperty("/visibility", true);
+        } catch (error) {
+          MessageBox.error("Errore durante la ricezione dei dati ", error);
+        } finally {
+          this.hideBusy(0);
+        }
+      },
       navToHome: function () {
         this.getOwnerComponent().getModel("datiAppoggio").setProperty("/filtriNav","")
         this.byId("idClientiComboBox2").setSelectedKey("")
