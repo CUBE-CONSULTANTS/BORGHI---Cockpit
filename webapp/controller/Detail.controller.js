@@ -25,18 +25,10 @@ sap.ui.define(
                 "Settimane": weekData.WEEK.slice(0, 4) + "/" + weekData.WEEK.slice(4),  
                 "ValoreRicavo": parseFloat(weekData.QTY) 
             })
-            if (weekData.PREV_QTY && weekData.QTY) {
-              let percentuale = ((weekData.QTY - weekData.PREV_QTY) / weekData.PREV_QTY) * 100;
-              dataChartPercentuali.push({
-                  "Settimane": weekData.WEEK.slice(0, 4) + "/" + weekData.WEEK.slice(4),
-                  "VariazionePercentuale": percentuale
-              });
-          } else {
-              dataChartPercentuali.push({
-                  "Settimane": weekData.WEEK.slice(0, 4) + "/" + weekData.WEEK.slice(4),
-                  "VariazionePercentuale": 0 
-              });
-          }
+            dataChartPercentuali.push({
+              "Settimane": weekData.WEEK.slice(0, 4) + "/" + weekData.WEEK.slice(4),
+              "VariazionePercentuale": parseFloat(weekData.PERC)
+          });
         })
         
         oDetailData.ProductCollection = [{
