@@ -44,8 +44,23 @@ sap.ui.define(
         try {
           this.showBusy(0)
           let weekCall = await API.getEntity(this.getOwnerComponent().getModel("modelloV2"), "/EIGHTWEEK_MAT", aFilters, ['WEEKS'])         
-          this.setModel(new JSONModel(weekCall.results),"variazioneArticolo" )
-
+          let formattedData = weekCall.results.map((item) => {
+            return {
+              CLIENTE: item.CLIENTE,
+              KDMAT: item.KDMAT,
+              MATNR: item.MATNR,
+              GIACENZA: item.GIACENZA.trim(),
+              IMPEGNO: item.IMPEGNO.trim(),
+              TOTALE: item.TOTALE.trim(),
+              WEEKS: item.WEEKS.results.map((week) => ({
+                N_WEEK: week.N_WEEK.trim(),
+                WEEK: week.WEEK.trim(),
+                QTY: week.QTY.trim(),
+                PERC: week.PERC.trim(),
+              }))
+            };
+          });
+          this.setModel(new JSONModel(formattedData),"variazioneArticolo" )
           this.getModel("main").setProperty("/visibility",true)
         } catch (error) {
           MessageBox.error("Errore durante la ricezione dei dati ",error)

@@ -257,7 +257,7 @@
                 />
               </ui:multiLabels>
               <ui:template>
-                <Text text="{variazioneArticolo>/weeks/QTY}" />
+                <Text text="{variazioneArticolo>WEEKS/0/QTY}" />
               </ui:template>
             </ui:Column>
             <ui:Column
@@ -275,7 +275,7 @@
                 />
               </ui:multiLabels>
               <ui:template>
-                <Text text="{}" />
+                <Text text="{variazioneArticolo>WEEKS/0/PERC}" />
               </ui:template>
             </ui:Column>
            
@@ -286,7 +286,7 @@
             >
               <ui:multiLabels>
                 <Label
-                  text="Settimana 2"
+                  text="Settimana 2" 
                   wrapping="true"
                   textAlign="Center"
                   width="100%"
@@ -297,8 +297,7 @@
                 />
               </ui:multiLabels>
               <ui:template>
-                <Text text="{
-                }" />
+                <Text text="{variazioneArticolo>WEEKS/1/QTY}" />
               </ui:template>
             </ui:Column>
             <ui:Column
@@ -316,7 +315,7 @@
                 />
               </ui:multiLabels>
               <ui:template>
-                <Text text="{}" />
+                <Text text="{variazioneArticolo>WEEKS/1/PERC}" />
               </ui:template>
             </ui:Column>
             <ui:Column
@@ -337,8 +336,7 @@
                 />
               </ui:multiLabels>
               <ui:template>
-                <Text text="{
-                }" />
+                <Text text="{variazioneArticolo>WEEKS/2/QTY}" />
               </ui:template>
             </ui:Column>
             <ui:Column
@@ -356,7 +354,7 @@
                 />
               </ui:multiLabels>
               <ui:template>
-                <Text text="{}" />
+                <Text text="{variazioneArticolo>WEEKS/2/PERC}" />
               </ui:template>
             </ui:Column>
             <ui:Column
@@ -367,7 +365,7 @@
               <ui:multiLabels>
                 <Label
                   text="Settimana 4"
-                  wrapping="true"
+                 
                   textAlign="Center"
                   width="100%"
                 />
@@ -377,8 +375,7 @@
                 />
               </ui:multiLabels>
               <ui:template>
-                <Text text="{
-                }" />
+                <Text text="{variazioneArticolo>WEEKS/3/QTY}" />
               </ui:template>
             </ui:Column>
             <ui:Column
@@ -396,7 +393,7 @@
                 />
               </ui:multiLabels>
               <ui:template>
-                <Text text="{}" />
+                <Text text="{variazioneArticolo>WEEKS/3/PERC}" />
               </ui:template>
             </ui:Column>
             <ui:Column
@@ -417,8 +414,7 @@
                 />
               </ui:multiLabels>
               <ui:template>
-                <Text text="{
-                }" />
+                <Text text="{variazioneArticolo>WEEKS/4/QTY}" />
               </ui:template>
             </ui:Column>
             <ui:Column
@@ -436,7 +432,7 @@
                 />
               </ui:multiLabels>
               <ui:template>
-                <Text text="{}" />
+                <Text text="{variazioneArticolo>WEEKS/4/PERC}" />
               </ui:template>
             </ui:Column>
             <ui:Column
@@ -457,8 +453,7 @@
                 />
               </ui:multiLabels>
               <ui:template>
-                <Text text="{
-                }" />
+                <Text text="{variazioneArticolo>WEEKS/5/QTY}" />
               </ui:template>
             </ui:Column>
             <ui:Column
@@ -476,7 +471,7 @@
                 />
               </ui:multiLabels>
               <ui:template>
-                <Text text="{}" />
+                <Text text="{variazioneArticolo>WEEKS/5/PERC}" />
               </ui:template>
             </ui:Column>
             <ui:Column
@@ -497,8 +492,7 @@
                 />
               </ui:multiLabels>
               <ui:template>
-                <Text text="{
-                }" />
+                <Text text="{variazioneArticolo>WEEKS/6/QTY}" />
               </ui:template>
             </ui:Column>
             <ui:Column
@@ -516,7 +510,7 @@
                 />
               </ui:multiLabels>
               <ui:template>
-                <Text text="{}" />
+                <Text text="{variazioneArticolo>WEEKS/6/PERC}" />
               </ui:template>
             </ui:Column>
             <ui:Column
@@ -537,8 +531,7 @@
                 />
               </ui:multiLabels>
               <ui:template>
-                <Text text="{
-                }" />
+                <Text text="{variazioneArticolo>WEEKS/7/QTY}" />
               </ui:template>
             </ui:Column>
             <ui:Column
@@ -556,7 +549,7 @@
                 />
               </ui:multiLabels>
               <ui:template>
-                <Text text="{}" />
+                <Text text="{variazioneArticolo>WEEKS/7/PERC}" />
               </ui:template>
             </ui:Column> 
           </ui:columns>
