@@ -232,7 +232,7 @@
 					"target": "master3"
 				},       
 				{
-					"pattern": "detail/{mat}/{cliente}/{layout}",
+					"pattern": "detail/{mat}/{layout}",
 					"name": "detail",
 					"target": [
 						"master",

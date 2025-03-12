@@ -102,7 +102,7 @@
           selectionMode="None"
           visible="{main>/visibility}"
           rows="{variazioneArticolo>/}"
-          fixedColumnCount="7"
+          fixedColumnCount="8"
           
           
         >

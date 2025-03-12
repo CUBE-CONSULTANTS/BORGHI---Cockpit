@@ -113,10 +113,17 @@ sap.ui.define(
       },
       onOpenDetail: function (oEvent) {
         debugger
-        //apri dettaglio
-        let objPath = oEvent.getSource().getBindingContext("variazioneArticolo").getPath()
-        let rowObjArt = oEvent.getSource().getBindingContext("variazioneArticolo").getObject().MATNR
-        let rowObjCliente = oEvent.getSource().getBindingContext("variazioneArticolo").getObject().CLIENTE
+        let detailPath = oEvent.getSource().getBindingContext("variazioneArticolo").getPath()
+        let detail = this.getModel("variazioneArticolo").getProperty(`${detailPath}`);
+        let detailMat = oEvent.getSource().getBindingContext("variazioneArticolo").getObject().MATNR
+        let currentDetail = this.getOwnerComponent().getModel("datiAppoggio").getProperty("/");
+          if (JSON.stringify(currentDetail) === JSON.stringify(detail)) {
+              // I dati sono uguali, quindi non fare nulla
+              return;
+          }
+
+          // Aggiorna il modello con i nuovi dati
+          this.getOwnerComponent().getModel("datiAppoggio").setProperty("/", detail);
         let oNextUIState;
               this.getOwnerComponent()
                 .getHelper()
@@ -124,8 +131,7 @@ sap.ui.define(
                   function (oHelper) {
                     oNextUIState = oHelper.getNextUIState(1);
                     this.getRouter().navTo("detail", {
-                      mat: rowObjArt,
-                      cliente: rowObjCliente,
+                      mat:detailMat,
                       layout: oNextUIState.layout,
                     });
                   }.bind(this)

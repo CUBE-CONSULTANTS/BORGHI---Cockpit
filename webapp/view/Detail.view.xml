@@ -1,429 +1,293 @@
 <mvc:View
-    controllerName="programmi.consegne.edi.controller.Detail"
-    xmlns="sap.uxap"
-    xmlns:m="sap.m"
-    xmlns:f="sap.f"
-    xmlns:ui="sap.ui.table" 
-    xmlns:form="sap.ui.layout.form"
-    xmlns:mvc="sap.ui.core.mvc"
-    xmlns:core="sap.ui.core"
-	xmlns:viz="sap.viz.ui5.controls"
-    xmlns:viz.data="sap.viz.ui5.data"
-    xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
-	xmlns:layout="sap.ui.layout"
-	xmlns:commons="sap.suite.ui.commons"
-
+  controllerName="programmi.consegne.edi.controller.Detail"
+  xmlns="sap.uxap"
+  xmlns:m="sap.m"
+  xmlns:f="sap.f"
+  xmlns:ui="sap.ui.table"
+  xmlns:form="sap.ui.layout.form"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:core="sap.ui.core"
+  xmlns:viz="sap.viz.ui5.controls"
+  xmlns:viz.data="sap.viz.ui5.data"
+  xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+  xmlns:layout="sap.ui.layout"
+  xmlns:commons="sap.suite.ui.commons"
 >
-    <ObjectPageLayout
-        id="ObjectPageLayout"
-        showTitleInHeaderContent="true"
-        alwaysShowContentHeader="false"
-        preserveHeaderStateOnScroll="false"
-        headerContentPinnable="true"
-        isChildPage="true"
-        upperCaseAnchorBar="false"
-    >
-        <headerTitle>
-            <ObjectPageDynamicHeaderTitle>
-                <expandedHeading>
-                    <m:Title
-                        text="{detailData>/ProductCollection/0/codice_articolo}"
-                        wrapping="true"
-                        class="sapUiSmallMarginEnd"
-                    />
-                </expandedHeading>
-
-                <snappedHeading>
-                    <m:FlexBox
-                        wrap="Wrap"
-                        fitContainer="true"
-                        alignItems="Center"
-                    >
-                        <m:FlexBox
-                            wrap="NoWrap"
-                            fitContainer="true"
-                            alignItems="Center"
-                            class="sapUiTinyMarginEnd"
-                        >
-                            <m:Avatar
-                                src="https://sdk.openui5.org/{detailData>ProductPicUrl}"
-                                displaySize="S"
-                                displayShape="Square"
-                                class="sapUiTinyMarginEnd"
-                            />
-                            <m:Title
-                                text="{products>codice_articolo}"
-                                wrapping="true"
-                            />
-                        </m:FlexBox>
-                    </m:FlexBox>
-                </snappedHeading>
-
-                <navigationActions>
-                    <m:OverflowToolbarButton
-                        type="Emphasized"
-                        icon="sap-icon://decline"
-                        press="handleCloseVariazioni"
-                        tooltip="Close column"
-                        visible="{= ${/actionButtonsInfo/midColumn/closeColumn} !== null }"
-                    />
-                </navigationActions>
-
-            </ObjectPageDynamicHeaderTitle>
-        </headerTitle>
-
-        <headerContent>
+  <ObjectPageLayout
+    id="ObjectPageLayout"
+    showTitleInHeaderContent="true"
+    alwaysShowContentHeader="false"
+    preserveHeaderStateOnScroll="false"
+    headerContentPinnable="true"
+    isChildPage="true"
+    upperCaseAnchorBar="false"
+  >
+    <headerTitle>
+      <ObjectPageDynamicHeaderTitle>
+        <expandedHeading>
+          <m:Title
+            text="Cod. Articolo: {detailData>/MATNR}"
+            wrapping="true"
+            class="sapUiSmallMarginEnd"
+          />
+        </expandedHeading>
+        <snappedHeading>
+          <m:FlexBox
+            wrap="Wrap"
+            fitContainer="true"
+            alignItems="Center"
+          >
             <m:FlexBox
-                wrap="Wrap"
-                fitContainer="true"
-                alignItems="Stretch"
+              wrap="NoWrap"
+              fitContainer="true"
+              alignItems="Center"
+              class="sapUiTinyMarginEnd"
             >
-                <m:Avatar
-                    src="https://sdk.openui5.org/{products>ProductPicUrl}"
-                    displaySize="L"
-                    displayShape="Square"
-                    class="sapUiTinyMarginEnd"
-                />
-                <m:VBox
-                    justifyContent="Center"
-                    class="sapUiSmallMarginEnd"
-                >
-                    <m:Label text="Codice Cliente" />
-                    <m:Text
-                        text="{detailData>/ProductCollection/0/ProductId}"
-                    />
-                </m:VBox>
-                <m:VBox
-                    justifyContent="Center"
-                    class="sapUiSmallMarginEnd"
-                >
-                    <m:Label text="Ragione Sociale" />
-                    <m:Text text="{detailData>/ProductCollection/0/Name}" />
-                </m:VBox>
+              <m:Title
+                text="Cod. Articolo: {detailData>/MATNR}"
+                wrapping="true"
+              />
             </m:FlexBox>
-        </headerContent>
-
-        <sections>
-            <ObjectPageSection title="General Information">
-                <subSections>
-                    <ObjectPageSubSection>
-                        <blocks>
-                            <m:Table
-                                
-                                  items="{
-                                  path: 'detailData>/ProductCollection',
-                                  sorter: {
-                                    path: 'Name'
+          </m:FlexBox>
+        </snappedHeading>
+        <navigationActions>
+          <m:OverflowToolbarButton
+            type="Emphasized"
+            icon="sap-icon://decline"
+            press="handleCloseVariazioni"
+            tooltip="Close column"
+            visible="{= ${/actionButtonsInfo/midColumn/closeColumn} !== null }"
+          />
+        </navigationActions>
+      </ObjectPageDynamicHeaderTitle>
+    </headerTitle>
+    <headerContent>
+      <m:FlexBox
+        wrap="Wrap"
+        fitContainer="true"
+        alignItems="Stretch"
+      >
+        <m:VBox
+          justifyContent="Center"
+          class="sapUiSmallMarginEnd"
+        >
+          <m:Label text="Codice Cliente" />
+          <m:Text text="{detailData>/CLIENTE}" />
+        </m:VBox>
+        <m:VBox
+          justifyContent="Center"
+          class="sapUiSmallMarginEnd"
+        >
+          <m:Label text="Ragione Sociale" />
+          <m:Text text="{detailData>/Name}" />
+        </m:VBox>
+      </m:FlexBox>
+    </headerContent>
+    <sections>
+      <ObjectPageSection>
+        <subSections>
+          <ObjectPageSubSection>
+            <blocks>
+              <!-- Grafico principale -->
+              <m:VBox>
+                <commons:ChartContainer
+                  id="chartContainer"
+                  showFullScreen="false"
+                  showPersonalization="false"
+                  showLegend="false"
+                  showSelectionDetails="false"
+                  showLegendButton="false"
+                  autoAdjustHeight="false"
+                  showZoom="false"
+                  personalizationPress="attachPersonalizationPress"
+                  contentChange="attachContentChange"
+                  title="Variazioni Quantità"
+                >
+                  <commons:content>
+                    <commons:ChartContainerContent
+                      icon="sap-icon://line-chart"
+                      
+                    >
+                      <commons:content>
+                        <layout:FixFlex
+                          id="chartFixFlexzz"
+                          minFlexSize="100"
+                          fitContainer="true"
+                        >
+                          <layout:flexContent>
+                            <viz:VizFrame
+                              id="idVizFrame"
+                              uiConfig="{
+                                applicationSet: 'fiori'
+                              }"
+                              vizType="column"
+                              width="100%"
+                              vizProperties="{
+                                plotArea: {
+                                  dataLabel: {
+                                    visible: true
                                   }
-					                      }"
-                                class="sapFDynamicPageAlignContent"
-                                width="auto"
+                                },
+                                valueAxis: {
+                                  title: {
+                                    visible: true
+                                  }
+                                },
+                                categoryAxis: {
+                                  title: {
+                                    visible: true
+                                  }
+                                },
+                                title: {
+                                  visible: true,
+                                  text: 'Quantità per settimana'
+                                }
+                              }"
                             >
-                                <m:columns>
-                                    <m:Column width="3.3rem" >
-                                        <m:Text text="1 sett" />
-                                    </m:Column>
-                                    <m:Column width="3.3rem" >
-                                        <m:Text text="2 sett" />
-                                    </m:Column>
-                                    <m:Column width="3.3rem" >
-                                        <m:Text text="3 sett" />
-                                    </m:Column>
-                                    <m:Column width="3.3rem" >
-                                        <m:Text text="4 sett" />
-                                    </m:Column>
-                                    <m:Column width="3.3rem" >
-                                        <m:Text text="5 sett" />
-                                    </m:Column>
-                                    <m:Column width="3.3rem" >
-                                        <m:Text text="6 sett" />
-                                    </m:Column>
-                                    <m:Column width="3.3rem" >
-                                        <m:Text text="7 sett" />
-                                    </m:Column>
-                                    <m:Column width="3.3rem" >
-                                        <m:Text text="8 sett" />
-                                    </m:Column>
-                                </m:columns>
-                                <m:items>
-                                    <m:ColumnListItem type="Inactive">
-                                        <m:cells>
-                                            <m:ObjectIdentifier
-                                                title="{detailData>/ProductCollection/0/variazioni_quantita/0/quantita}"
-                                                text="{detailData>/ProductCollection/0/variazioni_percentuali/0/percentuale} {detailData>CurrencyCode}"
-                                            />
-                                            <m:ObjectIdentifier
-                                                title="{detailData>/ProductCollection/0/variazioni_quantita/1/quantita}"
-                                                text="{detailData>/ProductCollection/0/variazioni_percentuali/1/percentuale} {detailData>CurrencyCode}"
-                                            />
-                                            <m:ObjectIdentifier
-                                                title="{detailData>/ProductCollection/0/variazioni_quantita/2/quantita}"
-                                                text="{detailData>/ProductCollection/0/variazioni_percentuali/2/percentuale} {detailData>CurrencyCode}"
-                                            />
-                                            <m:ObjectIdentifier
-                                                title="{detailData>/ProductCollection/0/variazioni_quantita/3/quantita}"
-                                                text="{detailData>/ProductCollection/0/variazioni_percentuali/3/percentuale} {detailData>CurrencyCode}"
-                                            />
-                                            <m:ObjectIdentifier
-                                                title="{detailData>/ProductCollection/0/variazioni_quantita/4/quantita}"
-                                                text="{detailData>/ProductCollection/0/variazioni_percentuali/4/percentuale} {detailData>CurrencyCode}"
-                                            />
-                                            <m:ObjectIdentifier
-                                                title="{detailData>/ProductCollection/0/variazioni_quantita/5/quantita}"
-                                                text="{detailData>/ProductCollection/0/variazioni_percentuali/5/percentuale} {detailData>CurrencyCode}"
-                                            />
-                                            <m:ObjectIdentifier
-                                                title="{detailData>/ProductCollection/0/variazioni_quantita/6/quantita}"
-                                                text="{detailData>/ProductCollection/0/variazioni_percentuali/6/percentuale} {detailData>CurrencyCode}"
-                                            />
-                                            <m:ObjectIdentifier
-                                                title="{detailData>/ProductCollection/0/variazioni_quantita/7/quantita}"
-                                                text="{detailData>/ProductCollection/0/variazioni_percentuali/7/percentuale} {detailData>CurrencyCode}"
-                                            />
-                                            <m:ObjectIdentifier
-                                                title="{detailData>Depth}"
-                                            />
-                                            <m:ObjectIdentifier
-                                                title="{detailData>Azz}"
-                                            />
-                                            <m:ObjectIdentifier
-                                                title="{detailData>giac_finito}"
-                                            />
-                                            <m:ObjectIdentifier
-                                                title="{detailData>impegno_cong}"
-                                            />
-                                            <m:ObjectIdentifier
-                                                title="{detailData>giac_scalato}"
-                                            />
-                                        </m:cells>
-                                    </m:ColumnListItem>
-                                </m:items>
-                            </m:Table>
-                        </blocks>
-                    </ObjectPageSubSection>
-                </subSections>
-            </ObjectPageSection>
-
-            <ObjectPageSection title="Dettagli">
-                <subSections>
-                    <ObjectPageSubSection>
-                        <blocks>
-                            <!-- Grafico principale -->
-                            <m:VBox >
-                                
-                                
-                                     <commons:ChartContainer
-                                        id="chartContainer"
-                                        showFullScreen="false"
-                                        showPersonalization="false"
-                                        showLegend="false"
-                                        showSelectionDetails="false"
-                                        showLegendButton="false"
-                                        autoAdjustHeight="false"
-                                        showZoom="false"
-                                        personalizationPress="attachPersonalizationPress"
-                                        contentChange="attachContentChange"
-                                        title=""
-                                    >
-                                        <commons:content>
-                                            <commons:ChartContainerContent
-                                                icon="sap-icon://line-chart"
-                                                title=""
-                                            >
-                                                <commons:content>
-                                                    <layout:FixFlex
-                                                        id='chartFixFlexzz'
-                                                        minFlexSize="100"
-                                                        fitContainer="true"
-                                                    >
-                                                        <layout:flexContent>
-                                                            <viz:VizFrame
-                                                                id="idVizFrame"
-                                                                uiConfig="{applicationSet:'fiori'}"
-                                                                vizType='column'
-                                                                width="100%"
-                                                                vizProperties='{
-																				plotArea: {
-																					dataLabel: {
-																						visible: true
-																					}
-																				},
-																				valueAxis: {
-																					title: {
-																						visible: true
-																					}
-																				},
-																				categoryAxis: {
-																					title: {
-																						visible: true
-																					}
-																				},
-																				title: {
-																					visible: true,
-																					text: "Quantità per settimana"
-																				}
-																			}'
-															>
-                                                                <viz:dataset>
-                                                                    <viz.data:FlattenedDataset
-                                                                        data="{detailData>/ProductCollection/0/variazioni_quantita/}"
-                                                                    >
-                                                                        <viz.data:dimensions
-                                                                        >
-                                                                            <viz.data:DimensionDefinition
-                                                                                name="Settimane"
-                                                                                value="{detailData>settimana}"
-                                                                            />
-                                                                        </viz.data:dimensions>
-                                                                        <viz.data:measures
-                                                                        >
-                                                                            <viz.data:MeasureDefinition
-                                                                                name="Valore Ricavo"
-                                                                                value="{detailData>quantita}"
-                                                                            />
-                                                                        </viz.data:measures>
-                                                                    </viz.data:FlattenedDataset>
-                                                                </viz:dataset>
-                                                                <viz:feeds>
-                                                                    <viz.feeds:FeedItem
-                                                                        uid="valueAxis"
-                                                                        type="Measure"
-                                                                        values="Valore Ricavo"
-                                                                    />
-                                                                    <viz.feeds:FeedItem
-                                                                        uid="categoryAxis"
-                                                                        type="Dimension"
-                                                                        values="Settimane"
-                                                                    />
-                                                                </viz:feeds>
-                                                            </viz:VizFrame>
-                                                        </layout:flexContent>
-                                                    </layout:FixFlex>
-                                                </commons:content>
-                                            </commons:ChartContainerContent> 
-                                        </commons:content>
-                                    </commons:ChartContainer>
-                                
-
-                                    <!-- Fine grafico principale -->
-                                
-                                
-                                
-                               
-                                    <!-- Grafico secondario -->
-                                    <commons:ChartContainer
-                                        id="chartContainerr"
-                                        showFullScreen="false"
-                                        showPersonalization="false"
-                                        showLegend="false"
-                                        showSelectionDetails="false"
-                                        showLegendButton="false"
-                                        autoAdjustHeight="false"
-                                        showZoom="false"
-                                        personalizationPress="attachPersonalizationPress"
-                                        contentChange="attachContentChange"
-                                        title=""
-                                    >
-                                        <commons:content>
-                                            <commons:ChartContainerContent
-                                                icon="sap-icon://line-chart"
-                                                title=""
-                                            >
-                                                <commons:content>
-                                                    <layout:FixFlex
-                                                        id='chartFixFlexzzz'
-                                                        minFlexSize="100"
-                                                        fitContainer="true"
-                                                    >
-                                                        <layout:flexContent>
-                                                            <viz:VizFrame
-                                                                id="idVizFramee"
-                                                                uiConfig="{applicationSet:'fiori'}"
-                                                                vizType='column'
-                                                                width="100%"
-                                                                vizProperties='{
-																				plotArea: {
-																					dataLabel: {
-																						visible: true
-																					}
-																				},
-																				valueAxis: {
-																					title: {
-																						visible: true
-																					}
-																				},
-																				categoryAxis: {
-																					title: {
-																						visible: true
-																					}
-																				},
-																				title: {
-																					visible: true,
-																					text: "Quantità per settimana"
-																				}
-																			}'
-															>
-                                                                <viz:dataset>
-                                                                    <viz.data:FlattenedDataset
-                                                                        data="{detailData>/ProductCollection/0/variazioni_percentuali/}"
-                                                                    >
-                                                                        <viz.data:dimensions
-                                                                        >
-                                                                            <viz.data:DimensionDefinition
-                                                                                name="Settimane"
-                                                                                value="{detailData>settimana}"
-                                                                            />
-                                                                        </viz.data:dimensions>
-                                                                        <viz.data:measures
-                                                                        >
-                                                                            <viz.data:MeasureDefinition
-                                                                                name="Valore Ricavo"
-                                                                                value="{detailData>percentuale}"
-                                                                            />
-                                                                        </viz.data:measures>
-                                                                    </viz.data:FlattenedDataset>
-                                                                </viz:dataset>
-                                                                <viz:feeds>
-                                                                    <viz.feeds:FeedItem
-                                                                        uid="valueAxis"
-                                                                        type="Measure"
-                                                                        values="Valore Ricavo"
-                                                                    />
-                                                                    <viz.feeds:FeedItem
-                                                                        uid="categoryAxis"
-                                                                        type="Dimension"
-                                                                        values="Settimane"
-                                                                    />
-                                                                </viz:feeds>
-                                                            </viz:VizFrame>
-                                                        </layout:flexContent>
-                                                    </layout:FixFlex>
-                                                </commons:content>
-                                            </commons:ChartContainerContent> 
-                                        </commons:content>
-                                    </commons:ChartContainer>
-
-							</m:VBox>	 
-                               
-                           
-                        </blocks>
-                    </ObjectPageSubSection>
-                </subSections>
-            </ObjectPageSection>
-        </sections>
-
-        <footer>
-            <m:OverflowToolbar>
-                <m:ToolbarSpacer />
-                <m:Button
-                    type="Accept"
-                    text="Save"
-                />
-                <m:Button
-                    type="Reject"
-                    text="Cancel"
-                />
-            </m:OverflowToolbar>
-        </footer>
-    </ObjectPageLayout>
+                              <viz:dataset>
+                                <viz.data:FlattenedDataset data="{detailData>/ProductCollection/0/variazioni_quantita/}">
+                                  <viz.data:dimensions>
+                                    <viz.data:DimensionDefinition
+                                      name="Settimane"
+                                      value="{detailData>settimana}"
+                                    />
+                                  </viz.data:dimensions>
+                                  <viz.data:measures>
+                                    <viz.data:MeasureDefinition
+                                      name="Valore Ricavo"
+                                      value="{detailData>quantita}"
+                                    />
+                                  </viz.data:measures>
+                                </viz.data:FlattenedDataset>
+                              </viz:dataset>
+                              <viz:feeds>
+                                <viz.feeds:FeedItem
+                                  uid="valueAxis"
+                                  type="Measure"
+                                  values="Valore Ricavo"
+                                />
+                                <viz.feeds:FeedItem
+                                  uid="categoryAxis"
+                                  type="Dimension"
+                                  values="Settimane"
+                                />
+                              </viz:feeds>
+                            </viz:VizFrame>
+                          </layout:flexContent>
+                        </layout:FixFlex>
+                      </commons:content>
+                    </commons:ChartContainerContent>
+                  </commons:content>
+                </commons:ChartContainer>
+                <!-- Fine grafico principale -->
+                <!-- Grafico secondario -->
+                <commons:ChartContainer
+                  id="chartContainerr"
+                  showFullScreen="false"
+                  showPersonalization="false"
+                  showLegend="false"
+                  showSelectionDetails="false"
+                  showLegendButton="false"
+                  autoAdjustHeight="false"
+                  showZoom="false"
+                  personalizationPress="attachPersonalizationPress"
+                  contentChange="attachContentChange"
+                  title="Variazioni Percentuali"
+                >
+                  <commons:content>
+                    <commons:ChartContainerContent
+                      icon="sap-icon://line-chart"
+                      title=""
+                    >
+                      <commons:content>
+                        <layout:FixFlex
+                          id="chartFixFlexzzz"
+                          minFlexSize="100"
+                          fitContainer="true"
+                        >
+                          <layout:flexContent>
+                            <viz:VizFrame
+                              id="idVizFramee"
+                              uiConfig="{
+                                applicationSet: 'fiori'
+                              }"
+                              vizType="column"
+                              width="100%"
+                              vizProperties="{
+                                plotArea: {
+                                  dataLabel: {
+                                    visible: true
+                                  }
+                                },
+                                valueAxis: {
+                                  title: {
+                                    visible: true
+                                  }
+                                },
+                                categoryAxis: {
+                                  title: {
+                                    visible: true
+                                  }
+                                },
+                                title: {
+                                  visible: true,
+                                  text: 'Quantità per settimana'
+                                }
+                              }"
+                            >
+                              <viz:dataset>
+                                <viz.data:FlattenedDataset data="{detailData>/ProductCollection/0/variazioni_percentuali/}">
+                                  <viz.data:dimensions>
+                                    <viz.data:DimensionDefinition
+                                      name="Settimane"
+                                      value="{detailData>settimana}"
+                                    />
+                                  </viz.data:dimensions>
+                                  <viz.data:measures>
+                                    <viz.data:MeasureDefinition
+                                      name="Valore Ricavo"
+                                      value="{detailData>percentuale}"
+                                    />
+                                  </viz.data:measures>
+                                </viz.data:FlattenedDataset>
+                              </viz:dataset>
+                              <viz:feeds>
+                                <viz.feeds:FeedItem
+                                  uid="valueAxis"
+                                  type="Measure"
+                                  values="Valore Ricavo"
+                                />
+                                <viz.feeds:FeedItem
+                                  uid="categoryAxis"
+                                  type="Dimension"
+                                  values="Settimane"
+                                />
+                              </viz:feeds>
+                            </viz:VizFrame>
+                          </layout:flexContent>
+                        </layout:FixFlex>
+                      </commons:content>
+                    </commons:ChartContainerContent>
+                  </commons:content>
+                </commons:ChartContainer>
+              </m:VBox>
+            </blocks>
+          </ObjectPageSubSection>
+        </subSections>
+      </ObjectPageSection>
+    </sections>
+    <footer>
+      <m:OverflowToolbar>
+        <m:ToolbarSpacer />
+        <m:Button
+          type="Accept"
+          text="Save"
+        />
+        <m:Button
+          type="Reject"
+          text="Cancel"
+        />
+      </m:OverflowToolbar>
+    </footer>
+  </ObjectPageLayout>
 </mvc:View>

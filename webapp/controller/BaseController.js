@@ -1322,36 +1322,14 @@ sap.ui.define(
             oEvent.getSource().getParent().getBindingContext("master3") !==
             undefined
           ) {
-            level = oEvent
-              .getSource()
-              .getParent()
-              .getBindingContext("master3")
-              .getPath()
-              .includes("posizioni");
-            detailPath = oEvent
-              .getSource()
-              .getParent()
-              .getBindingContext("master3")
-              .getPath();
-            detail = this.getView()
-              .getModel("master3")
-              .getProperty(`${detailPath}`);
-            this.getOwnerComponent()
-              .getModel("datiAppoggio")
-              .setProperty("/testata", detail);
-            this.getOwnerComponent()
-              .getModel("datiAppoggio")
-              .setProperty("/posizioni", detail.posizioni);
-            if (level) {
-              this.getOwnerComponent()
-                .getModel("datiAppoggio")
-                .setProperty("/posizioneCorrente", detail);
-              this.getOwnerComponent()  
-                .getModel("datiAppoggio")
-                .setProperty("/schedulazioni", detail.schedulazioni.results);
-              this.getOwnerComponent()
-                .getModel("datiAppoggio")
-                .setProperty(
+            level = oEvent.getSource().getParent().getBindingContext("master3").getPath().includes("posizioni");
+            detailPath = oEvent.getSource().getParent().getBindingContext("master3").getPath();
+            detail = this.getView().getModel("master3").getProperty(`${detailPath}`);
+            this.getOwnerComponent().getModel("datiAppoggio").setProperty("/testata", detail);
+            this.getOwnerComponent().getModel("datiAppoggio").setProperty("/posizioni", detail.posizioni);
+            if (level) {this.getOwnerComponent().getModel("datiAppoggio").setProperty("/posizioneCorrente", detail);
+              this.getOwnerComponent().getModel("datiAppoggio").setProperty("/schedulazioni", detail.schedulazioni.results);
+              this.getOwnerComponent().getModel("datiAppoggio").setProperty(
                   "/testata",
                   this.getModel("master3").getProperty(
                     `${detailPath[0] + detailPath[1]}`
