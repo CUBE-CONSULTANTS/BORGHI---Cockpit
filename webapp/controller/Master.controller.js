@@ -52,8 +52,6 @@ sap.ui.define(
         }
       },
       onSearch: function (oEvent) {
-        debugger 
-        //  /delivery-forecast/EIGHTWEEK_MAT?$expand=WEEKS&$filter=CLIENTE eq '0000200137' and KDMAT eq 'BRESSANS_2ND_TEST'
         let aFilters = this.getFiltersVariazioni(oEvent.getSource())
         this._searchVarArticolo(aFilters);
       },
@@ -110,7 +108,10 @@ sap.ui.define(
         table.getColumns()[19].getMultiLabels()[0].setText(labels[6]);
         table.getColumns()[21].getMultiLabels()[0].setText(labels[7]);
       },
-      onSort: function () {},
+      onSort: function (oEvent) {
+        debugger
+        // SORT X CODICE CLIENTE E CODICE ARTICOLO
+      },
       onListItemPress: function (oEvent) {
         //apri dettaglio
         // var productPath = oEvent.getSource().getBindingContext("products").getPath(),
