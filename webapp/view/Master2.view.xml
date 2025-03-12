@@ -59,13 +59,13 @@
                                         name=""
                                         
                                         items="{
-											path: '',
+											path: 'matchcode>/clienti',
 											templateShareable: true
 										}"
                                     >
                                         <core:Item
-                                            key="{customers>CustomerID}"
-                                            text="{customers>CompanyName}"
+                                            key="{matchcode>KUNNR}"
+                                            text="{matchcode>KUNNR_DESCR}"
                                         />
                                     </ComboBox>
                                 </fb:control>
