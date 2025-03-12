@@ -202,9 +202,10 @@
 						<Label text="Stato" />
 						<ui:template>
 							<Button
-                icon="{= ${master3CO>Stato} === 'OK' ? 'sap-icon://accept' : ${master3>Stato} === 'KO' ? 'sap-icon://decline' : 'sap-icon://warning'}"
-                type="{= ${master3CO>Stato} === 'OK' ? 'Accept' : ${master3>Stato} === 'KO' ? 'Negative' : 'Critical'}"
-                tooltip="{master3CO>Stato}"
+                visible="{= ${master3CO>progressivo_invio} ? false : true}"
+                icon="{= ${master3CO>stato} === '53' ? 'sap-icon://status-positive' : ${master3CO>stato} === '51' ? 'sap-icon://status-negative' : ${master3CO>stato} === '64' ? 'sap-icon://pending'  :'sap-icon://in-progress'}"
+                type="{= ${master3CO>stato} === '53' ? 'Accept' : ${master3CO>stato} === '51' ? 'Negative' : ${master3CO>stato} === '64' ? 'Critical' : 'Ghost'}"
+                tooltip="{master3CO>stato}"
                 press="statoButtonPress"
             />
 						</ui:template>

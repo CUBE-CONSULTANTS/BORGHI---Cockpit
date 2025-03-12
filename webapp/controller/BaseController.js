@@ -958,7 +958,16 @@ sap.ui.define(
             let aSelectedItems = indices.map(function (iIndex) {
               return table.getContextByIndex(iIndex).getObject();
             });
-
+            aSelectedItems = aSelectedItems.filter(item => {
+              let hasInvalidStatus = 
+                  (item.stato === '64' || item.stato === '53') ||
+                  (item.posizioni && item.posizioni.some(pos => pos.stato === '64' || pos.stato === '53'));
+              return !hasInvalidStatus; 
+            });
+            if (aSelectedItems.length === 0) {
+              MessageBox.error("Non è possibile Rielaborare elementi già processati");
+              return [];
+            }
             aSelectedItems.forEach((element) => {
               if (
                 element.hasOwnProperty("posizioni") ||
