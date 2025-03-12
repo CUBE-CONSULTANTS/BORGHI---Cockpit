@@ -99,10 +99,12 @@
       <VBox fitContainer="true">
         <ui:Table
           id="artTable"
-         selectionMode="None"
+          selectionMode="None"
           visible="{main>/visibility}"
           rows="{variazioneArticolo>/}"
           fixedColumnCount="7"
+          
+          
         >
           <ui:extension>
             <OverflowToolbar design="Solid" class="sapUiTinyMarginBottom" >
@@ -121,6 +123,21 @@
             </OverflowToolbar>
           </ui:extension>
           <ui:columns>
+            <ui:Column  headerSpan="10"
+            width="4em"
+            >
+              <ui:multiLabels>
+                <Label
+                  text=""
+                  textAlign="Center"
+                  width="100%"
+                />
+                <Label text = "" />
+              </ui:multiLabels>
+              <ui:template>
+                <Button icon="sap-icon://search" tooltip="Dettaglio" type="Emphasized" press="onOpenDetail" />
+              </ui:template>
+            </ui:Column>
             <ui:Column  headerSpan="10"
             width="10em"
             >

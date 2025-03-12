@@ -1346,7 +1346,7 @@ sap.ui.define(
               this.getOwnerComponent()
                 .getModel("datiAppoggio")
                 .setProperty("/posizioneCorrente", detail);
-              this.getOwnerComponent()
+              this.getOwnerComponent()  
                 .getModel("datiAppoggio")
                 .setProperty("/schedulazioni", detail.schedulazioni.results);
               this.getOwnerComponent()
@@ -1419,6 +1419,9 @@ sap.ui.define(
         },
         handleCloseDetail: function () {
           this.getRouter().navTo("master3");
+        },
+        handleCloseVariazioni: function (oEvent) {
+          this.getRouter().navTo("master", { layout: oEvent.getSource().getParent().getParent().getParent().getParent().getParent().setLayout(), });
         },
         navToArchive: function () {
           this.getRouter().navTo("archivio");

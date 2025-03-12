@@ -1,6 +1,6 @@
 sap.ui.define(
   ["./BaseController", "sap/ui/model/json/JSONModel"],
-  function (BaseController) {
+  function (BaseController, JSONModel) {
     "use strict";
 
     return BaseController.extend("programmi.consegne.edi.controller.Detail", {
@@ -11,8 +11,10 @@ sap.ui.define(
       },
 
       _onObjectMatched: function (oEvent) {
-        
-
+        debugger
+        let clientId = oEvent.getParameters().arguments.cliente
+        let matnrId = oEvent.getParameters().arguments.mat
+        this.setModel(new JSONModel(),"detailData")
       },
       // grafico: function () {
       // 	var oModel = this.getOwnerComponent().getModel("ProductModel");
@@ -53,12 +55,7 @@ sap.ui.define(
 
       // },
 
-      handleClose: function () {
-        // var sNextLayout = this.oModel.getProperty(
-        //   "/actionButtonsInfo/midColumn/closeColumn"
-        // );
-        // this.getRouter().navTo("master", { layout: sNextLayout });
-      },
+     
     });
   }
 );

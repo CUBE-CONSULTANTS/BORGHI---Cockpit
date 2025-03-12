@@ -99,35 +99,37 @@ sap.ui.define(
         }
       },
       createWeekLabels: function (labels, table) {
-        table.getColumns()[7].getMultiLabels()[0].setText(labels[0]);
-        table.getColumns()[9].getMultiLabels()[0].setText(labels[1]);
-        table.getColumns()[11].getMultiLabels()[0].setText(labels[2]);
-        table.getColumns()[13].getMultiLabels()[0].setText(labels[3]);
-        table.getColumns()[15].getMultiLabels()[0].setText(labels[4]);
-        table.getColumns()[17].getMultiLabels()[0].setText(labels[5]);
-        table.getColumns()[19].getMultiLabels()[0].setText(labels[6]);
-        table.getColumns()[21].getMultiLabels()[0].setText(labels[7]);
+        table.getColumns()[8].getMultiLabels()[0].setText(labels[0]);
+        table.getColumns()[10].getMultiLabels()[0].setText(labels[1]);
+        table.getColumns()[12].getMultiLabels()[0].setText(labels[2]);
+        table.getColumns()[14].getMultiLabels()[0].setText(labels[3]);
+        table.getColumns()[16].getMultiLabels()[0].setText(labels[4]);
+        table.getColumns()[18].getMultiLabels()[0].setText(labels[5]);
+        table.getColumns()[20].getMultiLabels()[0].setText(labels[6]);
+        table.getColumns()[22].getMultiLabels()[0].setText(labels[7]);
       },
       onSort: function (oEvent) {
-        debugger
         // SORT X CODICE CLIENTE E CODICE ARTICOLO
       },
-      onListItemPress: function (oEvent) {
+      onOpenDetail: function (oEvent) {
+        debugger
         //apri dettaglio
-        // var productPath = oEvent.getSource().getBindingContext("products").getPath(),
-        //   product = productPath.split("/").slice(-1).pop(),
-        //   oNextUIState;
-        // this.getOwnerComponent()
-        //   .getHelper()
-        //   .then(
-        //     function (oHelper) {
-        //       oNextUIState = oHelper.getNextUIState(1);
-        //       this.getRouter().navTo("detail", {
-        //         layout: oNextUIState.layout,
-        //         product: product,
-        //       });
-        //     }.bind(this)
-        //   );
+        let objPath = oEvent.getSource().getBindingContext("variazioneArticolo").getPath()
+        let rowObjArt = oEvent.getSource().getBindingContext("variazioneArticolo").getObject().MATNR
+        let rowObjCliente = oEvent.getSource().getBindingContext("variazioneArticolo").getObject().CLIENTE
+        let oNextUIState;
+              this.getOwnerComponent()
+                .getHelper()
+                .then(
+                  function (oHelper) {
+                    oNextUIState = oHelper.getNextUIState(1);
+                    this.getRouter().navTo("detail", {
+                      mat: rowObjArt,
+                      cliente: rowObjCliente,
+                      layout: oNextUIState.layout,
+                    });
+                  }.bind(this)
+                );
       },
       navToHome: function () {
         this.getRouter().navTo("home");
