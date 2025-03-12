@@ -120,13 +120,7 @@ sap.ui.define(
         }
         this.hideBusy(0);
       },
-      onDownloadCumulativi: async function(oEvent){
-        
-        let numIdoc = oEvent.getSource().getBindingContext("master3").getObject().numero_idoc
-        let dest = oEvent.getSource().getBindingContext("master3").getObject().destinatario
-        let rffon = oEvent.getSource().getBindingContext("master3").getObject().numero_ordine_acquisto
-        await this.getReportCumulativi(dest, numIdoc,rffon);
-      }, 
+      
       
     });
   }

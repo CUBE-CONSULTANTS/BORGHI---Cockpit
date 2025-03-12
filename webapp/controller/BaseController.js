@@ -1240,6 +1240,12 @@ sap.ui.define(
           }
           return new Blob([bytes], { type: mimeType });
         },
+        onDownloadCumulativi: async function(oEvent){
+          let numIdoc = oEvent.getSource().getBindingContext("master3").getObject().numero_idoc
+          let dest = oEvent.getSource().getBindingContext("master3").getObject().destinatario
+          let rffon = oEvent.getSource().getBindingContext("master3").getObject().numero_ordine_acquisto
+          await this.getReportCumulativi(dest, numIdoc,rffon);
+        }, 
         getReportCumulativi: async function (dest, numIdoc, rffon) {
           try {
             this.showBusy(0);
