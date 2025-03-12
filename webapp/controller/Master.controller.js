@@ -39,13 +39,17 @@ sap.ui.define(
           this.getModel("main").setProperty("/backToMon", false);
           this.getModel("main").setProperty("/backToArch", false);
         }
-
-        let model = this.getOwnerComponent().getModel("modelloV2");
-        let clienti = await API.getEntity(model, "/T661W", [], []);
-        this.getView().setModel(new JSONModel(), "matchcode");
-        this.getView()
-          .getModel("matchcode")
-          .setProperty("/clienti", clienti.results);
+        this.setModel(new JSONModel(), "matchcode");
+        try {
+          this.showBusy(0)
+          let model = this.getOwnerComponent().getModel("modelloV2");
+          let clienti = await API.getEntity(model, "/T661W", [], []);   
+          this.getModel("matchcode").setProperty("/clienti", clienti.results);
+        } catch (error) {
+          MessageBox.error("Errore durante il recupero dei dati")
+        }finally{
+          this.hideBusy(0);
+        }
       },
       onSearch: function (oEvent) {
         //  /delivery-forecast/EIGHTWEEK_MAT?$expand=WEEKS&$filter=CLIENTE eq '0000200137' and KDMAT eq 'BRESSANS_2ND_TEST'

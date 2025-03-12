@@ -409,6 +409,23 @@ sap.ui.define(
             );
           }
         },
+        onFilterBarVariazioniClear: function(oEvent) {
+          debugger
+          let oFilterBar = oEvent.getSource()
+          let aFilterItems = oFilterBar.getFilterGroupItems();
+    
+          aFilterItems.forEach(function(oFilterItem) {
+              let oControl = oFilterItem.getControl();
+              if (oControl instanceof sap.m.ComboBox) {
+                  oControl.setSelectedKey(null);
+                  oControl.setValue(""); 
+              } else if (oControl instanceof sap.m.MultiComboBox) {
+                  oControl.setSelectedKeys([]);  
+                  oControl.setValue("");  
+              }
+          });
+          this.getModel("main").setProperty("/visibility", false);
+        },
         onFilterBarClear: async function (oEvent) {
           let operator, archivVal;
           this.getModel("datiAppoggio").getProperty("/currentPage") ===
@@ -419,6 +436,7 @@ sap.ui.define(
           "archivio"
             ? (archivVal = true)
             : (archivVal = false);
+          debugger
           let oFilterData = this.getModel("filtersModel").getData();
           for (let sView in oFilterData) {
             if (oFilterData.hasOwnProperty(sView)) {

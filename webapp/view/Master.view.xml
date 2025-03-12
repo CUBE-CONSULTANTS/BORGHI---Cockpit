@@ -42,7 +42,7 @@
             showFilterConfiguration="false"
             showGoOnFB="true"
             showClearOnFB="true"
-            clear="onFilterBarClear"
+            clear="onFilterBarVariazioniClear"
           >
             <fb:filterGroupItems>
               <fb:FilterGroupItem
@@ -54,7 +54,6 @@
                 <fb:control>
                   <ComboBox
                     name=""
-                    selectionChange=".onSelectionChange"
                     items="{
                       path: 'matchcode>/clienti',
                       templateShareable: true
