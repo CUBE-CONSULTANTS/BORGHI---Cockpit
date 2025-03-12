@@ -49,6 +49,12 @@ sap.ui.define([
         });
         return outputFormat.format(inputDate);   
     },
+    formattedPerc:function (val){
+      let numVal = parseFloat(val);
+      let formatted = numVal.toFixed(2);  
+      formatted = formatted.replace('.', ',');
+      return formatted + ' %';
+    },
     checkValidExt: function(ext){
       const extUpperCase = ext.toUpperCase();
       if(extUpperCase === "DOC" || extUpperCase === "JPG" || extUpperCase === "PNG" || extUpperCase ==="XLS" || extUpperCase === "ZIP" || extUpperCase === "PDF"){
