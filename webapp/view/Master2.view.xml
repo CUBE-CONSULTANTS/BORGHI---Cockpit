@@ -101,46 +101,64 @@
             </OverflowToolbar>
           </ui:extension>
           <ui:columns>
-            <ui:Column>
+            <ui:Column width="14rem">
               <Label text="Cliente" />
               <ui:template>
                 <Text text="{variazioneCliente>CLIENTE} - {variazioneCliente>DESCR}" />
               </ui:template>
             </ui:Column>
-            <ui:Column>
+            <ui:Column hAlign="Center">
               <Label text="Settimana" />
               <ui:template>
                 <Text text="{variazioneCliente>WEEK}" />
               </ui:template>
             </ui:Column>
-            <ui:Column>
+            <ui:Column hAlign="Center">
               <Label text="Quantità Totale" />
               <ui:template>
                 <Text text="{variazioneCliente>QTY_TOT}" />
               </ui:template>
             </ui:Column>
-            <ui:Column>
-              <Label text="Variazione Totale" />
-              <ui:template>
-                <Text text="{variazioneCliente>VAR_TOT}" />
-              </ui:template>
-            </ui:Column>
-            <ui:Column>
+         
+            
+            <ui:Column hAlign="Center">
               <Label text="Variazione Positiva" />
               <ui:template>
                 <Text text="{variazioneCliente>VAR_POS}" />
               </ui:template>
             </ui:Column>
-            <ui:Column>
+            <ui:Column hAlign="Center">
+              <Label text="Variazione (%) Pos" />
+              <ui:template>
+                <Text text="{variazioneCliente>VAR_PERCPOS}" />
+              </ui:template>
+            </ui:Column>
+            <ui:Column hAlign="Center">
               <Label text="Variazione Negativa" />
               <ui:template>
                 <Text text="{variazioneCliente>VAR_NEG}" />
               </ui:template>
             </ui:Column>
-            <ui:Column>
-              <Label text="Variazione (%)" />
+            
+          <ui:Column hAlign="Center">
+            <Label text="Variazione (%) Neg" />
+            <ui:template>
+              <Text text="{variazioneCliente>VAR_PERCNEG}" />
+            </ui:template>
+          </ui:Column>
+       
+            <ui:Column hAlign="Center">
+              <Label text="Variazione Totale" />
               <ui:template>
-                <Text text="{variazioneCliente>VAR_PERC}" />
+                <Text text="{variazioneCliente>VAR_TOT}" />
+              </ui:template>
+            </ui:Column>
+            
+         
+            <ui:Column hAlign="Center">
+              <Label text="Variazione (%) Tot" />
+              <ui:template>
+                <Text text="{variazioneCliente>VAR_PERCTOT}" />
               </ui:template>
             </ui:Column>
           </ui:columns>
@@ -218,6 +236,7 @@
             </viz:VizFrame>
           </VBox>
           <!-- Grafico Variazioni Positive e Negative -->
+
           <VBox
             width="100%"
             class="chartContainer"
@@ -295,6 +314,10 @@
               </viz:feeds>
             </viz:VizFrame>
           </VBox>
+
+
+
+
           <!-- Grafico Variazione Percentuale -->
           <VBox
             width="100%"
@@ -344,8 +367,12 @@
                   </viz.data:dimensions>
                   <viz.data:measures>
                     <viz.data:MeasureDefinition
-                      name="Variazione Percentuale"
-                      value="{variazioneCliente>VAR_PERC}"
+                      name="Variazione % Positiva"
+                      value="{variazioneCliente>VAR_PERCPOS}"
+                    />
+                    <viz.data:MeasureDefinition
+                      name="Variazione % Negativa"
+                      value="{variazioneCliente>VAR_PERCNEG}"
                     />
                   </viz.data:measures>
                 </viz.data:FlattenedDataset>
@@ -354,7 +381,12 @@
                 <viz.feeds:FeedItem
                   uid="valueAxis"
                   type="Measure"
-                  values="Variazione Percentuale"
+                  values="Variazione % Positiva"
+                />
+                <viz.feeds:FeedItem
+                  uid="valueAxis"
+                  type="Measure"
+                  values="Variazione % Negativa"
                 />
                 <viz.feeds:FeedItem
                   uid="categoryAxis"

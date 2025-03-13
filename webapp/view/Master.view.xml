@@ -7,10 +7,10 @@
   xmlns:core="sap.ui.core"
   xmlns:layout="sap.ui.layout"
   xmlns:ui="sap.ui.table"
+  height="100%"
 >
   <f:DynamicPage
     id="dynamicPageId"
-    toggleHeaderOnTitleClick="false"
     showFooter="true"
   >
     <!-- DynamicPage Title -->
@@ -33,7 +33,7 @@
       </f:DynamicPageTitle>
     </f:title>
     <f:header>
-      <f:DynamicPageHeader pinnable="true">
+      <f:DynamicPageHeader  pinnable="true">
         <f:content>
           <fb:FilterBar
             search="onSearch"
@@ -98,14 +98,18 @@
     </f:header>
     <!-- DynamicPage Content -->
     <f:content>
-      <VBox fitContainer="true">
+    <VBox height="100%"
+    >
+        
+  
         <ui:Table
+
           id="artTable"
           selectionMode="None"
           visible="{main>/visibility}"
           rows="{variazioneArticolo>/}"
           fixedColumnCount="8"
-        >
+          >
           <ui:extension>
             
             <OverflowToolbar design="Solid">

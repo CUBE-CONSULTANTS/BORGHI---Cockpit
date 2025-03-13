@@ -191,57 +191,7 @@ sap.ui.define(
         let table = this.byId("artTable");
         this.createExcel(table);
       },
-      createExcel: function (oTable) {
-        const oRowBinding = oTable.getBinding("rows");
-        const aCols = this._getColumnsConfig(oTable);
-        const oSheet = new Spreadsheet({
-          workbook: {
-            columns: aCols,
-            hierarchyLevel: "Level",
-          },
-          dataSource: oRowBinding,
-          fileName: "Tabella Dati",
-        });
-        oSheet.build().finally(function () {
-          oSheet.destroy();
-        });
-      },
-      _getColumnsConfig: function (oTable) {
-        const aCols = [];
-        oTable.getColumns().forEach((el, key) => {
-          if (key !== 0) {
-            let property = "";
-            let type = String;
-            oTable.getRows().forEach((row, i) => {
-              const cell = row.getCells()[key];
-              if (cell.getBindingInfo("text")) {
-                property = cell.getBindingInfo("text").parts[0].path;
-              } else if (cell.getBindingInfo("text")) {
-                property = cell.getBindingInfo("text").parts[0].path;
-              }
-            });
-            let label;
-            el.getMultiLabels()[0].getText() === ""
-              ? (label = el.getMultiLabels()[1].getText())
-              : el.getMultiLabels()[0].getText();
-            if (
-              el.getMultiLabels()[0].getText() !== "" &&
-              el.getMultiLabels()[1].getText() !== 0
-            ) {
-              label =
-                el.getMultiLabels()[0].getText() +
-                " " +
-                el.getMultiLabels()[1].getText();
-            }
-            aCols.push({
-              label: label,
-              property: property,
-              type: type,
-            });
-          }
-        });
-        return aCols;
-      },
+      
     });
   }
 );

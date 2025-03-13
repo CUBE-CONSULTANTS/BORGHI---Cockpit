@@ -959,6 +959,58 @@ sap.ui.define(
           });
           return columns;
         },
+        //getEXCELVariazioni
+        createExcel: function (oTable) {
+          debugger
+          const oRowBinding = oTable.getBinding("rows");
+          const aCols = this._getColumnsConfig(oTable);
+          let fileName 
+          oTable.getId().includes('cliente') ? fileName = 'Confronto Programmazioni Clienti' : fileName = 'Confronto Programmazioni Articolo'
+          const oSheet = new Spreadsheet({
+            workbook: {
+              columns: aCols,
+              hierarchyLevel: "Level",
+            },
+            dataSource: oRowBinding,
+            fileName: fileName,
+          });
+          oSheet.build().finally(function () {
+            oSheet.destroy();
+          });
+        },
+        _getColumnsConfig: function (oTable) {
+          const aCols = [];
+          const isClientTable = oTable.getId().includes('cliente')
+          oTable.getColumns().forEach((el, key) => {
+            if (isClientTable || key !== 0) {
+              let property = "";
+              let type = String;
+              oTable.getRows().forEach((row, i) => {
+                const cell = row.getCells()[key];
+                if (cell.getBindingInfo("text")) {
+                  property = cell.getBindingInfo("text").parts[0].path;
+                } else if (cell.getBindingInfo("text")) {
+                  property = cell.getBindingInfo("text").parts[0].path;
+                }
+              });
+              let label
+              if(el.getMultiLabels().length > 0) {
+                el.getMultiLabels()[0].getText() === "" ? (label = el.getMultiLabels()[1].getText()) : el.getMultiLabels()[0].getText();
+                if (el.getMultiLabels()[0].getText() !== "" && el.getMultiLabels()[1].getText() !== 0) {
+                  label = el.getMultiLabels()[0].getText() + " " +el.getMultiLabels()[1].getText();
+                }
+              }else{
+                label = el.getLabel().getText()
+              } 
+              aCols.push({
+                label: label,
+                property: property,
+                type: type,
+              });
+            }
+          });
+          return aCols;
+        },
         onDeletePosition: async function (oEvent) {
           let oTable = oEvent.getSource().getParent().getParent();
           try {

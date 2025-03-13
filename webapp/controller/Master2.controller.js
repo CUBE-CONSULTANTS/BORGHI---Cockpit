@@ -55,13 +55,20 @@ sap.ui.define(
             aFilters,
             ["RETURN_DATA"]
           );
+          if (dataCall.results.length) {
           dataCall.results.forEach((element) => {
             element.WEEK =
               element.WEEK.slice(0, 4) + "/" + element.WEEK.slice(4);
-            element.VAR_PERC = formatter.formattedPerc(element.VAR_PERC);
-          });
-          this.setModel(new JSONModel(dataCall.results), "variazioneCliente");
-          this.getModel("main").setProperty("/visibility", true);
+              element.VAR_PERCTOT = formatter.formattedPerc(element.VAR_PERCTOT);
+              element.VAR_PERCPOS = formatter.formattedPerc(element.VAR_PERCPOS);
+              element.VAR_PERCNEG = formatter.formattedPerc(element.VAR_PERCNEG);
+            });
+            this.setModel(new JSONModel(dataCall.results), "variazioneCliente");
+            this.getModel("main").setProperty("/visibility", true);
+          } else {
+            this.getModel("main").setProperty("/visibility", false);
+            MessageBox.error("Nessun dato trovato per la ricerca");
+          }
         } catch (error) {
           MessageBox.error("Errore durante la ricezione dei dati ", error);
         } finally {
@@ -79,16 +86,14 @@ sap.ui.define(
       },
 
       onSort: function (oEvent) {
-        debugger;
         let table = this.byId("clienteTable");
-        let aSorters = ["week"];
+        let aSorters = ["WEEK"];
         let x = this.sortTables(table, aSorters);
       },
 
       downloadExcelFile: function (oEvent) {
-        debugger;
-        let aData = this.getView().getModel("variazioneCliente").getData();
-        this.buildSpreadSheet(aData);
+        let table = this.byId("clienteTable");
+        this.createExcel(table);
       },
     });
   }
