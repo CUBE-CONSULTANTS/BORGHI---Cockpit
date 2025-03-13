@@ -153,7 +153,7 @@
               <ui:template>
                 <Text
                   
-                  text="{variazioneArticolo>CLIENTE} -- {variazioneArticolo>descrizione_cliente}"
+                  text="{variazioneArticolo>CLIENTE} -- {variazioneArticolo>DESCR}"
                 />
               </ui:template>
             </ui:Column>
