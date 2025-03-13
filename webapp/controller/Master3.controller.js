@@ -38,14 +38,12 @@ sap.ui.define(
         this.setModel(models.createMainModel(), "main");
         this.setModel(models.createCountModel(), "count");
         this.setModel(models.createEdiFiltersModel(), "filtersModel");
-        this.getOwnerComponent()
-          .getModel("datiAppoggio")
-          .setProperty("/currentPage", "monitor");
         this.getRouter()
           .getRoute("master3")
           .attachPatternMatched(this._onObjectMatched, this);
       },
       _onObjectMatched: async function (oEvent) {
+        this.getOwnerComponent().getModel("datiAppoggio").setProperty("/currentPage", "master3");
         await this._getCounters(false);
         this.onFilterSelect(null, "01");
       },

@@ -190,8 +190,7 @@ sap.ui.define(
             default:
           }
         },
-        navToAPP: function (oEvent) {
-          
+        navToAPP: function (oEvent) {       
           let level = oEvent.getSource().getParent().getParent().getBindingContext("master3").getPath();
           let oCodArt = oEvent.getSource().getParent().getParent().getBindingContext("master3").getObject().codice_cliente_materiale;
           let oCodCliente;
@@ -1528,14 +1527,8 @@ sap.ui.define(
         },
         handleCloseVariazioni: function (oEvent) {
           this.getRouter().navTo("master", {
-            layout: oEvent
-              .getSource()
-              .getParent()
-              .getParent()
-              .getParent()
-              .getParent()
-              .getParent()
-              .setLayout(),
+            layout: oEvent.getSource().getParent().getParent().getParent().getParent().getParent().setLayout(),
+            prevApp : this.prevApp
           });
         },
         navToArchive: function () {

@@ -28,24 +28,24 @@ sap.ui.define(
     return BaseController.extend("programmi.consegne.edi.controller.Master", {
       onInit: function () {
         this.setModel(models.createMainModel(), "main");
-        this.getRouter()
-          .getRoute("master")
-          .attachPatternMatched(this._onObjectMatched, this);
+        this.getRouter().getRoute("master").attachPatternMatched(this._onObjectMatched, this);
+        this.prevApp  = undefined 
       },
-      _onObjectMatched: async function (oEvent) {
-        
-        if (oEvent.getParameters().arguments.prevApp === "monitor" || oEvent.getParameters().arguments.prevApp === "master3") {
+      _onObjectMatched: async function (oEvent) {      
+        if ( oEvent.getParameters().arguments.prevApp === "master3") {
+          this.prevApp = "master3"
           this.getModel("main").setProperty("/backToMon", true);
+          this.getModel("main").setProperty("/backToArch", false);
         } else if (oEvent.getParameters().arguments.prevApp === "archivio") {
+          this.prevApp = "archivio"
           this.getModel("main").setProperty("/backToArch", true);
+          this.getModel("main").setProperty("/backToMon", false);
         } else {
           this.getModel("main").setProperty("/backToMon", false);
           this.getModel("main").setProperty("/backToArch", false);
         }
         await this._getMatchCode();
-        let oFiltriNav = this.getOwnerComponent()
-          .getModel("datiAppoggio")
-          .getProperty("/filtriNav");
+        let oFiltriNav = this.getOwnerComponent().getModel("datiAppoggio").getProperty("/filtriNav");
         if (oFiltriNav) {
           let oCodArtComboBox = this.byId("idMatComboBox");
           let oCodClienteComboBox = this.byId("idClientiComboBox");
@@ -130,26 +130,10 @@ sap.ui.define(
         ]);
       },
       onOpenDetail: function (oEvent) {
-        let detailPath = oEvent
-          .getSource()
-          .getBindingContext("variazioneArticolo")
-          .getPath();
-        let detail = this.getModel("variazioneArticolo").getProperty(
-          `${detailPath}`
-        );
-        let detailMat = oEvent
-          .getSource()
-          .getBindingContext("variazioneArticolo")
-          .getObject().MATNR;
-        let currentDetail = this.getOwnerComponent()
-          .getModel("datiAppoggio")
-          .getProperty("/");
-        if (JSON.stringify(currentDetail) === JSON.stringify(detail)) {
-          return;
-        }
-        this.getOwnerComponent()
-          .getModel("datiAppoggio")
-          .setProperty("/", detail);
+        let detailPath = oEvent.getSource().getBindingContext("variazioneArticolo").getPath();
+        let detail = this.getModel("variazioneArticolo").getProperty(`${detailPath}`);
+        let detailMat = oEvent.getSource().getBindingContext("variazioneArticolo").getObject().MATNR;
+        this.getOwnerComponent().getModel("datiAppoggio").setProperty("/", detail);
         let oNextUIState;
         this.getOwnerComponent()
           .getHelper()
@@ -159,6 +143,7 @@ sap.ui.define(
               this.getRouter().navTo("detail", {
                 mat: detailMat,
                 layout: oNextUIState.layout,
+                prevApp: this.prevApp,
               });
             }.bind(this)
           );

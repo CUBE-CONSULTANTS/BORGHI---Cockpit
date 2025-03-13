@@ -28,10 +28,10 @@ sap.ui.define(
         this.setModel(models.createMainModel(), "main");
         this.setModel(models.createCountModel(), "count");
         this.setModel(models.createEdiFiltersModel(), "filtersModel");
-        this.getOwnerComponent().getModel("datiAppoggio").setProperty("/currentPage", "archivio");
         this.getRouter().getRoute("archivio").attachPatternMatched(this._onObjectMatched.bind(this));      
       },
       _onObjectMatched: async function (oEvent) {
+        this.getOwnerComponent().getModel("datiAppoggio").setProperty("/currentPage", "archivio");
         await this._getCounters(true);
         this.onFilterSelect(null, "01");
       },

@@ -5,11 +5,15 @@ sap.ui.define(
 
     return BaseController.extend("programmi.consegne.edi.controller.Detail", {
       onInit: function () {
-        this.getRouter()
-          .getRoute("detail")
-          .attachPatternMatched(this._onObjectMatched, this);
+        this.getRouter().getRoute("detail").attachPatternMatched(this._onObjectMatched, this);
+        this.prevApp = undefined
       },
       _onObjectMatched: function (oEvent) {
+        if (oEvent.getParameters().arguments.prevApp === "master3") {
+          this.prevApp = "master3"
+        } else if (oEvent.getParameters().arguments.prevApp === "archivio") {
+          this.prevApp = "archivio"
+        } 
         let detailData = this.getModel("datiAppoggio").getProperty("/");
         let oDetailModel = new JSONModel(detailData);
         this.setModel(oDetailModel, "detailData");

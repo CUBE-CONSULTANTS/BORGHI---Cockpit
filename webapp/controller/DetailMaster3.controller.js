@@ -66,7 +66,7 @@ sap.ui.define(
           let oSource = oEvent.getSource();
           let oBindingContext = oSource.getBindingContext("detailData");
           let oData = oBindingContext.getObject();
-          if (!oData.log) {
+          if (oData.log.length === 0) {
             MessageBox.error("Nessun log disponibile per questa posizione");
             return;
           }
@@ -147,7 +147,7 @@ sap.ui.define(
                           actions: [sap.m.MessageBox.Action.CLOSE],
                           emphasizedAction: sap.m.MessageBox.Action.CLOSE,
                           onClose: async function (oAction) {
-                            that._refreshData("01");
+                            that._refreshDetailData()
                           }
                         })      
                       //   let modelloReport = new JSONModel({
