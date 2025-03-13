@@ -188,12 +188,10 @@ sap.ui.define(
       },
 
       downloadExcelFile: function (oEvent) {
-        debugger;
         let table = this.byId("artTable");
-        this.createPRExcel(table);
+        this.createExcel(table);
       },
-
-      createPRExcel: function (oTable) {
+      createExcel: function (oTable) {
         const oRowBinding = oTable.getBinding("rows");
         const aCols = this._getColumnsConfig(oTable);
         const oSheet = new Spreadsheet({
