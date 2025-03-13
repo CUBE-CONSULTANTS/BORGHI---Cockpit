@@ -39,16 +39,21 @@ sap.ui.define(
           this.getModel("main").setProperty("/backToMon", false);
           this.getModel("main").setProperty("/backToArch", false);
         }
-        this.setModel(new JSONModel(), "matchcode");
-        try {
-          this.showBusy(0);
-          let model = this.getOwnerComponent().getModel("modelloV2");
-          let clienti = await API.getEntity(model, "/T661W", [], []);
-          this.getModel("matchcode").setProperty("/clienti", clienti.results);
-        } catch (error) {
-          MessageBox.error("Errore durante il recupero dei dati");
-        } finally {
-          this.hideBusy(0);
+        await this._getMatchCode();
+        let oFiltriNav = this.getOwnerComponent()
+          .getModel("datiAppoggio")
+          .getProperty("/filtriNav");
+        if (oFiltriNav) {
+          let oCodArtComboBox = this.byId("idMatComboBox");
+          let oCodClienteComboBox = this.byId("idClientiComboBox");
+          if (oFiltriNav.codice_articolo && oCodArtComboBox) {
+            oCodArtComboBox.setSelectedKey(oFiltriNav.codice_articolo);
+            oCodArtComboBox.setValue(oFiltriNav.codice_articolo);
+          }
+          if (oFiltriNav.codice_cliente && oCodClienteComboBox) {
+            oCodClienteComboBox.setSelectedKey(oFiltriNav.codice_cliente);
+            oCodClienteComboBox.setValue(oFiltriNav.codice_cliente);
+          }
         }
       },
       onSearch: function (oEvent) {
@@ -64,34 +69,39 @@ sap.ui.define(
             aFilters,
             ["WEEKS"]
           );
-          let labels = [];
-          let formattedData = weekCall.results.map((item) => {
-            return {
-              CLIENTE: item.CLIENTE,
-              KDMAT: item.KDMAT,
-              MATNR: item.MATNR,
-              GIACENZA: item.GIACENZA.trim(),
-              IMPEGNO: item.IMPEGNO.trim(),
-              TOTALE: item.TOTALE.trim(),
-              WEEKS: item.WEEKS.results.map((week) => ({
-                N_WEEK: week.N_WEEK.trim(),
-                WEEK: week.WEEK.trim(),
-                QTY: week.QTY.trim(),
-                PERC: week.PERC.trim(),
-              })),
-            };
-          });
-          formattedData.forEach((element) => {
-            element.WEEKS.forEach((week) => {
-              if (!labels.includes(week.WEEK)) {
-                labels.push(week.WEEK.slice(0, 4) + "/" + week.WEEK.slice(4));
-              }
-              week.PERC = formatter.formattedPerc(week.PERC);
+          if (weekCall.results.length) {
+            let labels = [];
+            let formattedData = weekCall.results.map((item) => {
+              return {
+                CLIENTE: item.CLIENTE,
+                KDMAT: item.KDMAT,
+                MATNR: item.MATNR,
+                GIACENZA: item.GIACENZA.trim(),
+                IMPEGNO: item.IMPEGNO.trim(),
+                TOTALE: item.TOTALE.trim(),
+                WEEKS: item.WEEKS.results.map((week) => ({
+                  N_WEEK: week.N_WEEK.trim(),
+                  WEEK: week.WEEK.trim(),
+                  QTY: week.QTY.trim(),
+                  PERC: week.PERC.trim(),
+                })),
+              };
             });
-          });
-          this.createWeekLabels(labels, this.byId("artTable"));
-          this.setModel(new JSONModel(formattedData), "variazioneArticolo");
-          this.getModel("main").setProperty("/visibility", true);
+            formattedData.forEach((element) => {
+              element.WEEKS.forEach((week) => {
+                if (!labels.includes(week.WEEK)) {
+                  labels.push(week.WEEK.slice(0, 4) + "/" + week.WEEK.slice(4));
+                }
+                week.PERC = formatter.formattedPerc(week.PERC);
+              });
+            });
+            this.createWeekLabels(labels, this.byId("artTable"));
+            this.setModel(new JSONModel(formattedData), "variazioneArticolo");
+            this.getModel("main").setProperty("/visibility", true);
+          } else {
+            this.getModel("main").setProperty("/visibility", false);
+            MessageBox.error("Nessun dato trovato per la ricerca");
+          }
         } catch (error) {
           MessageBox.error("Errore durante la ricezione dei dati ", error);
         } finally {
@@ -150,6 +160,14 @@ sap.ui.define(
           );
       },
       navToHome: function () {
+        this.getOwnerComponent()
+          .getModel("datiAppoggio")
+          .setProperty("/filtriNav", "");
+        this.byId("idMatComboBox").setSelectedKey("");
+        this.byId("idMatComboBox").setValue("");
+        this.byId("idClientiComboBox").setSelectedKey("");
+        this.byId("idClientiComboBox").setValue("");
+        this.getModel("main").setProperty("/visibility", false);
         this.getRouter().navTo("home");
       },
 

@@ -217,12 +217,12 @@
 					"target": "home"
 				},
 				{
-					"pattern": "master/:prevApp:",
+					"pattern": "master/:prevApp:/:cliente:/:art:",
 					"name": "master",
 					"target": "master"
 				},
 				{
-					"pattern": "master2/:prevApp:",
+					"pattern": "master2/:prevApp:/:cliente:",
 					"name": "master2",
 					"target": "master2"
 				},

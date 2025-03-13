@@ -53,6 +53,7 @@
               >
                 <fb:control>
                   <ComboBox
+                    id="idClientiComboBox"
                     name=""
                     items="{
                       path: 'matchcode>/clienti',
@@ -74,19 +75,19 @@
                 visibleInFilterBar="true"
               >
                 <fb:control>
-                  <MultiComboBox
-                    name="Category"
-                    selectionChange=".onSelectionChange"
-                    items="{
-                      path: '/',
-                      templateShareable: true
-                    }"
-                  >
-                    <core:Item
-                      key="{key}"
-                      text="{name}"
-                    />
-                  </MultiComboBox>
+                  <ComboBox
+                  id="idMatComboBox"
+                  name=""
+                  items="{
+                    path: 'matchcode>/materiali',
+                    templateShareable: true
+                  }"
+                >
+                  <core:Item
+                    key="{matchcode>Kdmat}"
+                    text="{matchcode>Kdmat} - {matchcode>Maktx}"
+                  />
+                </ComboBox>
                 </fb:control>
               </fb:FilterGroupItem>
             </fb:filterGroupItems>
@@ -103,11 +104,11 @@
           visible="{main>/visibility}"
           rows="{variazioneArticolo>/}"
           fixedColumnCount="8"
-          
-          
         >
           <ui:extension>
-            <OverflowToolbar design="Solid" class="sapUiTinyMarginBottom" >
+            
+            <OverflowToolbar design="Solid">
+              <Title text="Dettaglio Quantità (per settimana)" />
               <ToolbarSpacer />
               <Button
                 text="Esporta excel"

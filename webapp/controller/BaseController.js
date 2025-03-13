@@ -197,7 +197,38 @@ sap.ui.define(
             .getParent()
             .getBindingContext("master3")
             .getPath();
+          let oCodArt = oEvent
+            .getSource()
+            .getParent()
+            .getParent()
+            .getBindingContext("master3")
+            .getObject().codice_cliente_materiale;
+          let oCodCliente;
+          oEvent
+            .getSource()
+            .getParent()
+            .getParent()
+            .getBindingContext("master3")
+            .getObject().codice_cliente === null
+            ? (oCodCliente = oEvent
+                .getSource()
+                .getParent()
+                .getParent()
+                .getBindingContext("master3")
+                .getObject().testata.codice_cliente)
+            : (oCodCliente = oEvent
+                .getSource()
+                .getParent()
+                .getParent()
+                .getBindingContext("master3")
+                .getObject().codice_cliente);
 
+          this.getOwnerComponent()
+            .getModel("datiAppoggio")
+            .setProperty("/filtriNav", {
+              codice_articolo: oCodArt,
+              codice_cliente: oCodCliente,
+            });
           if (level.includes("posizioni")) {
             this.getRouter().navTo("master", {
               prevApp: this.getOwnerComponent()
@@ -212,6 +243,24 @@ sap.ui.define(
             });
           }
         },
+        _getMatchCode: async function () {
+          try {
+            this.showBusy(0);
+            let matchcode = new JSONModel();
+            matchcode.setSizeLimit(100000000);
+            this.setModel(matchcode, "matchcode");
+            let model = this.getOwnerComponent().getModel("modelloV2");
+            let clienti = await API.getEntity(model, "/T661W", [], []);
+            // let materiali = await API.getEntity(model, "", [], [])
+            this.getModel("matchcode").setProperty("/clienti", clienti.results);
+            // this.getModel("matchcode").setProperty("/materiali", materiali.results);
+          } catch (error) {
+            MessageBox.error("Errore durante il recupero dei dati");
+          } finally {
+            this.hideBusy(0);
+          }
+        },
+
         _getCounters: async function (filterVal) {
           this.showBusy(0);
           try {

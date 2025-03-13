@@ -4,8 +4,9 @@ sap.ui.define(
     "sap/ui/model/json/JSONModel",
     "../model/models",
     "../model/API",
+    "sap/m/MessageBox",
   ],
-  function (BaseController, JSONModel, models, API) {
+  function (BaseController, JSONModel, models, API, MessageBox) {
     "use strict";
 
     return BaseController.extend("programmi.consegne.edi.controller.Master2", {
@@ -24,15 +25,49 @@ sap.ui.define(
           this.getModel("main").setProperty("/backToMon", false);
           this.getModel("main").setProperty("/backToArch", false);
         }
-
-        let model = this.getOwnerComponent().getModel("modelloV2");
-        let clienti = await API.getEntity(model, "/T661W", [], []);
-        this.getView().setModel(new JSONModel(), "matchcode");
-        this.getView()
-          .getModel("matchcode")
-          .setProperty("/clienti", clienti.results);
+        await this._getMatchCode()
+        let oFiltriNav = this.getOwnerComponent().getModel("datiAppoggio").getProperty("/filtriNav")
+        if(oFiltriNav){
+          let oCodClienteComboBox = this.byId("idClientiComboBox2"); 
+          if (oFiltriNav.codice_cliente && oCodClienteComboBox) {
+            oCodClienteComboBox.setSelectedKey(oFiltriNav.codice_cliente);
+            oCodClienteComboBox.setValue(oFiltriNav.codice_cliente);
+          }
+        }
       },
-      onSearch: function (oEvent) {},
+      onSearch: function (oEvent) {
+        let aFilters = this.getFiltersVariazioni(oEvent.getSource())
+        if(aFilters.length > 0) {
+        this._searchVarCliente(aFilters)
+        }else{
+          MessageBox.error("Inserire il filtro di ricerca Cliente");
+        }
+        // /odata/v2/delivery-forecast/EIGHTWEEK_CLI?$expand=RETURN_DATA&$filter=CLIENTE eq '0000200191'
+      },
+      _searchVarCliente: async function (aFilters) {
+        try {
+          this.showBusy(0);
+          let dataCall = await API.getEntity(
+            this.getOwnerComponent().getModel("modelloV2"),
+            "/EIGHTWEEK_CLI",
+            aFilters,
+            ["RETURN_DATA"]
+          );
+          // this.setModel(new JSONModel(formattedData), "variazioneArticolo");
+          // this.getModel("main").setProperty("/visibility", true);
+        } catch (error) {
+          MessageBox.error("Errore durante la ricezione dei dati ", error);
+        } finally {
+          this.hideBusy(0);
+        }
+      },
+      navToHome: function () {
+        this.getOwnerComponent().getModel("datiAppoggio").setProperty("/filtriNav","")
+        this.byId("idClientiComboBox2").setSelectedKey("")
+        this.byId("idClientiComboBox2").setValue("")
+        this.getModel("main").setProperty("/visibility",false)
+        this.getRouter().navTo("home");
+      },
     });
   }
 );
