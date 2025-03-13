@@ -122,9 +122,11 @@ sap.ui.define(
         table.getColumns()[22].getMultiLabels()[0].setText(labels[7]);
       },
       onSort: function (oEvent) {
-        let table = this.byId("artTable");
-        let aSorters = ["CLIENTE", "MATNR"];
-        let x = this.sortTables(table, aSorters);
+        let oTable = this.byId("artTable");
+        let aSorters = [];
+        aSorters = this.sortTables(oTable, [
+          "CLIENTE", "MATNR"
+        ]);
       },
       onOpenDetail: function (oEvent) {
         let detailPath = oEvent

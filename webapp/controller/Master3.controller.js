@@ -46,10 +46,6 @@ sap.ui.define(
           .attachPatternMatched(this._onObjectMatched, this);
       },
       _onObjectMatched: async function (oEvent) {
-        // let numIdoc='0000000000000030'
-        // let rffon='123456'
-        // let dest='CIAO'
-        // await this.getReportCumulativi(dest, numIdoc, rffon)
         await this._getCounters(false);
         this.onFilterSelect(null, "01");
       },

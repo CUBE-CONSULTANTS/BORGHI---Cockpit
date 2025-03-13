@@ -12,7 +12,7 @@
   <f:DynamicPage
     id="dynamicPageId"
     showFooter="true"
-
+    fitContent="false"
   >
     <!-- DynamicPage Title -->
     <f:title>
@@ -99,10 +99,9 @@
     </f:header>
     <!-- DynamicPage Content -->
     <f:content>
-    <VBox height="100%" 
-    > 
-        <ui:Table
-
+   
+        <ui:Table    
+          visibleRowCountMode="Auto"
           id="artTable"
           selectionMode="None"
           visible="{main>/visibility}"
@@ -555,7 +554,7 @@
             </ui:Column> 
           </ui:columns>
         </ui:Table>
-      </VBox>
+    
     </f:content>
     <!-- DynamicPage Footer -->
     <f:footer>

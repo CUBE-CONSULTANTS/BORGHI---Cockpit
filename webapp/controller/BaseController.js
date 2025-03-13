@@ -629,7 +629,7 @@ sap.ui.define(
             case "01":
               oTable = this.byId("treetableMain");
               aSorters = this.sortTables(oTable, [
-                "codice_seller",
+                "codice_cliente",
                 "numero_progressivo_invio",
               ]);
               break;
@@ -889,12 +889,9 @@ sap.ui.define(
         sortTables: function (table, aSortFields) {
           let oBinding = table.getBinding("rows");
           let aCurrentSorters = oBinding.aSorters || [];
-          let bDescending =
-            aCurrentSorters.length > 0
-              ? !aCurrentSorters[0].bDescending
-              : false;
+          let bDescending = aCurrentSorters.length === 0 || !aCurrentSorters[0].bDescending;
           let aSorters = aSortFields.map(
-            (field) => new sap.ui.model.Sorter(field, bDescending)
+              (field) => new sap.ui.model.Sorter(field, bDescending)
           );
           oBinding.sort(aSorters);
         },
@@ -961,7 +958,7 @@ sap.ui.define(
         },
         //getEXCELVariazioni
         createExcel: function (oTable) {
-          debugger
+          
           const oRowBinding = oTable.getBinding("rows");
           const aCols = this._getColumnsConfig(oTable);
           let fileName 

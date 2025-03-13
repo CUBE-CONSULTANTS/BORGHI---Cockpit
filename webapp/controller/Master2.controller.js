@@ -90,9 +90,11 @@ sap.ui.define(
       },
 
       onSort: function (oEvent) {
-        let table = this.byId("clienteTable");
-        let aSorters = ["WEEK"];
-        let x = this.sortTables(table, aSorters);
+        let oTable = this.byId("clienteTable");
+        let aSorters = [];
+        aSorters = this.sortTables(oTable, [
+          "WEEK"
+        ]);
       },
 
       downloadExcelFile: function (oEvent) {
