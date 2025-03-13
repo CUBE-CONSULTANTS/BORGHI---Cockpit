@@ -12,6 +12,7 @@
   <f:DynamicPage
     id="dynamicPageId"
     showFooter="true"
+
   >
     <!-- DynamicPage Title -->
     <f:title>
@@ -33,7 +34,7 @@
       </f:DynamicPageTitle>
     </f:title>
     <f:header>
-      <f:DynamicPageHeader  pinnable="true">
+      <f:DynamicPageHeader   pinnable="true">
         <f:content>
           <fb:FilterBar
             search="onSearch"
@@ -98,10 +99,8 @@
     </f:header>
     <!-- DynamicPage Content -->
     <f:content>
-    <VBox height="100%"
-    >
-        
-  
+    <VBox height="100%" 
+    > 
         <ui:Table
 
           id="artTable"

@@ -368,11 +368,11 @@
                   <viz.data:measures>
                     <viz.data:MeasureDefinition
                       name="Variazione % Positiva"
-                      value="{variazioneCliente>VAR_PERCPOS}"
+                      value="{variazioneCliente>percPos}"
                     />
                     <viz.data:MeasureDefinition
                       name="Variazione % Negativa"
-                      value="{variazioneCliente>VAR_PERCNEG}"
+                      value="{variazioneCliente>percNeg}"
                     />
                   </viz.data:measures>
                 </viz.data:FlattenedDataset>

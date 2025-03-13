@@ -55,6 +55,12 @@ sap.ui.define([
       formatted = formatted.replace('.', ',');
       return formatted + ' %';
     },
+    convertNegative: function(value) {
+      if (typeof value === "string" && value.endsWith("-")) {
+          return -parseFloat(value.slice(0, -1));
+      }
+      return parseFloat(value);
+    },
     checkValidExt: function(ext){
       const extUpperCase = ext.toUpperCase();
       if(extUpperCase === "DOC" || extUpperCase === "JPG" || extUpperCase === "PNG" || extUpperCase ==="XLS" || extUpperCase === "ZIP" || extUpperCase === "PDF"){
