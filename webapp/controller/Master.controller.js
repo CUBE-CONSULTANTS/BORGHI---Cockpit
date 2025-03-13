@@ -159,6 +159,9 @@ sap.ui.define(
             }.bind(this)
           );
       },
+      onClientiComboBoxChange: function(oEvent){
+        debugger
+      },
       navToHome: function () {
         this.getOwnerComponent()
           .getModel("datiAppoggio")

@@ -59,6 +59,7 @@
                       path: 'matchcode>/clienti',
                       templateShareable: true
                     }"
+                    change="onClientiComboBoxChange"
                   >
                     <core:Item
                       key="{matchcode>KUNNR}"

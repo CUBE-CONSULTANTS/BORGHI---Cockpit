@@ -251,9 +251,10 @@ sap.ui.define(
             this.setModel(matchcode, "matchcode");
             let model = this.getOwnerComponent().getModel("modelloV2");
             let clienti = await API.getEntity(model, "/T661W", [], []);
-            // let materiali = await API.getEntity(model, "", [], [])
+            let materiali = await API.getEntity(model, "/EIGHTWEEK_MC_KDMAT", [], [])
+            // odata/v2/delivery-forecast/EIGHTWEEK_MC_KDMAT?$filter=Kunnr eq '200012'
             this.getModel("matchcode").setProperty("/clienti", clienti.results);
-            // this.getModel("matchcode").setProperty("/materiali", materiali.results);
+            this.getModel("matchcode").setProperty("/materiali", materiali.results);
           } catch (error) {
             MessageBox.error("Errore durante il recupero dei dati");
           } finally {
