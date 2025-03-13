@@ -49,8 +49,8 @@
           >
             <fb:filterGroupItems>
               <fb:FilterGroupItem
-                name="CustomerID"
-                label="Cliente"
+                name="Codice Cliente"
+                label="Codice Cliente"
                 groupName="Group1"
                 visibleInFilterBar="true"
               >

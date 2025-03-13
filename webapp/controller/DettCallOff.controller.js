@@ -5,8 +5,10 @@ sap.ui.define(
     "../model/API",
     "../model/models",
     "../model/formatter",
+    "sap/m/MessageBox",
+    "sap/m/MessageToast",
   ],
-  function (BaseController, JSONModel, API, models, formatter) {
+  function (BaseController, JSONModel, API, models, formatter,MessageBox,MessageToast) {
     "use strict";
 
     return BaseController.extend(
@@ -30,7 +32,7 @@ sap.ui.define(
               "/Testata",
               { id: this._id, id_master: this._idMaster },
               [],
-              ["master,posizioni_testata,log_testata"]
+              ["master,posizioni_testata($expand=log_posizioni)"]
             );
 
             let detailModel = new JSONModel(dettaglio);

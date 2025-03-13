@@ -432,7 +432,7 @@
                           <m:Button
                           class="sapUiTinyMarginBegin"
                           icon="{= ${detailData>stato} === '53' ? 'sap-icon://status-positive' : ${detailData>stato} === '51' ? 'sap-icon://status-negative' : ${detailData>stato} === '64'? 'sap-icon://pending'  :'sap-icon://in-progress'}"
-                          type="{= ${detailData>stato} === '53' ? 'Accept' : ${detailData>stato} === '51' ? 'Negative' : : ${detailData>stato} === '64'? 'Critical' : 'Ghost'}"
+                          type="{= ${detailData>stato} === '53' ? 'Accept' : ${detailData>stato} === '51' ? 'Negative' : ${detailData>stato} === '64'? 'Critical' : 'Ghost'}"
                           />
                         </ui:template>
                       </ui:Column>
