@@ -25,10 +25,12 @@ sap.ui.define(
           this.getModel("main").setProperty("/backToMon", false);
           this.getModel("main").setProperty("/backToArch", false);
         }
-        await this._getMatchCode()
-        let oFiltriNav = this.getOwnerComponent().getModel("datiAppoggio").getProperty("/filtriNav")
-        if(oFiltriNav){
-          let oCodClienteComboBox = this.byId("idClientiComboBox2"); 
+        await this._getMatchCode();
+        let oFiltriNav = this.getOwnerComponent()
+          .getModel("datiAppoggio")
+          .getProperty("/filtriNav");
+        if (oFiltriNav) {
+          let oCodClienteComboBox = this.byId("idClientiComboBox2");
           if (oFiltriNav.codice_cliente && oCodClienteComboBox) {
             oCodClienteComboBox.setSelectedKey(oFiltriNav.codice_cliente);
             oCodClienteComboBox.setValue(oFiltriNav.codice_cliente);
@@ -36,12 +38,11 @@ sap.ui.define(
         }
       },
       onSearch: function (oEvent) {
-        let aFilters = this.getFiltersVariazioni(oEvent.getSource())
-        debugger
-        if(aFilters.length > 0) {
-          
-        this._searchVarCliente(aFilters)
-        }else{
+        let aFilters = this.getFiltersVariazioni(oEvent.getSource());
+        debugger;
+        if (aFilters.length > 0) {
+          this._searchVarCliente(aFilters);
+        } else {
           MessageBox.error("Inserire il filtro di ricerca Cliente");
         }
         // /odata/v2/delivery-forecast/EIGHTWEEK_CLI?$expand=RETURN_DATA&$filter=CLIENTE eq '0000200191'
@@ -64,11 +65,26 @@ sap.ui.define(
         }
       },
       navToHome: function () {
-        this.getOwnerComponent().getModel("datiAppoggio").setProperty("/filtriNav","")
-        this.byId("idClientiComboBox2").setSelectedKey("")
-        this.byId("idClientiComboBox2").setValue("")
-        this.getModel("main").setProperty("/visibility",false)
+        this.getOwnerComponent()
+          .getModel("datiAppoggio")
+          .setProperty("/filtriNav", "");
+        this.byId("idClientiComboBox2").setSelectedKey("");
+        this.byId("idClientiComboBox2").setValue("");
+        this.getModel("main").setProperty("/visibility", false);
         this.getRouter().navTo("home");
+      },
+
+      onSort: function (oEvent) {
+        debugger;
+        let table = this.byId("clienteTable");
+        let aSorters = ["week"];
+        let x = this.sortTables(table, aSorters);
+      },
+
+      downloadExcelFile: function (oEvent) {
+        debugger;
+        let aData = this.getView().getModel("variazioneCliente").getData();
+        this.buildSpreadSheet(aData);
       },
     });
   }

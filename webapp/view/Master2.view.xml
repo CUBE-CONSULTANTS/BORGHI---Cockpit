@@ -79,7 +79,7 @@
     <f:content>
       <VBox fitContainer="true">
         <!-- Dettaglio Quantità -->
-        <ui:Table >
+        <ui:Table id="clienteTable">
           <ui:extension>
             <OverflowToolbar>
               <Title text="Dettaglio Quantità (per settimana)" />
