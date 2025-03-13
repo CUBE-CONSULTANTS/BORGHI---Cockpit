@@ -80,7 +80,7 @@
           class="sapUiSmallMarginEnd"
         >
           <m:Label text="Ragione Sociale" />
-          <m:Text text="{detailData>/Name}" />
+          <m:Text text="{detailData>/DESCR}" />
         </m:VBox>
       </m:FlexBox>
     </headerContent>

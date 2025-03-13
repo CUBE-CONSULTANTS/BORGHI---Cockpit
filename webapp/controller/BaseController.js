@@ -472,7 +472,6 @@ sap.ui.define(
           let aFilters = [];
           filterbar.getFilterGroupItems().forEach((filter) => {
             let value = filter.getControl().getValue().split(" -")[0];
-            //da verificare se il value va bene anche per codice articolo
             let label = filter.getLabel();
             if (value && value.length > 0 && filterMap[label]) {
               aFilters.push(

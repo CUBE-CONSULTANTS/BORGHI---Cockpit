@@ -76,6 +76,7 @@ sap.ui.define(
             let formattedData = weekCall.results.map((item) => {
               return {
                 CLIENTE: item.CLIENTE,
+                DESCR: item.DESCR,
                 KDMAT: item.KDMAT,
                 MATNR: item.MATNR,
                 GIACENZA: item.GIACENZA.trim(),
@@ -121,8 +122,6 @@ sap.ui.define(
         table.getColumns()[22].getMultiLabels()[0].setText(labels[7]);
       },
       onSort: function (oEvent) {
-        // SORT X CODICE CLIENTE E CODICE ARTICOLO
-        debugger;
         let table = this.byId("artTable");
         let aSorters = ["CLIENTE", "MATNR"];
         let x = this.sortTables(table, aSorters);
@@ -161,8 +160,20 @@ sap.ui.define(
             }.bind(this)
           );
       },
-      onClientiComboBoxChange: function(oEvent){
-        debugger
+      onClientiComboBoxChange: async function(oEvent){
+        let aFilters = []
+        aFilters.push(
+          new Filter("Kunnr", FilterOperator.EQ, oEvent.getSource().getValue().split(" -")[0])
+        );
+        try {
+          this.showBusy(0)
+          let materiali = await API.getEntity(this.getOwnerComponent().getModel("modelloV2"), "/EIGHTWEEK_MC_KDMAT", aFilters, [])
+          this.getModel("matchcode").setProperty("/materiali", materiali.results)
+        } catch (error) {
+          MessageBox.error("Errore durante il recupero dei materiali")
+        }finally {
+          this.hideBusy(0)
+        }    
       },
       navToHome: function () {
         this.getOwnerComponent()

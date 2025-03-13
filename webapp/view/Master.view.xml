@@ -141,7 +141,7 @@
               </ui:template>
             </ui:Column>
             <ui:Column  headerSpan="10"
-            width="10em"
+            width="12em"
             >
               <ui:multiLabels>
                 <Label
@@ -154,7 +154,7 @@
               <ui:template>
                 <Text
                   
-                  text="{variazioneArticolo>CLIENTE} -- {variazioneArticolo>DESCR}"
+                  text="{variazioneArticolo>CLIENTE} - {variazioneArticolo>DESCR}"
                 />
               </ui:template>
             </ui:Column>
