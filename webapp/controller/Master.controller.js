@@ -41,18 +41,18 @@ sap.ui.define(
         }
         this.setModel(new JSONModel(), "matchcode");
         try {
-          this.showBusy(0)
+          this.showBusy(0);
           let model = this.getOwnerComponent().getModel("modelloV2");
-          let clienti = await API.getEntity(model, "/T661W", [], []);   
+          let clienti = await API.getEntity(model, "/T661W", [], []);
           this.getModel("matchcode").setProperty("/clienti", clienti.results);
         } catch (error) {
-          MessageBox.error("Errore durante il recupero dei dati")
-        }finally{
+          MessageBox.error("Errore durante il recupero dei dati");
+        } finally {
           this.hideBusy(0);
         }
       },
       onSearch: function (oEvent) {
-        let aFilters = this.getFiltersVariazioni(oEvent.getSource())
+        let aFilters = this.getFiltersVariazioni(oEvent.getSource());
         this._searchVarArticolo(aFilters);
       },
       _searchVarArticolo: async function (aFilters) {
@@ -110,32 +110,52 @@ sap.ui.define(
       },
       onSort: function (oEvent) {
         // SORT X CODICE CLIENTE E CODICE ARTICOLO
+        debugger;
+        let table = this.byId("artTable");
+        let aSorters = ["CLIENTE", "MATNR"];
+        let x = this.sortTables(table, aSorters);
       },
       onOpenDetail: function (oEvent) {
-        
-        let detailPath = oEvent.getSource().getBindingContext("variazioneArticolo").getPath()
-        let detail = this.getModel("variazioneArticolo").getProperty(`${detailPath}`);
-        let detailMat = oEvent.getSource().getBindingContext("variazioneArticolo").getObject().MATNR
-        let currentDetail = this.getOwnerComponent().getModel("datiAppoggio").getProperty("/");
-          if (JSON.stringify(currentDetail) === JSON.stringify(detail)) {
-              return;
-          }
-          this.getOwnerComponent().getModel("datiAppoggio").setProperty("/", detail);
+        let detailPath = oEvent
+          .getSource()
+          .getBindingContext("variazioneArticolo")
+          .getPath();
+        let detail = this.getModel("variazioneArticolo").getProperty(
+          `${detailPath}`
+        );
+        let detailMat = oEvent
+          .getSource()
+          .getBindingContext("variazioneArticolo")
+          .getObject().MATNR;
+        let currentDetail = this.getOwnerComponent()
+          .getModel("datiAppoggio")
+          .getProperty("/");
+        if (JSON.stringify(currentDetail) === JSON.stringify(detail)) {
+          return;
+        }
+        this.getOwnerComponent()
+          .getModel("datiAppoggio")
+          .setProperty("/", detail);
         let oNextUIState;
-              this.getOwnerComponent()
-                .getHelper()
-                .then(
-                  function (oHelper) {
-                    oNextUIState = oHelper.getNextUIState(1);
-                    this.getRouter().navTo("detail", {
-                      mat:detailMat,
-                      layout: oNextUIState.layout,
-                    });
-                  }.bind(this)
-                );
+        this.getOwnerComponent()
+          .getHelper()
+          .then(
+            function (oHelper) {
+              oNextUIState = oHelper.getNextUIState(1);
+              this.getRouter().navTo("detail", {
+                mat: detailMat,
+                layout: oNextUIState.layout,
+              });
+            }.bind(this)
+          );
       },
       navToHome: function () {
         this.getRouter().navTo("home");
+      },
+
+      downloadExcelFile: function (oEvent) {
+        debugger;
+        this.buildSpreadSheet(this.getModel("variazioneArticolo").getData());
       },
     });
   }

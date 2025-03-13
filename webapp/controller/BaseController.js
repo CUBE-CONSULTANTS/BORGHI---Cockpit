@@ -22,7 +22,6 @@ sap.ui.define(
     "../model/formatter",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
-
   ],
   function (
     Controller,
@@ -281,12 +280,11 @@ sap.ui.define(
         onFiltersBuilding: function (oEvent, key) {
           if (key === "01") {
             let aData = this.getModel("master3").getProperty("/");
-            
+
             let aStato = [
               ...new Set(
                 aData.flatMap((item) =>
                   item.posizioni.map((pos) => {
-                    
                     if (pos.stato === "51") {
                       return "In Errore";
                     } else if (pos.stato === "53") {
@@ -414,35 +412,37 @@ sap.ui.define(
             );
           }
         },
-        getFiltersVariazioni: function(filterbar) {
+        getFiltersVariazioni: function (filterbar) {
           const filterMap = {
-              "Codice Cliente": "CLIENTE",
-              "Codice Articolo": "KDMAT"
-          }
-          let aFilters = []
-          filterbar.getFilterGroupItems().forEach(filter => {
-             let value = filter.getControl().getValue().split(' -')[0]
-             //da verificare se il value va bene anche per codice articolo
-            let label = filter.getLabel();  
-              if (value && value.length > 0 && filterMap[label]) {
-                  aFilters.push(new Filter(filterMap[label], FilterOperator.EQ, value));
-              }
+            "Codice Cliente": "CLIENTE",
+            "Codice Articolo": "KDMAT",
+          };
+          let aFilters = [];
+          filterbar.getFilterGroupItems().forEach((filter) => {
+            let value = filter.getControl().getValue().split(" -")[0];
+            //da verificare se il value va bene anche per codice articolo
+            let label = filter.getLabel();
+            if (value && value.length > 0 && filterMap[label]) {
+              aFilters.push(
+                new Filter(filterMap[label], FilterOperator.EQ, value)
+              );
+            }
           });
           return aFilters;
         },
-        onFilterBarVariazioniClear: function(oEvent) {
-          let oFilterBar = oEvent.getSource()
+        onFilterBarVariazioniClear: function (oEvent) {
+          let oFilterBar = oEvent.getSource();
           let aFilterItems = oFilterBar.getFilterGroupItems();
-    
-          aFilterItems.forEach(function(oFilterItem) {
-              let oControl = oFilterItem.getControl();
-              if (oControl instanceof sap.m.ComboBox) {
-                  oControl.setSelectedKey(null);
-                  oControl.setValue(""); 
-              } else if (oControl instanceof sap.m.MultiComboBox) {
-                  oControl.setSelectedKeys([]);  
-                  oControl.setValue("");  
-              }
+
+          aFilterItems.forEach(function (oFilterItem) {
+            let oControl = oFilterItem.getControl();
+            if (oControl instanceof sap.m.ComboBox) {
+              oControl.setSelectedKey(null);
+              oControl.setValue("");
+            } else if (oControl instanceof sap.m.MultiComboBox) {
+              oControl.setSelectedKeys([]);
+              oControl.setValue("");
+            }
           });
           this.getModel("main").setProperty("/visibility", false);
         },
@@ -456,7 +456,7 @@ sap.ui.define(
           "archivio"
             ? (archivVal = true)
             : (archivVal = false);
-          
+
           let oFilterData = this.getModel("filtersModel").getData();
           for (let sView in oFilterData) {
             if (oFilterData.hasOwnProperty(sView)) {
@@ -516,7 +516,7 @@ sap.ui.define(
                   archivVal
                 ),
               ],
-              ["master,posizioni_testata,log_testata"],
+              ["master,posizioni_testata,log_posizioni"],
               "02",
               false
             );
@@ -678,7 +678,6 @@ sap.ui.define(
               .selectionSet[0].getBindingInfo("value")
               .parts[0].path.includes("callOff")
           ) {
-            
             oFilterSet = this.getModel("filtersModel").getProperty("/callOff");
             let aFilters = mapper.buildFilters(
               oFilterSet,
@@ -705,7 +704,7 @@ sap.ui.define(
               this.getOwnerComponent().getModel("calloffV2"),
               "/Testata",
               aFilters,
-              ["posizioni_testata,log_testata,master"],
+              ["posizioni_testata,log_posizioni,master"],
               "02",
               false
             );
@@ -788,14 +787,12 @@ sap.ui.define(
               this.getOwnerComponent().setModel(modelMeta, "master3");
               this.getModel("master3").setSizeLimit(1000000);
             } else if (key === "02") {
-              
               let datiFiltrati = metadata.results.filter(
                 (x) =>
                   x.master !== null && x.posizioni_testata.results.length > 0
               );
 
               if (filtrato) {
-                
                 datiFiltrati = metadata.results
                   .filter((x) => x.master !== null)
                   .map((x) => ({
@@ -958,17 +955,26 @@ sap.ui.define(
             let aSelectedItems = indices.map(function (iIndex) {
               return table.getContextByIndex(iIndex).getObject();
             });
-            aSelectedItems = aSelectedItems.map(item => {
-              if (item.posizioni) {
-                  item.posizioni = item.posizioni.filter(pos => pos.stato !== '53' && pos.stato !== '64');
-              }
-              if ((item.stato !== '53' && item.stato !== '64') || (item.posizioni && item.posizioni.length > 0)) {
-                return item;
-              }
-              return null;
-            }).filter(item => item !== null)
+            aSelectedItems = aSelectedItems
+              .map((item) => {
+                if (item.posizioni) {
+                  item.posizioni = item.posizioni.filter(
+                    (pos) => pos.stato !== "53" && pos.stato !== "64"
+                  );
+                }
+                if (
+                  (item.stato !== "53" && item.stato !== "64") ||
+                  (item.posizioni && item.posizioni.length > 0)
+                ) {
+                  return item;
+                }
+                return null;
+              })
+              .filter((item) => item !== null);
             if (aSelectedItems.length === 0) {
-              MessageBox.error("Non è possibile Rielaborare elementi già processati");
+              MessageBox.error(
+                "Non è possibile Rielaborare elementi già processati"
+              );
               return [];
             }
             aSelectedItems.forEach((element) => {
@@ -1240,12 +1246,21 @@ sap.ui.define(
           }
           return new Blob([bytes], { type: mimeType });
         },
-        onDownloadCumulativi: async function(oEvent){
-          let numIdoc = oEvent.getSource().getBindingContext("master3").getObject().numero_idoc
-          let dest = oEvent.getSource().getBindingContext("master3").getObject().destinatario
-          let rffon = oEvent.getSource().getBindingContext("master3").getObject().numero_ordine_acquisto
-          await this.getReportCumulativi(dest, numIdoc,rffon);
-        }, 
+        onDownloadCumulativi: async function (oEvent) {
+          let numIdoc = oEvent
+            .getSource()
+            .getBindingContext("master3")
+            .getObject().numero_idoc;
+          let dest = oEvent
+            .getSource()
+            .getBindingContext("master3")
+            .getObject().destinatario;
+          let rffon = oEvent
+            .getSource()
+            .getBindingContext("master3")
+            .getObject().numero_ordine_acquisto;
+          await this.getReportCumulativi(dest, numIdoc, rffon);
+        },
         getReportCumulativi: async function (dest, numIdoc, rffon) {
           try {
             this.showBusy(0);
@@ -1340,14 +1355,36 @@ sap.ui.define(
             oEvent.getSource().getParent().getBindingContext("master3") !==
             undefined
           ) {
-            level = oEvent.getSource().getParent().getBindingContext("master3").getPath().includes("posizioni");
-            detailPath = oEvent.getSource().getParent().getBindingContext("master3").getPath();
-            detail = this.getView().getModel("master3").getProperty(`${detailPath}`);
-            this.getOwnerComponent().getModel("datiAppoggio").setProperty("/testata", detail);
-            this.getOwnerComponent().getModel("datiAppoggio").setProperty("/posizioni", detail.posizioni);
-            if (level) {this.getOwnerComponent().getModel("datiAppoggio").setProperty("/posizioneCorrente", detail);
-              this.getOwnerComponent().getModel("datiAppoggio").setProperty("/schedulazioni", detail.schedulazioni.results);
-              this.getOwnerComponent().getModel("datiAppoggio").setProperty(
+            level = oEvent
+              .getSource()
+              .getParent()
+              .getBindingContext("master3")
+              .getPath()
+              .includes("posizioni");
+            detailPath = oEvent
+              .getSource()
+              .getParent()
+              .getBindingContext("master3")
+              .getPath();
+            detail = this.getView()
+              .getModel("master3")
+              .getProperty(`${detailPath}`);
+            this.getOwnerComponent()
+              .getModel("datiAppoggio")
+              .setProperty("/testata", detail);
+            this.getOwnerComponent()
+              .getModel("datiAppoggio")
+              .setProperty("/posizioni", detail.posizioni);
+            if (level) {
+              this.getOwnerComponent()
+                .getModel("datiAppoggio")
+                .setProperty("/posizioneCorrente", detail);
+              this.getOwnerComponent()
+                .getModel("datiAppoggio")
+                .setProperty("/schedulazioni", detail.schedulazioni.results);
+              this.getOwnerComponent()
+                .getModel("datiAppoggio")
+                .setProperty(
                   "/testata",
                   this.getModel("master3").getProperty(
                     `${detailPath[0] + detailPath[1]}`
@@ -1417,7 +1454,16 @@ sap.ui.define(
           this.getRouter().navTo("master3");
         },
         handleCloseVariazioni: function (oEvent) {
-          this.getRouter().navTo("master", { layout: oEvent.getSource().getParent().getParent().getParent().getParent().getParent().setLayout(), });
+          this.getRouter().navTo("master", {
+            layout: oEvent
+              .getSource()
+              .getParent()
+              .getParent()
+              .getParent()
+              .getParent()
+              .getParent()
+              .setLayout(),
+          });
         },
         navToArchive: function () {
           this.getRouter().navTo("archivio");
