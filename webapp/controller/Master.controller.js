@@ -33,7 +33,8 @@ sap.ui.define(
           .attachPatternMatched(this._onObjectMatched, this);
       },
       _onObjectMatched: async function (oEvent) {
-        if (oEvent.getParameters().arguments.prevApp === "monitor") {
+        
+        if (oEvent.getParameters().arguments.prevApp === "monitor" || oEvent.getParameters().arguments.prevApp === "master3") {
           this.getModel("main").setProperty("/backToMon", true);
         } else if (oEvent.getParameters().arguments.prevApp === "archivio") {
           this.getModel("main").setProperty("/backToArch", true);

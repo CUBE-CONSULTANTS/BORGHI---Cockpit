@@ -191,55 +191,25 @@ sap.ui.define(
           }
         },
         navToAPP: function (oEvent) {
-          let level = oEvent
-            .getSource()
-            .getParent()
-            .getParent()
-            .getBindingContext("master3")
-            .getPath();
-          let oCodArt = oEvent
-            .getSource()
-            .getParent()
-            .getParent()
-            .getBindingContext("master3")
-            .getObject().codice_cliente_materiale;
+          
+          let level = oEvent.getSource().getParent().getParent().getBindingContext("master3").getPath();
+          let oCodArt = oEvent.getSource().getParent().getParent().getBindingContext("master3").getObject().codice_cliente_materiale;
           let oCodCliente;
-          oEvent
-            .getSource()
-            .getParent()
-            .getParent()
-            .getBindingContext("master3")
-            .getObject().codice_cliente === null
-            ? (oCodCliente = oEvent
-                .getSource()
-                .getParent()
-                .getParent()
-                .getBindingContext("master3")
-                .getObject().testata.codice_cliente)
-            : (oCodCliente = oEvent
-                .getSource()
-                .getParent()
-                .getParent()
-                .getBindingContext("master3")
-                .getObject().codice_cliente);
+          oEvent.getSource().getParent().getParent().getBindingContext("master3").getObject().codice_cliente === null?
+           oCodCliente = oEvent.getSource().getParent().getParent().getBindingContext("master3").getObject().testata.codice_cliente
+          : oCodCliente = oEvent.getSource().getParent().getParent().getBindingContext("master3").getObject().codice_cliente;
 
-          this.getOwnerComponent()
-            .getModel("datiAppoggio")
-            .setProperty("/filtriNav", {
+          this.getOwnerComponent().getModel("datiAppoggio").setProperty("/filtriNav", {
               codice_articolo: oCodArt,
               codice_cliente: oCodCliente,
             });
           if (level.includes("posizioni")) {
             this.getRouter().navTo("master", {
-              prevApp: this.getOwnerComponent()
-                .getModel("datiAppoggio")
-                .getProperty("/currentPage"),
+              prevApp: this.getOwnerComponent().getModel("datiAppoggio").getProperty("/currentPage"),
             });
           } else {
             this.getRouter().navTo("master2", {
-              prevApp: this.getOwnerComponent()
-                .getModel("datiAppoggio")
-                .getProperty("/currentPage"),
+              prevApp: this.getOwnerComponent().getModel("datiAppoggio").getProperty("/currentPage"),
             });
           }
         },
