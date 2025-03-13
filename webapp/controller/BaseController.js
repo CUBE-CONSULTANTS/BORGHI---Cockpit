@@ -479,9 +479,11 @@ sap.ui.define(
               );
             }
           });
+          
           return aFilters;
+          
         },
-        onFilterBarVariazioniClear: function (oEvent) {
+        onFilterBarVariazioniClear: async function (oEvent) {
           let oFilterBar = oEvent.getSource();
           let aFilterItems = oFilterBar.getFilterGroupItems();
 
@@ -496,6 +498,7 @@ sap.ui.define(
             }
           });
           this.getModel("main").setProperty("/visibility", false);
+          await this._getMatchCode()
         },
         onFilterBarClear: async function (oEvent) {
           let operator, archivVal;
