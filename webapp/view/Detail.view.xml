@@ -16,11 +16,12 @@
   <ObjectPageLayout
     id="ObjectPageLayout"
     showTitleInHeaderContent="true"
-    alwaysShowContentHeader="false"
-    preserveHeaderStateOnScroll="false"
+    alwaysShowContentHeader="true"
+    preserveHeaderStateOnScroll="true"
     headerContentPinnable="true"
     isChildPage="true"
     upperCaseAnchorBar="false"
+    
   >
     <headerTitle>
       <ObjectPageDynamicHeaderTitle>
@@ -84,7 +85,8 @@
       </m:FlexBox>
     </headerContent>
     <sections>
-      <ObjectPageSection title="Dettaglio Variazioni">
+    
+      <ObjectPageSection  title="Dettaglio Variazioni">
         <subSections>
           <ObjectPageSubSection>
             <blocks>

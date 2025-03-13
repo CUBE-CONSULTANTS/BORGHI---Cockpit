@@ -340,8 +340,10 @@ sap.ui.define(
                       return "Elaborato Positivamente";
                     } else if (pos.stato === null) {
                       return "Non Elaborato";
+                    }else if (pos.stato === '64'){
+                      return "In Elaborazione"
                     }
-                    return pos.stato; // Mantieni il valore originale per altri casi
+                    return pos.stato; 
                   })
                 )
               ),

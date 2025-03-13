@@ -90,7 +90,7 @@ sap.ui.define(
                   false
                 ),
               ],
-              ["master,posizioni_testata,log_testata"],
+              ["master,posizioni_testata,posizioni_testata($expand=log_posizioni)"],
               selectedKey,
               false
             );
@@ -221,7 +221,7 @@ sap.ui.define(
           .getSource()
           .getBindingContext("master3")
           .getObject().log.results[lastIndexMessage].messaggio;
-        MessageBox.error(message);
+        MessageBox.information(message);
       },
       processaItems: function (items) {
         let itemList = items

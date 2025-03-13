@@ -37,7 +37,9 @@ sap.ui.define(
       },
       onSearch: function (oEvent) {
         let aFilters = this.getFiltersVariazioni(oEvent.getSource())
+        debugger
         if(aFilters.length > 0) {
+          
         this._searchVarCliente(aFilters)
         }else{
           MessageBox.error("Inserire il filtro di ricerca Cliente");
