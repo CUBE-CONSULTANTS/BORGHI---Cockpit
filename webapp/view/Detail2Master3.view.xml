@@ -17,18 +17,7 @@
                 
               </f:heading>
                 <f:actions>
-            <m:Button
-                type="Transparent"
-                icon="sap-icon://full-screen"
-                press=".handleFullScreen"
-                tooltip="Enter Full Screen Mode"
-                visible="false" />
-            <m:Button
-                type="Transparent"
-                icon="sap-icon://exit-full-screen"
-                press=".handleExitFullScreen"
-                tooltip="Exit Full Screen Mode"
-                visible="false" />
+            
             <m:Button
                 type="Emphasized"
                 icon="sap-icon://decline"
@@ -37,9 +26,7 @@
                 />
            
         </f:actions>
-        <!-- visible="{= ${/actionButtonsInfo/midColumn/fullScreen} !== null }" -->
-        <!-- visible="{= ${/actionButtonsInfo/midColumn/exitFullScreen} !== null }" -->
-        <!-- visible="{= ${/actionButtonsInfo/midColumn/closeColumn} !== null }" -->
+
             </f:DynamicPageTitle>
         </f:title>
         <f:header>
@@ -61,25 +48,26 @@
         <f:content>
           
             <commons:Timeline
-                id="idTimeline"
-                dateTimePath="{detailSched>/data_spedizione_richiesta_da}"
+                id="idTimeline"   
                 enableDoubleSided="true"
                 groupBy="{detailSched>/data_spedizione_richiesta_da}"
                 growingThreshold="0"
                 filterTitle="Schedulazioni"
+                showItemFilter="false"
+                showTimeFilter="false"
                 sortOldestFirst="true"
                 content="{
                   path: 'detailSched>/datiElementoSelect',
                   sorter: {
-                      path: 'data_spedizione_richiesta_da',
+                      path: 'detailSched>data_spedizione_richiesta_da',
                       descending: false
                   }
-              }"
-            >
+                  }"
+                >
                 <commons:content>
                     <commons:TimelineItem
-                        dateTime="Schedulazione: {detailSched>schedulazione}"
-                        userName="{detailSched>data_spedizione_richiesta_da} - {detailSched>data_spedizione_richiesta_a}"
+                        dateTime="{path: 'detailSched>data_spedizione_richiesta_da', formatter: '.formatter.formatDate'} - {path: 'detailSched>data_spedizione_richiesta_a', formatter: '.formatter.formatDate'}"               
+                        userName= "Schedulazione: {detailSched>schedulazione}"
                         text="Quantità da consegnare: {detailSched>quantita_da_consegnare}"
                         icon="sap-icon://shipping-status"
                         

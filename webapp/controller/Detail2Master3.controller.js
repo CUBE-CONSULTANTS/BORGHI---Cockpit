@@ -32,25 +32,25 @@ sap.ui.define(
               numeroProgressivoInvio: numeroProgressivoInvio,
               cliente: cliente,
             });
-          datiElementoSelect = datiElementoSelect
-            .map((item) => {
-              if (item.data_spedizione_richiesta_da) {
-                item.data_spedizione_richiesta_da = formatter.formatDate(
-                  item.data_spedizione_richiesta_da
-                );
-              }
-              if (item.data_spedizione_richiesta_a) {
-                item.data_spedizione_richiesta_a = formatter.formatDate(
-                  item.data_spedizione_richiesta_a
-                );
-              }
-              return item;
-            })
-            .sort((a, b) => {
-              let dateA = formatter.parseDate(a.data_spedizione_richiesta_da);
-              let dateB = formatter.parseDate(b.data_spedizione_richiesta_da);
-              return dateA - dateB;
-            });
+            
+          // datiElementoSelect = datiElementoSelect.map((item) => {
+          //     if (item.data_spedizione_richiesta_da) {
+          //       item.data_spedizione_richiesta_da = formatter.formatDate(
+          //         item.data_spedizione_richiesta_da
+          //       );
+          //     }
+          //     if (item.data_spedizione_richiesta_a) {
+          //       item.data_spedizione_richiesta_a = formatter.formatDate(
+          //         item.data_spedizione_richiesta_a
+          //       );
+          //     }
+          //     return item;
+          //   })
+          //   .sort((a, b) => {
+          //     let dateA = formatter.parseDate(a.data_spedizione_richiesta_da);
+          //     let dateB = formatter.parseDate(b.data_spedizione_richiesta_da);
+          //     return dateA - dateB;
+          //   });
 
           this.getView().setModel(
             new JSONModel({
@@ -62,22 +62,12 @@ sap.ui.define(
             }),
             "detailSched"
           );
-        },
-        onEditToggleButtonPress: function () {
-          var oObjectPage = this.getView().byId("ObjectPageLayout"),
-            bCurrentShowFooterState = oObjectPage.getShowFooter();
-
-          oObjectPage.setShowFooter(!bCurrentShowFooterState);
-        },
-
-        
-
+        },       
         handleClose: function (oEvent) { 
           let currentBegColViewName = oEvent.getSource().getParent().getParent().getParent().getParent().getParent().getCurrentBeginColumnPage().getProperty("viewName");
           var sNextLayout = this.getOwnerComponent().getModel("layout").getProperty(
             "/actionButtonsInfo/midColumn/closeColumn"
-          );
-          //prova chiusura colonna e nav        
+          );     
             if(currentBegColViewName.includes('archivio')){
               sNextLayout = this.getRouter().navTo("archivio", {
                 layout: oEvent.getSource().getParent().getParent().getParent().getParent().getParent().setLayout(),
@@ -96,12 +86,8 @@ sap.ui.define(
         },
 
         onExit: function () {
-          this.getRouter()
-            .getRoute("master3")
-            .detachPatternMatched(this._onProductMatched, this);
-          this.getRouter()
-            .getRoute("detailMaster3")
-            .detachPatternMatched(this._onProductMatched, this);
+          this.getRouter().getRoute("master3").detachPatternMatched(this._onProductMatched, this);
+          this.getRouter().getRoute("detailMaster3").detachPatternMatched(this._onProductMatched, this);
         },
       }
     );
