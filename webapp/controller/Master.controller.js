@@ -9,6 +9,7 @@ sap.ui.define(
     "../model/models",
     "../model/API",
     "../model/formatter",
+    "sap/ui/export/Spreadsheet",
   ],
   function (
     BaseController,
@@ -19,7 +20,8 @@ sap.ui.define(
     JSONModel,
     models,
     API,
-    formatter
+    formatter,
+    Spreadsheet
   ) {
     "use strict";
 
@@ -173,7 +175,60 @@ sap.ui.define(
 
       downloadExcelFile: function (oEvent) {
         debugger;
-        this.buildSpreadSheet(this.getModel("variazioneArticolo").getData());
+        let table = this.byId("artTable");
+        this.createPRExcel(table);
+      },
+
+      createPRExcel: function (oTable) {
+        const oRowBinding = oTable.getBinding("rows");
+        const aCols = this._getColumnsConfig(oTable);
+        const oSheet = new Spreadsheet({
+          workbook: {
+            columns: aCols,
+            hierarchyLevel: "Level",
+          },
+          dataSource: oRowBinding,
+          fileName: "Tabella Dati",
+        });
+        oSheet.build().finally(function () {
+          oSheet.destroy();
+        });
+      },
+      _getColumnsConfig: function (oTable) {
+        const aCols = [];
+        oTable.getColumns().forEach((el, key) => {
+          if (key !== 0) {
+            let property = "";
+            let type = String;
+            oTable.getRows().forEach((row, i) => {
+              const cell = row.getCells()[key];
+              if (cell.getBindingInfo("text")) {
+                property = cell.getBindingInfo("text").parts[0].path;
+              } else if (cell.getBindingInfo("text")) {
+                property = cell.getBindingInfo("text").parts[0].path;
+              }
+            });
+            let label;
+            el.getMultiLabels()[0].getText() === ""
+              ? (label = el.getMultiLabels()[1].getText())
+              : el.getMultiLabels()[0].getText();
+            if (
+              el.getMultiLabels()[0].getText() !== "" &&
+              el.getMultiLabels()[1].getText() !== 0
+            ) {
+              label =
+                el.getMultiLabels()[0].getText() +
+                " " +
+                el.getMultiLabels()[1].getText();
+            }
+            aCols.push({
+              label: label,
+              property: property,
+              type: type,
+            });
+          }
+        });
+        return aCols;
       },
     });
   }
