@@ -9,7 +9,6 @@ sap.ui.define(
           .getRoute("detail")
           .attachPatternMatched(this._onObjectMatched, this);
       },
-
       _onObjectMatched: function (oEvent) {
         let detailData = this.getModel("datiAppoggio").getProperty("/");
         let oDetailModel = new JSONModel(detailData);

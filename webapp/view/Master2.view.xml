@@ -77,9 +77,12 @@
     </f:header>
     <!-- Main Content -->
     <f:content>
-      <VBox fitContainer="true">
+      <VBox fitContainer="true" visible="{main>/visibility}">
         <!-- Dettaglio Quantità -->
-        <ui:Table id="clienteTable">
+        <ui:Table 
+         id="clienteTable"
+        selectionMode="None"
+        rows="{variazioneCliente>/}" >
           <ui:extension>
             <OverflowToolbar>
               <Title text="Dettaglio Quantità (per settimana)" />
@@ -99,54 +102,49 @@
           </ui:extension>
           <ui:columns>
             <ui:Column>
+              <Label text="Cliente" />
+              <ui:template>
+                <Text text="{variazioneCliente>CLIENTE} - {variazioneCliente>DESCR}" />
+              </ui:template>
+            </ui:Column>
+            <ui:Column>
               <Label text="Settimana" />
               <ui:template>
-                <ObjectIdentifier />
+                <Text text="{variazioneCliente>WEEK}" />
               </ui:template>
             </ui:Column>
             <ui:Column>
               <Label text="Quantità Totale" />
               <ui:template>
-                <ObjectIdentifier />
+                <Text text="{variazioneCliente>QTY_TOT}" />
               </ui:template>
             </ui:Column>
             <ui:Column>
               <Label text="Variazione Totale" />
               <ui:template>
-                <ObjectIdentifier />
+                <Text text="{variazioneCliente>VAR_TOT}" />
               </ui:template>
             </ui:Column>
             <ui:Column>
               <Label text="Variazione Positiva" />
               <ui:template>
-                <ObjectIdentifier />
+                <Text text="{variazioneCliente>VAR_POS}" />
               </ui:template>
             </ui:Column>
             <ui:Column>
               <Label text="Variazione Negativa" />
               <ui:template>
-                <ObjectIdentifier />
+                <Text text="{variazioneCliente>VAR_NEG}" />
               </ui:template>
             </ui:Column>
             <ui:Column>
               <Label text="Variazione (%)" />
               <ui:template>
-                <ObjectIdentifier />
+                <Text text="{variazioneCliente>VAR_PERC}" />
               </ui:template>
             </ui:Column>
           </ui:columns>
-          <!-- <items>
-                        <ColumnListItem>
-                            <cells>
-                                <Text text="{selectedCustomer>Week}" />
-                                <Text text="{selectedCustomer>TotalQuantity}" />
-                                <Text text="{selectedCustomer>TotalVariation}" />
-                                <Text text="{selectedCustomer>PositiveVariation}" />
-                                <Text text="{selectedCustomer>NegativeVariation}" />
-                                <Text text="{selectedCustomer>VariationPercentage}%" />
-                            </cells>
-                        </ColumnListItem>
-                    </items> -->
+          
         </ui:Table>
         <!-- Grafici -->
         <VBox>
@@ -167,19 +165,40 @@
               vizType="column"
               width="100%"
               height="400px"
+              vizProperties="{
+                plotArea: {
+                  dataLabel: {
+                    visible: true
+                  }
+                },
+                valueAxis: {
+                  title: {
+                    visible: true
+                  }
+                },
+                categoryAxis: {
+                  title: {
+                    visible: true
+                  }
+                },
+                title: {
+                  visible: false,
+                  text: ''
+                }
+              }"
             >
               <viz:dataset>
-                <viz.data:FlattenedDataset data="{selectedCustomer>/Data}">
+                <viz.data:FlattenedDataset data="{variazioneCliente>/}">
                   <viz.data:dimensions>
                     <viz.data:DimensionDefinition
                       name="Settimana"
-                      value="{selectedCustomer>Week}"
+                      value="{variazioneCliente>WEEK}"
                     />
                   </viz.data:dimensions>
                   <viz.data:measures>
                     <viz.data:MeasureDefinition
                       name="Quantità Totale"
-                      value="{selectedCustomer>TotalQuantity}"
+                      value="{variazioneCliente>QTY_TOT}"
                     />
                   </viz.data:measures>
                 </viz.data:FlattenedDataset>
@@ -215,23 +234,44 @@
               vizType="column"
               width="100%"
               height="400px"
+              vizProperties="{
+                plotArea: {
+                  dataLabel: {
+                    visible: true
+                  }
+                },
+                valueAxis: {
+                  title: {
+                    visible: true
+                  }
+                },
+                categoryAxis: {
+                  title: {
+                    visible: true
+                  }
+                },
+                title: {
+                  visible: false,
+                  text: ''
+                }
+              }"
             >
               <viz:dataset>
-                <viz.data:FlattenedDataset data="{selectedCustomer>/Data}">
+                <viz.data:FlattenedDataset data="{variazioneCliente>/}">
                   <viz.data:dimensions>
                     <viz.data:DimensionDefinition
                       name="Settimana"
-                      value="{selectedCustomer>Week}"
+                      value="{variazioneCliente>WEEK}"
                     />
                   </viz.data:dimensions>
                   <viz.data:measures>
                     <viz.data:MeasureDefinition
                       name="Variazione Positiva"
-                      value="{selectedCustomer>PositiveVariation}"
+                      value="{variazioneCliente>VAR_POS}"
                     />
                     <viz.data:MeasureDefinition
                       name="Variazione Negativa"
-                      value="{selectedCustomer>NegativeVariation}"
+                      value="{variazioneCliente>VAR_NEG}"
                     />
                   </viz.data:measures>
                 </viz.data:FlattenedDataset>
@@ -272,19 +312,40 @@
               vizType="column"
               width="100%"
               height="400px"
+              vizProperties="{
+                plotArea: {
+                  dataLabel: {
+                    visible: true
+                  }
+                },
+                valueAxis: {
+                  title: {
+                    visible: true
+                  }
+                },
+                categoryAxis: {
+                  title: {
+                    visible: true
+                  }
+                },
+                title: {
+                  visible: false,
+                  text: ''
+                }
+              }"
             >
               <viz:dataset>
-                <viz.data:FlattenedDataset data="{selectedCustomer>/Data}">
+                <viz.data:FlattenedDataset data="{variazioneCliente>/}">
                   <viz.data:dimensions>
                     <viz.data:DimensionDefinition
                       name="Settimana"
-                      value="{selectedCustomer>Week}"
+                      value="{variazioneCliente>WEEK}"
                     />
                   </viz.data:dimensions>
                   <viz.data:measures>
                     <viz.data:MeasureDefinition
                       name="Variazione Percentuale"
-                      value="{selectedCustomer>VariationPercentage}"
+                      value="{variazioneCliente>VAR_PERC}"
                     />
                   </viz.data:measures>
                 </viz.data:FlattenedDataset>

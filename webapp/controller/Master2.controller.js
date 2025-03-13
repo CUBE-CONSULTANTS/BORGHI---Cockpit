@@ -4,9 +4,10 @@ sap.ui.define(
     "sap/ui/model/json/JSONModel",
     "../model/models",
     "../model/API",
+    "../model/formatter",
     "sap/m/MessageBox",
   ],
-  function (BaseController, JSONModel, models, API, MessageBox) {
+  function (BaseController, JSONModel, models, API, formatter, MessageBox) {
     "use strict";
 
     return BaseController.extend("programmi.consegne.edi.controller.Master2", {
@@ -39,13 +40,11 @@ sap.ui.define(
       },
       onSearch: function (oEvent) {
         let aFilters = this.getFiltersVariazioni(oEvent.getSource());
-        debugger;
         if (aFilters.length > 0) {
           this._searchVarCliente(aFilters);
         } else {
           MessageBox.error("Inserire il filtro di ricerca Cliente");
         }
-        // /odata/v2/delivery-forecast/EIGHTWEEK_CLI?$expand=RETURN_DATA&$filter=CLIENTE eq '0000200191'
       },
       _searchVarCliente: async function (aFilters) {
         try {
@@ -56,8 +55,13 @@ sap.ui.define(
             aFilters,
             ["RETURN_DATA"]
           );
-          // this.setModel(new JSONModel(formattedData), "variazioneArticolo");
-          // this.getModel("main").setProperty("/visibility", true);
+          dataCall.results.forEach((element) => {
+            element.WEEK =
+              element.WEEK.slice(0, 4) + "/" + element.WEEK.slice(4);
+            element.VAR_PERC = formatter.formattedPerc(element.VAR_PERC);
+          });
+          this.setModel(new JSONModel(dataCall.results), "variazioneCliente");
+          this.getModel("main").setProperty("/visibility", true);
         } catch (error) {
           MessageBox.error("Errore durante la ricezione dei dati ", error);
         } finally {
