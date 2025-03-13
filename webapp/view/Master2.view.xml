@@ -77,9 +77,12 @@
     </f:header>
     <!-- Main Content -->
     <f:content>
-      <VBox fitContainer="true">
+      <VBox fitContainer="true" visible="{main>/visibility}">
         <!-- Dettaglio Quantità -->
-        <ui:Table >
+        <ui:Table 
+         id="clienteTable"
+        selectionMode="None"
+        rows="{variazioneCliente>/}" >
           <ui:extension>
             <OverflowToolbar>
               <Title text="Dettaglio Quantità (per settimana)" />
@@ -99,39 +102,45 @@
           </ui:extension>
           <ui:columns>
             <ui:Column>
+              <Label text="Cliente" />
+              <ui:template>
+                <Text text="{variazioneCliente>CLIENTE} - {variazioneCliente>DESCR}" />
+              </ui:template>
+            </ui:Column>
+            <ui:Column>
               <Label text="Settimana" />
               <ui:template>
-                <ObjectIdentifier />
+                <Text text="{variazioneCliente>WEEK}" />
               </ui:template>
             </ui:Column>
             <ui:Column>
               <Label text="Quantità Totale" />
               <ui:template>
-                <ObjectIdentifier />
+                <Text text="{variazioneCliente>QTY_TOT}" />
               </ui:template>
             </ui:Column>
             <ui:Column>
               <Label text="Variazione Totale" />
               <ui:template>
-                <ObjectIdentifier />
+                <Text text="{variazioneCliente>VAR_TOT}" />
               </ui:template>
             </ui:Column>
             <ui:Column>
               <Label text="Variazione Positiva" />
               <ui:template>
-                <ObjectIdentifier />
+                <Text text="{variazioneCliente>VAR_POS}" />
               </ui:template>
             </ui:Column>
             <ui:Column>
               <Label text="Variazione Negativa" />
               <ui:template>
-                <ObjectIdentifier />
+                <Text text="{variazioneCliente>VAR_NEG}" />
               </ui:template>
             </ui:Column>
             <ui:Column>
               <Label text="Variazione (%)" />
               <ui:template>
-                <ObjectIdentifier />
+                <Text text="{variazioneCliente>VAR_PERC}" />
               </ui:template>
             </ui:Column>
           </ui:columns>
