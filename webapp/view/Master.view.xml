@@ -152,9 +152,9 @@
                 <Label text="Cod. Cliente/Rag. Soc." />
               </ui:multiLabels>
               <ui:template>
-                <ObjectIdentifier
-                  title="{variazioneArticolo>CLIENTE}"
-                  text="{variazioneArticolo>descrizione_cliente}"
+                <Text
+                  
+                  text="{variazioneArticolo>CLIENTE} -- {variazioneArticolo>DESCR}"
                 />
               </ui:template>
             </ui:Column>
@@ -168,7 +168,7 @@
                 <Label text="Articolo" />
               </ui:multiLabels>
               <ui:template>
-                <ObjectIdentifier title="{variazioneArticolo>MATNR}" />
+                <Text text="{variazioneArticolo>MATNR}" />
               </ui:template>
             </ui:Column>
             <ui:Column width="6em">
@@ -181,7 +181,7 @@
                 <Label text="Cod. Tot" />
               </ui:multiLabels>
               <ui:template>
-                <ObjectIdentifier title="{variazioneArticolo>TOTALE}" />
+                <Text text="{variazioneArticolo>TOTALE}" />
               </ui:template>
             </ui:Column>
             <ui:Column width="6em">
@@ -194,7 +194,7 @@
                 <Label text="Azzeramento" />
               </ui:multiLabels>
               <ui:template>
-                <ObjectIdentifier title="{variazioneArticolo>FLAG_AZZ}" />
+                <Text text="{variazioneArticolo>FLAG_AZZ}" />
               </ui:template>
             </ui:Column>
             <ui:Column width="6em">
@@ -207,7 +207,7 @@
                 <Label text="Giac. Finito" />
               </ui:multiLabels>
               <ui:template>
-                <ObjectIdentifier title="{variazioneArticolo>GIACENZA}" />
+                <Text text="{variazioneArticolo>GIACENZA}" />
               </ui:template>
             </ui:Column>
             <ui:Column width="6em">
@@ -220,7 +220,7 @@
                 <Label text="Impegno Cong." />
               </ui:multiLabels>
               <ui:template>
-                <ObjectIdentifier title="{variazioneArticolo>IMPEGNO}" />
+                <Text text="{variazioneArticolo>IMPEGNO}" />
               </ui:template>
             </ui:Column>
             <ui:Column width="6em">
@@ -233,7 +233,7 @@
                 <Label text="Giac. Scalato" />
               </ui:multiLabels>
               <ui:template>
-                <ObjectIdentifier title="{variazioneArticolo>SCALATO}" />
+                <Text text="{variazioneArticolo>SCALATO}" />
               </ui:template>
             </ui:Column>
             <!-- GESTIONE SETTIMANe -->
