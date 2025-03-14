@@ -70,7 +70,7 @@ sap.ui.define(
        oModel,
        "/Testata",
        [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, false)],
-       ["master,posizioni_testata,posizioni_testata($expand=log_posizioni,testata)"],
+       ["master,posizioni_testata,posizioni_testata($expand=log_posizioni)"],
        selectedKey,
        false
       );

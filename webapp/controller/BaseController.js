@@ -472,6 +472,23 @@ sap.ui.define(
     this.getModel("datiAppoggio").getProperty("/currentPage") === "archivio"
      ? (archivVal = true)
      : (archivVal = false);
+          aFilterItems.forEach(function (oFilterItem) {
+            let oControl = oFilterItem.getControl();
+            if (oControl instanceof sap.m.ComboBox) {
+              oControl.setSelectedKey(null);
+              oControl.setValue("");
+            } else if (oControl instanceof sap.m.MultiComboBox) {
+              oControl.setSelectedKeys([]);
+              oControl.setValue("");
+            }
+          });
+          this.getModel("main").setProperty("/visibility", false);
+          await this._getMatchCode()
+        },
+        onFilterBarClear: async function (oEvent) {
+          let operator, archivVal;
+          this.getModel("datiAppoggio").getProperty("/currentPage") ==="archivio"? (operator = "eq"): (operator = "ne");
+          this.getModel("datiAppoggio").getProperty("/currentPage") ==="archivio"? (archivVal = true): (archivVal = false);
 
     let oFilterData = this.getModel("filtersModel").getData();
     for (let sView in oFilterData) {
@@ -704,6 +721,229 @@ sap.ui.define(
      );
     }
    },
+          let oFilterData = this.getModel("filtersModel").getData();
+          for (let sView in oFilterData) {
+            if (oFilterData.hasOwnProperty(sView)) {
+              let oFilters = oFilterData[sView];
+              for (let sKey in oFilters) {
+                if (oFilters.hasOwnProperty(sKey)) {
+                  let oFilter = oFilters[sKey];
+                  if (
+                    oFilter &&
+                    typeof oFilter === "object" &&
+                    oFilter.hasOwnProperty("value")
+                  ) {
+                    oFilters[sKey].value = null;
+                  } else {
+                    oFilters[sKey] = null;
+                  }
+                }
+              }
+            }
+          }
+          this.getModel("filtersModel").refresh(true);
+          let modelMeta;
+          if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("delivery")) {
+            modelMeta = await this.callData(this.getOwnerComponent().getModel("modelloV2"),"/Testata",[new sap.ui.model.Filter(  "archiviazione",  sap.ui.model.FilterOperator.EQ,  archivVal),],
+              [`posizioni,posizioni($expand=log,schedulazioni,testata),master`],
+              "01",
+              false
+            );
+          }
+          if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("callOff")) {
+            modelMeta = await this.callData(
+              this.getOwnerComponent().getModel("calloffV2"),
+              "/Testata",
+              [
+                new sap.ui.model.Filter(
+                  "archiviazione",
+                  sap.ui.model.FilterOperator.EQ,
+                  archivVal
+                ),
+              ],
+              ["master,posizioni_testata,posizioni_testata($expand=log_posizioni)"],
+              "02",
+              false
+            );
+          }
+          if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("selfBilling")) {
+            modelMeta = await this.callData(
+              this.getOwnerComponent().getModel("selfBillingV2"),
+              "/Testata",
+              [
+                new sap.ui.model.Filter(
+                  "archiviazione",
+                  sap.ui.model.FilterOperator.EQ,
+                  archivVal
+                ),
+              ],
+              [
+                "dettaglio_fattura,log_testata,dettaglio_fattura/riferimento_ddt,dettaglio_fattura/riferimento_ddt/riga_fattura",
+              ],
+              "03",
+              false
+            );
+          }
+          if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("scartati")
+          ) {
+            modelMeta = await this.callData(
+              this.getOwnerComponent().getModel("fileScartatiV2"),
+              "/FileScartati",
+              [
+                new sap.ui.model.Filter(
+                  "archiviazione",
+                  sap.ui.model.FilterOperator.EQ,
+                  archivVal
+                ),
+              ],
+              [],
+              "06",
+              false
+            );
+          }
+          // oBinding.filter([]);
+          // oBinding.sort([]);
+        },
+        sortCategories: function () {
+          let oTable;
+          let aSorters = [];
+          switch (this.getView().byId("idIconTabBar").getSelectedKey()) {
+            case "01":
+              oTable = this.byId("treetableMain");
+              aSorters = this.sortTables(oTable, [
+                "codice_cliente",
+                "numero_progressivo_invio",
+              ]);
+              break;
+            case "02":
+              oTable = this.byId("treetableCallOff");
+              aSorters = this.sortTables(oTable, [
+                "codice_terre_cliente",
+                "progressivo_invio",
+              ]);
+              break;
+            case "03":
+              oTable = this.byId("treetableSB");
+              aSorters = this.sortTables(oTable, [
+                "customer",
+                "data_ricezione",
+              ]);
+              break;
+            case "06":
+              oTable = this.byId("tableScartati");
+              aSorters = this.sortTables(oTable, [
+                "filename",
+                "data_ricezione",
+              ]);
+              break;
+            default:
+              return;
+          }
+        },
+        onSearchData: async function (oEvent) {
+          let oFilterSet;
+          let key;
+          let operator;
+          let filtrato = false;
+          this.getModel("datiAppoggio").getProperty("/currentPage") ==="archivio"? (operator = "eq"): (operator = "ne");
+          if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("delivery")) {
+            oFilterSet = this.getModel("filtersModel").getProperty("/delivery");
+            let aFilters = mapper.buildFilters(oFilterSet,(key = "01"),operator);
+            let filters = {
+              data_ricezione: aFilters.find(
+                (f) => f.sPath === "data_ricezione"
+              ),
+              stato: aFilters.find((f) => f.sPath === "stato"),
+              messaggio: aFilters.find((f) => f.sPath === "messaggio"),
+              materiale: aFilters.find(
+                (f) => f.sPath === "posizioni/codice_cliente_materiale"
+              ),
+            };
+            Object.keys(filters).forEach((key) => {
+              if (filters[key]) {
+                let index = aFilters.findIndex((f) => f.sPath === key);
+                if (index !== -1) aFilters.splice(index, 1);
+              }
+            });
+            let expandQuery = `posizioni,posizioni($expand=log,schedulazioni,testata),master`;
+            if (filters.stato) {
+              expandQuery = `posizioni($filter=stato eq ${filters.stato.oValue1}),posizioni($expand=log,schedulazioni,testata),master`;
+            }
+            if (filters.materiale) {
+              filtrato = true;
+              expandQuery = `posizioni($filter=codice_cliente_materiale eq '${filters.materiale.oValue1}'),posizioni($expand=log,schedulazioni,testata),master`;
+            }
+            if (filters.messaggio) {
+              filtrato = true;
+              filters.messaggio.oValue1 = filters.messaggio.oValue1.replace(
+                /'/g,
+                "''"
+              );
+              expandQuery = `posizioni,posizioni($expand=log($filter=messaggio eq '${filters.messaggio.oValue1}'),schedulazioni,testata),master`;
+            }
+            if (filters.data_ricezione) {
+              expandQuery = `posizioni,posizioni($expand=log,schedulazioni,testata),master($filter=data_ricezione eq '${filters.data_ricezione.oValue1}')`;
+            }
+            if (filters.stato && filters.messaggio && filters.data_ricezione) {
+              expandQuery = `posizioni($filter=stato eq '${filters.stato.oValue1}'),posizioni($expand=log($filter=messaggio eq '${filters.messaggio.oValue1}'),schedulazioni,testata),master($filter=data_ricezione eq '${filters.data_ricezione.oValue1}')`;
+            }
+            await this.callData(this.getOwnerComponent().getModel("modelloV2"),"/Testata",aFilters,[expandQuery],"01",filtrato);
+          } else if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("callOff")) {
+            oFilterSet = this.getModel("filtersModel").getProperty("/callOff");
+            let aFilters = mapper.buildFilters(oFilterSet,(key = "02"),operator);
+            let filters = {
+              data_ricezione: aFilters.find((f) => f.sPath === "data_ricezione"),
+              posizione_6_28 : aFilters.find((f) => f.sPath === "posizione_6_28"),
+              posizione_43_44: aFilters.find((f) => f.sPath === "posizione_43_44")
+            };
+            Object.keys(filters).forEach((key) => {
+              if (filters[key]) {
+                let index = aFilters.findIndex((f) => f.sPath === key);
+                if (index !== -1) aFilters.splice(index, 1);
+              }
+            });
+            let expandQuery = `posizioni_testata,posizioni_testata($expand=log_posizioni),master`;
+            if (filters.data_ricezione) {
+              expandQuery = `posizioni_testata,posizioni_testata($expand=log_posizioni),master($filter=data_ricezione eq '${filters.data_ricezione.oValue1}')`;
+            }
+            if(filters.posizione_6_28) {
+              expandQuery = `posizioni_testata($filter=posizione_6_28 eq '${filters.posizione_6_28.oValue1}'),posizioni_testata($expand=log_posizioni),master`;
+            }
+            if(filters.posizione_43_44) {
+              expandQuery = `posizioni_testata($filter=posizione_43_44 eq '${filters.posizione_43_44.oValue1}'),posizioni_testata($expand=log_posizioni),master`;
+            }
+            await this.callData(this.getOwnerComponent().getModel("calloffV2"),"/Testata",aFilters,[expandQuery],"02",filtrato);
+          } else if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("selfBilling")) {
+            oFilterSet =
+              this.getModel("filtersModel").getProperty("/selfBilling");
+            let aFilters = mapper.buildFilters(
+              oFilterSet,
+              (key = "03"),
+              operator
+            );
+            await this.callData(
+              this.getOwnerComponent().getModel("selfBillingV2"),
+              "/Testata",
+              aFilters,
+              [
+                "dettaglio_fattura,log_testata,dettaglio_fattura/riferimento_ddt,dettaglio_fattura/riferimento_ddt/riga_fattura",
+              ],
+              "03",
+              false
+            );
+          } else if (oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("scartati")) {
+            oFilterSet = this.getModel("filtersModel").getProperty("/scartati");
+            let aFilters = mapper.buildFilters(oFilterSet, (key = "06"),operator);
+            await this.callData(
+              this.getOwnerComponent().getModel("fileScartatiV2"),
+              "/FileScartati",
+              aFilters,
+              [],
+              "06",
+              false
+            );
+          }
+        },
 
    callData: async function (oModel, entity, aFilters, Expands, key, filtrato) {
     let metadata, modelMeta;
