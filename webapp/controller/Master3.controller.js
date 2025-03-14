@@ -56,16 +56,7 @@ sap.ui.define(
         switch (selectedKey) {
           case "01":
             oModel = this.getOwnerComponent().getModel("modelloV2");
-            await this.callData(
-              oModel,
-              "/Testata",
-              [
-                new sap.ui.model.Filter(
-                  "archiviazione",
-                  sap.ui.model.FilterOperator.EQ,
-                  false
-                ),
-              ],
+            await this.callData(oModel,"/Testata",[new sap.ui.model.Filter("archiviazione",sap.ui.model.FilterOperator.EQ,false)],
               ["posizioni,posizioni($expand=log,schedulazioni,testata),master"],
               selectedKey,
               false
@@ -74,16 +65,7 @@ sap.ui.define(
             break;
           case "02":
             oModel = this.getOwnerComponent().getModel("calloffV2");
-            await this.callData(
-              oModel,
-              "/Testata",
-              [
-                new sap.ui.model.Filter(
-                  "archiviazione",
-                  sap.ui.model.FilterOperator.EQ,
-                  false
-                ),
-              ],
+            await this.callData( oModel,"/Testata",[new sap.ui.model.Filter("archiviazione",sap.ui.model.FilterOperator.EQ,false)],
               ["master,posizioni_testata,posizioni_testata($expand=log_posizioni)"],
               selectedKey,
               false
