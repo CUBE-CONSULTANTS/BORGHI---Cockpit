@@ -13,7 +13,7 @@
 
   <ToolbarSpacer />
   <Button
-      press="handleCloseDetail"
+      press="navToMonitor"
       icon="sap-icon://navigation-right-arrow"
       text="Monitor"
       type="Emphasized"

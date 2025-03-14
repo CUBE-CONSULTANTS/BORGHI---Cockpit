@@ -46,6 +46,7 @@
             showGoOnFB="true"
             showClearOnFB="true"
             clear="onFilterBarVariazioniClear"
+            filterContainerWidth="15rem"
           >
             <fb:filterGroupItems>
               <fb:FilterGroupItem

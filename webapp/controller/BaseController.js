@@ -1531,7 +1531,31 @@ sap.ui.define(
             prevApp : this.prevApp
           });
         },
+        refreshOnExit: function() {this.getOwnerComponent().getModel("datiAppoggio").setProperty("/filtriNav", "");
+          let idMatComboBox = this.byId("idMatComboBox");
+          let idClienti1 = this.byId("idClientiComboBox");
+          let idClienti2 = this.byId("idClientiComboBox2")
+          if (idMatComboBox) {
+            idMatComboBox.setSelectedKey("");
+            idMatComboBox.setValue("");
+          }
+          if (idClienti1) {
+            idClienti1.setSelectedKey("");
+            idClienti1.setValue("");
+          }
+          if (idClienti2) {
+            idClienti2.setSelectedKey("");
+            idClienti2.setValue("");
+          }
+          this.getModel("main").setProperty("/visibility", false);},
+        navToMonitor: function() {
+          
+          this.refreshOnExit()
+          this.getRouter().navTo("master3");
+        },
         navToArchive: function () {
+          
+          this.refreshOnExit()
           this.getRouter().navTo("archivio");
         },
         onClose: function (oEvent) {

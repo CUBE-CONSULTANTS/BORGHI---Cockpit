@@ -83,10 +83,7 @@ sap.ui.define(
         }
       },
       navToHome: function () {
-        this.getOwnerComponent().getModel("datiAppoggio").setProperty("/filtriNav", "");
-        this.byId("idClientiComboBox2").setSelectedKey("");
-        this.byId("idClientiComboBox2").setValue("");
-        this.getModel("main").setProperty("/visibility", false);
+        this.refreshOnExit()
         this.getRouter().navTo("home");
       },
 

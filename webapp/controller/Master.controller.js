@@ -80,6 +80,7 @@ sap.ui.define(
                 DESCR: item.DESCR,
                 KDMAT: item.KDMAT,
                 MATNR: item.MATNR,
+                FLAG_AZZ: item.FLAG_AZZ,
                 GIACENZA: item.GIACENZA.trim(),
                 IMPEGNO: item.IMPEGNO.trim(),
                 TOTALE: item.TOTALE.trim(),
@@ -113,14 +114,14 @@ sap.ui.define(
         }
       },
       createWeekLabels: function (labels, table) {
-        table.getColumns()[8].getMultiLabels()[0].setText(labels[0]);
-        table.getColumns()[10].getMultiLabels()[0].setText(labels[1]);
-        table.getColumns()[12].getMultiLabels()[0].setText(labels[2]);
-        table.getColumns()[14].getMultiLabels()[0].setText(labels[3]);
-        table.getColumns()[16].getMultiLabels()[0].setText(labels[4]);
-        table.getColumns()[18].getMultiLabels()[0].setText(labels[5]);
-        table.getColumns()[20].getMultiLabels()[0].setText(labels[6]);
-        table.getColumns()[22].getMultiLabels()[0].setText(labels[7]);
+        table.getColumns()[6].getMultiLabels()[0].setText(labels[0]);
+        table.getColumns()[8].getMultiLabels()[0].setText(labels[1]);
+        table.getColumns()[10].getMultiLabels()[0].setText(labels[2]);
+        table.getColumns()[12].getMultiLabels()[0].setText(labels[3]);
+        table.getColumns()[14].getMultiLabels()[0].setText(labels[4]);
+        table.getColumns()[16].getMultiLabels()[0].setText(labels[5]);
+        table.getColumns()[18].getMultiLabels()[0].setText(labels[6]);
+        table.getColumns()[20].getMultiLabels()[0].setText(labels[7]);
       },
       onSort: function (oEvent) {
         let oTable = this.byId("artTable");
@@ -164,14 +165,7 @@ sap.ui.define(
         }    
       },
       navToHome: function () {
-        this.getOwnerComponent()
-          .getModel("datiAppoggio")
-          .setProperty("/filtriNav", "");
-        this.byId("idMatComboBox").setSelectedKey("");
-        this.byId("idMatComboBox").setValue("");
-        this.byId("idClientiComboBox").setSelectedKey("");
-        this.byId("idClientiComboBox").setValue("");
-        this.getModel("main").setProperty("/visibility", false);
+        this.refreshOnExit()
         this.getRouter().navTo("home");
       },
 
