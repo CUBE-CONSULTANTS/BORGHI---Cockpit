@@ -1256,110 +1256,82 @@ sap.ui.define(
           }
         },
         moveToArchive: async function (oEvent) {
-          // UPDATE X ARCHIVIO CHIAMATA IN CHIAVE /ENTITY(KEY ES: ID = 'CICCIO')
-          //  BODY  { ARCHIVIAZIONE : TRUE , DATA_ARCHIVIAZIONE : NEW dATE() }
-
-          let tableID;
-          let oModel;
-          let part = oEvent
-            .getSource()
-            .getParent()
-            .getParent()
-            .getParent()
-            .getParent()
-            .getParent()
-            .getSelectedKey();
-          if (part === "06") {
-            tableID = "tableScartati";
-            oModel = this.getOwnerComponent().getModel("fileScartatiV2");
-          } else if (part === "05") {
-            tableID = "tableInvoice";
-          } else if (part === "04") {
-            tableID = "treetableSB";
-          }
-          let table = this.getView().byId(tableID);
-          let indices = this.getView().byId(tableID).getSelectedIndices();
-
-          if (indices.length > 0) {
-            let aSelectedItems = indices.map(function (iIndex) {
-              return table.getContextByIndex(iIndex).getObject();
-            });
-            let promises = [];
-            aSelectedItems.forEach((el) => {
-              promises.push(
-                new Promise((resolve, reject) =>
-                  resolve(
-                    API.updateEntity(
-                      oModel,
-                      `/FileScartati(id=${el.id})`,
-                      { archiviazione: true, data_archiviazione: new Date() },
-                      "PUT"
-                    )
-                  )
-                )
-              );
-            });
-            let out = await Promise.allSettled(promises);
-            let flag = false;
-            out.forEach((x) => {
-              if (x.status != "fulfilled") {
-                flag = true;
+          let part = oEvent.getSource().getParent().getParent().getParent().getParent().getParent().getSelectedKey();
+          let { tableID, oModel, Entity } = this.getModelAndEntityByPart(part);
+          if (tableID === "treetableCallOff") {
+              let elId = oEvent.getSource().getBindingContext("master3CO").getObject().id;
+              await this.archiveSingleItem(oModel, Entity, elId);
+          } else {
+              let table = this.byId(tableID);
+              let indices = table.getSelectedIndices();
+              if (indices.length > 0) {
+                await this.archiveSelectedItems(oModel, Entity, indices, table);
+              } else {
+                MessageBox.error("Selezionare almeno un elemento");
               }
-            });
-            let that = this;
-            if (flag) {
+          }
+        },
+        getModelAndEntityByPart: function (part) {
+          switch (part) {
+          case "06":
+            return { tableID: "tableScartati", oModel: this.getOwnerComponent().getModel("fileScartatiV2"), Entity: "/FileScartati" };
+          case "05":
+            return { tableID: "tableInvoice", oModel: this.getOwnerComponent().getModel(""), Entity: "" };
+          case "04":
+            return { tableID: "treetableSB", oModel: this.getOwnerComponent().getModel(""), Entity: "" };
+          case "02":
+            return { tableID: "treetableCallOff", oModel: this.getOwnerComponent().getModel("calloffV2"), Entity: "/Testata" };
+          default:
+            return { tableID: "", oModel: null, Entity: "" };
+          }
+        },
+        archiveSingleItem: async function (oModel, Entity, elId) {
+          try {
+            await API.updateEntity(oModel, `${Entity}(id=${elId})`, { archiviazione: true, data_archiviazione: new Date() }, "PUT");
+            MessageBox.success("Archiviato con successo");
+          } catch (error) {
+            MessageBox.error("Errore nell'Archiviazione");
+          }
+        },
+        archiveSelectedItems: async function (oModel, Entity, indices, table) {
+          //da cambiare archiviazione x testata/posizione
+          let aSelectedItems = indices.map(iIndex => table.getContextByIndex(iIndex).getObject());
+          let promises = aSelectedItems.map(el => {
+            return API.updateEntity(oModel, `${Entity}(id=${el.id})`, { archiviazione: true, data_archiviazione: new Date() }, "PUT");
+          });
+      
+          try {
+            let out = await Promise.allSettled(promises);
+            let hasError = out.some(x => x.status !== "fulfilled");
+      
+            if (hasError) {
               MessageBox.error("Errore nell'archiviazione dei file");
             } else {
               MessageBox.success("File archiviati con successo", {
                 onClose: async () => {
-                  let selectedKey;
-                  that.byId("idIconTabBar")
-                    ? (selectedKey = that.byId("idIconTabBar").getSelectedKey())
-                    : undefined;
-                  if (selectedKey !== undefined) {
+                let selectedKey = this.byId("idIconTabBar")?.getSelectedKey();
+                  if (selectedKey) {
                     table.clearSelection();
-                    await that._refreshData(selectedKey);
+                    await this._refreshData(selectedKey);
                   }
-                },
+                }
               });
             }
-          } else {
-            MessageBox.error("Selezionare almeno un elemento");
+          } catch (error) {
+            MessageBox.error("Errore nell'archiviazione dei file");
           }
         },
         dettaglioNav: function (oEvent) {
           let level, detailPath, detail;
-          if (
-            oEvent.getSource().getParent().getBindingContext("master3") !==
-            undefined
-          ) {
-            level = oEvent
-              .getSource()
-              .getParent()
-              .getBindingContext("master3")
-              .getPath()
-              .includes("posizioni");
-            detailPath = oEvent
-              .getSource()
-              .getParent()
-              .getBindingContext("master3")
-              .getPath();
-            detail = this.getView()
-              .getModel("master3")
-              .getProperty(`${detailPath}`);
-            this.getOwnerComponent()
-              .getModel("datiAppoggio")
-              .setProperty("/testata", detail);
-            this.getOwnerComponent()
-              .getModel("datiAppoggio")
-              .setProperty("/posizioni", detail.posizioni);
+          if (oEvent.getSource().getParent().getBindingContext("master3") !==undefined) {
+            level = oEvent.getSource().getParent().getBindingContext("master3").getPath().includes("posizioni");
+            detailPath = oEvent.getSource().getParent().getBindingContext("master3").getPath();
+            detail = this.getModel("master3").getProperty(`${detailPath}`);
+            this.getOwnerComponent().getModel("datiAppoggio").setProperty("/testata", detail);
+            this.getOwnerComponent().getModel("datiAppoggio").setProperty("/posizioni", detail.posizioni);
             if (level) {
-              this.getOwnerComponent()
-                .getModel("datiAppoggio")
-                .setProperty("/posizioneCorrente", detail);
-              this.getOwnerComponent()
-                .getModel("datiAppoggio")
-                .setProperty("/schedulazioni", detail.schedulazioni.results);
+              this.getOwnerComponent().getModel("datiAppoggio").setProperty("/posizioneCorrente", detail);
+              this.getOwnerComponent().getModel("datiAppoggio").setProperty("/schedulazioni", detail.schedulazioni.results);
               this.getOwnerComponent()
                 .getModel("datiAppoggio")
                 .setProperty(
