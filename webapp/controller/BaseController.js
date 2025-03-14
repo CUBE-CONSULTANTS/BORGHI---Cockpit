@@ -193,6 +193,7 @@ sap.ui.define(
         navToAPP: function (oEvent) {       
           let level = oEvent.getSource().getParent().getParent().getBindingContext("master3").getPath();
           let oCodArt = oEvent.getSource().getParent().getParent().getBindingContext("master3").getObject().codice_cliente_materiale;
+          
           let oCodCliente;
           oEvent.getSource().getParent().getParent().getBindingContext("master3").getObject().codice_cliente === null?
            oCodCliente = oEvent.getSource().getParent().getParent().getBindingContext("master3").getObject().testata.codice_cliente

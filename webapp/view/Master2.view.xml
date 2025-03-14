@@ -65,8 +65,8 @@
                     }"
                   >
                     <core:Item
-                      key="{matchcode>KUNNR}"
-                      text="{matchcode>KUNNR} - {matchcode>KUNNR_DESCR}"
+                      key="{matchcode>Kunnr}"
+                      text="{matchcode>Kunnr} - {matchcode>Name1}"
                     />
                   </ComboBox>
                 </fb:control>

@@ -149,9 +149,10 @@ sap.ui.define(
    },
    onClientiComboBoxChange: async function (oEvent) {
     try {
+    let oModel = this.getOwnerComponent().getModel("modelloV2");
      this.showBusy(0);     
      let materialiForn = await API.getEntity(oModel, "/EIGHTWEEK_MC_KDMAT",[new Filter("Kunnr", FilterOperator.EQ, oEvent.getSource().getValue().split(" -")[0]), new Filter("Azione", FilterOperator.EQ, "KDMAT")],[])
-     this.getModel("matchcode").setProperty("/materiali", materiali.results); 
+     this.getModel("matchcode").setProperty("/materiali", materialiForn.results); 
      let materialiSap = await API.getEntity(oModel, "/EIGHTWEEK_MC_KDMAT",[new Filter("Kunnr", FilterOperator.EQ, oEvent.getSource().getValue().split(" -")[0]), new Filter("Azione", FilterOperator.EQ, "MATNR")],[]) 
      this.getModel("matchcode").setProperty("/materialiSap", materialiSap.results);
     } catch (error) {
@@ -160,7 +161,7 @@ sap.ui.define(
      this.hideBusy(0);
     }
    },
-   onMaterialiComboBoxChange: async function(){
+   onMaterialiComboBoxChange: async function(oEvent){
     try {
      this.showBusy(0);
      let materialiSap = await API.getEntity(this.getOwnerComponent().getModel("modelloV2"),"/EIGHTWEEK_MC_KDMAT",[new Filter("Kdmat", FilterOperator.EQ, oEvent.getSource().getValue().split(" -")[0]), new Filter("Azione", FilterOperator.EQ, "MATNR")],[]);

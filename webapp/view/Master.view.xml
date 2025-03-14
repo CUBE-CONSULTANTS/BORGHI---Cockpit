@@ -63,10 +63,10 @@
                     }"
                     change="onClientiComboBoxChange"
                   >
-                    <core:Item
-                      key="{matchcode>KUNNR}"
-                      text="{matchcode>KUNNR} - {matchcode>KUNNR_DESCR}"
-                    />
+                  <core:Item
+                  key="{matchcode>Kunnr}"
+                  text="{matchcode>Kunnr} - {matchcode>Name1}"
+                />
                   </ComboBox>
                 </fb:control>
               </fb:FilterGroupItem>
