@@ -19,10 +19,12 @@ sap.ui.define(
       },
       _onObjectMatched: async function (oEvent) {
         
-        if (oEvent.getParameters().arguments.prevApp === "monitor" || oEvent.getParameters().arguments.prevApp === "master3") {
+        if ( oEvent.getParameters().arguments.prevApp === "master3") {
           this.getModel("main").setProperty("/backToMon", true);
+          this.getModel("main").setProperty("/backToArch", false);
         } else if (oEvent.getParameters().arguments.prevApp === "archivio") {
           this.getModel("main").setProperty("/backToArch", true);
+          this.getModel("main").setProperty("/backToMon", false);
         } else {
           this.getModel("main").setProperty("/backToMon", false);
           this.getModel("main").setProperty("/backToArch", false);
@@ -81,10 +83,7 @@ sap.ui.define(
         }
       },
       navToHome: function () {
-        this.getOwnerComponent().getModel("datiAppoggio").setProperty("/filtriNav", "");
-        this.byId("idClientiComboBox2").setSelectedKey("");
-        this.byId("idClientiComboBox2").setValue("");
-        this.getModel("main").setProperty("/visibility", false);
+        this.refreshOnExit()
         this.getRouter().navTo("home");
       },
 

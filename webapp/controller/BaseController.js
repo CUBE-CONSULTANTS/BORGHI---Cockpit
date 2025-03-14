@@ -190,8 +190,7 @@ sap.ui.define(
             default:
           }
         },
-        navToAPP: function (oEvent) {
-          
+        navToAPP: function (oEvent) {       
           let level = oEvent.getSource().getParent().getParent().getBindingContext("master3").getPath();
           let oCodArt = oEvent.getSource().getParent().getParent().getBindingContext("master3").getObject().codice_cliente_materiale;
           let oCodCliente;
@@ -1528,17 +1527,35 @@ sap.ui.define(
         },
         handleCloseVariazioni: function (oEvent) {
           this.getRouter().navTo("master", {
-            layout: oEvent
-              .getSource()
-              .getParent()
-              .getParent()
-              .getParent()
-              .getParent()
-              .getParent()
-              .setLayout(),
+            layout: oEvent.getSource().getParent().getParent().getParent().getParent().getParent().setLayout(),
+            prevApp : this.prevApp
           });
         },
+        refreshOnExit: function() {this.getOwnerComponent().getModel("datiAppoggio").setProperty("/filtriNav", "");
+          let idMatComboBox = this.byId("idMatComboBox");
+          let idClienti1 = this.byId("idClientiComboBox");
+          let idClienti2 = this.byId("idClientiComboBox2")
+          if (idMatComboBox) {
+            idMatComboBox.setSelectedKey("");
+            idMatComboBox.setValue("");
+          }
+          if (idClienti1) {
+            idClienti1.setSelectedKey("");
+            idClienti1.setValue("");
+          }
+          if (idClienti2) {
+            idClienti2.setSelectedKey("");
+            idClienti2.setValue("");
+          }
+          this.getModel("main").setProperty("/visibility", false);},
+        navToMonitor: function() {
+          
+          this.refreshOnExit()
+          this.getRouter().navTo("master3");
+        },
         navToArchive: function () {
+          
+          this.refreshOnExit()
           this.getRouter().navTo("archivio");
         },
         onClose: function (oEvent) {

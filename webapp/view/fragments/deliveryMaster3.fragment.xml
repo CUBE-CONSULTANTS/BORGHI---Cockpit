@@ -327,7 +327,7 @@
               class="sapUiTinyMarginBegin"
               type="Emphasized"
               visible="{= ${datiAppoggio>/currentPage} === 'archivio' &amp;&amp; !${master3>numero_progressivo_invio} ? true : false
-              || ${datiAppoggio>/currentPage} === 'monitor' &amp;&amp; !${master3>numero_progressivo_invio} &amp;&amp; ${master3>stato} === '53' ? true : false}"
+              || ${datiAppoggio>/currentPage} === 'master3' &amp;&amp; !${master3>numero_progressivo_invio} &amp;&amp; ${master3>stato} === '53' ? true : false}"
               />
           </HBox>
         </ui:template>

@@ -232,7 +232,7 @@
 					"target": "master3"
 				},       
 				{
-					"pattern": "detail/{mat}/{layout}",
+					"pattern": "detail/{mat}/{layout}/:prevApp:",
 					"name": "detail",
 					"target": [
 						"master",

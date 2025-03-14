@@ -300,6 +300,9 @@ sap.ui.define(
             }else if(oFilterSet.stato.value === "Elaborato Positivamente"){
               oFilterSet.stato.value = "53"
             }
+            else if(oFilterSet.stato.value === "In Elaborazione"){
+              oFilterSet.stato.value = "64"
+            }
             aFilters.push(
               new sap.ui.model.Filter(
                 "stato",
@@ -591,7 +594,8 @@ sap.ui.define(
           "id_posizione",
           "id_testata",
           "testata",
-          "schedulazioni"
+          "schedulazioni",
+          "archiviazione"
         ].forEach((key) => delete cleanedData[key]);
         if (cleanedData.master) {
           ["edi", "payload_db", "id"].forEach(

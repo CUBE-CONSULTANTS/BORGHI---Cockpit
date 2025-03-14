@@ -37,6 +37,7 @@
       <f:DynamicPageHeader   pinnable="true">
         <f:content>
           <fb:FilterBar
+          filterContainerWidth="15rem"
             search="onSearch"
             persistencyKey="myPersKey"
             useToolbar="false"
@@ -106,7 +107,7 @@
           selectionMode="None"
           visible="{main>/visibility}"
           rows="{variazioneArticolo>/}"
-          fixedColumnCount="8"
+          fixedColumnCount="6"
           >
           <ui:extension>
             
@@ -186,7 +187,7 @@
                 <Text text="{variazioneArticolo>TOTALE}" />
               </ui:template>
             </ui:Column>
-            <ui:Column width="6em">
+            <ui:Column width="6em" hAlign="Center">
               <ui:multiLabels>
                 <Label
                   text=""
@@ -196,7 +197,7 @@
                 <Label text="Azzeramento" />
               </ui:multiLabels>
               <ui:template>
-                <Text text="{variazioneArticolo>FLAG_AZZ}" />
+                <Text text="{variazioneArticolo>FLAG_AZZ}"/>
               </ui:template>
             </ui:Column>
             <ui:Column width="6em">
@@ -212,32 +213,8 @@
                 <Text text="{variazioneArticolo>GIACENZA}" />
               </ui:template>
             </ui:Column>
-            <ui:Column width="6em">
-              <ui:multiLabels>
-                <Label
-                  text=""
-                  textAlign="Center"
-                  width="100%"
-                />
-                <Label text="Impegno Cong." />
-              </ui:multiLabels>
-              <ui:template>
-                <Text text="{variazioneArticolo>IMPEGNO}" />
-              </ui:template>
-            </ui:Column>
-            <ui:Column width="6em">
-              <ui:multiLabels>
-                <Label
-                  text=""
-                  textAlign="Center"
-                  width="100%"
-                />
-                <Label text="Giac. Scalato" />
-              </ui:multiLabels>
-              <ui:template>
-                <Text text="{variazioneArticolo>SCALATO}" />
-              </ui:template>
-            </ui:Column>
+            
+            
             <!-- GESTIONE SETTIMANe -->
             <ui:Column
             headerSpan="2,1"

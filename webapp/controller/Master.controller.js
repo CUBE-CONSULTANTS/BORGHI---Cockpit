@@ -29,15 +29,17 @@ sap.ui.define(
    onInit: function () {
     this.setModel(models.createMainModel(), "main");
     this.getRouter().getRoute("master").attachPatternMatched(this._onObjectMatched, this);
+    this.prevApp = undefined;
    },
    _onObjectMatched: async function (oEvent) {
-    if (
-     oEvent.getParameters().arguments.prevApp === "monitor" ||
-     oEvent.getParameters().arguments.prevApp === "master3"
-    ) {
+    if (oEvent.getParameters().arguments.prevApp === "master3") {
+     this.prevApp = "master3";
      this.getModel("main").setProperty("/backToMon", true);
+     this.getModel("main").setProperty("/backToArch", false);
     } else if (oEvent.getParameters().arguments.prevApp === "archivio") {
+     this.prevApp = "archivio";
      this.getModel("main").setProperty("/backToArch", true);
+     this.getModel("main").setProperty("/backToMon", false);
     } else {
      this.getModel("main").setProperty("/backToMon", false);
      this.getModel("main").setProperty("/backToArch", false);
@@ -78,6 +80,7 @@ sap.ui.define(
         DESCR: item.DESCR,
         KDMAT: item.KDMAT,
         MATNR: item.MATNR,
+        FLAG_AZZ: item.FLAG_AZZ,
         GIACENZA: item.GIACENZA.trim(),
         IMPEGNO: item.IMPEGNO.trim(),
         TOTALE: item.TOTALE.trim(),
@@ -111,14 +114,14 @@ sap.ui.define(
     }
    },
    createWeekLabels: function (labels, table) {
-    table.getColumns()[8].getMultiLabels()[0].setText(labels[0]);
-    table.getColumns()[10].getMultiLabels()[0].setText(labels[1]);
-    table.getColumns()[12].getMultiLabels()[0].setText(labels[2]);
-    table.getColumns()[14].getMultiLabels()[0].setText(labels[3]);
-    table.getColumns()[16].getMultiLabels()[0].setText(labels[4]);
-    table.getColumns()[18].getMultiLabels()[0].setText(labels[5]);
-    table.getColumns()[20].getMultiLabels()[0].setText(labels[6]);
-    table.getColumns()[22].getMultiLabels()[0].setText(labels[7]);
+    table.getColumns()[6].getMultiLabels()[0].setText(labels[0]);
+    table.getColumns()[8].getMultiLabels()[0].setText(labels[1]);
+    table.getColumns()[10].getMultiLabels()[0].setText(labels[2]);
+    table.getColumns()[12].getMultiLabels()[0].setText(labels[3]);
+    table.getColumns()[14].getMultiLabels()[0].setText(labels[4]);
+    table.getColumns()[16].getMultiLabels()[0].setText(labels[5]);
+    table.getColumns()[18].getMultiLabels()[0].setText(labels[6]);
+    table.getColumns()[20].getMultiLabels()[0].setText(labels[7]);
    },
    onSort: function (oEvent) {
     let oTable = this.byId("artTable");
@@ -129,10 +132,6 @@ sap.ui.define(
     let detailPath = oEvent.getSource().getBindingContext("variazioneArticolo").getPath();
     let detail = this.getModel("variazioneArticolo").getProperty(`${detailPath}`);
     let detailMat = oEvent.getSource().getBindingContext("variazioneArticolo").getObject().MATNR;
-    let currentDetail = this.getOwnerComponent().getModel("datiAppoggio").getProperty("/");
-    if (JSON.stringify(currentDetail) === JSON.stringify(detail)) {
-     return;
-    }
     this.getOwnerComponent().getModel("datiAppoggio").setProperty("/", detail);
     let oNextUIState;
     this.getOwnerComponent()
@@ -143,6 +142,7 @@ sap.ui.define(
        this.getRouter().navTo("detail", {
         mat: detailMat,
         layout: oNextUIState.layout,
+        prevApp: this.prevApp,
        });
       }.bind(this)
      );
@@ -168,12 +168,7 @@ sap.ui.define(
     }
    },
    navToHome: function () {
-    this.getOwnerComponent().getModel("datiAppoggio").setProperty("/filtriNav", "");
-    this.byId("idMatComboBox").setSelectedKey("");
-    this.byId("idMatComboBox").setValue("");
-    this.byId("idClientiComboBox").setSelectedKey("");
-    this.byId("idClientiComboBox").setValue("");
-    this.getModel("main").setProperty("/visibility", false);
+    this.refreshOnExit();
     this.getRouter().navTo("home");
    },
 
