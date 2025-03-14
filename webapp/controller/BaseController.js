@@ -880,7 +880,7 @@ sap.ui.define(
     return aCols;
    },
    onDeletePosition: async function (oEvent) {
-    debugger
+    
     let oTable = oEvent.getSource().getParent().getParent();
     try {
      let arrayToProcess = await this._returnPayload(oTable);
@@ -1249,7 +1249,7 @@ sap.ui.define(
     }
    },
    archiveSingleItem: async function (oModel, Entity, elId,elIdTest) {
-    debugger
+    
     try {
     this.showBusy(0)
      await API.updateEntity(
