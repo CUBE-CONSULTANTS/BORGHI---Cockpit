@@ -967,12 +967,19 @@ sap.ui.define(
          title: "Continuare?",
          onClose: (oAction) => {
           if (oAction === sap.m.MessageBox.Action.OK) {
-           testate.forEach((x) => {
-            x.posizioni.forEach(
-             (pos) => (pos["numero_progressivo_invio"] = x.numero_progressivo_invio)
-            );
-            selectedPos = selectedPos.concat(x.posizioni);
-           });
+            testate.forEach((x) => {
+              if (x.hasOwnProperty("posizioni")) {
+               x.posizioni.forEach(
+                (pos) => (pos["numero_progressivo_invio"] = x.numero_progressivo_invio)
+               );
+               selectedPos = selectedPos.concat(x.posizioni);
+              } else if (x.hasOwnProperty("posizioni_testata")) {
+               x.posizioni_testata.forEach(
+                (pos) => (pos["numero_progressivo_invio"] = x.progressivo_invio)
+               );
+               selectedPos = selectedPos.concat(x.posizioni_testata);
+              }
+            });
            let uniqueArray = selectedPos.reduce((acc, currentValue) => {
             if (!acc.some((item) => item.id === currentValue.id)) {
              acc.push(currentValue);
