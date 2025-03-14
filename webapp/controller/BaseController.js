@@ -649,8 +649,8 @@ sap.ui.define(
             let aFilters = mapper.buildFilters(oFilterSet,(key = "02"),operator);
             let filters = {
               data_ricezione: aFilters.find((f) => f.sPath === "data_ricezione"),
-              posizione_6_28 : aFilters.find((f) => f.sPath === "posizioni_testata/posizione_6_28"),
-              posizione_43_44: aFilters.find((f) => f.sPath === "posizioni_testata/posizione_43_44")
+              posizione_6_28 : aFilters.find((f) => f.sPath === "posizione_6_28"),
+              posizione_43_44: aFilters.find((f) => f.sPath === "posizione_43_44")
             };
             Object.keys(filters).forEach((key) => {
               if (filters[key]) {
