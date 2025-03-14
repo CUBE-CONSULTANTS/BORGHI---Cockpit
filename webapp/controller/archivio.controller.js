@@ -65,14 +65,8 @@ sap.ui.define(
             await this.callData(
               oModel,
               "/Testata",
-              [
-                new sap.ui.model.Filter(
-                  "archiviazione",
-                  sap.ui.model.FilterOperator.EQ,
-                  true
-                ),
-              ],
-              ["master,posizioni_testata,log_testata"],
+              [],
+              ["master,posizioni_testata($filter=archiviazione eq true),posizioni_testata($expand=log_posizioni)"],
               selectedKey, false
             );
             this.onFiltersBuilding(oEvent, selectedKey);

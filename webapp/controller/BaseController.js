@@ -271,19 +271,14 @@ sap.ui.define(
      let cal = await API.getEntity(
       this.getOwnerComponent().getModel("calloffV2"),
       "/Testata/$count",
-      [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, filterVal)],
+      [],
       []
      );
      this.getModel("count").setProperty("/calloff", cal.results);
      let selfb = await API.getEntity(
       this.getOwnerComponent().getModel("selfBillingV2"),
       "/Testata/$count",
-      [],
-      // new sap.ui.model.Filter(
-      //   "archiviazione",
-      //   sap.ui.model.FilterOperator.EQ,
-      //   true
-      // )
+      [ new sap.ui.model.Filter("archiviazione",sap.ui.model.FilterOperator.EQ,filterVal)],
       []
      );
      this.getModel("count").setProperty("/selfbilling", selfb.results);
@@ -516,7 +511,7 @@ sap.ui.define(
       this.getOwnerComponent().getModel("calloffV2"),
       "/Testata",
       [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, archivVal)],
-      ["master,posizioni_testata,posizioni_testata($expand=log_posizioni)"],
+      ["master,posizioni_testata($filter=archiviazione eq false),posizioni_testata($expand=log_posizioni)"],
       "02",
       false
      );
@@ -654,15 +649,15 @@ sap.ui.define(
        if (index !== -1) aFilters.splice(index, 1);
       }
      });
-     let expandQuery = `posizioni_testata,posizioni_testata($expand=log_posizioni),master`;
+     let expandQuery = `posizioni_testata($filter=archiviazione eq false),posizioni_testata($expand=log_posizioni),master`;
      if (filters.data_ricezione) {
-      expandQuery = `posizioni_testata,posizioni_testata($expand=log_posizioni),master($filter=data_ricezione eq '${filters.data_ricezione.oValue1}')`;
+      expandQuery = `posizioni_testata($filter=archiviazione eq false),posizioni_testata($expand=log_posizioni),master($filter=data_ricezione eq '${filters.data_ricezione.oValue1}')`;
      }
      if (filters.posizione_6_28) {
-      expandQuery = `posizioni_testata($filter=posizione_6_28 eq '${filters.posizione_6_28.oValue1}'),posizioni_testata($expand=log_posizioni),master`;
+      expandQuery = `posizioni_testata($filter=posizione_6_28 eq '${filters.posizione_6_28.oValue1}'and $filter=archiviazione eq false),posizioni_testata($expand=log_posizioni),master`;
      }
      if (filters.posizione_43_44) {
-      expandQuery = `posizioni_testata($filter=posizione_43_44 eq '${filters.posizione_43_44.oValue1}'),posizioni_testata($expand=log_posizioni),master`;
+      expandQuery = `posizioni_testata($filter=posizione_43_44 eq '${filters.posizione_43_44.oValue1}' and  $filter=archiviazione eq false),posizioni_testata($expand=log_posizioni),master`;
      }
      await this.callData(
       this.getOwnerComponent().getModel("calloffV2"),
@@ -1222,7 +1217,8 @@ sap.ui.define(
     let { tableID, oModel, Entity } = this.getModelAndEntityByPart(part);
     if (tableID === "treetableCallOff") {
      let elId = oEvent.getSource().getBindingContext("master3CO").getObject().id;
-     await this.archiveSingleItem(oModel, Entity, elId);
+     let elIdTest = oEvent.getSource().getBindingContext("master3CO").getObject().id_testata
+     await this.archiveSingleItem(oModel, Entity, elId,elIdTest);
     } else {
      let table = this.byId(tableID);
      let indices = table.getSelectedIndices();
@@ -1249,23 +1245,34 @@ sap.ui.define(
       return {
        tableID: "treetableCallOff",
        oModel: this.getOwnerComponent().getModel("calloffV2"),
-       Entity: "/Testata",
+       Entity: "/Posizioni",
       };
      default:
       return { tableID: "", oModel: null, Entity: "" };
     }
    },
-   archiveSingleItem: async function (oModel, Entity, elId) {
+   archiveSingleItem: async function (oModel, Entity, elId,elIdTest) {
+    debugger
     try {
+    this.showBusy(0)
      await API.updateEntity(
       oModel,
-      `${Entity}(id=${elId})`,
-      { archiviazione: true, data_archiviazione: new Date() },
+      `${Entity}(id='${elId}',id_testata='${elIdTest}')`,
+      { archiviazione: true},
       "PUT"
      );
-     MessageBox.success("Archiviato con successo");
+     MessageBox.success("Archiviato con successo",{ 
+      onClose: async () => {
+        let selectedKey = this.byId("idIconTabBar")?.getSelectedKey();
+        if (selectedKey) {
+          await this._refreshData(selectedKey);
+        }
+      }
+     })
     } catch (error) {
      MessageBox.error("Errore nell'Archiviazione");
+    }finally {
+      this.hideBusy(0);
     }
    },
    archiveSelectedItems: async function (oModel, Entity, indices, table) {
@@ -1281,6 +1288,7 @@ sap.ui.define(
     });
 
     try {
+    this.showBusy(0);
      let out = await Promise.allSettled(promises);
      let hasError = out.some((x) => x.status !== "fulfilled");
 
@@ -1299,6 +1307,8 @@ sap.ui.define(
      }
     } catch (error) {
      MessageBox.error("Errore nell'archiviazione dei file");
+    } finally {
+      this.hideBusy(0);
     }
    },
    dettaglioNav: function (oEvent) {
