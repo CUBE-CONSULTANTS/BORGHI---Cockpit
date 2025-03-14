@@ -255,7 +255,8 @@ sap.ui.define(
         ))
         if (key === "01") {
           if (oFilterSet.dataRic) {
-            let oDataRic = formatter.returnDate(oFilterSet.dataRic,"dd/MM/yyyy","yyyyMMdd");     
+            let oDataRic = formatter.returnDate(oFilterSet.dataRic,"dd/MM/yyyy","yyyyMMdd");
+            
             aFilters.push(
               new sap.ui.model.Filter(
                 "data_ricezione",
@@ -311,6 +312,7 @@ sap.ui.define(
             );
           }
           if (oFilterSet.messaggio && oFilterSet.messaggio.value) {
+            
             aFilters.push(
               new sap.ui.model.Filter(
                 "messaggio",
@@ -322,7 +324,8 @@ sap.ui.define(
         }
         if (key === "02") {
           if (oFilterSet.dataRic) {
-            let oDataRic = formatter.returnDate(oFilterSet.dataRic,"dd/MM/yyyy","yyyyMMdd");          
+            let oDataRic = formatter.returnDate(oFilterSet.dataRic,"dd/MM/yyyy","yyyyMMdd");
+           
             aFilters.push(
               new sap.ui.model.Filter(
                 "data_ricezione",
@@ -343,7 +346,7 @@ sap.ui.define(
           if (oFilterSet.materiale && oFilterSet.materiale.value) {
             aFilters.push(
               new sap.ui.model.Filter(
-                "posizione_6_28",
+                "posizioni_testata/posizione_6_28",
                 sap.ui.model.FilterOperator.EQ,
                 oFilterSet.materiale.value
               )
@@ -352,7 +355,7 @@ sap.ui.define(
           if (oFilterSet.reason && oFilterSet.reason.value) {
             aFilters.push(
               new sap.ui.model.Filter(
-                "posizione_43_44",
+                "posizioni_testata/posizione_43_44",
                 sap.ui.model.FilterOperator.EQ,
                 oFilterSet.reason.value
               )

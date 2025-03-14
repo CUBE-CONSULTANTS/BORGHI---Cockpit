@@ -37,7 +37,7 @@
       <f:DynamicPageHeader   pinnable="true">
         <f:content>
           <fb:FilterBar
-          
+          filterContainerWidth="15rem"
             search="onSearch"
             persistencyKey="myPersKey"
             useToolbar="false"
@@ -52,11 +52,9 @@
                 label="Codice Cliente"
                 groupName="Group1"
                 visibleInFilterBar="true"
-                
               >
                 <fb:control>
                   <ComboBox
-                    
                     id="idClientiComboBox"
                     name=""
                     items="{
