@@ -148,6 +148,12 @@ sap.ui.define(
      );
    },
    onClientiComboBoxChange: async function (oEvent) {
+    let idMatComboBox = this.byId("idMatComboBox");
+    let idMatnrComboBox = this.byId("idMatnrComboBox");
+    if(idMatComboBox.getValue || idMatnrComboBox.getValue){
+      idMatComboBox.setValue("")
+      idMatnrComboBox.setValue("")
+    }
     try {
     let oModel = this.getOwnerComponent().getModel("modelloV2");
      this.showBusy(0);     
@@ -162,6 +168,10 @@ sap.ui.define(
     }
    },
    onMaterialiComboBoxChange: async function(oEvent){
+    let idMatnrComboBox = this.byId("idMatnrComboBox");
+    if(idMatnrComboBox.getValue){
+      idMatnrComboBox.setValue("")
+    }
     try {
      this.showBusy(0);
      let materialiSap = await API.getEntity(this.getOwnerComponent().getModel("modelloV2"),"/EIGHTWEEK_MC_KDMAT",[new Filter("Kdmat", FilterOperator.EQ, oEvent.getSource().getValue().split(" -")[0]), new Filter("Azione", FilterOperator.EQ, "MATNR")],[]);
