@@ -880,6 +880,7 @@ sap.ui.define(
     return aCols;
    },
    onDeletePosition: async function (oEvent) {
+    debugger
     let oTable = oEvent.getSource().getParent().getParent();
     try {
      let arrayToProcess = await this._returnPayload(oTable);
@@ -892,7 +893,10 @@ sap.ui.define(
        };
       });
       let obj = { id: payload };
-      let oModel = this.getOwnerComponent().getModel("modelloV2");
+      
+      let part = oEvent.getSource().getParent().getParent().getParent().getParent().getParent().getSelectedKey();
+      let { tableID, oModel, Entity } = this.getModelAndEntityByPart(part);
+      
       let res = await API.createEntity(oModel, "/DeletePosizioni", obj);
       if (res.results.length > 0) {
        MessageBox.success("Operazione andata a buon fine.", {
@@ -1206,14 +1210,7 @@ sap.ui.define(
     }
    },
    moveToArchive: async function (oEvent) {
-    let part = oEvent
-     .getSource()
-     .getParent()
-     .getParent()
-     .getParent()
-     .getParent()
-     .getParent()
-     .getSelectedKey();
+    let part = oEvent.getSource().getParent().getParent().getParent().getParent().getParent().getSelectedKey();
     let { tableID, oModel, Entity } = this.getModelAndEntityByPart(part);
     if (tableID === "treetableCallOff") {
      let elId = oEvent.getSource().getBindingContext("master3CO").getObject().id;
