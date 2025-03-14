@@ -239,7 +239,8 @@
             <Button
               class="sapUiTinyMarginBegin"
               icon="sap-icon://bbyd-active-sales"
-              press=""
+              tooltip="Archivia"
+              press="moveToArchive" 
               type="Emphasized"
               visible="{= ${master3CO>posizione_43_44} === '35' }" 
           />

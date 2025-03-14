@@ -516,7 +516,7 @@ sap.ui.define(
       this.getOwnerComponent().getModel("calloffV2"),
       "/Testata",
       [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, archivVal)],
-      ["master,posizioni_testata,log_posizioni"],
+      ["master,posizioni_testata,posizioni_testata($expand=log_posizioni)"],
       "02",
       false
      );
@@ -627,7 +627,6 @@ sap.ui.define(
      if (filters.stato && filters.messaggio && filters.data_ricezione) {
       expandQuery = `posizioni($filter=stato eq '${filters.stato.oValue1}'),posizioni($expand=log($filter=messaggio eq '${filters.messaggio.oValue1}'),schedulazioni,testata),master($filter=data_ricezione eq '${filters.data_ricezione.oValue1}')`;
      }
-
      await this.callData(
       this.getOwnerComponent().getModel("modelloV2"),
       "/Testata",
@@ -644,29 +643,34 @@ sap.ui.define(
     ) {
      oFilterSet = this.getModel("filtersModel").getProperty("/callOff");
      let aFilters = mapper.buildFilters(oFilterSet, (key = "02"), operator);
-     // let filters = {
-     //   data_ricezione: aFilters.find(
-     //     (f) => f.sPath === "data_ricezione"
-     //   ),
-     // };
-     // Object.keys(filters).forEach((key) => {
-     //   if (filters[key]) {
-     //     let index = aFilters.findIndex((f) => f.sPath === key);
-     //     if (index !== -1) aFilters.splice(index, 1);
-     //   }
-     // });
-     // let expandQuery = `posizioni_testata,log_testata,master`;
-     // if (filters.data_ricezione) {
-     //   expandQuery = `posizioni_testata,log_testata,master($filter=data_ricezione eq '${filters.data_ricezione.oValue1}')`;
-     // }
-
+     let filters = {
+      data_ricezione: aFilters.find((f) => f.sPath === "data_ricezione"),
+      posizione_6_28: aFilters.find((f) => f.sPath === "posizione_6_28"),
+      posizione_43_44: aFilters.find((f) => f.sPath === "posizione_43_44"),
+     };
+     Object.keys(filters).forEach((key) => {
+      if (filters[key]) {
+       let index = aFilters.findIndex((f) => f.sPath === key);
+       if (index !== -1) aFilters.splice(index, 1);
+      }
+     });
+     let expandQuery = `posizioni_testata,posizioni_testata($expand=log_posizioni),master`;
+     if (filters.data_ricezione) {
+      expandQuery = `posizioni_testata,posizioni_testata($expand=log_posizioni),master($filter=data_ricezione eq '${filters.data_ricezione.oValue1}')`;
+     }
+     if (filters.posizione_6_28) {
+      expandQuery = `posizioni_testata($filter=posizione_6_28 eq '${filters.posizione_6_28.oValue1}'),posizioni_testata($expand=log_posizioni),master`;
+     }
+     if (filters.posizione_43_44) {
+      expandQuery = `posizioni_testata($filter=posizione_43_44 eq '${filters.posizione_43_44.oValue1}'),posizioni_testata($expand=log_posizioni),master`;
+     }
      await this.callData(
       this.getOwnerComponent().getModel("calloffV2"),
       "/Testata",
       aFilters,
-      ["posizioni_testata,log_posizioni,master"],
+      [expandQuery],
       "02",
-      false
+      filtrato
      );
     } else if (
      oEvent
@@ -693,7 +697,7 @@ sap.ui.define(
       .parts[0].path.includes("scartati")
     ) {
      oFilterSet = this.getModel("filtersModel").getProperty("/scartati");
-     let aFilters = mapper.buildFilters(oFilterSet, (key = "06"));
+     let aFilters = mapper.buildFilters(oFilterSet, (key = "06"), operator);
      await this.callData(
       this.getOwnerComponent().getModel("fileScartatiV2"),
       "/FileScartati",
@@ -713,7 +717,6 @@ sap.ui.define(
       let datiFiltrati = metadata.results.filter(
        (x) => x.master !== null && x.posizioni.results.length > 0
       );
-
       if (filtrato) {
        datiFiltrati = metadata.results
         .filter((x) => x.master !== null)
@@ -736,20 +739,7 @@ sap.ui.define(
       let datiFiltrati = metadata.results.filter(
        (x) => x.master !== null && x.posizioni_testata.results.length > 0
       );
-
-      if (filtrato) {
-       datiFiltrati = metadata.results
-        .filter((x) => x.master !== null)
-        .map((x) => ({
-         ...x,
-         posizioni_testata: {
-          results: x.posizioni_testata.results,
-         },
-        }))
-        .filter((x) => x.posizioni_testata.results.length > 0);
-      }
       modelMeta = new JSONModel(datiFiltrati);
-
       modelMeta.getProperty("/").forEach((testata) => {
        testata.posizioni_testata = Object.values(testata.posizioni_testata.results);
       });
@@ -978,17 +968,10 @@ sap.ui.define(
          onClose: (oAction) => {
           if (oAction === sap.m.MessageBox.Action.OK) {
            testate.forEach((x) => {
-            if (x.hasOwnProperty("posizioni")) {
-             x.posizioni.forEach(
-              (pos) => (pos["numero_progressivo_invio"] = x.numero_progressivo_invio)
-             );
-             selectedPos = selectedPos.concat(x.posizioni);
-            } else if (x.hasOwnProperty("posizioni_testata")) {
-             x.posizioni_testata.forEach(
-              (pos) => (pos["numero_progressivo_invio"] = x.progressivo_invio)
-             );
-             selectedPos = selectedPos.concat(x.posizioni_testata);
-            }
+            x.posizioni.forEach(
+             (pos) => (pos["numero_progressivo_invio"] = x.numero_progressivo_invio)
+            );
+            selectedPos = selectedPos.concat(x.posizioni);
            });
            let uniqueArray = selectedPos.reduce((acc, currentValue) => {
             if (!acc.some((item) => item.id === currentValue.id)) {
@@ -1221,11 +1204,6 @@ sap.ui.define(
     }
    },
    moveToArchive: async function (oEvent) {
-    // UPDATE X ARCHIVIO CHIAMATA IN CHIAVE /ENTITY(KEY ES: ID = 'CICCIO')
-    //  BODY  { ARCHIVIAZIONE : TRUE , DATA_ARCHIVIAZIONE : NEW dATE() }
-
-    let tableID;
-    let oModel;
     let part = oEvent
      .getSource()
      .getParent()
@@ -1234,62 +1212,86 @@ sap.ui.define(
      .getParent()
      .getParent()
      .getSelectedKey();
-    if (part === "06") {
-     tableID = "tableScartati";
-     oModel = this.getOwnerComponent().getModel("fileScartatiV2");
-    } else if (part === "05") {
-     tableID = "tableInvoice";
-    } else if (part === "04") {
-     tableID = "treetableSB";
+    let { tableID, oModel, Entity } = this.getModelAndEntityByPart(part);
+    if (tableID === "treetableCallOff") {
+     let elId = oEvent.getSource().getBindingContext("master3CO").getObject().id;
+     await this.archiveSingleItem(oModel, Entity, elId);
+    } else {
+     let table = this.byId(tableID);
+     let indices = table.getSelectedIndices();
+     if (indices.length > 0) {
+      await this.archiveSelectedItems(oModel, Entity, indices, table);
+     } else {
+      MessageBox.error("Selezionare almeno un elemento");
+     }
     }
-    let table = this.getView().byId(tableID);
-    let indices = this.getView().byId(tableID).getSelectedIndices();
+   },
+   getModelAndEntityByPart: function (part) {
+    switch (part) {
+     case "06":
+      return {
+       tableID: "tableScartati",
+       oModel: this.getOwnerComponent().getModel("fileScartatiV2"),
+       Entity: "/FileScartati",
+      };
+     case "05":
+      return { tableID: "tableInvoice", oModel: this.getOwnerComponent().getModel(""), Entity: "" };
+     case "04":
+      return { tableID: "treetableSB", oModel: this.getOwnerComponent().getModel(""), Entity: "" };
+     case "02":
+      return {
+       tableID: "treetableCallOff",
+       oModel: this.getOwnerComponent().getModel("calloffV2"),
+       Entity: "/Testata",
+      };
+     default:
+      return { tableID: "", oModel: null, Entity: "" };
+    }
+   },
+   archiveSingleItem: async function (oModel, Entity, elId) {
+    try {
+     await API.updateEntity(
+      oModel,
+      `${Entity}(id=${elId})`,
+      { archiviazione: true, data_archiviazione: new Date() },
+      "PUT"
+     );
+     MessageBox.success("Archiviato con successo");
+    } catch (error) {
+     MessageBox.error("Errore nell'Archiviazione");
+    }
+   },
+   archiveSelectedItems: async function (oModel, Entity, indices, table) {
+    //da cambiare archiviazione x testata/posizione
+    let aSelectedItems = indices.map((iIndex) => table.getContextByIndex(iIndex).getObject());
+    let promises = aSelectedItems.map((el) => {
+     return API.updateEntity(
+      oModel,
+      `${Entity}(id=${el.id})`,
+      { archiviazione: true, data_archiviazione: new Date() },
+      "PUT"
+     );
+    });
 
-    if (indices.length > 0) {
-     let aSelectedItems = indices.map(function (iIndex) {
-      return table.getContextByIndex(iIndex).getObject();
-     });
-     let promises = [];
-     aSelectedItems.forEach((el) => {
-      promises.push(
-       new Promise((resolve, reject) =>
-        resolve(
-         API.updateEntity(
-          oModel,
-          `/FileScartati(id=${el.id})`,
-          { archiviazione: true, data_archiviazione: new Date() },
-          "PUT"
-         )
-        )
-       )
-      );
-     });
+    try {
      let out = await Promise.allSettled(promises);
-     let flag = false;
-     out.forEach((x) => {
-      if (x.status != "fulfilled") {
-       flag = true;
-      }
-     });
-     let that = this;
-     if (flag) {
+     let hasError = out.some((x) => x.status !== "fulfilled");
+
+     if (hasError) {
       MessageBox.error("Errore nell'archiviazione dei file");
      } else {
       MessageBox.success("File archiviati con successo", {
        onClose: async () => {
-        let selectedKey;
-        that.byId("idIconTabBar")
-         ? (selectedKey = that.byId("idIconTabBar").getSelectedKey())
-         : undefined;
-        if (selectedKey !== undefined) {
+        let selectedKey = this.byId("idIconTabBar")?.getSelectedKey();
+        if (selectedKey) {
          table.clearSelection();
-         await that._refreshData(selectedKey);
+         await this._refreshData(selectedKey);
         }
        },
       });
      }
-    } else {
-     MessageBox.error("Selezionare almeno un elemento");
+    } catch (error) {
+     MessageBox.error("Errore nell'archiviazione dei file");
     }
    },
    dettaglioNav: function (oEvent) {
@@ -1302,7 +1304,7 @@ sap.ui.define(
       .getPath()
       .includes("posizioni");
      detailPath = oEvent.getSource().getParent().getBindingContext("master3").getPath();
-     detail = this.getView().getModel("master3").getProperty(`${detailPath}`);
+     detail = this.getModel("master3").getProperty(`${detailPath}`);
      this.getOwnerComponent().getModel("datiAppoggio").setProperty("/testata", detail);
      this.getOwnerComponent().getModel("datiAppoggio").setProperty("/posizioni", detail.posizioni);
      if (level) {
