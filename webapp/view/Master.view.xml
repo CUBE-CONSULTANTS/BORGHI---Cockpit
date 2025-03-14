@@ -72,14 +72,15 @@
               </fb:FilterGroupItem>
           
               <fb:FilterGroupItem
-                name="Codice Articolo"
-                label="Codice Articolo"
+                name="Codice Articolo Fornitore"
+                label="Codice Articolo Fornitore"
                 groupName="Group1"
                 visibleInFilterBar="true"
               >
                 <fb:control>
                   <ComboBox
                   id="idMatComboBox"
+                  change="onMaterialiComboBoxChange"
                   name=""
                   items="{
                     path: 'matchcode>/materiali',
@@ -93,6 +94,28 @@
                 </ComboBox>
                 </fb:control>
               </fb:FilterGroupItem>
+              <fb:FilterGroupItem
+              name="Codice Articolo SAP"
+              label="Codice Articolo SAP"
+              groupName="Group1"
+              visibleInFilterBar="true"
+            >
+              <fb:control>
+                <ComboBox
+                id="idMatnrComboBox"
+                name=""
+                items="{
+                  path: 'matchcode>/materialiSap',
+                  templateShareable: true
+                }"
+              >
+                <core:Item
+                  key="{matchcode>Matnr}"
+                  text="{matchcode>Matnr} - {matchcode>Maktx}"
+                />
+              </ComboBox>
+              </fb:control>
+            </fb:FilterGroupItem>
             </fb:filterGroupItems>
           </fb:FilterBar>
         </f:content>

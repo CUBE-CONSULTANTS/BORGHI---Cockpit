@@ -17,8 +17,7 @@ sap.ui.define(
           .getRoute("master2")
           .attachPatternMatched(this._onObjectMatched, this);
       },
-      _onObjectMatched: async function (oEvent) {
-        
+      _onObjectMatched: async function (oEvent) {     
         if ( oEvent.getParameters().arguments.prevApp === "master3") {
           this.getModel("main").setProperty("/backToMon", true);
           this.getModel("main").setProperty("/backToArch", false);

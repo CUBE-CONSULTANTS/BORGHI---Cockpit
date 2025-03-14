@@ -27,16 +27,45 @@ sap.ui.define(
           });
         });
       },
-      uploadExcel: function(file){
-        
+      fetchMC: function(oModel, Entity, aFilters = [], Expands = [], headers = {}){
+        const baseUrl = oModel.sServiceUrl;
+        let urlParameters = "";
+        if (Expands.length > 0) {
+          urlParameters += `$expand=${Expands.join(",")}`;
+        }
+        if (aFilters.length > 0) {
+          if (urlParameters) urlParameters += "&";
+          urlParameters += `$filter=${aFilters.join(",")}`;
+        }
+      
+        const requestUrl = `${baseUrl}${Entity}?${urlParameters}`
+      
+        return new Promise((resolve, reject) => {
+          fetch(requestUrl, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              ...headers,
+            },
+          })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`Request failed with status ${response.status}`);
+            }
+            return response.json(); 
+          })
+          .then((data) => {
+            resolve({
+              results: data.value || data, 
+              success: true,
+            });
+          })
+          .catch((error) => {
+            reject({ success: false, error: error.message });
+          });
+        });
       },
-      readByKey: function (
-        oModel,
-        Entity,
-        keyValue,
-        aFilters = [],
-        Expands = []
-      ) {
+      readByKey: function (oModel,Entity,keyValue,aFilters = [], Expands = []) {
         let keyString =
           typeof keyValue === "object"
             ? Object.entries(keyValue)

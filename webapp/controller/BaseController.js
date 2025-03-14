@@ -213,17 +213,19 @@ sap.ui.define(
           }
         },
         _getMatchCode: async function () {
+          
           try {
             this.showBusy(0);
             let matchcode = new JSONModel();
             matchcode.setSizeLimit(100000000);
             this.setModel(matchcode, "matchcode");
-            let model = this.getOwnerComponent().getModel("modelloV2");
-            let clienti = await API.getEntity(model, "/T661W", [], []);
-            let materiali = await API.getEntity(model, "/EIGHTWEEK_MC_KDMAT", [], [])
-            // odata/v2/delivery-forecast/EIGHTWEEK_MC_KDMAT?$filter=Kunnr eq '200012'
+            let oModel = this.getOwnerComponent().getModel("modelloV2");
+            let clienti = await API.getEntity(oModel, "/EIGHTWEEK_MC_KDMAT",[new Filter("Azione", FilterOperator.EQ, "CLIENTE")],[])
+            let materialiForn = await API.getEntity(oModel, "/EIGHTWEEK_MC_KDMAT",[ new Filter("Azione", FilterOperator.EQ, "KDMAT")],[])
+            let materialiSap = await API.getEntity(oModel, "/EIGHTWEEK_MC_KDMAT",[ new Filter("Azione", FilterOperator.EQ, "MATNR")],[])
             this.getModel("matchcode").setProperty("/clienti", clienti.results);
-            this.getModel("matchcode").setProperty("/materiali", materiali.results);
+            this.getModel("matchcode").setProperty("/materiali", materialiForn.results);
+            this.getModel("matchcode").setProperty("/materialiSap", materialiSap.results);
           } catch (error) {
             MessageBox.error("Errore durante il recupero dei dati");
           } finally {
@@ -1533,11 +1535,16 @@ sap.ui.define(
         },
         refreshOnExit: function() {this.getOwnerComponent().getModel("datiAppoggio").setProperty("/filtriNav", "");
           let idMatComboBox = this.byId("idMatComboBox");
+          let idMatnrComboBox = this.byId("idMatnrComboBox");
           let idClienti1 = this.byId("idClientiComboBox");
           let idClienti2 = this.byId("idClientiComboBox2")
           if (idMatComboBox) {
             idMatComboBox.setSelectedKey("");
             idMatComboBox.setValue("");
+          }
+          if (idMatnrComboBox) {
+            idMatnrComboBox.setSelectedKey("");
+            idMatnrComboBox.setValue("");
           }
           if (idClienti1) {
             idClienti1.setSelectedKey("");
@@ -1548,13 +1555,11 @@ sap.ui.define(
             idClienti2.setValue("");
           }
           this.getModel("main").setProperty("/visibility", false);},
-        navToMonitor: function() {
-          
+        navToMonitor: function() {  
           this.refreshOnExit()
           this.getRouter().navTo("master3");
         },
         navToArchive: function () {
-          
           this.refreshOnExit()
           this.getRouter().navTo("archivio");
         },
