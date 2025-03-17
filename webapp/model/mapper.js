@@ -592,6 +592,7 @@ sap.ui.define(
           "numero_idoc",
           "master",
           "log",
+          "log_posizioni",
           "id_posizione",
           "id_testata",
           "testata",
@@ -606,19 +607,65 @@ sap.ui.define(
         Object.keys(cleanedData).forEach((key) => {
           if (
             key.toLowerCase().includes("data") ||
-            key.toLowerCase().includes("date")
+            key.toLowerCase().includes("date") 
           ) {
             cleanedData[key] = formatter.formatDate(cleanedData[key]);
           }
-          if (key.toLowerCase().includes("posizione_14_19")) {
-            cleanedData[key] = formatter.returnDate(
-              cleanedData[key],
-              "yyyyMMdd",
-              "dd/MM/YYYY"
-            );
+          if (key.toLowerCase().includes("posizione_14_19") && !cleanedData[key].includes("/")) {
+            cleanedData[key] = formatter.returnDate(cleanedData[key],"yyyyMMdd","dd/MM/YYYY");
           }
         });
+        if(cleanedData.hasOwnProperty('posizione_14_19')){
+          cleanedData = this.renameColumns(cleanedData)
+        }
         return cleanedData;
+      },
+      renameColumns: function(data){
+        
+        const columnMapping = {
+          "posizione_6_28": "Cod. Articolo Cliente",
+          "posizione_20_24": "Punto di scarico",
+          "posizione_31_42": "Num. Ordine presso Cliente",
+          "posizione_43_44": "Reason",
+          "posizione_49_51": "Stabilimento consegna",
+          "posizione_53_65": "Quantità",
+          "posizione_66_67": "Udm",
+          "posizione_77_86": "Cod Terre Cliente",
+          "posizione_87_89": "Numero riga DDT",
+          "posizione_121_128": "DDT"
+        };
+        let renamedData = {};
+        if (data.hasOwnProperty("posizione_6_13") && data.hasOwnProperty("posizione_43_44")) {
+          let value = data["posizione_6_13"];
+          let tipoDocumento = data["posizione_43_44"];
+  
+          if (tipoDocumento === "36") {
+              renamedData["Progr. Prelievo"] = value;
+          } else if (tipoDocumento === "35") {
+              renamedData["Progr. Invio"] = value;
+          } else if (tipoDocumento === "30" || tipoDocumento === "33") {
+              renamedData["DDT"] = value;
+          }
+        }
+        if (data.hasOwnProperty("posizione_14_19") && data.hasOwnProperty("posizione_43_44")) {
+          let value = data["posizione_14_19"];
+          let tipoDocumento = data["posizione_43_44"];
+  
+          if (tipoDocumento === "36") {
+              renamedData["Data Prelievo mov mag."] = value;
+          } else if (tipoDocumento === "35") {
+              renamedData["Data Messaggio"] = value;
+          } else if (tipoDocumento === "30" || tipoDocumento === "33") {
+              renamedData["Data DDT"] = value;
+          }
+        }
+        Object.keys(data).forEach((key) => {
+          if (!["posizione_6_13", "posizione_14_19"].includes(key)) {
+              let newKey = columnMapping[key] || key;
+              renamedData[newKey] = data[key];
+          }
+        });
+        return renamedData;
       },
       // flatData: function (data) {
       //   

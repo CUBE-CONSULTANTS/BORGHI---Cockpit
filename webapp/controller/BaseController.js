@@ -286,7 +286,7 @@ sap.ui.define(
         _getCounters: async function (filterVal) {
           this.showBusy(0);
           try {
-            let del = await API.getEntity(
+            let delfor = await API.getEntity(
               this.getOwnerComponent().getModel("modelloV2"),
               "/Testata/$count",
               [
@@ -298,14 +298,33 @@ sap.ui.define(
               ],
               []
             );
-            this.getModel("count").setProperty("/delivery", del.results);
-            let cal = await API.getEntity(
+            this.getModel("count").setProperty("/delivery", delfor.results);
+
+            let calloff
+            if(filterVal){    
+               calloff = await API.getEntity(
               this.getOwnerComponent().getModel("calloffV2"),
-              "/Testata/$count",
+              "/ContatoreTestate",
               [],
               []
-            );
-            this.getModel("count").setProperty("/calloff", cal.results);
+              )  
+              this.getModel("count").setProperty("/calloff", calloff.results[0].ContatoreTestata)               
+            }else{
+               calloff = await API.getEntity(
+                this.getOwnerComponent().getModel("calloffV2"),
+                "/Testata/$count",
+                [
+                  new sap.ui.model.Filter(
+                    "archiviazione",
+                    sap.ui.model.FilterOperator.EQ,
+                    filterVal
+                  ),
+                ],
+                []
+              );
+                this.getModel("count").setProperty("/calloff", calloff.results);
+            }
+
             let selfb = await API.getEntity(
               this.getOwnerComponent().getModel("selfBillingV2"),
               "/Testata/$count",
@@ -319,6 +338,7 @@ sap.ui.define(
               []
             );
             this.getModel("count").setProperty("/selfbilling", selfb.results);
+
             let fileScart = await API.getEntity(
               this.getOwnerComponent().getModel("fileScartatiV2"),
               "/FileScartati/$count",
