@@ -1185,7 +1185,6 @@ sap.ui.define(
         },
         //processamento dettagli
         onProcessaButtonDetail: function (oEvent) {
-          debugger
           let table = oEvent.getSource().getParent().getParent()
           let indices = table.getSelectedIndices();
           let items = [];
