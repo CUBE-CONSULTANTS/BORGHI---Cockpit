@@ -197,7 +197,7 @@ sap.ui.define(
    },
    processaItems: function (items) {
     let itemList;
-    debugger
+    
     if (this.byId("idIconTabBar").getSelectedKey() === "02") {
       items = items.filter((x) => x.posizione_43_44 !== "35");
     }  
@@ -305,7 +305,7 @@ sap.ui.define(
     }
    },
    downloadRow35: function(oEvent){
-    debugger
+    
     let oRow35 = oEvent.getSource().getBindingContext("master3CO").getObject();
     
    }

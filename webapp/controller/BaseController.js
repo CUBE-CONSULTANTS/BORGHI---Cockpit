@@ -1056,7 +1056,7 @@ sap.ui.define(
               if(selectedKey !== undefined){
                  ({ tableID, oModel, Entity } = this.getModelAndEntityByPart(selectedKey))
               } else{
-                debugger 
+                 
                 if(this.getModel("detailData").getProperty("/__metadata").type.includes("Delivery")) {
                   oModel = this.getOwnerComponent().getModel("modelloV2")
                 }else if(this.getModel("detailData").getProperty("/__metadata").type.includes("CalloffService")){
