@@ -1051,7 +1051,7 @@ sap.ui.define(
         onDeletePosition: async function (oEvent) {
           let oTable = oEvent.getSource().getParent().getParent();
           try {
-            let arrayToProcess = await this._returnPayload(oTable);
+            let arrayToProcess = await this._returnPayload(oTable,"delete");
             if (arrayToProcess.length > 0) {
               this.showBusy(0);
               let payload = arrayToProcess.map((x) => {
@@ -1098,7 +1098,7 @@ sap.ui.define(
             this.hideBusy(0);
           }
         },
-        _returnPayload: async function (table) {
+        _returnPayload: async function (table,action) {
           let indices = table.getSelectedIndices();
           let testate = [];
           let selectedPos = [];
@@ -1141,11 +1141,13 @@ sap.ui.define(
                 selectedPos.push(element);
               }
             });
-
+            let message 
+            action === "elab" ? message = 'Verranno processate tutte le posizioni non ancora elaborate della Testata selezionata, continuare?' :
+            message = "Verranno eliminate tutte le posizioni della Testata selezionata, continuare?";
             if (flag) {
               return new Promise((resolve) => {
                 MessageBox.confirm(
-                  "Verranno processate tutte le posizioni non ancora elaborate della Testata selezionata, continuare?",
+                 message,
                   {
                     title: "Continuare?",
                     onClose: (oAction) => {
@@ -1534,12 +1536,13 @@ sap.ui.define(
           let oSource = oEvent.getSource();
           let oBindingContext = oSource.getBindingContext("detailData");
           let oData = oBindingContext.getObject();
-          if ((oData.log && oData.log.length === 0 )||( oData.log_posizioni.results && oData.log_posizioni.results.length === 0)) {
+          let oDataLog 
+          oData.log === undefined ? oDataLog = oData.log_posizioni.results : oDataLog = oData.log
+          if (oDataLog.length === 0 ) {
             MessageBox.error("Nessun log disponibile per questa posizione");
             return;
           }
-          let oDataLog 
-          oData.log === undefined ? oDataLog = oData.log_posizioni.results : oDataLog = oData.log
+         
           let sortedLogs = oDataLog.sort((a, b) => {
             let dateA = new Date(a.data).getTime(); 
             let dateB = new Date(b.data).getTime();

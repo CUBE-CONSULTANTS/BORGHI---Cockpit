@@ -160,7 +160,7 @@ sap.ui.define(
     }
     let table = this.getView().byId(id);
     try {
-      let arrayToProcess = await this._returnPayload(table);
+      let arrayToProcess = await this._returnPayload(table,"elab");
       if (arrayToProcess.length > 0) {
         this.processaItems(arrayToProcess);
       }
