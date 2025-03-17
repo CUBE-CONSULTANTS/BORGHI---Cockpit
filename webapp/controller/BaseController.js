@@ -148,9 +148,7 @@ sap.ui.define(
         },
         onCollapseAll: function () {
           let oTable;
-          let selectedKey = this.getView()
-            .byId("idIconTabBar")
-            .getSelectedKey();
+          let selectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
           !selectedKey ? (selectedKey = key) : (selectedKey = selectedKey);
           switch (selectedKey) {
             case "01":
@@ -979,7 +977,7 @@ sap.ui.define(
         //getEXCELVariazioni
         createExcel: function (oTable) {
           const oRowBinding = oTable.getBinding("rows");
-          const aCols = this._getColumnsConfig(oTable);
+          const aCols = this._getVariazioniColumnsConfig(oTable);
           let fileName;
           oTable.getId().includes("cliente")
             ? (fileName = "Confronto Programmazioni Clienti")
@@ -996,7 +994,7 @@ sap.ui.define(
             oSheet.destroy();
           });
         },
-        _getColumnsConfig: function (oTable) {
+        _getVariazioniColumnsConfig: function (oTable) {
           const aCols = [];
           const isClientTable = oTable.getId().includes("cliente");
           oTable.getColumns().forEach((el, key) => {
@@ -1050,29 +1048,28 @@ sap.ui.define(
                 };
               });
               let obj = { id: payload };
-
-              let part = oEvent
-                .getSource()
-                .getParent()
-                .getParent()
-                .getParent()
-                .getParent()
-                .getParent()
-                .getSelectedKey();
-              let { tableID, oModel, Entity } =
-                this.getModelAndEntityByPart(part);
+              let tableID, oModel, Entity 
+              let selectedKey;
+                    this.getView().byId("idIconTabBar")
+                      ? (selectedKey = this.getView().byId("idIconTabBar").getSelectedKey())
+                      : undefined;
+              if(selectedKey !== undefined){
+                 ({ tableID, oModel, Entity } = this.getModelAndEntityByPart(selectedKey))
+              } else{
+                debugger 
+                if(this.getModel("detailData").getProperty("/__metadata").type.includes("Delivery")) {
+                  oModel = this.getOwnerComponent().getModel("modelloV2")
+                }else if(this.getModel("detailData").getProperty("/__metadata").type.includes("CalloffService")){
+                  oModel = this.getOwnerComponent().getModel("calloffV2")
+                }  
+              }                 
 
               let res = await API.createEntity(oModel, "/DeletePosizioni", obj);
               if (res.results.length > 0) {
                 MessageBox.success("Operazione andata a buon fine.", {
                   title: "Operazione completata",
                   onClose: async () => {
-                    let selectedKey;
-                    this.getView().byId("idIconTabBar")
-                      ? (selectedKey = this.getView()
-                          .byId("idIconTabBar")
-                          .getSelectedKey())
-                      : undefined;
+                    
                     if (selectedKey !== undefined) {
                       await this._refreshData(selectedKey);
                     } else {
@@ -1098,10 +1095,7 @@ sap.ui.define(
             let aSelectedItems = indices.map(function (iIndex) {
               return table.getContextByIndex(iIndex).getObject();
             });
-          if (this.byId("idIconTabBar").getSelectedKey() === "02") {
-            aSelectedItems = aSelectedItems.filter((x) => x.posizione_43_44 !== "35");
-            MessageToast.show("Le posizioni con Reason 35 verranno escluse dall'elaborazione")
-          }  
+
           aSelectedItems = aSelectedItems.map((item) => {
             if (item.posizioni) {
               item.posizioni = item.posizioni.filter(
@@ -1117,12 +1111,12 @@ sap.ui.define(
                 return null;
             }).filter((item) => item !== null);
             
-            if (aSelectedItems.length === 0) {
-              MessageBox.error(
-                "Non è possibile Rielaborare elementi già processati"
-              );
-              return [];
+            let errorMessage = "Non è possibile rielaborare elementi già processati.";
+            if (aSelectedItems.length === 0) {         
+                MessageBox.error(errorMessage);
+                return [];
             }
+
             aSelectedItems.forEach((element) => {
               if (
                 element.hasOwnProperty("posizioni") ||
@@ -1199,19 +1193,23 @@ sap.ui.define(
               sap.m.MessageBox.alert("Si prega di selezionare almeno una posizione");
               return;
           }
-
           items = indices.map(function (iIndex) {
               return table.getContextByIndex(iIndex).getObject();
           });
+          items = items.filter(item => item.posizione_43_44 !== "35");
+
           items = items.map(item => {        
             if (item.stato !== '53' && item.stato !== '64') {
               return item;
             }
             return null;
           }).filter(item => item !== null)
-          if (items.length === 0) {
-            MessageBox.error("Non è possibile Rielaborare elementi già processati");
-            return [];
+
+          if (items.length === 0) {           
+              MessageBox.error(
+                "Non è possibile Rielaborare elementi già processati"
+              );
+              return []; 
           }
           let itemList = items
               .map(
@@ -1305,7 +1303,7 @@ sap.ui.define(
                 { id: this._id, id_master: this._idMaster },
                 [],
                 [
-                  "posizioni($filter=stato ne '53'),posizioni($expand=log,schedulazioni,testata),master",
+                  "posizioni,posizioni($expand=log,schedulazioni,testata),master",
                 ]
               );
               let detailModel = this.getModel("detailData");
@@ -1314,6 +1312,21 @@ sap.ui.define(
                 pos.log = Object.values(pos.log.results);
               });
             }
+            else if (this.getView().getControllerName().includes("DettCallOff")){
+              let dettaglio = await API.readByKey(
+                this.getOwnerComponent().getModel("calloffV2"),
+                "/Testata",
+                { id: this._id, id_master: this._idMaster },
+                [],
+                ["master,posizioni_testata($expand=log_posizioni)"]
+              );
+              let detailModel = this.getModel("detailData");
+              detailModel.setData(dettaglio);
+              detailModel.getProperty("/posizioni_testata/results").forEach((pos) => {
+                pos.posizione_14_19 = this.formatter.returnDate(pos.posizione_14_19,"yyyyMMdd","dd/MM/yyyy");
+              });
+            }
+            //AGGIUNGERE LOGICHE X OGNI DETTAGLIO
           } catch (error) {
             MessageBox.error("Errore durante il recupero dei dati dettaglio");
           } finally {
@@ -1478,18 +1491,9 @@ sap.ui.define(
           return new Blob([bytes], { type: mimeType });
         },
         onDownloadCumulativi: async function (oEvent) {
-          let numIdoc = oEvent
-            .getSource()
-            .getBindingContext("master3")
-            .getObject().numero_idoc;
-          let dest = oEvent
-            .getSource()
-            .getBindingContext("master3")
-            .getObject().destinatario;
-          let rffon = oEvent
-            .getSource()
-            .getBindingContext("master3")
-            .getObject().numero_ordine_acquisto;
+          let numIdoc = oEvent.getSource().getBindingContext("master3").getObject().numero_idoc;
+          let dest = oEvent.getSource().getBindingContext("master3").getObject().destinatario;
+          let rffon = oEvent.getSource().getBindingContext("master3").getObject().numero_ordine_acquisto;
           await this.getReportCumulativi(dest, numIdoc, rffon);
         },
         getReportCumulativi: async function (dest, numIdoc, rffon) {
@@ -1508,25 +1512,38 @@ sap.ui.define(
             this.hideBusy(0);
           }
         },
+        onStatoPress: function(oEvent) {
+          let oSource = oEvent.getSource();
+          let oBindingContext = oSource.getBindingContext("detailData");
+          let oData = oBindingContext.getObject();
+          if ((oData.log && oData.log.length === 0 )||( oData.log_posizioni.results && oData.log_posizioni.results.length === 0)) {
+            MessageBox.error("Nessun log disponibile per questa posizione");
+            return;
+          }
+          let sortedLogs = oData.log.sort((a, b) => {
+            let dateA = new Date(a.data).getTime(); 
+            let dateB = new Date(b.data).getTime();
+    
+            if (dateA === dateB) {
+                return b.ora.ms - a.ora.ms;
+            }
+            return dateB - dateA; 
+          });
+          let oModel = new JSONModel();
+          oModel.setData({ logs: sortedLogs }); 
+          if (!this._oDialog) {
+            this._oDialog = sap.ui.xmlfragment("programmi.consegne.edi.view.fragments.detailStato", this);
+            this.getView().addDependent(this._oDialog);
+          }     
+          this._oDialog.setModel(oModel, "logData");
+          this._oDialog.open();
+        },      
         moveToArchive: async function (oEvent) {
-          let part = oEvent
-            .getSource()
-            .getParent()
-            .getParent()
-            .getParent()
-            .getParent()
-            .getParent()
-            .getSelectedKey();
+          let part = oEvent.getSource().getParent().getParent().getParent().getParent().getParent().getSelectedKey();
           let { tableID, oModel, Entity } = this.getModelAndEntityByPart(part);
           if (tableID === "treetableCallOff") {
-            let elId = oEvent
-              .getSource()
-              .getBindingContext("master3CO")
-              .getObject().id;
-            let elIdTest = oEvent
-              .getSource()
-              .getBindingContext("master3CO")
-              .getObject().id_testata;
+            let elId = oEvent.getSource().getBindingContext("master3CO").getObject().id;
+            let elIdTest = oEvent.getSource().getBindingContext("master3CO").getObject().id_testata;
             await this.archiveSingleItem(oModel, Entity, elId, elIdTest);
           } else {
             let table = this.byId(tableID);
@@ -1592,7 +1609,6 @@ sap.ui.define(
           }
         },
         archiveSelectedItems: async function (oModel, Entity, indices, table) {
-          //da cambiare archiviazione x testata/posizione
           let aSelectedItems = indices.map((iIndex) =>
             table.getContextByIndex(iIndex).getObject()
           );
@@ -1635,34 +1651,15 @@ sap.ui.define(
             oEvent.getSource().getParent().getBindingContext("master3") !==
             undefined
           ) {
-            level = oEvent
-              .getSource()
-              .getParent()
-              .getBindingContext("master3")
-              .getPath()
-              .includes("posizioni");
-            detailPath = oEvent
-              .getSource()
-              .getParent()
-              .getBindingContext("master3")
-              .getPath();
+            level = oEvent.getSource().getParent().getBindingContext("master3").getPath().includes("posizioni");
+            detailPath = oEvent.getSource().getParent().getBindingContext("master3").getPath();
             detail = this.getModel("master3").getProperty(`${detailPath}`);
-            this.getOwnerComponent()
-              .getModel("datiAppoggio")
-              .setProperty("/testata", detail);
-            this.getOwnerComponent()
-              .getModel("datiAppoggio")
-              .setProperty("/posizioni", detail.posizioni);
+            this.getOwnerComponent().getModel("datiAppoggio").setProperty("/testata", detail);
+            this.getOwnerComponent().getModel("datiAppoggio").setProperty("/posizioni", detail.posizioni);
             if (level) {
-              this.getOwnerComponent()
-                .getModel("datiAppoggio")
-                .setProperty("/posizioneCorrente", detail);
-              this.getOwnerComponent()
-                .getModel("datiAppoggio")
-                .setProperty("/schedulazioni", detail.schedulazioni.results);
-              this.getOwnerComponent()
-                .getModel("datiAppoggio")
-                .setProperty(
+              this.getOwnerComponent().getModel("datiAppoggio").setProperty("/posizioneCorrente", detail);
+              this.getOwnerComponent().getModel("datiAppoggio").setProperty("/schedulazioni", detail.schedulazioni.results);
+              this.getOwnerComponent().getModel("datiAppoggio").setProperty(
                   "/testata",
                   this.getModel("master3").getProperty(
                     `${detailPath[0] + detailPath[1]}`
@@ -1681,11 +1678,7 @@ sap.ui.define(
                   }.bind(this)
                 );
             } else {
-              detailPath = oEvent
-                .getSource()
-                .getParent()
-                .getBindingContext("master3")
-                .getPath();
+              detailPath = oEvent.getSource().getParent().getBindingContext("master3").getPath();
               this.getRouter().navTo("detailMaster3", {
                 id: detail.id,
                 idmaster: detail.id_master,
@@ -1696,14 +1689,8 @@ sap.ui.define(
             oEvent.getSource().getParent().getBindingContext("master3CO") !==
             undefined
           ) {
-            detailPath = oEvent
-              .getSource()
-              .getParent()
-              .getBindingContext("master3CO")
-              .getPath();
-            detail = this.getView()
-              .getModel("master3CO")
-              .getProperty(`${detailPath}`);
+            detailPath = oEvent.getSource().getParent().getBindingContext("master3CO").getPath();
+            detail = this.getView().getModel("master3CO").getProperty(`${detailPath}`);
             this.getRouter().navTo("dettCallOff", {
               id: detail.id,
               idmaster: detail.id_master,
@@ -1713,11 +1700,7 @@ sap.ui.define(
             oEvent.getSource().getParent().getBindingContext("master3SB") !==
             undefined
           ) {
-            detailPath = oEvent
-              .getSource()
-              .getParent()
-              .getBindingContext("master3SB")
-              .getPath();
+            detailPath = oEvent.getSource().getParent().getBindingContext("master3SB").getPath();
             detail = this.getModel("master3SB").getProperty(`${detailPath}`);
             this.getRouter().navTo("dettSelfBilling", {
               id: detail.id,
@@ -1733,21 +1716,12 @@ sap.ui.define(
         },
         handleCloseVariazioni: function (oEvent) {
           this.getRouter().navTo("master", {
-            layout: oEvent
-              .getSource()
-              .getParent()
-              .getParent()
-              .getParent()
-              .getParent()
-              .getParent()
-              .setLayout(),
+            layout: oEvent.getSource().getParent().getParent().getParent().getParent().getParent().setLayout(),
             prevApp: this.prevApp,
           });
         },
         refreshOnExit: function () {
-          this.getOwnerComponent()
-            .getModel("datiAppoggio")
-            .setProperty("/filtriNav", "");
+          this.getOwnerComponent().getModel("datiAppoggio").setProperty("/filtriNav", "");
           let idMatComboBox = this.byId("idMatComboBox");
           let idMatnrComboBox = this.byId("idMatnrComboBox");
           let idClienti1 = this.byId("idClientiComboBox");

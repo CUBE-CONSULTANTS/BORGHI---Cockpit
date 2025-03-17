@@ -160,10 +160,10 @@ sap.ui.define(
     }
     let table = this.getView().byId(id);
     try {
-     let arrayToProcess = await this._returnPayload(table);
-     if (arrayToProcess.length > 0) {
-      this.processaItems(arrayToProcess);
-     }
+      let arrayToProcess = await this._returnPayload(table);
+      if (arrayToProcess.length > 0) {
+        this.processaItems(arrayToProcess);
+      }
     } catch (error) {
      console.error("Errore durante la selezione delle posizioni:", error);
     }
@@ -197,7 +197,10 @@ sap.ui.define(
    },
    processaItems: function (items) {
     let itemList;
-
+    debugger
+    if (this.byId("idIconTabBar").getSelectedKey() === "02") {
+      items = items.filter((x) => x.posizione_43_44 !== "35");
+    }  
     itemList = items.map((item) => {
       if (item.hasOwnProperty("posizione_6_13")) {
        return `Codice Cliente: ${item.testata.codice_terre_cliente} - Codice cliente materiale: ${item.posizione_6_28} - Progressivo Invio: ${item.testata.progressivo_invio} \n`;
@@ -243,42 +246,6 @@ sap.ui.define(
            that._refreshData("01");
           },
          });
-         //   let modelloReport = new JSONModel({
-         //     successo: "",
-         //     errore: "",
-         //   });
-         //   that.setModel(modelloReport, "modelloReport");
-         //   let success = [];
-         //   let error = [];
-         //   res.results.forEach((x) => {
-         //     if (x.status === "51") {
-         //       let el = items.find((y) => x.id === y.id);
-         //       error.push(Object.assign(el, x));
-         //     } else {
-         //       let el = items.find((y) => x.id === y.id);
-         //       success.push(Object.assign(el, x));
-         //     }
-         //   });
-         //   that
-         //     .getModel("modelloReport")
-         //     .setProperty("/successo", success);
-         //   that.getModel("modelloReport").setProperty("/errore", error);
-
-         //   if (!that._fragment) {
-         //     Fragment.load({
-         //       name: "programmi.consegne.edi.view.fragments.reportDelfor",
-         //       controller: this,
-         //     }).then(
-         //       function (oFragment) {
-         //         this._fragment = oFragment;
-         //         this.getView().addDependent(this._fragment);
-         //         this._fragment.open();
-         //       }.bind(this)
-         // );
-         //   } else {
-         //     that._fragment.setModel("modelloReport");
-         //     that._fragment.open();
-         //   }
         } else {
          MessageBox.error("Elaborazione non andata a buon fine");
         }
@@ -293,12 +260,7 @@ sap.ui.define(
    },
 
    onCumulativi: async function (oEvent) {
-    let obj = oEvent
-     .getSource()
-     .getParent()
-     .getParent()
-     .getBindingContext("modelloReport")
-     .getObject();
+    let obj = oEvent.getSource().getParent().getParent().getBindingContext("modelloReport").getObject();
     let numIdoc = obj.idoc_number;
     let dest = obj.destinatario;
     let rffon = obj.numero_ordine_acquisto;
@@ -342,6 +304,11 @@ sap.ui.define(
      MessageBox.error("Nessun file selezionato");
     }
    },
+   downloadRow35: function(oEvent){
+    debugger
+    let oRow35 = oEvent.getSource().getBindingContext("master3CO").getObject();
+    
+   }
   });
  }
 );

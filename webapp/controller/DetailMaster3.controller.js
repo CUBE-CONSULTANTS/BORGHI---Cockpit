@@ -62,52 +62,13 @@ sap.ui.define(
         onReturn: function(){
           this.prevHash === 'archivio'? this.navToArchive(): this.handleCloseDetail()
         },
-        onStatoPress: function(oEvent) {
-          let oSource = oEvent.getSource();
-          let oBindingContext = oSource.getBindingContext("detailData");
-          let oData = oBindingContext.getObject();
-          if (oData.log.length === 0) {
-            MessageBox.error("Nessun log disponibile per questa posizione");
-            return;
-          }
-          let sortedLogs = oData.log.sort((a, b) => {
-            let dateA = new Date(a.data).getTime(); 
-            let dateB = new Date(b.data).getTime();
-    
-            if (dateA === dateB) {
-                return b.ora.ms - a.ora.ms;
-            }
-            return dateB - dateA; 
-          });
-          let oModel = new JSONModel();
-          oModel.setData({ logs: sortedLogs }); 
-          if (!this._oDialog) {
-            this._oDialog = sap.ui.xmlfragment("programmi.consegne.edi.view.fragments.detailStato", this);
-            this.getView().addDependent(this._oDialog);
-          }     
-          this._oDialog.setModel(oModel, "logData");
-          this._oDialog.open();
-        },      
         
         buttonDetailSched: function (oEvent) {
           
-          let detailPath = oEvent
-            .getSource()
-            .getParent()
-            .getBindingContext("detailData")
-            .getPath();
-
-          let detail = this.getView()
-            .getModel("detailData")
-            .getProperty(`${detailPath}`);
-
-          this.getOwnerComponent()
-            .getModel("datiAppoggio")
-            .setProperty("/schedulazioni", detail.schedulazioni.results);
-
-          this.getOwnerComponent()
-            .getModel("datiAppoggio")
-            .setProperty("/posizioneCorrente", detail);
+          let detailPath = oEvent.getSource().getParent().getBindingContext("detailData").getPath();
+          let detail = this.getView().getModel("detailData").getProperty(`${detailPath}`);
+          this.getOwnerComponent().getModel("datiAppoggio").setProperty("/schedulazioni", detail.schedulazioni.results);
+          this.getOwnerComponent().getModel("datiAppoggio").setProperty("/posizioneCorrente", detail);
 
           let oNextUIState;
           this.getOwnerComponent()

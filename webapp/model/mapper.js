@@ -173,6 +173,7 @@ sap.ui.define(
             },
           ],
           tablePosCO: [
+            {key: "stato_col",label: "Stato",path: "Stato"},
             { key: "cliente_col", label: "Cliente", path: "posizione_77_86" },
             { key: "reason_col", label: "Reason", path: "posizione_43_44" },
             { key: "progr_prelievo_col", label: "Progressivo Prelievo", path: "posizione_6_13" },

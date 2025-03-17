@@ -234,7 +234,7 @@
               tooltip="Stock Level"
               visible="{= ${master3CO>posizione_43_44} === '35' }"   
               class="sapUiTinyMarginBegin"
-              press="downloadEdi"          
+              press="downloadRow35"          
             />
             <Button
               class="sapUiTinyMarginBegin"
