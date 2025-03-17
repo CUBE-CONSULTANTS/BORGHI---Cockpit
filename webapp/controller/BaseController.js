@@ -700,15 +700,11 @@ sap.ui.define(
           let key;
           let operator;
           let filtrato = false;
-          this.getModel("datiAppoggio").getProperty("/currentPage") ===
-          "archivio"
+          this.getModel("datiAppoggio").getProperty("/currentPage") ==="archivio"
             ? (operator = "eq")
             : (operator = "ne");
           if (
-            oEvent
-              .getParameters()
-              .selectionSet[0].getBindingInfo("value")
-              .parts[0].path.includes("delivery")
+            oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("delivery")
           ) {
             oFilterSet = this.getModel("filtersModel").getProperty("/delivery");
             let aFilters = mapper.buildFilters(
@@ -717,14 +713,10 @@ sap.ui.define(
               operator
             );
             let filters = {
-              data_ricezione: aFilters.find(
-                (f) => f.sPath === "data_ricezione"
-              ),
+              data_ricezione: aFilters.find((f) => f.sPath === "data_ricezione"),
               stato: aFilters.find((f) => f.sPath === "stato"),
               messaggio: aFilters.find((f) => f.sPath === "messaggio"),
-              materiale: aFilters.find(
-                (f) => f.sPath === "posizioni/codice_cliente_materiale"
-              ),
+              materiale: aFilters.find((f) => f.sPath === "posizioni/codice_cliente_materiale"),
             };
             Object.keys(filters).forEach((key) => {
               if (filters[key]) {
@@ -774,32 +766,33 @@ sap.ui.define(
               (key = "02"),
               operator
             );
-            let filters = {
-              data_ricezione: aFilters.find(
-                (f) => f.sPath === "data_ricezione"
-              ),
-              posizione_6_28: aFilters.find(
-                (f) => f.sPath === "posizione_6_28"
-              ),
-              posizione_43_44: aFilters.find(
-                (f) => f.sPath === "posizione_43_44"
-              ),
+            let filters = {     
+              data_ricezione: aFilters.find((f) => f.sPath === "data_ricezione"),
+              materiale: aFilters.find((f) => f.sPath === "posizioni_testata/posizione_6_28"),
+              reason: aFilters.find((f) => f.sPath === "posizioni_testata/posizione_43_44"),
             };
             Object.keys(filters).forEach((key) => {
               if (filters[key]) {
-                let index = aFilters.findIndex((f) => f.sPath === key);
+                let index
+                if (key === "reason"){
+                  index = aFilters.findIndex((f) => f.sPath === "posizioni_testata/posizione_43_44");
+                }else if (key === "materiale"){
+                  index = aFilters.findIndex((f) => f.sPath === "posizioni_testata/posizione_6_28");
+                }else{
+                  index = aFilters.findIndex((f) => f.sPath === key);
+                }
                 if (index !== -1) aFilters.splice(index, 1);
               }
             });
-            let expandQuery = `posizioni_testata($filter=archiviazione eq false),posizioni_testata($expand=log_posizioni),master`;
+            let expandQuery = `posizioni_testata,posizioni_testata($expand=log_posizioni),master`;
             if (filters.data_ricezione) {
-              expandQuery = `posizioni_testata($filter=archiviazione eq false),posizioni_testata($expand=log_posizioni),master($filter=data_ricezione eq '${filters.data_ricezione.oValue1}')`;
+              expandQuery = `posizioni_testata,posizioni_testata($expand=log_posizioni),master($filter=data_ricezione eq '${filters.data_ricezione.oValue1}')`;
             }
-            if (filters.posizione_6_28) {
-              expandQuery = `posizioni_testata($filter=posizione_6_28 eq '${filters.posizione_6_28.oValue1}'and $filter=archiviazione eq false),posizioni_testata($expand=log_posizioni),master`;
+            if (filters.materiale) {
+              expandQuery = `posizioni_testata($filter=posizione_6_28 eq '${filters.materiale.oValue1}'),posizioni_testata($expand=log_posizioni),master`;
             }
-            if (filters.posizione_43_44) {
-              expandQuery = `posizioni_testata($filter=posizione_43_44 eq '${filters.posizione_43_44.oValue1}' and  $filter=archiviazione eq false),posizioni_testata($expand=log_posizioni),master`;
+            if (filters.reason) {
+              expandQuery = `posizioni_testata($filter=posizione_43_44 eq '${filters.reason.oValue1}'),posizioni_testata($expand=log_posizioni),master`;
             }
             await this.callData(
               this.getOwnerComponent().getModel("calloffV2"),

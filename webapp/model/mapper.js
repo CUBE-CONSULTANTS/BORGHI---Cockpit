@@ -347,7 +347,7 @@ sap.ui.define(
           if (oFilterSet.materiale && oFilterSet.materiale.value) {
             aFilters.push(
               new sap.ui.model.Filter(
-                "posizione_6_28",
+                "posizioni_testata/posizione_6_28",
                 sap.ui.model.FilterOperator.EQ,
                 oFilterSet.materiale.value
               )
@@ -356,7 +356,7 @@ sap.ui.define(
           if (oFilterSet.reason && oFilterSet.reason.value) {
             aFilters.push(
               new sap.ui.model.Filter(
-                "posizione_43_44",
+                "posizioni_testata/posizione_43_44",
                 sap.ui.model.FilterOperator.EQ,
                 oFilterSet.reason.value
               )
