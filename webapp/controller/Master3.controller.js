@@ -197,11 +197,8 @@ sap.ui.define(
    },
    processaItems: function (items) {
     let itemList;
-    if (this.byId("idIconTabBar").getSelectedKey() === "02") {
-     items = items.filter((x) => x.posizione_43_44 !== "35");
-    }
-    itemList = items
-     .map((item) => {
+
+    itemList = items.map((item) => {
       if (item.hasOwnProperty("posizione_6_13")) {
        return `Codice Cliente: ${item.testata.codice_terre_cliente} - Codice cliente materiale: ${item.posizione_6_28} - Progressivo Invio: ${item.testata.progressivo_invio} \n`;
       } else {
@@ -286,7 +283,7 @@ sap.ui.define(
          MessageBox.error("Elaborazione non andata a buon fine");
         }
        } catch (error) {
-        MessageBox.error("Errore durante la ricezione dei dati");
+        MessageBox.error("Errore durante l'elaborazione dei dati");
        } finally {
         that.hideBusy(0);
        }

@@ -182,7 +182,7 @@
                         <m:Button
                           text="Elabora"
                           icon="sap-icon://process"
-                          press="onProcessaButton"
+                          press="onProcessaButtonDetail"
                           type="Emphasized"
                           visible="{=${datiAppoggio>/currentPage} === 'archivio' ? false:true}"
                         />

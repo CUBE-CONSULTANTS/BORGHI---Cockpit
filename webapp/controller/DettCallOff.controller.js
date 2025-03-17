@@ -17,10 +17,10 @@ sap.ui.define(
         formatter: formatter,
         onInit: function () {
           
-          this.getRouter().getRoute("dettCallOff").attachPatternMatched(this._onProductMatched, this);
+          this.getRouter().getRoute("dettCallOff").attachPatternMatched(this._onObjectMatched, this);
         },
 
-        _onProductMatched: async function (oEvent) {
+        _onObjectMatched: async function (oEvent) {
           
           this._id = oEvent.getParameter("arguments").id || this._id || "0";
           this._idMaster = oEvent.getParameter("arguments").idmaster || this._id || "0";
