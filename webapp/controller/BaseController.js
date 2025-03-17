@@ -1475,10 +1475,13 @@ sap.ui.define(
             oBindingContext = oEvent.getSource().getBindingContext("master3CO");
           }
           let objId = oBindingContext.getObject().id;
+          let selectedKey = this.byId("idIconTabBar")?.getSelectedKey();
+          let {tableId, oModel,Entity} = this.getModelAndEntityByPart(selectedKey)
+          debugger
           try {
             this.showBusy(0);
             let base64Edi = await API.readByKey(
-              this.getOwnerComponent().getModel("modelloV2"),
+              oModel,
               "/GetFileEdi",
               { id_testata: objId },
               [],
