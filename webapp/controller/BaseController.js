@@ -1185,6 +1185,7 @@ sap.ui.define(
         },
         //processamento dettagli
         onProcessaButtonDetail: function (oEvent) {
+          debugger
           let table = oEvent.getSource().getParent().getParent()
           let indices = table.getSelectedIndices();
           let items = [];
@@ -1197,7 +1198,6 @@ sap.ui.define(
               return table.getContextByIndex(iIndex).getObject();
           });
           items = items.filter(item => item.posizione_43_44 !== "35");
-
           items = items.map(item => {        
             if (item.stato !== '53' && item.stato !== '64') {
               return item;
@@ -1211,13 +1211,16 @@ sap.ui.define(
               );
               return []; 
           }
-          let itemList = items
-              .map(
-                  (item) =>
-                      `Codice cliente materiale: ${item.codice_cliente_materiale} - ID: ${item.id} - Codice materiale fornitore: ${item.codice_materiale_fornitore}\n`
-              )
-              .join("");
-      
+
+          let itemList = items.map((item) => {
+            if (item.hasOwnProperty("posizione_6_13")) {
+             return `Codice Cliente: ${item.posizione_77_86} - Codice cliente materiale: ${item.posizione_6_28} - Progressivo Invio: ${item.testata.progressivo_invio} \n`;
+            } else {
+             return `Codice Cliente: ${item.testata.codice_cliente} - Codice cliente materiale: ${item.codice_cliente_materiale} - Progressivo Invio: ${item.testata.numero_progressivo_invio} \n`;
+            }
+           })
+           .join("");
+         
           let message = `Vuoi continuare con questi elementi? \n ${itemList}`;
       
           sap.m.MessageBox.confirm(message, {
