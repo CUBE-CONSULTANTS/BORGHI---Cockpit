@@ -1073,10 +1073,10 @@ sap.ui.define(
                     this.getView().byId("idIconTabBar")
                       ? (selectedKey = this.getView().byId("idIconTabBar").getSelectedKey())
                       : undefined;
+                      
               if(selectedKey !== undefined){
                  ({ tableID, oModel, Entity } = this.getModelAndEntityByPart(selectedKey))
               } else{
-                 
                 if(this.getModel("detailData").getProperty("/__metadata").type.includes("Delivery")) {
                   oModel = this.getOwnerComponent().getModel("modelloV2")
                 }else if(this.getModel("detailData").getProperty("/__metadata").type.includes("CalloffService")){
@@ -1545,7 +1545,9 @@ sap.ui.define(
             MessageBox.error("Nessun log disponibile per questa posizione");
             return;
           }
-          let sortedLogs = oData.log.sort((a, b) => {
+          let oDataLog 
+          oData.log === undefined ? oDataLog = oData.log_posizioni.results : oDataLog = oData.log
+          let sortedLogs = oDataLog.sort((a, b) => {
             let dateA = new Date(a.data).getTime(); 
             let dateB = new Date(b.data).getTime();
     

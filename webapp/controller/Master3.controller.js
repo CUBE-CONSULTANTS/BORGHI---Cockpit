@@ -188,11 +188,20 @@ sap.ui.define(
    },
 
    statoButtonPress: function (oEvent) {
-    let lastIndexMessage =
-     oEvent.getSource().getBindingContext("master3").getObject().log.results.length - 1;
-    let message = oEvent.getSource().getBindingContext("master3").getObject().log.results[
+    let oBindingContext 
+    oEvent.getSource().getBindingContext("master3") === undefined ? 
+    oBindingContext  = oEvent.getSource().getBindingContext("master3CO")
+    : oBindingContext = oEvent.getSource().getBindingContext("master3")
+    let lastIndexMessage 
+    oBindingContext.getObject().log? lastIndexMessage = oBindingContext.getObject().log.results.length - 1 : 
+    lastIndexMessage = oBindingContext.getObject().log_posizioni.results.length - 1;
+    let log 
+    oBindingContext.getObject().log? log = oBindingContext.getObject().log.results : 
+    log = oBindingContext.getObject().log_posizioni.results
+    let message = log[
      lastIndexMessage
     ].messaggio;
+
     MessageBox.information(message);
    },
    processaItems: function (items) {
@@ -228,12 +237,15 @@ sap.ui.define(
         let obj = { id: payload };
         let oModel;
         let res;
+        let key
         if (this.byId("idIconTabBar").getSelectedKey() === "01") {
          oModel = this.getOwnerComponent().getModel("modelloV2");
          res = await API.createEntity(oModel, "/Processamento", obj);
+         key = "01"
         } else if (this.byId("idIconTabBar").getSelectedKey() === "02") {
          oModel = this.getOwnerComponent().getModel("calloffV2");
          res = await API.createEntity(oModel, "/Processamento", obj);
+         key = "02"
         }
 
         if (res.results.length > 0) {
@@ -243,7 +255,7 @@ sap.ui.define(
           actions: [sap.m.MessageBox.Action.CLOSE],
           emphasizedAction: sap.m.MessageBox.Action.CLOSE,
           onClose: async function (oAction) {
-           that._refreshData("01");
+           that._refreshData(key);
           },
          });
         } else {
