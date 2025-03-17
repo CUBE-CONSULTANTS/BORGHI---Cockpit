@@ -503,7 +503,8 @@ sap.ui.define(
         getFiltersVariazioni: function (filterbar) {
           const filterMap = {
             "Codice Cliente": "CLIENTE",
-            "Codice Articolo": "KDMAT",
+            "Codice Articolo Fornitore": "KDMAT",
+            "Codice Articolo SAP" : "MATNR"
           };
           let aFilters = [];
           filterbar.getFilterGroupItems().forEach((filter) => {
@@ -515,7 +516,6 @@ sap.ui.define(
               );
             }
           });
-
           return aFilters;
         },
         onFilterBarVariazioniClear: async function (oEvent) {
