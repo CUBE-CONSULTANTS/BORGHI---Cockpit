@@ -242,17 +242,9 @@
               tooltip="Archivia"
               press="moveToArchive" 
               type="Emphasized"
-              visible="{= ${master3CO>posizione_43_44} === '35' }" 
+              visible="{= ${master3CO>posizione_43_44} === '35' &amp;&amp;  ${datiAppoggio>/currentPage} !== 'archivio'}" 
           />
-          <!-- <Button
-              tooltip="Report CallOff"
-              icon="sap-icon://excel-attachment"
-              press="onDownloadReportCallOff"
-              class="sapUiTinyMarginBegin"
-              type="Emphasized"
-              visible="{= ${datiAppoggio>/currentPage} === 'archivio' &amp;&amp; !${master3CO>progressivo_invio} ? true : false
-              || ${datiAppoggio>/currentPage} === 'master3' &amp;&amp; !${master3CO>progressivo_invio} &amp;&amp; ${master3CO>stato} === '53' ? true : false}"
-              /> -->
+        
           </HBox>
 						</ui:template>
 					</ui:Column>

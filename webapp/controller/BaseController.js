@@ -1667,6 +1667,12 @@ sap.ui.define(
             this.hideBusy(0);
           }
         },
+        downloadRow35: function(oEvent){
+          let oRow35 = oEvent.getSource().getBindingContext("master3CO").getObject();
+          let aData = []
+          aData.push(oRow35);
+          this.buildSpreadSheet(aData);
+        },
         dettaglioNav: function (oEvent) {
           let level, detailPath, detail;
           if (
