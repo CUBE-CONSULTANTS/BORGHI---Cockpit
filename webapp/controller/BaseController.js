@@ -146,6 +146,53 @@ sap.ui.define(
             self[dialName].open();
           }
         },
+        //UTILITY X TUTTE LE TABELLE
+        sortCategories: function () {
+          let oTable;
+          let aSorters = [];
+          switch (this.getView().byId("idIconTabBar").getSelectedKey()) {
+            case "01":
+              oTable = this.byId("treetableMain");
+              aSorters = this.sortTables(oTable, [
+                "codice_cliente",
+                "numero_progressivo_invio",
+              ]);
+              break;
+            case "02":
+              oTable = this.byId("treetableCallOff");
+              aSorters = this.sortTables(oTable, [
+                "codice_terre_cliente",
+                "progressivo_invio",
+              ]);
+              break;
+            case "03":
+              oTable = this.byId("treetableSB");
+              aSorters = this.sortTables(oTable, [
+                "customer",
+                "data_ricezione",
+              ]);
+              break;
+            case "06":
+              oTable = this.byId("tableScartati");
+              aSorters = this.sortTables(oTable, [
+                "filename",
+                "data_ricezione",
+              ]);
+              break;
+            default:
+              return;
+          }
+        },
+        sortTables: function (table, aSortFields) {
+          let oBinding = table.getBinding("rows");
+          let aCurrentSorters = oBinding.aSorters || [];
+          let bDescending =
+            aCurrentSorters.length === 0 || !aCurrentSorters[0].bDescending;
+          let aSorters = aSortFields.map(
+            (field) => new sap.ui.model.Sorter(field, bDescending)
+          );
+          oBinding.sort(aSorters);
+        },
         onCollapseAll: function () {
           let oTable;
           let selectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
@@ -188,39 +235,15 @@ sap.ui.define(
             default:
           }
         },
+        //NAVIGAZIONE VERSO VARIAZIONI
         navToAPP: function (oEvent) {
-          let level = oEvent
-            .getSource()
-            .getParent()
-            .getParent()
-            .getBindingContext("master3")
-            .getPath();
-          let oCodArt = oEvent
-            .getSource()
-            .getParent()
-            .getParent()
-            .getBindingContext("master3")
-            .getObject().codice_cliente_materiale;
+          let level = oEvent.getSource().getParent().getParent().getBindingContext("master3").getPath();
+          let oCodArt = oEvent.getSource().getParent().getParent().getBindingContext("master3").getObject().codice_cliente_materiale;
 
           let oCodCliente;
-          oEvent
-            .getSource()
-            .getParent()
-            .getParent()
-            .getBindingContext("master3")
-            .getObject().codice_cliente === null
-            ? (oCodCliente = oEvent
-                .getSource()
-                .getParent()
-                .getParent()
-                .getBindingContext("master3")
-                .getObject().testata.codice_cliente)
-            : (oCodCliente = oEvent
-                .getSource()
-                .getParent()
-                .getParent()
-                .getBindingContext("master3")
-                .getObject().codice_cliente);
+          oEvent.getSource().getParent().getParent().getBindingContext("master3").getObject().codice_cliente === null
+            ? (oCodCliente = oEvent.getSource().getParent().getParent().getBindingContext("master3").getObject().testata.codice_cliente)
+            : (oCodCliente = oEvent.getSource().getParent().getParent().getBindingContext("master3").getObject().codice_cliente);
 
           this.getOwnerComponent()
             .getModel("datiAppoggio")
@@ -230,18 +253,15 @@ sap.ui.define(
             });
           if (level.includes("posizioni")) {
             this.getRouter().navTo("master", {
-              prevApp: this.getOwnerComponent()
-                .getModel("datiAppoggio")
-                .getProperty("/currentPage"),
+              prevApp: this.getOwnerComponent().getModel("datiAppoggio").getProperty("/currentPage"),
             });
           } else {
             this.getRouter().navTo("master2", {
-              prevApp: this.getOwnerComponent()
-                .getModel("datiAppoggio")
-                .getProperty("/currentPage"),
+              prevApp: this.getOwnerComponent().getModel("datiAppoggio").getProperty("/currentPage"),
             });
           }
         },
+        // MC X VARIAZIONI
         _getMatchCode: async function () {
           try {
             this.showBusy(0);
@@ -282,7 +302,7 @@ sap.ui.define(
             this.hideBusy(0);
           }
         },
-
+        //COUNTERS X MONITOR E ARCHIVIO
         _getCounters: async function (filterVal) {
           this.showBusy(0);
           try {
@@ -362,7 +382,7 @@ sap.ui.define(
             this.hideBusy(0);
           }
         },
-
+        //COSTRUZIONE FILTRI X TUTTI I TAB
         onFiltersBuilding: function (oEvent, key) {
           if (key === "01") {
             let aData = this.getModel("master3").getProperty("/");
@@ -500,6 +520,7 @@ sap.ui.define(
             );
           }
         },
+        // FILTRI X APP VARIAZIONI
         getFiltersVariazioni: function (filterbar) {
           const filterMap = {
             "Codice Cliente": "CLIENTE",
@@ -518,6 +539,7 @@ sap.ui.define(
           });
           return aFilters;
         },
+        //CLEAR DELLE FILTERBAR
         onFilterBarVariazioniClear: async function (oEvent) {
           let oFilterBar = oEvent.getSource();
           let aFilterItems = oFilterBar.getFilterGroupItems();
@@ -650,42 +672,8 @@ sap.ui.define(
           // oBinding.filter([]);
           // oBinding.sort([]);
         },
-        sortCategories: function () {
-          let oTable;
-          let aSorters = [];
-          switch (this.getView().byId("idIconTabBar").getSelectedKey()) {
-            case "01":
-              oTable = this.byId("treetableMain");
-              aSorters = this.sortTables(oTable, [
-                "codice_cliente",
-                "numero_progressivo_invio",
-              ]);
-              break;
-            case "02":
-              oTable = this.byId("treetableCallOff");
-              aSorters = this.sortTables(oTable, [
-                "codice_terre_cliente",
-                "progressivo_invio",
-              ]);
-              break;
-            case "03":
-              oTable = this.byId("treetableSB");
-              aSorters = this.sortTables(oTable, [
-                "customer",
-                "data_ricezione",
-              ]);
-              break;
-            case "06":
-              oTable = this.byId("tableScartati");
-              aSorters = this.sortTables(oTable, [
-                "filename",
-                "data_ricezione",
-              ]);
-              break;
-            default:
-              return;
-          }
-        },
+        //FINE CLEAR FILTERBAR
+        // CHIAMATE DI ARCHIVIO E MONITOR SIA IN OBJECTMATCHED CHE CON SEARCH SU FILTERBAR
         onSearchData: async function (oEvent,filterTab) {         
           let oFilterSet;
           let key;
@@ -839,7 +827,7 @@ sap.ui.define(
             );
           }
         },
-
+        //gestione CHIAMATE E BINDING X TAB
         callData: async function (oModel,entity,aFilters,Expands,key,filtrato) {
           let metadata, modelMeta;
           try {
@@ -902,18 +890,8 @@ sap.ui.define(
             this.hideBusy(0);
           }
         },
-        sortTables: function (table, aSortFields) {
-          let oBinding = table.getBinding("rows");
-          let aCurrentSorters = oBinding.aSorters || [];
-          let bDescending =
-            aCurrentSorters.length === 0 || !aCurrentSorters[0].bDescending;
-          let aSorters = aSortFields.map(
-            (field) => new sap.ui.model.Sorter(field, bDescending)
-          );
-          oBinding.sort(aSorters);
-        },
+        // DOWNLOAD DI EXCEL X DETTAGLI
         downloadExcelFileDett: function (oEvent) {
-
           let oModel = this.getModel("detailData");
           let aData = oModel.getProperty("/");
           if (!aData || aData.length === 0) {
@@ -924,6 +902,7 @@ sap.ui.define(
           // controlla se esiste e manda aData.DettaglioMaster3
           this.buildSpreadSheet(aData);
         },
+        //COSTRUZIONE DELLO SHEET
         buildSpreadSheet: function (aExportData) {
           let exportData = Array.isArray(aExportData)
             ? aExportData
@@ -1037,6 +1016,8 @@ sap.ui.define(
           });
           return aCols;
         },
+        // FINE EXCEL VARIAZIONI
+        //DELETE X TUTTI I BUTTON
         onDeletePosition: async function (oEvent) {
           let oTable = oEvent.getSource().getParent().getParent();
           try {
@@ -1090,6 +1071,7 @@ sap.ui.define(
             this.hideBusy(0);
           }
         },
+        // UTILITY X POST (ELABORAZIONE E DELETE)
         _returnPayload: async function (table,action) {
           let indices = table.getSelectedIndices();
           let testate = [];
@@ -1270,7 +1252,7 @@ sap.ui.define(
               }.bind(this), 
           });
         },      
-        // refresh data dopo post
+        // refresh data dopo post X MASTER
         _refreshData: async function (selectedKey) {
           this.showBusy(0);
           try {
@@ -1302,6 +1284,7 @@ sap.ui.define(
             this.hideBusy(0);
           }
         },
+        // REFRESH X DETTAGLI
         _refreshDetailData: async function () {
           this.showBusy(0);
           try {
@@ -1374,13 +1357,7 @@ sap.ui.define(
           );
         },
         openPosizioniDialog: function (oEvent) {
-          let tableId = oEvent
-            .getSource()
-            .getParent()
-            .getParent()
-            .getId()
-            .split("--")
-            .pop();
+          let tableId = oEvent.getSource().getParent().getParent().getId().split("--").pop();
           let oTable = this.byId(tableId);
           Engine.getInstance().show(oTable, ["Columns", "Sorter"], {
             contentHeight: "35rem",
@@ -1393,7 +1370,6 @@ sap.ui.define(
           let sKey = aCustomData.find((data) => data.getKey() === "p13nKey");
           return sKey ? sKey.getValue() : null;
         },
-
         handleStateChange: function (tableId, oEvt) {
           const oTable = this.getView().byId(tableId);
           const oState = oEvt.getParameter("state");
@@ -1482,6 +1458,7 @@ sap.ui.define(
         },
         //fine configurazione Engine x tutte tabelle, da richiamare nei controller dei dettagli,
         // dopo aver mappato le colonne in mapper e definite il custData nelle view di dettaglio
+        //DOWNLOAD EDI, VALIDO X TUTTI I TAB DA AGGIUNGERE I BINDING CONTEXT
         downloadEdi: async function (oEvent) {
           let oBindingContext;
           if (oEvent.getSource().getBindingContext("master3") !== undefined) {
@@ -1522,6 +1499,7 @@ sap.ui.define(
             this.hideBusy(0);
           }
         },
+        // BLOB DA SCARICARE
         base64ToBlob: function (base64, mimeType) {
           base64 = base64.replaceAll("-", "+").replaceAll("_", "/");
           const binaryString = window.atob(base64);
@@ -1532,6 +1510,7 @@ sap.ui.define(
           }
           return new Blob([bytes], { type: mimeType });
         },
+        // GESTIONE CUMULATIVI X ARCHIVIO E MONITOR
         onDownloadCumulativi: async function (oEvent) {
           let numIdoc = oEvent.getSource().getBindingContext("master3").getObject().numero_idoc;
           let dest = oEvent.getSource().getBindingContext("master3").getObject().destinatario;
@@ -1554,6 +1533,7 @@ sap.ui.define(
             this.hideBusy(0);
           }
         },
+        // LOG DEI PROCESSAMENTI
         onStatoPress: function(oEvent) {
           let oSource = oEvent.getSource();
           let oBindingContext = oSource.getBindingContext("detailData");
@@ -1583,6 +1563,7 @@ sap.ui.define(
           this._oDialog.setModel(oModel, "logData");
           this._oDialog.open();
         },      
+        // SPOSTAMENTO IN ARCHIVIO SIA TOOLBAR CHE POSIZIONALE
         moveToArchive: async function (oEvent) {
           let part = oEvent.getSource().getParent().getParent().getParent().getParent().getParent().getSelectedKey();
           let { tableID, oModel, Entity } = this.getModelAndEntityByPart(part);
@@ -1696,12 +1677,15 @@ sap.ui.define(
             this.hideBusy(0);
           }
         },
+        // FINE ARCHIVIAZIONE
+        // REPORT REASON 35
         downloadRow35: function(oEvent){
           let oRow35 = oEvent.getSource().getBindingContext("master3CO").getObject();
           let aData = []
           aData.push(oRow35);
           this.buildSpreadSheet(aData);
         },
+        // NAVIGAZIONE NEI DETTAGLI
         dettaglioNav: function (oEvent) {
           let level, detailPath, detail;
           if (
@@ -1780,6 +1764,7 @@ sap.ui.define(
             prevApp: this.prevApp,
           });
         },
+        //REFRESH FILTRI VARIAZIONI
         refreshOnExit: function () {
           this.getOwnerComponent().getModel("datiAppoggio").setProperty("/filtriNav", "");
           let idMatComboBox = this.byId("idMatComboBox");
