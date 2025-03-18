@@ -29,14 +29,6 @@ sap.ui.define(
             .attachPatternMatched(this._onObjectMatched, this);
         },
         _onObjectMatched: async function (oEvent) {         
-          const oHistory = History.getInstance();
-          this.prevHash = oHistory.getPreviousHash()
-          let operator
-          if(this.prevHash === 'master3'){
-           operator = 'ne' 
-          }else if (this.prevHash === 'archivio'){
-            operator = 'eq'
-          }
           this._id = oEvent.getParameter("arguments").id || this._id || "0";
           this._idMaster = oEvent.getParameter("arguments").idmaster || this._id || "0";
           
@@ -57,10 +49,6 @@ sap.ui.define(
             this.hideBusy(0)
           }  
         },
-        onReturn: function(){
-          this.prevHash === 'archivio'? this.navToArchive(): this.handleCloseDetail()
-        },
-        
         buttonDetailSched: function (oEvent) {
           
           let detailPath = oEvent.getSource().getParent().getBindingContext("detailData").getPath();
