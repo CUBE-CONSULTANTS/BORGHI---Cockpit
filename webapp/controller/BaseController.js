@@ -1736,6 +1736,7 @@ sap.ui.define(
           ) {
             detailPath = oEvent.getSource().getParent().getBindingContext("master3SB").getPath();
             detail = this.getModel("master3SB").getProperty(`${detailPath}`);
+            debugger
             this.getRouter().navTo("dettSelfBilling", {
               id: detail.id,
               layout: "OneColumn",

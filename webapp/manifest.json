@@ -269,7 +269,7 @@
 					]
         },
         {
-					"pattern": "dettSelfBilling/{id}",
+					"pattern": "dettSelfBilling/{id}/{layout}",
 					"name": "dettSelfBilling",
 					"target": [
             
