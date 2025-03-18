@@ -1584,7 +1584,7 @@ sap.ui.define(
                 oModel: this.getOwnerComponent().getModel(""),
                 Entity: "",
               };
-            case "04":
+            case "03":
               return {
                 tableID: "treetableSB",
                 oModel: this.getOwnerComponent().getModel(""),

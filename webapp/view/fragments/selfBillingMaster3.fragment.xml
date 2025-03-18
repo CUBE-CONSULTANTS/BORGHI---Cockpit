@@ -125,7 +125,7 @@ xmlns:mvc="sap.ui.core.mvc">
             <Button
             text="Archivia"
             icon="sap-icon://bbyd-active-sales"
-            press=""
+            press="moveToArchive"
             type="Emphasized"
             visible="{=${datiAppoggio>/currentPage} === 'archivio' ? false:true}"
            
