@@ -15,7 +15,7 @@ sap.ui.define(
         },
 
         _onObject: async function (oEvent) {
-          debugger
+          
           this._id =oEvent.getParameter("arguments").id || this._id || "0";
           try {
             this.showBusy(0);
@@ -26,7 +26,7 @@ sap.ui.define(
               { id: this._id},
               [],
               [
-                "dettaglio_fattura,log_testata,dettaglio_fattura/riferimento_ddt,dettaglio_fattura/riferimento_ddt/riga_fattura",
+                "dettaglio_fattura,dettaglio_fattura/riferimento_ddt,dettaglio_fattura/riferimento_ddt/riga_fattura",
               ],
             );
             console.log(dettaglio);

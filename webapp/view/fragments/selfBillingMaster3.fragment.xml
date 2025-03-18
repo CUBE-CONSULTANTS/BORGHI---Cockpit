@@ -28,7 +28,7 @@ xmlns:mvc="sap.ui.core.mvc">
                       tooltip="Data di ricezione"
                       secondaryCalendarType="Gregorian"
                       change="handleChange"
-                      value="{filtersModel>/selfBilling/dataRic}" 
+                      value="{filtersModel>/selfBilling/dataRic}"
                       valueFormat="dd/MM/yyyy"
                       displayFormat="dd/MM/yyyy"
                     />

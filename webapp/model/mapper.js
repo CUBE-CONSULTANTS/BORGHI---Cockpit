@@ -327,7 +327,6 @@ sap.ui.define(
         if (key === "02") {
           if (oFilterSet.dataRic) {
             let oDataRic = formatter.returnDate(oFilterSet.dataRic,"dd/MM/yyyy","yyyyMMdd");
-           
             aFilters.push(
               new sap.ui.model.Filter(
                 "data_ricezione",
@@ -366,8 +365,8 @@ sap.ui.define(
         }
         if (key === "03") {
           if (oFilterSet.dataRic) {
-            let oDataRic = formatter.returnDate(oFilterSet.dataRic,"dd/MM/yyyy","yyyyMMdd");
-           
+            let oDataRic = formatter.parseDate(oFilterSet.dataRic);
+                 
             aFilters.push(
               new sap.ui.model.Filter(
                 "data_ricezione",

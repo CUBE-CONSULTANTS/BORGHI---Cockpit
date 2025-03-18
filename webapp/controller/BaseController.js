@@ -796,24 +796,17 @@ sap.ui.define(
               filtrato
             );
           } else if ( oEvent &&
-            oEvent
-              .getParameters()
-              .selectionSet[0].getBindingInfo("value")
-              .parts[0].path.includes("selfBilling") || !oEvent &&  filterTab === '03'
+            oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("selfBilling") || !oEvent &&  filterTab === '03'
           ) {
-            oFilterSet =
-              this.getModel("filtersModel").getProperty("/selfBilling");
-            let aFilters = mapper.buildFilters(
-              oFilterSet,
-              (key = "03"),
-              operator
-            );
+            oFilterSet = this.getModel("filtersModel").getProperty("/selfBilling");
+            let aFilters = mapper.buildFilters(oFilterSet,(key = "03"),operator);
+            
             await this.callData(
               this.getOwnerComponent().getModel("selfBillingV2"),
               "/Testata",
               aFilters,
               [
-                "dettaglio_fattura,log_testata,dettaglio_fattura/riferimento_ddt,dettaglio_fattura/riferimento_ddt/riga_fattura",
+                "dettaglio_fattura,dettaglio_fattura/riferimento_ddt,dettaglio_fattura/riferimento_ddt/riga_fattura",
               ],
               "03",
               false
@@ -1736,7 +1729,7 @@ sap.ui.define(
           ) {
             detailPath = oEvent.getSource().getParent().getBindingContext("master3SB").getPath();
             detail = this.getModel("master3SB").getProperty(`${detailPath}`);
-            debugger
+            
             this.getRouter().navTo("dettSelfBilling", {
               id: detail.id,
               layout: "OneColumn",
