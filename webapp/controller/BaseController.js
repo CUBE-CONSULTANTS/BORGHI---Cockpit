@@ -1432,6 +1432,12 @@ sap.ui.define(
           });
           if (oState.Sorter) {
             const aSorter = [];
+            const priorityMap = {
+              51: 1,  
+              64: 2,
+              53: 3,
+              null: 4,   
+            };
             oState.Sorter.forEach((oSorter) => {
               const oColumn = oTable
                 .getColumns()
@@ -1447,10 +1453,34 @@ sap.ui.define(
 
                 const oProperty = this.oMetadataHelper.getProperty(oSorter.key);
                 if (oProperty) {
-                  aSorter.push(new Sorter(oProperty.path, oSorter.descending));
+                  if (oSorter.key === "stato_col") {
+                    const oCustomSorter = new Sorter("stato", oSorter.descending);
+                    oCustomSorter.fnCompare = function(a, b) {
+                      let valueA = a, valueB = b;
+                      if (typeof a === 'object' && a !== null) {
+                        if (a.getProperty) valueA = a.getProperty("stato");
+                        else if (a.getObject) valueA = a.getObject().stato;
+                        else if (a.oData) valueA = a.oData.stato;
+                      }
+                      
+                      if (typeof b === 'object' && b !== null) {
+                        if (b.getProperty) valueB = b.getProperty("stato");
+                        else if (b.getObject) valueB = b.getObject().stato;
+                        else if (b.oData) valueB = b.oData.stato;
+                      }
+                      const priorityA = priorityMap[valueA] !== undefined ? priorityMap[valueA] : 999;
+                      const priorityB = priorityMap[valueB] !== undefined ? priorityMap[valueB] : 999;
+                      return priorityA - priorityB;
+                    };
+                    aSorter.push(oCustomSorter);               
+                  } else {
+                    aSorter.push(new Sorter(oProperty.path, oSorter.descending));
+                  }
                 }
               }
             });
+          
+            
             if (oTable.getBinding("rows")) {
               oTable.getBinding("rows").sort(aSorter);
             }

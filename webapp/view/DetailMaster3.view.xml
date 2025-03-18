@@ -225,7 +225,7 @@
                         showSortMenuEntry="false"
                         tooltip="Stato"
                         app:p13nKey="stato_col"
-                        sortProperty="stato"
+                        sortProperty="stato_col"
                       >
                         <m:Label text="Stato" />
                         <ui:template>
