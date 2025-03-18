@@ -11,10 +11,10 @@ sap.ui.define(
           
           this.getRouter()
             .getRoute("dettSelfBilling")
-            .attachPatternMatched(this._onProductMatched, this);
+            .attachPatternMatched(this._onObjecth, this);
         },
 
-        _onProductMatched: function (oEvent) {
+        _onObjecth: function (oEvent) {
           this._id =oEvent.getParameter("arguments").id || this._id || "0";
           let datiElementoSelect = this.getOwnerComponent().getModel("master3SB").getProperty("/").find((x) => (x.id = this._id));
           datiElementoSelect.dettaglio_fattura.forEach(pos=> {
@@ -38,8 +38,7 @@ sap.ui.define(
           let oTable = oEvent.getSource().getParent().getParent()
             oTable.collapseAll();
         },
-        onExpandFirstLevel: function (oEvent) {
-          
+        onExpandFirstLevel: function (oEvent) {        
           let oTable = oEvent.getSource().getParent().getParent()
           oTable.expandToLevel(2);
           

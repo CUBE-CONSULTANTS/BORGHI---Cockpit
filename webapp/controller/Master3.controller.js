@@ -50,7 +50,6 @@ sap.ui.define(
     this.showBusy(0);
     let selectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
     !selectedKey ? (selectedKey = key) : (selectedKey = selectedKey);
-    let oModel;
     switch (selectedKey) {
      case "01":
       await this.onSearchData(undefined, selectedKey)

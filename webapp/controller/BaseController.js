@@ -695,8 +695,7 @@ sap.ui.define(
               return;
           }
         },
-        onSearchData: async function (oEvent,filterTab) {
-          
+        onSearchData: async function (oEvent,filterTab) {         
           let oFilterSet;
           let key;
           let operator;
@@ -927,12 +926,15 @@ sap.ui.define(
           oBinding.sort(aSorters);
         },
         downloadExcelFileDett: function (oEvent) {
+
           let oModel = this.getModel("detailData");
           let aData = oModel.getProperty("/");
           if (!aData || aData.length === 0) {
             MessageToast.show("Nessun dato disponibile per l'esportazione");
             return;
           }
+          debugger
+          // controlla se esiste e manda aData.DettaglioMaster3
           this.buildSpreadSheet(aData);
         },
         buildSpreadSheet: function (aExportData) {
