@@ -710,16 +710,22 @@ sap.ui.define(
             };
             Object.keys(filters).forEach((key) => {
               if (filters[key]) {
-                let index = aFilters.findIndex((f) => f.sPath === key);
+                let index
+                if (key === "materiale"){
+                  index = aFilters.findIndex((f) => f.sPath === "posizioni/codice_cliente_materiale");
+                }else{
+                  index = aFilters.findIndex((f) => f.sPath === key);
+                }
                 if (index !== -1) aFilters.splice(index, 1);
               }
+             
             });
             let expandQuery = `posizioni,posizioni($expand=log,schedulazioni,testata),master`;
             if (filters.stato) {
               expandQuery = `posizioni($filter=stato eq ${filters.stato.oValue1}),posizioni($expand=log,schedulazioni,testata),master`;
             }
             if (filters.materiale) {
-              filtrato = true;
+              // filtrato = true;
               expandQuery = `posizioni($filter=codice_cliente_materiale eq '${filters.materiale.oValue1}'),posizioni($expand=log,schedulazioni,testata),master`;
             }
             if (filters.messaggio) {

@@ -257,8 +257,7 @@ sap.ui.define(
             archivVal
           ))
           if (oFilterSet.dataRic) {
-            let oDataRic = formatter.returnDate(oFilterSet.dataRic,"dd/MM/yyyy","yyyyMMdd");
-            
+            let oDataRic = formatter.returnDate(oFilterSet.dataRic,"dd/MM/yyyy","yyyyMMdd");            
             aFilters.push(
               new sap.ui.model.Filter(
                 "data_ricezione",
