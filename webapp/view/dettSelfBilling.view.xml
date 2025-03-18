@@ -572,15 +572,6 @@
           </ObjectPageSubSection>
         </subSections>
       </ObjectPageSection>
-      <ObjectPageSection title="LOG">
-        <subSections>
-          <ObjectPageSubSection>
-            <blocks>
-              <m:Text text="Processamento" />
-            </blocks>
-          </ObjectPageSubSection>
-        </subSections>
-      </ObjectPageSection>
-    </sections>
+         </sections>
   </ObjectPageLayout>
 </mvc:View>
