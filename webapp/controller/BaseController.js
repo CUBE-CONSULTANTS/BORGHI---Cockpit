@@ -536,6 +536,7 @@ sap.ui.define(
           await this._getMatchCode();
         },
         onFilterBarClear: async function (oEvent) {
+          
           let operator, archivVal;
           this.getModel("datiAppoggio").getProperty("/currentPage") ===
           "archivio"
@@ -568,11 +569,7 @@ sap.ui.define(
           }
           this.getModel("filtersModel").refresh(true);
           let modelMeta;
-          if (
-            oEvent
-              .getParameters()
-              .selectionSet[0].getBindingInfo("value")
-              .parts[0].path.includes("delivery")
+          if ( oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("delivery")
           ) {
             modelMeta = await this.callData(
               this.getOwnerComponent().getModel("modelloV2"),
@@ -598,15 +595,9 @@ sap.ui.define(
             modelMeta = await this.callData(
               this.getOwnerComponent().getModel("calloffV2"),
               "/Testata",
+              [],
               [
-                new sap.ui.model.Filter(
-                  "archiviazione",
-                  sap.ui.model.FilterOperator.EQ,
-                  archivVal
-                ),
-              ],
-              [
-                "master,posizioni_testata($filter=archiviazione eq false),posizioni_testata($expand=log_posizioni)",
+                `master,posizioni_testata($filter=archiviazione eq '${archivVal}'),posizioni_testata($expand=log_posizioni)`,
               ],
               "02",
               false
@@ -1080,7 +1071,7 @@ sap.ui.define(
                   oModel = this.getOwnerComponent().getModel("modelloV2")
                 }else if(this.getModel("detailData").getProperty("/__metadata").type.includes("CalloffService")){
                   oModel = this.getOwnerComponent().getModel("calloffV2")
-                }else if(this.getModel("detailData").getProperty("/__metadata").type.includes("")){
+                }else if(this.getModel("detailData").getProperty("/DettaglioMaster3/__metadata").type.includes("SelfBillingService")){
                     oModel = this.getOwnerComponent().getModel("selfBillingV2")
                 }  
               }                 

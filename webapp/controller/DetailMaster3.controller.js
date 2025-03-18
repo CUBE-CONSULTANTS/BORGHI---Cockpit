@@ -26,10 +26,9 @@ sap.ui.define(
         onInit: function () {
           this.getRouter()
             .getRoute("detailMaster3")
-            .attachPatternMatched(this._onProductMatched, this);
+            .attachPatternMatched(this._onObjectMatched, this);
         },
-        _onProductMatched: async function (oEvent) {
-          
+        _onObjectMatched: async function (oEvent) {         
           const oHistory = History.getInstance();
           this.prevHash = oHistory.getPreviousHash()
           let operator
@@ -46,7 +45,6 @@ sap.ui.define(
             let dettaglio = await API.readByKey( this.getOwnerComponent().getModel("modelloV2"), "/Testata", {id: this._id, id_master: this._idMaster}, [], [
               `posizioni,posizioni($expand=log,schedulazioni,testata),master`,
             ])
-            // dettaglio.master.data_ricezione = formatter.formatDateString(dettaglio.master.data_ricezione)
             let detailModel = new JSONModel(dettaglio);
             detailModel.getProperty("/posizioni/results").forEach((pos) => {  
               pos.log = Object.values(pos.log.results);

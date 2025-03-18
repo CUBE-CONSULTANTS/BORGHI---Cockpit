@@ -20,8 +20,13 @@ sap.ui.define(
           this.getRouter().getRoute("dettCallOff").attachPatternMatched(this._onObjectMatched, this);
         },
 
-        _onObjectMatched: async function (oEvent) {
-          
+        _onObjectMatched: async function (oEvent) {      
+          let archivVal
+          this.getModel("datiAppoggio").getProperty("/currentPage") ===
+          "archivio"
+            ? (archivVal = true)
+            : (archivVal = false);
+
           this._id = oEvent.getParameter("arguments").id || this._id || "0";
           this._idMaster = oEvent.getParameter("arguments").idmaster || this._id || "0";
           try {
@@ -32,7 +37,9 @@ sap.ui.define(
               "/Testata",
               { id: this._id, id_master: this._idMaster },
               [],
-              ["master,posizioni_testata($expand=log_posizioni)"]
+              [`master,posizioni_testata($filter=archiviazione eq '${archivVal}'),posizioni_testata($expand=log_posizioni)`,
+              ]
+
             );
 
             let detailModel = new JSONModel(dettaglio);

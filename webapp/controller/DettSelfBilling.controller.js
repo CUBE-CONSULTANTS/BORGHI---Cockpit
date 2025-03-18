@@ -11,10 +11,11 @@ sap.ui.define(
           
           this.getRouter()
             .getRoute("dettSelfBilling")
-            .attachPatternMatched(this._onObjecth, this);
+            .attachPatternMatched(this._onObject, this);
         },
 
-        _onObjecth: function (oEvent) {
+        _onObject: function (oEvent) {
+          
           this._id =oEvent.getParameter("arguments").id || this._id || "0";
           let datiElementoSelect = this.getOwnerComponent().getModel("master3SB").getProperty("/").find((x) => (x.id = this._id));
           datiElementoSelect.dettaglio_fattura.forEach(pos=> {
