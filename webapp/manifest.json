@@ -71,7 +71,7 @@
 				"odataVersion": "2.0"
 				}
 			}
-	}
+	  }
 	},
 	"sap.ui5": {
 		"flexEnabled": false,

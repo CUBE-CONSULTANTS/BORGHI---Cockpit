@@ -795,27 +795,33 @@ sap.ui.define(
               "02",
               filtrato
             );
-          } else if ( oEvent &&
-            oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("selfBilling") || !oEvent &&  filterTab === '03'
+          } else if ( oEvent &&  oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("selfBilling") || !oEvent &&  filterTab === '03'
           ) {
             oFilterSet = this.getModel("filtersModel").getProperty("/selfBilling");
-            let aFilters = mapper.buildFilters(oFilterSet,(key = "03"),operator);
-            
+            let aFilters = mapper.buildFilters(oFilterSet,(key = "03"),operator);     
+            let filters = {
+              fatture:aFilters.find((f) => f.sPath === "dettaglio_fattura/numero_fattura") 
+            };
+            Object.keys(filters).forEach((key) => {
+              if (filters[key]) {
+                let index = aFilters.findIndex((f) => f.sPath === key);
+                if (index !== -1) aFilters.splice(index, 1);
+              }
+            });      
+            let expandQuery = `dettaglio_fattura,dettaglio_fattura/riferimento_ddt,dettaglio_fattura/riferimento_ddt/riga_fattura`;
+            if(filters.fatture){
+              expandQuery = `dettaglio_fattura($filter=numero_fattura eq '${filters.fatture.oValue1}'),dettaglio_fattura/riferimento_ddt,dettaglio_fattura/riferimento_ddt/riga_fattura`;
+            }
             await this.callData(
               this.getOwnerComponent().getModel("selfBillingV2"),
               "/Testata",
               aFilters,
-              [
-                "dettaglio_fattura,dettaglio_fattura/riferimento_ddt,dettaglio_fattura/riferimento_ddt/riga_fattura",
-              ],
+              [expandQuery],
               "03",
               false
             );
           } else if ( oEvent &&
-            oEvent
-              .getParameters()
-              .selectionSet[0].getBindingInfo("value")
-              .parts[0].path.includes("scartati") || !oEvent &&  filterTab === '06'
+            oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("scartati") || !oEvent &&  filterTab === '06'
           ) {
             oFilterSet = this.getModel("filtersModel").getProperty("/scartati");
             let aFilters = mapper.buildFilters(
@@ -834,14 +840,7 @@ sap.ui.define(
           }
         },
 
-        callData: async function (
-          oModel,
-          entity,
-          aFilters,
-          Expands,
-          key,
-          filtrato
-        ) {
+        callData: async function (oModel,entity,aFilters,Expands,key,filtrato) {
           let metadata, modelMeta;
           try {
             metadata = await API.getEntity(oModel, entity, aFilters, Expands);
@@ -883,6 +882,7 @@ sap.ui.define(
               this.getOwnerComponent().setModel(modelMeta, "master3CO");
               this.getModel("master3CO").setSizeLimit(1000000);
             } else if (key === "03") {
+              
               modelMeta = new JSONModel(metadata.results);
               modelMeta.getProperty("/").forEach((testata) => {
                 testata.dettaglio_fattura = Object.values(

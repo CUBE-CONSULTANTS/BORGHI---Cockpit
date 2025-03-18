@@ -365,13 +365,17 @@ sap.ui.define(
         }
         if (key === "03") {
           if (oFilterSet.dataRic) {
-            let oDataRic = formatter.parseDate(oFilterSet.dataRic);
-                 
+            let oDataRic = formatter.returnDate(oFilterSet.dataRic,"dd/MM/yyyy","yyyyMMdd");
+            // eq 2025-01-22T00:00:00Z    
+            let year = oDataRic.substring(0, 4);
+            let month = oDataRic.substring(4, 6);
+            let day = oDataRic.substring(6, 8);
+            let formattedDate = new Date(`${year}-${month}-${day}T00:00:00Z`).toISOString()
             aFilters.push(
               new sap.ui.model.Filter(
                 "data_ricezione",
                 sap.ui.model.FilterOperator.EQ,
-                oDataRic
+                formattedDate
               )
             );
           }
