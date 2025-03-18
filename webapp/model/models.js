@@ -45,7 +45,6 @@ sap.ui.define(
 							value: null,
 							items: [],
 						},
-            dataCons: null,
             cliente: {
 							value: null,
 							items: [],

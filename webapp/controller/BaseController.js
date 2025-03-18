@@ -695,7 +695,8 @@ sap.ui.define(
               return;
           }
         },
-        onSearchData: async function (oEvent) {
+        onSearchData: async function (oEvent,filterTab) {
+          
           let oFilterSet;
           let key;
           let operator;
@@ -703,9 +704,8 @@ sap.ui.define(
           this.getModel("datiAppoggio").getProperty("/currentPage") ==="archivio"
             ? (operator = "eq")
             : (operator = "ne");
-          if (
-            oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("delivery")
-          ) {
+          if (oEvent && oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("delivery")
+           || !oEvent &&  filterTab === '01') {
             oFilterSet = this.getModel("filtersModel").getProperty("/delivery");
             let aFilters = mapper.buildFilters(
               oFilterSet,
@@ -754,11 +754,11 @@ sap.ui.define(
               "01",
               filtrato
             );
-          } else if (
+          } else if ( oEvent &&
             oEvent
               .getParameters()
               .selectionSet[0].getBindingInfo("value")
-              .parts[0].path.includes("callOff")
+              .parts[0].path.includes("callOff")  || !oEvent &&  filterTab === '02'
           ) {
             oFilterSet = this.getModel("filtersModel").getProperty("/callOff");
             let aFilters = mapper.buildFilters(
@@ -802,11 +802,11 @@ sap.ui.define(
               "02",
               filtrato
             );
-          } else if (
+          } else if ( oEvent &&
             oEvent
               .getParameters()
               .selectionSet[0].getBindingInfo("value")
-              .parts[0].path.includes("selfBilling")
+              .parts[0].path.includes("selfBilling") || !oEvent &&  filterTab === '03'
           ) {
             oFilterSet =
               this.getModel("filtersModel").getProperty("/selfBilling");
@@ -825,11 +825,11 @@ sap.ui.define(
               "03",
               false
             );
-          } else if (
+          } else if ( oEvent &&
             oEvent
               .getParameters()
               .selectionSet[0].getBindingInfo("value")
-              .parts[0].path.includes("scartati")
+              .parts[0].path.includes("scartati") || !oEvent &&  filterTab === '06'
           ) {
             oFilterSet = this.getModel("filtersModel").getProperty("/scartati");
             let aFilters = mapper.buildFilters(
