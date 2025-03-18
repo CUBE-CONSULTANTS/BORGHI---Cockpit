@@ -690,18 +690,17 @@ sap.ui.define(
           let oFilterSet;
           let key;
           let operator;
+          let valPosArch 
           let filtrato = false;
           this.getModel("datiAppoggio").getProperty("/currentPage") ==="archivio"
             ? (operator = "eq")
             : (operator = "ne");
+          operator === 'ne' ? valPosArch = false : valPosArch = true  
+          //GESTIONE FILTRI DELFOR  
           if (oEvent && oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("delivery")
            || !oEvent &&  filterTab === '01') {
             oFilterSet = this.getModel("filtersModel").getProperty("/delivery");
-            let aFilters = mapper.buildFilters(
-              oFilterSet,
-              (key = "01"),
-              operator
-            );
+            let aFilters = mapper.buildFilters(oFilterSet,(key = "01"),operator);
             let filters = {
               data_ricezione: aFilters.find((f) => f.sPath === "data_ricezione"),
               stato: aFilters.find((f) => f.sPath === "stato"),
@@ -718,29 +717,29 @@ sap.ui.define(
                 }
                 if (index !== -1) aFilters.splice(index, 1);
               }
-             
             });
             let expandQuery = `posizioni,posizioni($expand=log,schedulazioni,testata),master`;
+
+            let posizioniFilter = "";
+            let masterFilter = "";
+            let logFilter = "";
             if (filters.stato) {
-              expandQuery = `posizioni($filter=stato eq ${filters.stato.oValue1}),posizioni($expand=log,schedulazioni,testata),master`;
+              posizioniFilter += `stato eq '${filters.stato.oValue1}'`;
             }
             if (filters.materiale) {
-              // filtrato = true;
-              expandQuery = `posizioni($filter=codice_cliente_materiale eq '${filters.materiale.oValue1}'),posizioni($expand=log,schedulazioni,testata),master`;
+              posizioniFilter += posizioniFilter ? ` and ` : "";
+              posizioniFilter += `codice_cliente_materiale eq '${filters.materiale.oValue1}'`;
             }
             if (filters.messaggio) {
               filtrato = true;
-              filters.messaggio.oValue1 = filters.messaggio.oValue1.replace(
-                /'/g,
-                "''"
-              );
-              expandQuery = `posizioni,posizioni($expand=log($filter=messaggio eq '${filters.messaggio.oValue1}'),schedulazioni,testata),master`;
+              filters.messaggio.oValue1 = filters.messaggio.oValue1.replace(/'/g, "''");
+              logFilter = `messaggio eq '${filters.messaggio.oValue1}'`;
             }
             if (filters.data_ricezione) {
-              expandQuery = `posizioni,posizioni($expand=log,schedulazioni,testata),master($filter=data_ricezione eq '${filters.data_ricezione.oValue1}')`;
+              masterFilter = `data_ricezione eq '${filters.data_ricezione.oValue1}'`;
             }
-            if (filters.stato && filters.messaggio && filters.data_ricezione) {
-              expandQuery = `posizioni($filter=stato eq '${filters.stato.oValue1}'),posizioni($expand=log($filter=messaggio eq '${filters.messaggio.oValue1}'),schedulazioni,testata),master($filter=data_ricezione eq '${filters.data_ricezione.oValue1}')`;
+            if (posizioniFilter) {
+              expandQuery = `posizioni($filter=${posizioniFilter}),posizioni($expand=log,schedulazioni,testata),master`;
             }
             await this.callData(
               this.getOwnerComponent().getModel("modelloV2"),
@@ -750,12 +749,8 @@ sap.ui.define(
               "01",
               filtrato
             );
-          } else if ( oEvent &&
-            oEvent
-              .getParameters()
-              .selectionSet[0].getBindingInfo("value")
-              .parts[0].path.includes("callOff")  || !oEvent &&  filterTab === '02'
-          ) {
+          } // GESTIONE FILTRI CALLOFF
+          else if ( oEvent && oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("callOff")  || !oEvent &&  filterTab === '02') {
             oFilterSet = this.getModel("filtersModel").getProperty("/callOff");
             let aFilters = mapper.buildFilters(
               oFilterSet,
@@ -781,18 +776,18 @@ sap.ui.define(
               }
             });
             
-            let valPosArch 
-            operator === 'ne' ? valPosArch = false : valPosArch = true
-            let expandQuery = `posizioni_testata($filter=archiviazione eq '${valPosArch}'),posizioni_testata($expand=log_posizioni,testata),master`;
-            if (filters.data_ricezione) {
-              expandQuery = `posizioni_testata($filter=archiviazione eq '${valPosArch}'),posizioni_testata($expand=log_posizioni,testata),master($filter=data_ricezione eq '${filters.data_ricezione.oValue1}')`;
-            }
+            let posizioniFilter = `archiviazione eq '${valPosArch}'`
             if (filters.materiale) {
-              expandQuery = `posizioni_testata($filter=archiviazione eq '${valPosArch}' and posizione_6_28 eq '${filters.materiale.oValue1}'),posizioni_testata($expand=log_posizioni,testata),master`;
+              posizioniFilter += ` and posizione_6_28 eq '${filters.materiale.oValue1}'`;
             }
             if (filters.reason) {
-              expandQuery = `posizioni_testata($filter=archiviazione eq '${valPosArch}' and posizione_43_44 eq '${filters.reason.oValue1}'),posizioni_testata($expand=log_posizioni,testata),master`;
+              posizioniFilter += ` and posizione_43_44 eq '${filters.reason.oValue1}'`;
             }
+            let masterFilter = '';
+            if (filters.data_ricezione) {
+              masterFilter = `($filter=data_ricezione eq '${filters.data_ricezione.oValue1}')`;
+            }
+            let expandQuery = `posizioni_testata($filter=${posizioniFilter}),posizioni_testata($expand=log_posizioni,testata),master${masterFilter}`
             await this.callData(
               this.getOwnerComponent().getModel("calloffV2"),
               "/Testata",
@@ -801,8 +796,8 @@ sap.ui.define(
               "02",
               filtrato
             );
-          } else if ( oEvent &&  oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("selfBilling") || !oEvent &&  filterTab === '03'
-          ) {
+          } // GESTIONE FILTRI SELFBILLING
+           else if ( oEvent &&  oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("selfBilling") || !oEvent &&  filterTab === '03') {
             oFilterSet = this.getModel("filtersModel").getProperty("/selfBilling");
             let aFilters = mapper.buildFilters(oFilterSet,(key = "03"),operator);     
             let filters = {
@@ -826,9 +821,8 @@ sap.ui.define(
               "03",
               false
             );
-          } else if ( oEvent &&
-            oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("scartati") || !oEvent &&  filterTab === '06'
-          ) {
+          } //GESTIONE FILTRI SCARTATI
+          else if ( oEvent && oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("scartati") || !oEvent &&  filterTab === '06' ) {
             oFilterSet = this.getModel("filtersModel").getProperty("/scartati");
             let aFilters = mapper.buildFilters(
               oFilterSet,
