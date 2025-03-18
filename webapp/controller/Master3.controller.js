@@ -165,7 +165,6 @@ sap.ui.define(
    },
    processaItems: function (items) {
     let itemList;
-    
     if (this.byId("idIconTabBar").getSelectedKey() === "02") {
       items = items.filter((x) => x.posizione_43_44 !== "35");
     }  

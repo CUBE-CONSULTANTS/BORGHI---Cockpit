@@ -777,15 +777,15 @@ sap.ui.define(
             
             let valPosArch 
             operator === 'ne' ? valPosArch = false : valPosArch = true
-            let expandQuery = `posizioni_testata($filter=archiviazione eq '${valPosArch}'),posizioni_testata($expand=log_posizioni),master`;
+            let expandQuery = `posizioni_testata($filter=archiviazione eq '${valPosArch}'),posizioni_testata($expand=log_posizioni,testata),master`;
             if (filters.data_ricezione) {
-              expandQuery = `posizioni_testata($filter=archiviazione eq '${valPosArch}'),posizioni_testata($expand=log_posizioni),master($filter=data_ricezione eq '${filters.data_ricezione.oValue1}')`;
+              expandQuery = `posizioni_testata($filter=archiviazione eq '${valPosArch}'),posizioni_testata($expand=log_posizioni,testata),master($filter=data_ricezione eq '${filters.data_ricezione.oValue1}')`;
             }
             if (filters.materiale) {
-              expandQuery = `posizioni_testata($filter=archiviazione eq '${valPosArch}' and posizione_6_28 eq '${filters.materiale.oValue1}'),posizioni_testata($expand=log_posizioni),master`;
+              expandQuery = `posizioni_testata($filter=archiviazione eq '${valPosArch}' and posizione_6_28 eq '${filters.materiale.oValue1}'),posizioni_testata($expand=log_posizioni,testata),master`;
             }
             if (filters.reason) {
-              expandQuery = `posizioni_testata($filter=archiviazione eq '${valPosArch}' and posizione_43_44 eq '${filters.reason.oValue1}'),posizioni_testata($expand=log_posizioni),master`;
+              expandQuery = `posizioni_testata($filter=archiviazione eq '${valPosArch}' and posizione_43_44 eq '${filters.reason.oValue1}'),posizioni_testata($expand=log_posizioni,testata),master`;
             }
             await this.callData(
               this.getOwnerComponent().getModel("calloffV2"),
