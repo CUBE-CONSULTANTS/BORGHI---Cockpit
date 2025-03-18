@@ -168,19 +168,26 @@ sap.ui.define(
     }
    },
    onMaterialiComboBoxChange: async function(oEvent){
-    let idMatnrComboBox = this.byId("idMatnrComboBox");
-    if(idMatnrComboBox.getValue){
-      idMatnrComboBox.setValue("")
-    }
     try {
      this.showBusy(0);
      let materialiSap = await API.getEntity(this.getOwnerComponent().getModel("modelloV2"),"/EIGHTWEEK_MC_KDMAT",[new Filter("Kdmat", FilterOperator.EQ, oEvent.getSource().getValue().split(" -")[0]), new Filter("Azione", FilterOperator.EQ, "MATNR")],[]);
-     this.getModel("matchcode").setProperty("/materialiSap", materialiSap.results);
+     this.getModel("matchcode").setProperty("/materiali", materialiSap.results);
     } catch (error) {
      MessageBox.error("Errore durante il recupero dei materiali Sap");
     } finally {
      this.hideBusy(0);
     }
+   },
+   onMaterialiSapChange: async function(oEvent){
+    try {
+      this.showBusy(0);
+      let materiali = await API.getEntity(this.getOwnerComponent().getModel("modelloV2"),"/EIGHTWEEK_MC_KDMAT",[new Filter("Matnr", FilterOperator.EQ, oEvent.getSource().getValue().split(" -")[0]), new Filter("Azione", FilterOperator.EQ, "KDMAT")],[]);
+      this.getModel("matchcode").setProperty("/materiali", materiali.results);
+     } catch (error) {
+      MessageBox.error("Errore durante il recupero dei materiali Sap");
+     } finally {
+      this.hideBusy(0);
+      }
    },
    navToHome: function () {
     this.refreshOnExit();

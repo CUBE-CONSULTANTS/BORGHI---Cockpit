@@ -357,7 +357,7 @@ sap.ui.define(
               fileScart.results
             );
           } catch (error) {
-            MessageBox.error("Errore durante il recupero dei Dati");
+            console.log("Errore durante il recupero dei Dati");
           } finally {
             this.hideBusy(0);
           }

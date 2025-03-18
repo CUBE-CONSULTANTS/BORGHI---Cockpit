@@ -99,10 +99,12 @@
               label="Codice Articolo SAP"
               groupName="Group1"
               visibleInFilterBar="true"
+              
             >
               <fb:control>
                 <ComboBox
                 id="idMatnrComboBox"
+                change="onMaterialiSapChange"
                 name=""
                 items="{
                   path: 'matchcode>/materialiSap',
