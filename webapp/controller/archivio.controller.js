@@ -39,81 +39,30 @@ sap.ui.define(
         this.showBusy(0);
         let selectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
         !selectedKey ? (selectedKey = key) : (selectedKey = selectedKey);
-        let oModel;
         switch (selectedKey) {
-          case "01":
-            oModel = this.getOwnerComponent().getModel("modelloV2");
-            await this.callData(
-              oModel,
-              "/Testata",
-              [
-                new sap.ui.model.Filter(
-                  "archiviazione",
-                  sap.ui.model.FilterOperator.EQ,
-                  true
-                ),
-              ],
-              [
-                "posizioni($filter=stato eq '53'),posizioni($expand=log,schedulazioni,testata),master",
-              ],
-              selectedKey, false
-            );
-            this.onFiltersBuilding(oEvent, selectedKey);
-            break;
-          case "02":
-            oModel = this.getOwnerComponent().getModel("calloffV2");
-            await this.callData(
-              oModel,
-              "/Testata",
-              [],
-              ["master,posizioni_testata($filter=archiviazione eq true),posizioni_testata($expand=log_posizioni)"],
-              selectedKey, false
-            );
-            this.onFiltersBuilding(oEvent, selectedKey);
-            break;
-          case "03":
-            oModel = this.getOwnerComponent().getModel("selfBillingV2");
-            await this.callData(
-              oModel,
-              "/Testata",
-              [
-                // new sap.ui.model.Filter(
-                //   "archiviazione",
-                //   sap.ui.model.FilterOperator.EQ,
-                //   true
-                // )
-              ],
-              [
-                "dettaglio_fattura,log_testata,dettaglio_fattura/riferimento_ddt,dettaglio_fattura/riferimento_ddt/riga_fattura",
-              ],
-              selectedKey, false
-            );
-            this.onFiltersBuilding(oEvent, selectedKey);
-            break;
-          case "04":
-            break;
-          case "05":
-            break;
-          case "06":
-            oModel = this.getOwnerComponent().getModel("fileScartatiV2");
-            await this.callData(
-              oModel,
-              "/FileScartati",
-              [
-                new sap.ui.model.Filter(
-                  "archiviazione",
-                  sap.ui.model.FilterOperator.EQ,
-                  true
-                ),
-              ],
-              [],
-              selectedKey, false
-            );
-            this.onFiltersBuilding(oEvent, selectedKey);
-            break;
+         case "01":
+          await this.onSearchData(undefined, selectedKey)
+          this.onFiltersBuilding(oEvent, selectedKey);
+          break;
+         case "02":
+          await this.onSearchData(undefined, selectedKey)
+          this.onFiltersBuilding(oEvent, selectedKey);
+          break;
+         case "03":
+          await this.onSearchData(undefined, selectedKey)
+          this.onFiltersBuilding(oEvent, selectedKey);
+          break;
+         case "04":
+          break;
+         case "05":
+          break;
+         case "06":
+          await this.onSearchData(undefined, selectedKey)
+          this.onFiltersBuilding(oEvent, selectedKey);
+          break;
         }
         this.hideBusy(0);
-      },
+       },
       
       
     });

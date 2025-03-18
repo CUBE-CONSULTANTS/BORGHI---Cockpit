@@ -783,15 +783,18 @@ sap.ui.define(
                 if (index !== -1) aFilters.splice(index, 1);
               }
             });
-            let expandQuery = `posizioni_testata,posizioni_testata($expand=log_posizioni),master`;
+            
+            let valPosArch 
+            operator === 'ne' ? valPosArch = false : valPosArch = true
+            let expandQuery = `posizioni_testata($filter=archiviazione eq '${valPosArch}'),posizioni_testata($expand=log_posizioni),master`;
             if (filters.data_ricezione) {
-              expandQuery = `posizioni_testata,posizioni_testata($expand=log_posizioni),master($filter=data_ricezione eq '${filters.data_ricezione.oValue1}')`;
+              expandQuery = `posizioni_testata($filter=archiviazione eq '${valPosArch}'),posizioni_testata($expand=log_posizioni),master($filter=data_ricezione eq '${filters.data_ricezione.oValue1}')`;
             }
             if (filters.materiale) {
-              expandQuery = `posizioni_testata($filter=posizione_6_28 eq '${filters.materiale.oValue1}'),posizioni_testata($expand=log_posizioni),master`;
+              expandQuery = `posizioni_testata($filter=archiviazione eq '${valPosArch}' and posizione_6_28 eq '${filters.materiale.oValue1}'),posizioni_testata($expand=log_posizioni),master`;
             }
             if (filters.reason) {
-              expandQuery = `posizioni_testata($filter=posizione_43_44 eq '${filters.reason.oValue1}'),posizioni_testata($expand=log_posizioni),master`;
+              expandQuery = `posizioni_testata($filter=archiviazione eq '${valPosArch}' and posizione_43_44 eq '${filters.reason.oValue1}'),posizioni_testata($expand=log_posizioni),master`;
             }
             await this.callData(
               this.getOwnerComponent().getModel("calloffV2"),
@@ -933,7 +936,7 @@ sap.ui.define(
             MessageToast.show("Nessun dato disponibile per l'esportazione");
             return;
           }
-          debugger
+          
           // controlla se esiste e manda aData.DettaglioMaster3
           this.buildSpreadSheet(aData);
         },
@@ -1072,10 +1075,13 @@ sap.ui.define(
               if(selectedKey !== undefined){
                  ({ tableID, oModel, Entity } = this.getModelAndEntityByPart(selectedKey))
               } else{
+                
                 if(this.getModel("detailData").getProperty("/__metadata").type.includes("Delivery")) {
                   oModel = this.getOwnerComponent().getModel("modelloV2")
                 }else if(this.getModel("detailData").getProperty("/__metadata").type.includes("CalloffService")){
                   oModel = this.getOwnerComponent().getModel("calloffV2")
+                }else if(this.getModel("detailData").getProperty("/__metadata").type.includes("")){
+                    oModel = this.getOwnerComponent().getModel("selfBillingV2")
                 }  
               }                 
 

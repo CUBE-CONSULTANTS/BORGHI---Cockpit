@@ -194,8 +194,9 @@
                     <m:Button
                       text="Elimina"
                       icon="sap-icon://delete"
-                      press=""
+                      press="onDeletePosition"
                       type="Reject"
+                      visible="{=${datiAppoggio>/currentPage} === 'archivio' ? false:true}"
                     />
                         
                         <m:Button

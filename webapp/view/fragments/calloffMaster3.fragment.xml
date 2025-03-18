@@ -117,7 +117,7 @@
         text="Esporta excel"
         icon="sap-icon://excel-attachment"
         press="downloadExcelFile"
-        visible="{=${datiAppoggio>/currentPage} === 'archivio' ? false:true}"
+    
         />
         <Button
           text="Elabora"

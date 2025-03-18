@@ -162,12 +162,14 @@
                                               icon="sap-icon://process"
                                               press="onProcessaButtonDetail"
                                               type="Emphasized"
+                                              visible="{=${datiAppoggio>/currentPage} === 'archivio' ? false:true}"
                                             />
                                               <m:Button
                                                   text="Elimina"
                                                   icon="sap-icon://delete"
                                                   press="onDeletePosition"
                                                   type="Reject"
+                                                  visible="{=${datiAppoggio>/currentPage} === 'archivio' ? false:true}"
                                               />
                                                 <m:Button
                                                     icon="sap-icon://action-settings"

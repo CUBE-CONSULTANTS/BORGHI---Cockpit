@@ -249,12 +249,13 @@ sap.ui.define(
         let aFilters = [];
         let archivVal
         operator === 'eq'? archivVal = true : archivVal = false
-        aFilters.push(new sap.ui.model.Filter(
-          "archiviazione",
-          sap.ui.model.FilterOperator.EQ,
-          archivVal
-        ))
+        
         if (key === "01") {
+          aFilters.push(new sap.ui.model.Filter(
+            "archiviazione",
+            sap.ui.model.FilterOperator.EQ,
+            archivVal
+          ))
           if (oFilterSet.dataRic) {
             let oDataRic = formatter.returnDate(oFilterSet.dataRic,"dd/MM/yyyy","yyyyMMdd");
             
@@ -404,6 +405,11 @@ sap.ui.define(
           }
         }
         if (key === "06") {
+          aFilters.push(new sap.ui.model.Filter(
+            "archiviazione",
+            sap.ui.model.FilterOperator.EQ,
+            archivVal
+          ))
           if (oFilterSet.dataRic) {
             let oDataRic = formatter.returnDate(oFilterSet.dataRic,"dd/MM/yyyy","yyyyMMdd");
             
