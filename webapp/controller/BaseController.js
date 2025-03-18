@@ -1740,6 +1740,8 @@ sap.ui.define(
           this.getRouter().navTo("home");
         },
         handleCloseDetail: function () {
+          this.getModel("datiAppoggio").getProperty("/currentPage") ===
+          "archivio" ? this.getRouter().navTo("archivio")    :
           this.getRouter().navTo("master3");
         },
         handleCloseVariazioni: function (oEvent) {

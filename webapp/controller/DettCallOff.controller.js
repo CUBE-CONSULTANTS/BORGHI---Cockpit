@@ -26,7 +26,6 @@ sap.ui.define(
           "archivio"
             ? (archivVal = true)
             : (archivVal = false);
-
           this._id = oEvent.getParameter("arguments").id || this._id || "0";
           this._idMaster = oEvent.getParameter("arguments").idmaster || this._id || "0";
           try {
@@ -39,7 +38,6 @@ sap.ui.define(
               [],
               [`master,posizioni_testata($filter=archiviazione eq '${archivVal}'),posizioni_testata($expand=log_posizioni)`,
               ]
-
             );
 
             let detailModel = new JSONModel(dettaglio);
