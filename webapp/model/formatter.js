@@ -52,14 +52,14 @@ sap.ui.define([
     formattedPerc:function (val){
       let numVal = parseFloat(val);
       let formatted = numVal.toFixed(2);  
-      formatted = formatted.replace('.', ',');
+      
       return formatted + ' %';
     },
     convertNegative: function(value) {
       if (typeof value === "string" && value.endsWith("-")) {
-        return (-parseFloat(value.slice(0, -1))).toFixed(2).replace(".", ",");
+        return (-parseFloat(value.slice(0, -1))).toFixed(2)
       }
-      return parseFloat(value).toFixed(2).replace(".", ",");
+      return parseFloat(value).toFixed(2)
     },
     checkValidExt: function(ext){
       const extUpperCase = ext.toUpperCase();
