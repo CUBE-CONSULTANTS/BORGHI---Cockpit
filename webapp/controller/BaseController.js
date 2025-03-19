@@ -1578,12 +1578,11 @@ sap.ui.define(
       archiveSelectedItems: async function (oModel, Entity, indices, table) {
         let aSelectedItems = indices.map((iIndex) => table.getContextByIndex(iIndex).getObject());
         let promises = aSelectedItems.map((el) => {
-          return API.updateEntity(
-            oModel,
-            `${Entity}(id=${el.id})`,
-            { archiviazione: true, data_archiviazione: new Date() },
-            "PUT"
-          );
+          let payload = [];
+          el.dettaglio_fattura.forEach((fat) => {
+            payload.push({ id_testata: fat.id_testata, id_posizione: fat.id });
+          });
+          return API.createEntity(oModel, `${Entity}`, { id: payload });
         });
 
         try {
