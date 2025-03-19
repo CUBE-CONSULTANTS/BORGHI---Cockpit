@@ -1579,13 +1579,11 @@ sap.ui.define(
         debugger
         let aSelectedItems = indices.map((iIndex) => table.getContextByIndex(iIndex).getObject());
         let promises = aSelectedItems.map((el) => {
-          debugger
-           return API.updateEntity(
-            oModel,
-            Entity,
-           
-            "POST"
-          );
+          let payload = [];
+          el.dettaglio_fattura.forEach((fat) => {
+            payload.push({ id_testata: fat.id_testata, id_posizione: fat.id });
+          });
+          return API.createEntity(oModel, `${Entity}`, { id: payload });
         });
 
         try {
