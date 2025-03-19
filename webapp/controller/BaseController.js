@@ -438,6 +438,30 @@ sap.ui.define(
             "/selfBilling/fornitori/items",
             aFornitori.map((m) => ({ Key: m, Text: m }))
           );
+        } else if(key === "04"){
+          let aData = this.getModel("master3DesAdv").getProperty("/");
+          let aIdoc = [...new Set(aData.map((item) => item.numero_idoc))];
+          let aNumCons = [...new Set(aData.map((item) => item.numero_consegna))];
+          let aNumDDTCl = [...new Set(aData.map((item) => item.numero_ddt))];
+          let aBp = [...new Set(aData.map((item) => item.numero_bp_sold_to))];
+          this.getModel("filtersModel").setProperty(
+            "/desadv/numiDoc/items",
+            aIdoc.map((m) => ({ Key: m, Text: m }))
+          );
+          this.getModel("filtersModel").setProperty(
+            "/desadv/numConsegna/items",
+            aNumCons.map((m) => ({ Key: m, Text: m }))
+          );
+          this.getModel("filtersModel").setProperty(
+            "/desadv/numDDTCliente/items",
+            aNumDDTCl.map((m) => ({ Key: m, Text: m }))
+          );
+          this.getModel("filtersModel").setProperty(
+            "/desadv/bp/items",
+            aBp.map((m) => ({ Key: m, Text: m }))
+          );
+        } else if(key === "05"){
+
         } else if (key === "06") {
           let aData = this.getModel("master3Scart").getProperty("/");
           let aFile = [...new Set(aData.map((item) => item.filename))];
@@ -763,7 +787,7 @@ sap.ui.define(
             "/Testata",
             aFilters,
             [],
-            "03",
+            "04",
             false
           );
         } // GESTIONE FILTRI INVOICE
