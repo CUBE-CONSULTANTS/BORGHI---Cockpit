@@ -111,7 +111,7 @@ class="sapUiSmallMarginBottom"
 
 
 <ui:Table
-rows="{/master3Inv}"
+rows="{master3Inv>/}"
 selectionMode="MultiToggle"
 paste="onPaste"
 ariaLabelledBy="title"
@@ -134,46 +134,68 @@ id="tableInvoice">
   <ui:Column width="7rem">
     <Label text="Num iDoc" />
     <ui:template>
-      <Text text="{Name}" wrapping="false" />
+      <Text text="{master3Inv>numero_idoc}" wrapping="false" />
     </ui:template>
   </ui:Column>
   
   <ui:Column width="12rem">
     <Label text="Num Fattura Vendita" />
     <ui:template>
-      <Text text="{Name}" wrapping="false" />
+      <Text text="{master3Inv>fattura_di_vendita}" wrapping="false" />
     </ui:template>
   </ui:Column>
   <ui:Column width="12rem">
     <Label text="Num. Doc Contabile" />
     <ui:template>
-      <Text text="{Name}" wrapping="false" />
+      <Text text="{master3Inv>numero_documento_contabile}" wrapping="false" />
     </ui:template>
   </ui:Column>
   <ui:Column width="9rem">
     <Label text="Data Fattura" />
     <ui:template>
-      <Text text="{Name}" wrapping="false" />
+      <DatePicker
+      editable="false"
+      value="{
+        path: 'master3Inv>data_di_fatturazione',
+        type: 'sap.ui.model.type.Date',
+        formatOptions: {
+          pattern: 'dd/MM/yyyy'
+        }
+      }"
+      valueFormat="dd/MM/yyyy"
+      displayFormat="dd/MM/yyyy"
+    />
     </ui:template>
   </ui:Column>
   <ui:Column width="9rem">
     <Label text="Num. DDT" />
     <ui:template>
-      <Text text="{Name}" wrapping="false" />
+      <Text text="{master3Inv>num_DDT}" wrapping="false" />
     </ui:template>
   </ui:Column>
   
   <ui:Column width="11rem">
     <Label text="BP" />
     <ui:template>
-      <Text text="{Name}" wrapping="false" />
+      <Text text="{master3Inv>BP}" wrapping="false" />
     </ui:template>
   </ui:Column>
 
   <ui:Column width="15rem">
     <Label text="Data Creazione Doc Contabile" />
     <ui:template>
-      <Text text="{Name}" wrapping="false" />
+      <DatePicker
+      editable="false"
+      value="{
+        path: 'master3Inv>data_creazione_doc_contabile',
+        type: 'sap.ui.model.type.Date',
+        formatOptions: {
+          pattern: 'dd/MM/yyyy'
+        }
+      }"
+      valueFormat="dd/MM/yyyy"
+      displayFormat="dd/MM/yyyy"
+    />
     </ui:template>
   </ui:Column>
 
