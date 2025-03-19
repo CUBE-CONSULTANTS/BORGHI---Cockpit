@@ -364,6 +364,11 @@ sap.ui.define(
           }
         }
         if (key === "03") {
+          aFilters.push(new sap.ui.model.Filter(
+            "archiviazione",
+            sap.ui.model.FilterOperator.EQ,
+            archivVal
+          ))
           if (oFilterSet.dataRic) {
             let oDataRic = formatter.returnDate(oFilterSet.dataRic,"dd/MM/yyyy","yyyyMMdd");
             // eq 2025-01-22T00:00:00Z    
