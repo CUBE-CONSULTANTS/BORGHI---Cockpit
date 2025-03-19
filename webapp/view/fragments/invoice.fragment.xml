@@ -111,7 +111,7 @@ class="sapUiSmallMarginBottom"
 
 
 <ui:Table
-rows="{/ProductCollection}"
+rows="{/master3Inv}"
 selectionMode="MultiToggle"
 paste="onPaste"
 ariaLabelledBy="title"

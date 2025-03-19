@@ -605,6 +605,22 @@ sap.ui.define(
             false
           );
         }
+
+        if (
+          oEvent
+            .getParameters()
+            .selectionSet[0].getBindingInfo("value")
+            .parts[0].path.includes("invoice")
+        ) {
+          modelMeta = await this.callData(
+            this.getOwnerComponent().getModel("invoiceV2"),
+            "/Invoice",
+            [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, archivVal)],
+            [],
+            "05",
+            false
+          );
+        }
         // oBinding.filter([]);
         // oBinding.sort([]);
       },
@@ -795,10 +811,10 @@ sap.ui.define(
           let aFilters = mapper.buildFilters(oFilterSet, (key = "05"), operator);
           await this.callData(
             this.getOwnerComponent().getModel("invoiceV2"),
-            "/Testata",
+            "/Invoice",
             aFilters,
             [],
-            "03",
+            "05",
             false
           );
         } //GESTIONE FILTRI SCARTATI
@@ -873,6 +889,10 @@ sap.ui.define(
             modelMeta = new JSONModel(metadata.results);
             this.getOwnerComponent().setModel(modelMeta, "master3Scart");
             this.getModel("master3Scart").setSizeLimit(1000000);
+          } else if (key == "05") {
+            modelMeta = new JSONModel(metadata.results);
+            this.getOwnerComponent().setModel(modelMeta, "master3Inv");
+            this.getModel("master3Inv").setSizeLimit(1000000);
           }
         } catch (error) {
           MessageBox.error("Errore durante la ricezione dei dati");
