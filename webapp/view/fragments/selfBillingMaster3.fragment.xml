@@ -285,7 +285,7 @@ xmlns:mvc="sap.ui.core.mvc">
                     icon="sap-icon://excel-attachment"
                     tooltip="Verifica Prezzi e quantità"
                     class="sapUiTinyMarginBegin"
-                    press="downloadEdi"
+                    press="downloadReportSB"
                     visible="{= ${master3SB>supplier} ? true : false}"
                   />
 

@@ -64,8 +64,12 @@ sap.ui.define(
       this.onFiltersBuilding(oEvent, selectedKey);
       break;
      case "04":
+      await this.onSearchData(undefined, selectedKey)
+      this.onFiltersBuilding(oEvent, selectedKey);
       break;
      case "05":
+      await this.onSearchData(undefined, selectedKey)
+      this.onFiltersBuilding(oEvent, selectedKey);
       break;
      case "06":
       await this.onSearchData(undefined, selectedKey)
@@ -274,7 +278,11 @@ sap.ui.define(
      MessageBox.error("Nessun file selezionato");
     }
    },
-   
+   downloadReportSB: function(oEvent) {
+    // /sap/opu/odata/sap/ZEDIFACT_IDOC_SRV/SELFBILLING_VDA4908_REPORT_SET?$filter=(KNREF eq '0000707511' and KUNNR eq '00217881' and NOTA_CREDITO eq 'test' and DATA_NOTA eq '20250313' and NUM_BOLLA eq 'Off 25/2025' and DATA_BOLLA eq '20250313' and COD_ARTICOLO_CLIENTE eq 'test_art' and NUM_ORDINE eq '1234' and QUANT_PRELEVATA eq '1' and PREZZO eq '100' and VALORE eq '123')&$format=json,
+    debugger
+    oEvent.getSource().getBindingContext("master3SB").getObject()
+  }  
   });
  }
 );

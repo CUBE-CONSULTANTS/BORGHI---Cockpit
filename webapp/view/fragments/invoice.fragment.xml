@@ -22,7 +22,11 @@ class="sapUiSmallMarginBottom"
         visibleInFilterBar="true"
     >
         <fb:control>
-           <Input/>
+          <ComboBox 
+          items="{filtersModel>/invoice/numiDoc/items}" 
+          value="{filtersModel>/invoice/numiDoc/value}">
+          <core:ListItem key="{filtersModel>Key}" text="{filtersModel>Text}" />
+          </ComboBox>
         </fb:control>
     </fb:FilterGroupItem>
     <fb:FilterGroupItem
@@ -32,7 +36,11 @@ class="sapUiSmallMarginBottom"
         visibleInFilterBar="true"
     > 
         <fb:control>
-           <Input/>
+          <ComboBox 
+          items="{filtersModel>/invoice/numFattVend/items}" 
+          value="{filtersModel>/invoice/numFattVend/value}">
+          <core:ListItem key="{filtersModel>Key}" text="{filtersModel>Text}" />
+          </ComboBox>
         </fb:control>
     </fb:FilterGroupItem>
     <fb:FilterGroupItem
@@ -42,10 +50,13 @@ class="sapUiSmallMarginBottom"
     visibleInFilterBar="true"
 >
     <fb:control>
-    <DatePicker
-    tooltip="..."
-    secondaryCalendarType="Gregorian"
-    change="handleChange"
+      <DatePicker
+      tooltip="Data DDT"
+      secondaryCalendarType="Gregorian"
+      change="handleChange"
+      value="{filtersModel>/invoice/dataFattura}" 
+      valueFormat="dd/MM/yyyy"
+      displayFormat="dd/MM/yyyy"
     />
     </fb:control>
 </fb:FilterGroupItem> 
@@ -56,7 +67,11 @@ class="sapUiSmallMarginBottom"
         visibleInFilterBar="true"
     >
         <fb:control>
-           <Input/>
+          <ComboBox 
+          items="{filtersModel>/invoice/numDocCont/items}" 
+          value="{filtersModel>/invoice/numDocCont/value}">
+          <core:ListItem key="{filtersModel>Key}" text="{filtersModel>Text}" />
+          </ComboBox>
         </fb:control>
     </fb:FilterGroupItem>
     <fb:FilterGroupItem
@@ -66,7 +81,11 @@ class="sapUiSmallMarginBottom"
     visibleInFilterBar="true"
 >
     <fb:control>
-       <Input/>
+      <ComboBox 
+      items="{filtersModel>/invoice/bp/items}" 
+      value="{filtersModel>/invoice/bp/value}">
+      <core:ListItem key="{filtersModel>Key}" text="{filtersModel>Text}" />
+      </ComboBox>
     </fb:control>
 </fb:FilterGroupItem>
 
@@ -77,10 +96,13 @@ class="sapUiSmallMarginBottom"
         visibleInFilterBar="true"
     >
         <fb:control>
-        <DatePicker
-        tooltip="..."
-        secondaryCalendarType="Gregorian"
-        change="handleChange"
+          <DatePicker
+          tooltip="Data DDT"
+          secondaryCalendarType="Gregorian"
+          change="handleChange"
+          value="{filtersModel>/invoice/dataDocCont}" 
+          valueFormat="dd/MM/yyyy"
+          displayFormat="dd/MM/yyyy"
         />
         </fb:control>
     </fb:FilterGroupItem>                

@@ -753,7 +753,35 @@ sap.ui.define(
             "03",
             false
           );
-        } //GESTIONE FILTRI SCARTATI
+        } // GESTIONE FILTRI DESADV
+        else if(oEvent &&
+        oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("despatchAdvise") ||
+      (!oEvent && filterTab === "04")){
+        oFilterSet = this.getModel("filtersModel").getProperty("/desadv");
+        let aFilters = mapper.buildFilters(oFilterSet, (key = "04"), operator);
+        await this.callData(
+          this.getOwnerComponent().getModel(""),
+          "/Testata",
+          aFilters,
+          [],
+          "03",
+          false
+        );
+      } // GESTIONE FILTRI INVOICE
+        else if(oEvent &&
+        oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("invoice") ||
+      (!oEvent && filterTab === "05")){
+        oFilterSet = this.getModel("filtersModel").getProperty("/invoice");
+          let aFilters = mapper.buildFilters(oFilterSet, (key = "05"), operator);
+        await this.callData(
+          this.getOwnerComponent().getModel(""),
+          "/Testata",
+          aFilters,
+          [],
+          "03",
+          false
+        );
+      } //GESTIONE FILTRI SCARTATI
         else if (
           (oEvent &&
             oEvent
@@ -1266,7 +1294,6 @@ sap.ui.define(
                 "dettaglio_fattura,dettaglio_fattura/riferimento_ddt,dettaglio_fattura/riferimento_ddt/riga_fattura",
               ],
             );
-            
             this.getView().setModel(
               new JSONModel(),
               "detailData"

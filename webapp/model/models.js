@@ -92,8 +92,47 @@ sap.ui.define(
               items: [],
             }
           },
-          despatch: {},
-          invoice: {},
+          desadv: {
+            dataCreaDoc: null,
+            dataDDT: null,
+            numiDoc: {
+              value: null,
+              items: [],
+            },
+            numConsegna: {
+              value: null,
+              items: [],
+            },
+            numDDTCliente: {
+              value: null,
+              items: [],
+            },
+            bp: {
+              value: null,
+              items: [],
+            },
+            dataCreaDoc: null
+          },
+          invoice: {
+            numiDoc: {
+              value: null,
+              items: [],
+            },
+            numFattVend: {
+              value: null,
+              items: [],
+            },
+            dataFattura : null,
+            numDocCont: {
+              value: null,
+              items: [],
+            },
+            bp: {
+              value: null,
+              items: [],
+            },
+            dataDocCont: null
+          },
           scartati: {
             dataRic : null,
             nomeFile : {
