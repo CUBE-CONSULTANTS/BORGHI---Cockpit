@@ -532,102 +532,7 @@ sap.ui.define(
           }
         }
         this.getModel("filtersModel").refresh(true);
-        let modelMeta;
-        if (
-          oEvent
-            .getParameters()
-            .selectionSet[0].getBindingInfo("value")
-            .parts[0].path.includes("delivery")
-        ) {
-          modelMeta = await this.callData(
-            this.getOwnerComponent().getModel("modelloV2"),
-            "/Testata",
-            [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, archivVal)],
-            [`posizioni,posizioni($expand=log,schedulazioni,testata),master`],
-            "01",
-            false
-          );
-        }
-        if (
-          oEvent
-            .getParameters()
-            .selectionSet[0].getBindingInfo("value")
-            .parts[0].path.includes("callOff")
-        ) {
-          modelMeta = await this.callData(
-            this.getOwnerComponent().getModel("calloffV2"),
-            "/Testata",
-            [],
-            [
-              `master,posizioni_testata($filter=archiviazione eq '${archivVal}'),posizioni_testata($expand=log_posizioni)`,
-            ],
-            "02",
-            false
-          );
-        }
-        if (
-          oEvent
-            .getParameters()
-            .selectionSet[0].getBindingInfo("value")
-            .parts[0].path.includes("selfBilling")
-        ) {
-          modelMeta = await this.callData(
-            this.getOwnerComponent().getModel("selfBillingV2"),
-            "/Testata",
-            [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, archivVal)],
-            [
-              "dettaglio_fattura,log_testata,dettaglio_fattura/riferimento_ddt,dettaglio_fattura/riferimento_ddt/riga_fattura",
-            ],
-            "03",
-            false
-          );
-        }
-        if (
-          oEvent
-            .getParameters()
-            .selectionSet[0].getBindingInfo("value")
-            .parts[0].path.includes("scartati")
-        ) {
-          modelMeta = await this.callData(
-            this.getOwnerComponent().getModel("fileScartatiV2"),
-            "/FileScartati",
-            [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, archivVal)],
-            [],
-            "06",
-            false
-          );
-        }
-        if( oEvent
-          .getParameters()
-          .selectionSet[0].getBindingInfo("value")
-          .parts[0].path.includes("desadv")
-      ){
-        modelMeta = await this.callData(
-          this.getOwnerComponent().getModel("despatchAdviceV2"),
-          "/Testata",
-          [],
-          [],
-          "04",
-          false
-        );
-      }
-        if (
-          oEvent
-            .getParameters()
-            .selectionSet[0].getBindingInfo("value")
-            .parts[0].path.includes("invoice")
-        ) {
-          modelMeta = await this.callData(
-            this.getOwnerComponent().getModel("invoiceV2"),
-            "/Invoice",
-            [],
-            [],
-            "05",
-            false
-          );
-        }
-        // oBinding.filter([]);
-        // oBinding.sort([]);
+        this._refreshData(this.getView().byId("idIconTabBar").getSelectedKey(), archivVal)
       },
       //FINE CLEAR FILTERBAR
       // CHIAMATE DI ARCHIVIO E MONITOR SIA IN OBJECTMATCHED CHE CON SEARCH SU FILTERBAR
@@ -1035,6 +940,9 @@ sap.ui.define(
       // FINE EXCEL VARIAZIONI
       //DELETE X TUTTI I BUTTON
       onDeletePosition: async function (oEvent) {
+        this.getModel("datiAppoggio").getProperty("/currentPage") === "archivio"
+          ? (archivVal = true)
+          : (archivVal = false);
         let oTable = oEvent.getSource().getParent().getParent();
         try {
           let arrayToProcess = await this._returnPayload(oTable, "delete");
@@ -1083,7 +991,7 @@ sap.ui.define(
                 title: "Operazione completata",
                 onClose: async () => {
                   if (selectedKey !== undefined) {
-                    await this._refreshData(selectedKey);
+                    await this._refreshData(selectedKey, archivVal);
                   } else {
                     await this._refreshDetailData();
                   }
@@ -1273,10 +1181,10 @@ sap.ui.define(
         });
       },
       // refresh data dopo post X MASTER
-      _refreshData: async function (selectedKey) {
+      _refreshData: async function (selectedKey, archivVal) {
         this.showBusy(0);
         try {
-          await this._getCounters(false);
+          await this._getCounters(archivVal);
           switch (selectedKey) {
             case "01":
               await this.onFilterSelect(null, "01");
@@ -1290,7 +1198,12 @@ sap.ui.define(
             case "06":
               await this.onFilterSelect(null, "06");
               break;
-
+            case "04":
+              await this.onFilterSelect(null, "04");
+              break;
+            case "05":
+              await this.onFilterSelect(null, "04");
+                break;
             default:
               console.warn("Chiave della tabella non riconosciuta:", selectedKey);
               break;
@@ -1657,6 +1570,9 @@ sap.ui.define(
         }
       },
       archiveSingleItem: async function (oModel, Entity, elId, elIdTest) {
+        this.getModel("datiAppoggio").getProperty("/currentPage") === "archivio"
+          ? (archivVal = true)
+          : (archivVal = false);
         try {
           this.showBusy(0);
           if (oModel)
@@ -1670,7 +1586,7 @@ sap.ui.define(
             onClose: async () => {
               let selectedKey = this.byId("idIconTabBar")?.getSelectedKey();
               if (selectedKey) {
-                await this._refreshData(selectedKey);
+                await this._refreshData(selectedKey, archivVal);
               }
             },
           });
@@ -1681,6 +1597,9 @@ sap.ui.define(
         }
       },
       archiveSelectedItems: async function (oModel, Entity, indices, table) {
+        this.getModel("datiAppoggio").getProperty("/currentPage") === "archivio"
+          ? (archivVal = true)
+          : (archivVal = false);
         let aSelectedItems = indices.map((iIndex) => table.getContextByIndex(iIndex).getObject());
         let promises = [];
         if (Entity === "/FileScartati") {
@@ -1720,7 +1639,7 @@ sap.ui.define(
                 let selectedKey = this.byId("idIconTabBar")?.getSelectedKey();
                 if (selectedKey) {
                   table.clearSelection();
-                  await this._refreshData(selectedKey);
+                  await this._refreshData(selectedKey, archivVal);
                 }
               },
             });
