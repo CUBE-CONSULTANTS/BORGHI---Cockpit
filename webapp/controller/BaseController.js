@@ -218,18 +218,8 @@ sap.ui.define(
       },
       //NAVIGAZIONE VERSO VARIAZIONI
       navToAPP: function (oEvent) {
-        let level = oEvent
-          .getSource()
-          .getParent()
-          .getParent()
-          .getBindingContext("master3")
-          .getPath();
-        let oCodArt = oEvent
-          .getSource()
-          .getParent()
-          .getParent()
-          .getBindingContext("master3")
-          .getObject().codice_cliente_materiale;
+        let level = oEvent.getSource().getParent().getParent().getBindingContext("master3").getPath();
+        let oCodArt = oEvent.getSource().getParent().getParent().getBindingContext("master3").getObject().codice_cliente_materiale;
 
         let oCodCliente;
         oEvent.getSource().getParent().getParent().getBindingContext("master3").getObject()
@@ -969,7 +959,6 @@ sap.ui.define(
       // FINE EXCEL VARIAZIONI
       //DELETE X TUTTI I BUTTON
       onDeletePosition: async function (oEvent) {
-        debugger
         let oTable = oEvent.getSource().getParent().getParent();
         try {
           let arrayToProcess = await this._returnPayload(oTable, "delete");
@@ -991,21 +980,20 @@ sap.ui.define(
             if (selectedKey !== undefined) {
               ({ tableID, oModel, Entity } = this.getModelAndEntityByPart(selectedKey));
             } else {
-              if (
-                this.getModel("detailData").getProperty("/__metadata").type.includes("Delivery")
-              ) {
-                oModel = this.getOwnerComponent().getModel("modelloV2");
+              if(this.getModel("detailData").getProperty("/__metadata") !== undefined) {
+                if (
+                  this.getModel("detailData").getProperty("/__metadata").type.includes("Delivery")
+                ) {
+                  oModel = this.getOwnerComponent().getModel("modelloV2");
+                } else if (
+                  this.getModel("detailData").getProperty("/__metadata").type.includes("CalloffService")
+                ) {
+                  oModel = this.getOwnerComponent().getModel("calloffV2");
+                } 
               } else if (
-                this.getModel("detailData")
-                  .getProperty("/__metadata")
-                  .type.includes("CalloffService")
-              ) {
-                oModel = this.getOwnerComponent().getModel("calloffV2");
-              } else if (
-                this.getModel("detailData")
-                  .getProperty("/DettaglioMaster3/__metadata")
-                  .type.includes("SelfBillingService")
-              ) {
+                  this.getModel("detailData").
+                  getProperty("/DettaglioMaster3").__metadata.type.includes('SelfBilling')) {
+                  
                 oModel = this.getOwnerComponent().getModel("selfBillingV2");
               }
             }
@@ -1068,7 +1056,8 @@ sap.ui.define(
           aSelectedItems.forEach((element) => {
             if (
               element.hasOwnProperty("posizioni") ||
-              element.hasOwnProperty("posizioni_testata")
+              element.hasOwnProperty("posizioni_testata") ||
+              element.hasOwnProperty("dettaglio_fattura")
             ) {
               testate.push(element);
               flag = true;
@@ -1099,6 +1088,11 @@ sap.ui.define(
                           (pos) => (pos["numero_progressivo_invio"] = x.progressivo_invio)
                         );
                         selectedPos = selectedPos.concat(x.posizioni_testata);
+                      } else if (x.hasOwnProperty("dettaglio_fattura")){
+                        x.dettaglio_fattura.forEach(
+                          (pos) => (pos["numero_progressivo_invio"] = x.progressivo_invio)
+                        );
+                        selectedPos = selectedPos.concat(x.dettaglio_fattura);
                       }
                     });
                     let uniqueArray = selectedPos.reduce((acc, currentValue) => {
@@ -1262,7 +1256,35 @@ sap.ui.define(
                 "dd/MM/yyyy"
               );
             });
+          }else if (this.getView().getControllerName().includes("DettSelfBilling")) {
+            let dettaglio = await API.readByKey(
+              this.getOwnerComponent().getModel("selfBillingV2"),
+              "/Testata",
+              { id: this._id},
+              [],
+              [
+                "dettaglio_fattura,dettaglio_fattura/riferimento_ddt,dettaglio_fattura/riferimento_ddt/riga_fattura",
+              ],
+            );
+            
+            this.getView().setModel(
+              new JSONModel(),
+              "detailData"
+            );
+            let detailModel = this.getModel("detailData");
+            detailModel.setData(dettaglio);
+            dettaglio.dettaglio_fattura.results.forEach(pos=> {
+              pos.data_fattura = formatter.formatDate(pos.data_fattura)
+              pos.data_scadenza_fattura = formatter.formatDate(pos.data_scadenza_fattura)
+              pos.riferimento_ddt = Object.values(pos.riferimento_ddt.results);
+              pos.riferimento_ddt.forEach(posit=>{
+              posit.data_ddt_cliente = formatter.formatDate(posit.data_ddt_cliente)
+              })
+            })
+            this.getModel("detailData").setProperty("/DettaglioMaster3", dettaglio);
+            this.getModel("detailData").setProperty("/DettaglioFatture", dettaglio.dettaglio_fattura.results); 
           }
+
           //AGGIUNGERE LOGICHE X OGNI DETTAGLIO
         } catch (error) {
           MessageBox.error("Errore durante il recupero dei dati dettaglio");
@@ -1598,7 +1620,6 @@ sap.ui.define(
             let payload = [];
             if (el.hasOwnProperty("dettaglio_fattura")) {
               el.dettaglio_fattura.forEach((fat) => {
-              el.dettaglio_fattura.forEach((fat) => {
                 payload.push({ id_testata: fat.id_testata, id_posizione: fat.id });
               });
             } else {
@@ -1644,28 +1665,15 @@ sap.ui.define(
       dettaglioNav: function (oEvent) {
         let level, detailPath, detail;
         if (oEvent.getSource().getParent().getBindingContext("master3") !== undefined) {
-          level = oEvent
-            .getSource()
-            .getParent()
-            .getBindingContext("master3")
-            .getPath()
-            .includes("posizioni");
+          level = oEvent.getSource().getParent().getBindingContext("master3").getPath().includes("posizioni");
           detailPath = oEvent.getSource().getParent().getBindingContext("master3").getPath();
           detail = this.getModel("master3").getProperty(`${detailPath}`);
           this.getOwnerComponent().getModel("datiAppoggio").setProperty("/testata", detail);
-          this.getOwnerComponent()
-            .getModel("datiAppoggio")
-            .setProperty("/posizioni", detail.posizioni);
+          this.getOwnerComponent().getModel("datiAppoggio").setProperty("/posizioni", detail.posizioni);
           if (level) {
-            this.getOwnerComponent()
-              .getModel("datiAppoggio")
-              .setProperty("/posizioneCorrente", detail);
-            this.getOwnerComponent()
-              .getModel("datiAppoggio")
-              .setProperty("/schedulazioni", detail.schedulazioni.results);
-            this.getOwnerComponent()
-              .getModel("datiAppoggio")
-              .setProperty(
+            this.getOwnerComponent().getModel("datiAppoggio").setProperty("/posizioneCorrente", detail);
+            this.getOwnerComponent().getModel("datiAppoggio").setProperty("/schedulazioni", detail.schedulazioni.results);
+            this.getOwnerComponent().getModel("datiAppoggio").setProperty(
                 "/testata",
                 this.getModel("master3").getProperty(`${detailPath[0] + detailPath[1]}`)
               );
@@ -1717,14 +1725,7 @@ sap.ui.define(
       },
       handleCloseVariazioni: function (oEvent) {
         this.getRouter().navTo("master", {
-          layout: oEvent
-            .getSource()
-            .getParent()
-            .getParent()
-            .getParent()
-            .getParent()
-            .getParent()
-            .setLayout(),
+          layout: oEvent.getSource().getParent().getParent().getParent().getParent().getParent().setLayout(),
           prevApp: this.prevApp,
         });
       },
