@@ -412,11 +412,13 @@ sap.ui.define(
             );
           }
         }if(key === "04"){
+          debugger
           // aFilters.push(new sap.ui.model.Filter(
           //   "archiviazione",
           //   sap.ui.model.FilterOperator.EQ,
           //   archivVal
           // ))
+          
           if(oFilterSet.dataDDT){
             let oDataDDT = formatter.returnDate(oFilterSet.dataDDT,"dd/MM/yyyy","yyyyMMdd");
             aFilters.push(
@@ -437,12 +439,12 @@ sap.ui.define(
               )
             );
           }
-          if (oFilterSet.numeroDDTCliente && oFilterSet.numeroDDTCliente.value) {
+          if (oFilterSet.numDDTCliente && oFilterSet.numDDTCliente.value) {
             aFilters.push(
               new sap.ui.model.Filter(
-                "numero_ddt_cliente",
+                "numero_ddt",
                 sap.ui.model.FilterOperator.EQ,
-                oFilterSet.numeroDDTCliente.value
+                oFilterSet.numDDTCliente.value
               )
             );
           }
@@ -458,7 +460,7 @@ sap.ui.define(
           if (oFilterSet.numiDoc && oFilterSet.numiDoc.value){
             aFilters.push(
               new sap.ui.model.Filter(
-                "numero_consegna",
+                "numero_idoc",
                 sap.ui.model.FilterOperator.EQ,
                 oFilterSet.numiDoc.value
               )
@@ -467,7 +469,7 @@ sap.ui.define(
           if (oFilterSet.bp && oFilterSet.bp.value){
             aFilters.push(
               new sap.ui.model.Filter(
-                "bp",
+                "numero_bp_ship_to",
                 sap.ui.model.FilterOperator.EQ,
                 oFilterSet.bp.value
               )

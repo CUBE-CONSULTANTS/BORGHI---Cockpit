@@ -597,7 +597,7 @@ sap.ui.define(
             false
           );
         }
-
+     
         if (
           oEvent
             .getParameters()
@@ -774,10 +774,7 @@ sap.ui.define(
         } // GESTIONE FILTRI DESADV
         else if (
           (oEvent &&
-            oEvent
-              .getParameters()
-              .selectionSet[0].getBindingInfo("value")
-              .parts[0].path.includes("despatchAdvise")) ||
+            oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes('desadv')) ||
           (!oEvent && filterTab === "04")
         ) {
           oFilterSet = this.getModel("filtersModel").getProperty("/desadv");
