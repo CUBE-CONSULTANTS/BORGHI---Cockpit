@@ -1579,9 +1579,14 @@ sap.ui.define(
         let aSelectedItems = indices.map((iIndex) => table.getContextByIndex(iIndex).getObject());
         let promises = aSelectedItems.map((el) => {
           let payload = [];
-          el.dettaglio_fattura.forEach((fat) => {
-            payload.push({ id_testata: fat.id_testata, id_posizione: fat.id });
-          });
+          if (el.hasOwnProperty("dettaglio_fattura")) {
+            el.dettaglio_fattura.forEach((fat) => {
+              payload.push({ id_testata: fat.id_testata, id_posizione: fat.id });
+            });
+          } else {
+            payload.push({ id_testata: el.id_testata, id_posizione: el.id });
+          }
+
           return API.createEntity(oModel, `${Entity}`, { id: payload });
         });
 
