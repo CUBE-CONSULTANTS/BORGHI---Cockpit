@@ -57,9 +57,9 @@ sap.ui.define([
     },
     convertNegative: function(value) {
       if (typeof value === "string" && value.endsWith("-")) {
-          return -parseFloat(value.slice(0, -1));
+        return (-parseFloat(value.slice(0, -1))).toFixed(2).replace(".", ",");
       }
-      return parseFloat(value);
+      return parseFloat(value).toFixed(2).replace(".", ",");
     },
     checkValidExt: function(ext){
       const extUpperCase = ext.toUpperCase();

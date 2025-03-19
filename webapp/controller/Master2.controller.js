@@ -64,8 +64,8 @@ sap.ui.define(
               element.percPos = element.VAR_PERCPOS;
               element.percNeg = formatter.convertNegative(element.VAR_PERCNEG);
               element.VAR_PERCTOT = formatter.formattedPerc(element.VAR_PERCTOT);
-              element.VAR_PERCPOS = formatter.formattedPerc(element.VAR_PERCPOS);
               element.VAR_PERCNEG = formatter.formattedPerc(element.VAR_PERCNEG);
+              element.VAR_PERCPOS = formatter.formattedPerc(element.VAR_PERCPOS);
               element.VAR_NEG = formatter.convertNegative(element.VAR_NEG)
               element.VAR_TOT = formatter.convertNegative(element.VAR_TOT);
             });
