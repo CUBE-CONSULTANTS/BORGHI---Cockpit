@@ -100,7 +100,7 @@
                         key="04"
                         
                     >
-                        <core:Fragment fragmentName="programmi.consegne.edi.view.fragments.despatchAdvise"
+                        <core:Fragment fragmentName="programmi.consegne.edi.view.fragments.despatchAdvice"
                     type="XML" />
                     </IconTabFilter>
                     <IconTabFilter

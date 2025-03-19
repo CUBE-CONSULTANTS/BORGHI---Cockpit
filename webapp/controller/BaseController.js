@@ -311,47 +311,16 @@ sap.ui.define(
           let invoiceModel = this.getOwnerComponent().getModel("invoiceV2");
           let fileScartatiModel = this.getOwnerComponent().getModel("fileScartatiV2");
           let [delfor, calloff, selfb, desadv, invoice, fileScart] = await Promise.all([
-            API.getEntity(
-              oModel,
-              "/Testata/$count",
-              [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, filterVal)],
-              []
-            ),
-            filterVal
-              ? API.getEntity(calloffModel, "/ContatoreTestate", [], [])
-              : API.getEntity(
-                  calloffModel,
-                  "/Testata/$count",
-                  [
-                    new sap.ui.model.Filter(
-                      "archiviazione",
-                      sap.ui.model.FilterOperator.EQ,
-                      filterVal
-                    ),
-                  ],
-                  []
-                ),
-            API.getEntity(
-              selfBillingModel,
-              "/Testata/$count",
-              [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, filterVal)],
-              []
-            ),
+            API.getEntity(oModel,"/Testata/$count",[new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, filterVal)],[]),
+            filterVal? API.getEntity(calloffModel, "/ContatoreTestate", [], [])
+              : API.getEntity(calloffModel,"/Testata/$count",[new sap.ui.model.Filter("archiviazione",sap.ui.model.FilterOperator.EQ,filterVal),],[]),
+            API.getEntity(selfBillingModel,"/Testata/$count",[new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, filterVal)],[]),
             API.getEntity(desAdvModel, "/Testata/$count", [], []),
             API.getEntity(invoiceModel, "/Invoice/$count", [], []),
-            API.getEntity(
-              fileScartatiModel,
-              "/FileScartati/$count",
-              [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, filterVal)],
-              []
-            ),
+            API.getEntity(fileScartatiModel,"/FileScartati/$count",[new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, filterVal)],[]),
           ]);
-
           this.getModel("count").setProperty("/delivery", delfor.results);
-          this.getModel("count").setProperty(
-            "/calloff",
-            filterVal ? calloff.results[0].ContatoreTestata : calloff.results
-          );
+          this.getModel("count").setProperty("/calloff",filterVal ? calloff.results[0].ContatoreTestata : calloff.results);
           this.getModel("count").setProperty("/selfbilling", selfb.results);
           this.getModel("count").setProperty("/despatch", desadv.results);
           this.getModel("count").setProperty("/invoice", invoice.results);
@@ -898,8 +867,6 @@ sap.ui.define(
           MessageToast.show("Nessun dato disponibile per l'esportazione");
           return;
         }
-
-        // controlla se esiste e manda aData.DettaglioMaster3
         this.buildSpreadSheet(aData);
       },
       //COSTRUZIONE DELLO SHEET
@@ -1042,26 +1009,16 @@ sap.ui.define(
               ({ tableID, oModel, Entity } = this.getModelAndEntityByPart(selectedKey));
             } else {
               if (this.getModel("detailData").getProperty("/__metadata") !== undefined) {
-                if (
-                  this.getModel("detailData").getProperty("/__metadata").type.includes("Delivery")
-                ) {
+                if (this.getModel("detailData").getProperty("/__metadata").type.includes("Delivery")) {
                   oModel = this.getOwnerComponent().getModel("modelloV2");
-                } else if (
-                  this.getModel("detailData")
-                    .getProperty("/__metadata")
-                    .type.includes("CalloffService")
-                ) {
+                } else if (this.getModel("detailData").getProperty("/__metadata").type.includes("CalloffService")) {
                   oModel = this.getOwnerComponent().getModel("calloffV2");
                 }
               } else if (
-                this.getModel("detailData")
-                  .getProperty("/DettaglioMaster3")
-                  .__metadata.type.includes("SelfBilling")
-              ) {
+                this.getModel("detailData").getProperty("/DettaglioMaster3").__metadata.type.includes("SelfBilling")) {
                 oModel = this.getOwnerComponent().getModel("selfBillingV2");
               }
             }
-
             let res = await API.createEntity(oModel, "/DeletePosizioni", obj);
             if (res.results.length > 0) {
               MessageBox.success("Operazione andata a buon fine.", {
@@ -1130,11 +1087,8 @@ sap.ui.define(
             }
           });
           let message;
-          action === "elab"
-            ? (message =
-                "Verranno processate tutte le posizioni non ancora elaborate della Testata selezionata, continuare?")
-            : (message =
-                "Verranno eliminate tutte le posizioni della Testata selezionata, continuare?");
+          action === "elab"? (message ="Verranno processate tutte le posizioni non ancora elaborate della Testata selezionata, continuare?")
+            : (message ="Verranno eliminate tutte le posizioni della Testata selezionata, continuare?");
           if (flag) {
             return new Promise((resolve) => {
               MessageBox.confirm(message, {
@@ -1272,15 +1226,15 @@ sap.ui.define(
             case "03":
               await this.onFilterSelect(null, "03");
               break;
-            case "06":
-              await this.onFilterSelect(null, "06");
-              break;
             case "04":
               await this.onFilterSelect(null, "04");
               break;
             case "05":
               await this.onFilterSelect(null, "04");
-                break;
+              break;  
+            case "06":
+              await this.onFilterSelect(null, "06");
+              break;
             default:
               console.warn("Chiave della tabella non riconosciuta:", selectedKey);
               break;
@@ -1353,7 +1307,7 @@ sap.ui.define(
             );
           }
 
-          //AGGIUNGERE LOGICHE X OGNI DETTAGLIO
+          //AGGIUNGERE LOGICHE X OGNI DETTAGLIO SE ESISTENTE
         } catch (error) {
           MessageBox.error("Errore durante il recupero dei dati dettaglio");
         } finally {
@@ -1485,7 +1439,8 @@ sap.ui.define(
       },
       //fine configurazione Engine x tutte tabelle, da richiamare nei controller dei dettagli,
       // dopo aver mappato le colonne in mapper e definite il custData nelle view di dettaglio
-      //DOWNLOAD EDI, VALIDO X TUTTI I TAB DA AGGIUNGERE I BINDING CONTEXT
+
+      //DOWNLOAD EDI, VALIDO X TUTTI I TAB, DA AGGIUNGERE I BINDING CONTEXT
       downloadEdi: async function (oEvent) {
         let oBindingContext;
         if (oEvent.getSource().getBindingContext("master3") !== undefined) {
@@ -1530,10 +1485,7 @@ sap.ui.define(
       onDownloadCumulativi: async function (oEvent) {
         let numIdoc = oEvent.getSource().getBindingContext("master3").getObject().numero_idoc;
         let dest = oEvent.getSource().getBindingContext("master3").getObject().destinatario;
-        let rffon = oEvent
-          .getSource()
-          .getBindingContext("master3")
-          .getObject().numero_ordine_acquisto;
+        let rffon = oEvent.getSource().getBindingContext("master3").getObject().numero_ordine_acquisto;
         await this.getReportCumulativi(dest, numIdoc, rffon);
       },
       getReportCumulativi: async function (dest, numIdoc, rffon) {
@@ -1587,14 +1539,7 @@ sap.ui.define(
       },
       // SPOSTAMENTO IN ARCHIVIO SIA TOOLBAR CHE POSIZIONALE
       moveToArchive: async function (oEvent) {
-        let part = oEvent
-          .getSource()
-          .getParent()
-          .getParent()
-          .getParent()
-          .getParent()
-          .getParent()
-          .getSelectedKey();
+        let part = oEvent.getSource().getParent().getParent().getParent().getParent().getParent().getSelectedKey();
         let { tableID, oModel, Entity } = this.getModelAndEntityByPart(part);
         if (tableID === "treetableCallOff") {
           let elId = oEvent.getSource().getBindingContext("master3CO").getObject().id;
@@ -1642,6 +1587,12 @@ sap.ui.define(
               oModel: this.getOwnerComponent().getModel("modelloV2"),
               Entity: "",
             };
+          case "04":
+              return {
+                tableID: "treetableMain",
+                oModel: this.getOwnerComponent().getModel("modelloV2"),
+                Entity: "",
+            };  
           default:
             return { tableID: "", oModel: null, Entity: "" };
         }
