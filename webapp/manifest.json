@@ -55,7 +55,7 @@
 				"odataVersion": "2.0"
 				}
 			},
-      "fileScartatiService": {
+      		"fileScartatiService": {
 				"uri": "/odata/v4/file-scartati/",
 				"type": "OData",
 				"settings": {
@@ -65,6 +65,38 @@
 			},
 			"fileScartatiService2": {
 				"uri": "/odata/v2/file-scartati/",
+				"type": "OData",
+				"settings": {
+				"annotations": [],
+				"odataVersion": "2.0"
+				}
+			},
+			"despatchAdviceV4": {
+				"uri": "/odata/v4/despatch-advice/",
+				"type": "OData",
+				"settings": {
+				"annotations": [],
+				"odataVersion": "4.0"
+				}
+			},
+			"despatchAdviceV2": {
+				"uri": "/odata/v2/despatch-advice/",
+				"type": "OData",
+				"settings": {
+				"annotations": [],
+				"odataVersion": "2.0"
+				}
+			},
+			"invoiceV4": {
+				"uri": "/odata/v4/invoice/",
+				"type": "OData",
+				"settings": {
+				"annotations": [],
+				"odataVersion": "4.0"
+				}
+			},
+			"invoiceV2": {
+				"uri": "/odata/v2/invoice//",
 				"type": "OData",
 				"settings": {
 				"annotations": [],
@@ -179,7 +211,47 @@
           "autoExpandSelect": true,
           "earlyRequests": true
         }
-	    }
+	},
+	"despatchAdviceV4": {
+        "dataSource": "despatchAdviceV4",
+        "preload": true,
+        "settings": {
+          "synchronizationMode": "None",
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      },
+	  "despatchAdviceV2": {
+        "dataSource": "despatchAdviceV2",
+        "preload": true,
+        "settings": {
+          "synchronizationMode": "None",
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      },
+	  "invoiceV4": {
+        "dataSource": "invoiceV4",
+        "preload": true,
+        "settings": {
+          "synchronizationMode": "None",
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      },
+	  "invoiceV2": {
+        "dataSource": "invoiceV2",
+        "preload": true,
+        "settings": {
+          "synchronizationMode": "None",
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      }
     },
 		"resources": {
 			"css": [
