@@ -29,7 +29,6 @@ sap.ui.define(
                 "dettaglio_fattura,dettaglio_fattura/riferimento_ddt,dettaglio_fattura/riferimento_ddt/riga_fattura",
               ],
             );
-            console.log(dettaglio);
             dettaglio.dettaglio_fattura.results.forEach(pos=> {
               pos.data_fattura = formatter.formatDate(pos.data_fattura)
               pos.data_scadenza_fattura = formatter.formatDate(pos.data_scadenza_fattura)

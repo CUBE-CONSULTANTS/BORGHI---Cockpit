@@ -120,10 +120,7 @@
         arrayNames: ['posizioni']
       }
     }"
-    selectionMode="MultiToggle" 
-    enableSelectAll="false"
-    ariaLabelledBy="title"
-    selectionBehavior="Row"
+    selectionMode="{=${datiAppoggio>/currentPage} === 'archivio' ? 'Single':'MultiToggle'}"
   >
 
     <ui:extension>

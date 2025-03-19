@@ -218,18 +218,8 @@ sap.ui.define(
       },
       //NAVIGAZIONE VERSO VARIAZIONI
       navToAPP: function (oEvent) {
-        let level = oEvent
-          .getSource()
-          .getParent()
-          .getParent()
-          .getBindingContext("master3")
-          .getPath();
-        let oCodArt = oEvent
-          .getSource()
-          .getParent()
-          .getParent()
-          .getBindingContext("master3")
-          .getObject().codice_cliente_materiale;
+        let level = oEvent.getSource().getParent().getParent().getBindingContext("master3").getPath();
+        let oCodArt = oEvent.getSource().getParent().getParent().getBindingContext("master3").getObject().codice_cliente_materiale;
 
         let oCodCliente;
         oEvent.getSource().getParent().getParent().getBindingContext("master3").getObject()
@@ -763,7 +753,35 @@ sap.ui.define(
             "03",
             false
           );
-        } //GESTIONE FILTRI SCARTATI
+        } // GESTIONE FILTRI DESADV
+        else if(oEvent &&
+        oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("despatchAdvise") ||
+      (!oEvent && filterTab === "04")){
+        oFilterSet = this.getModel("filtersModel").getProperty("/desadv");
+        let aFilters = mapper.buildFilters(oFilterSet, (key = "04"), operator);
+        await this.callData(
+          this.getOwnerComponent().getModel(""),
+          "/Testata",
+          aFilters,
+          [],
+          "03",
+          false
+        );
+      } // GESTIONE FILTRI INVOICE
+        else if(oEvent &&
+        oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("invoice") ||
+      (!oEvent && filterTab === "05")){
+        oFilterSet = this.getModel("filtersModel").getProperty("/invoice");
+          let aFilters = mapper.buildFilters(oFilterSet, (key = "05"), operator);
+        await this.callData(
+          this.getOwnerComponent().getModel(""),
+          "/Testata",
+          aFilters,
+          [],
+          "03",
+          false
+        );
+      } //GESTIONE FILTRI SCARTATI
         else if (
           (oEvent &&
             oEvent
@@ -822,6 +840,9 @@ sap.ui.define(
             this.getOwnerComponent().setModel(modelMeta, "master3CO");
             this.getModel("master3CO").setSizeLimit(1000000);
           } else if (key === "03") {
+            let datiFiltrati = metadata.results.filter(
+              (x) => x.dettaglio_fattura.results.length > 0
+            );
             modelMeta = new JSONModel(metadata.results);
             modelMeta.getProperty("/").forEach((testata) => {
               testata.dettaglio_fattura = Object.values(testata.dettaglio_fattura.results);
@@ -940,7 +961,7 @@ sap.ui.define(
                 property = cell.getBindingInfo("text").parts[0].path;
               }
             });
-            let label;
+            let label;  
             if (el.getMultiLabels().length > 0) {
               el.getMultiLabels()[0].getText() === ""
                 ? (label = el.getMultiLabels()[1].getText())
@@ -987,21 +1008,20 @@ sap.ui.define(
             if (selectedKey !== undefined) {
               ({ tableID, oModel, Entity } = this.getModelAndEntityByPart(selectedKey));
             } else {
-              if (
-                this.getModel("detailData").getProperty("/__metadata").type.includes("Delivery")
-              ) {
-                oModel = this.getOwnerComponent().getModel("modelloV2");
+              if(this.getModel("detailData").getProperty("/__metadata") !== undefined) {
+                if (
+                  this.getModel("detailData").getProperty("/__metadata").type.includes("Delivery")
+                ) {
+                  oModel = this.getOwnerComponent().getModel("modelloV2");
+                } else if (
+                  this.getModel("detailData").getProperty("/__metadata").type.includes("CalloffService")
+                ) {
+                  oModel = this.getOwnerComponent().getModel("calloffV2");
+                } 
               } else if (
-                this.getModel("detailData")
-                  .getProperty("/__metadata")
-                  .type.includes("CalloffService")
-              ) {
-                oModel = this.getOwnerComponent().getModel("calloffV2");
-              } else if (
-                this.getModel("detailData")
-                  .getProperty("/DettaglioMaster3/__metadata")
-                  .type.includes("SelfBillingService")
-              ) {
+                  this.getModel("detailData").
+                  getProperty("/DettaglioMaster3").__metadata.type.includes('SelfBilling')) {
+                  
                 oModel = this.getOwnerComponent().getModel("selfBillingV2");
               }
             }
@@ -1064,7 +1084,8 @@ sap.ui.define(
           aSelectedItems.forEach((element) => {
             if (
               element.hasOwnProperty("posizioni") ||
-              element.hasOwnProperty("posizioni_testata")
+              element.hasOwnProperty("posizioni_testata") ||
+              element.hasOwnProperty("dettaglio_fattura")
             ) {
               testate.push(element);
               flag = true;
@@ -1095,6 +1116,11 @@ sap.ui.define(
                           (pos) => (pos["numero_progressivo_invio"] = x.progressivo_invio)
                         );
                         selectedPos = selectedPos.concat(x.posizioni_testata);
+                      } else if (x.hasOwnProperty("dettaglio_fattura")){
+                        x.dettaglio_fattura.forEach(
+                          (pos) => (pos["numero_progressivo_invio"] = x.progressivo_invio)
+                        );
+                        selectedPos = selectedPos.concat(x.dettaglio_fattura);
                       }
                     });
                     let uniqueArray = selectedPos.reduce((acc, currentValue) => {
@@ -1258,7 +1284,34 @@ sap.ui.define(
                 "dd/MM/yyyy"
               );
             });
+          }else if (this.getView().getControllerName().includes("DettSelfBilling")) {
+            let dettaglio = await API.readByKey(
+              this.getOwnerComponent().getModel("selfBillingV2"),
+              "/Testata",
+              { id: this._id},
+              [],
+              [
+                "dettaglio_fattura,dettaglio_fattura/riferimento_ddt,dettaglio_fattura/riferimento_ddt/riga_fattura",
+              ],
+            );
+            this.getView().setModel(
+              new JSONModel(),
+              "detailData"
+            );
+            let detailModel = this.getModel("detailData");
+            detailModel.setData(dettaglio);
+            dettaglio.dettaglio_fattura.results.forEach(pos=> {
+              pos.data_fattura = formatter.formatDate(pos.data_fattura)
+              pos.data_scadenza_fattura = formatter.formatDate(pos.data_scadenza_fattura)
+              pos.riferimento_ddt = Object.values(pos.riferimento_ddt.results);
+              pos.riferimento_ddt.forEach(posit=>{
+              posit.data_ddt_cliente = formatter.formatDate(posit.data_ddt_cliente)
+              })
+            })
+            this.getModel("detailData").setProperty("/DettaglioMaster3", dettaglio);
+            this.getModel("detailData").setProperty("/DettaglioFatture", dettaglio.dettaglio_fattura.results); 
           }
+
           //AGGIUNGERE LOGICHE X OGNI DETTAGLIO
         } catch (error) {
           MessageBox.error("Errore durante il recupero dei dati dettaglio");
@@ -1555,6 +1608,7 @@ sap.ui.define(
       archiveSingleItem: async function (oModel, Entity, elId, elIdTest) {
         try {
           this.showBusy(0);
+          if(oModel)
           await API.updateEntity(
             oModel,
             `${Entity}(id='${elId}',id_testata='${elIdTest}')`,
@@ -1577,19 +1631,31 @@ sap.ui.define(
       },
       archiveSelectedItems: async function (oModel, Entity, indices, table) {
         let aSelectedItems = indices.map((iIndex) => table.getContextByIndex(iIndex).getObject());
-        let promises = aSelectedItems.map((el) => {
-          let payload = [];
-          if (el.hasOwnProperty("dettaglio_fattura")) {
-            el.dettaglio_fattura.forEach((fat) => {
-              payload.push({ id_testata: fat.id_testata, id_posizione: fat.id });
-            });
-          } else {
-            payload.push({ id_testata: el.id_testata, id_posizione: el.id });
-          }
-
-          return API.createEntity(oModel, `${Entity}`, { id: payload });
-        });
-
+        let promises = [];
+        if(Entity === "/FileScartati"){
+         promises = aSelectedItems.map(el => {
+          let elId = el.id
+          return API.updateEntity(
+            oModel,
+            `${Entity}(id='${elId}')`,
+            { archiviazione: true, data_archiviazione: new Date()},
+            "PUT"
+          );
+         }) 
+        }else{
+          promises = aSelectedItems.map((el) => {
+            let payload = [];
+            if (el.hasOwnProperty("dettaglio_fattura")) {
+              el.dettaglio_fattura.forEach((fat) => {
+                payload.push({ id_testata: fat.id_testata, id_posizione: fat.id });
+              });
+            } else {
+              payload.push({ id_testata: el.id_testata, id_posizione: el.id });
+            }
+            return API.createEntity(oModel, `${Entity}`, { id: payload });
+          });
+        }
+              
         try {
           this.showBusy(0);
           let out = await Promise.allSettled(promises);
@@ -1626,28 +1692,15 @@ sap.ui.define(
       dettaglioNav: function (oEvent) {
         let level, detailPath, detail;
         if (oEvent.getSource().getParent().getBindingContext("master3") !== undefined) {
-          level = oEvent
-            .getSource()
-            .getParent()
-            .getBindingContext("master3")
-            .getPath()
-            .includes("posizioni");
+          level = oEvent.getSource().getParent().getBindingContext("master3").getPath().includes("posizioni");
           detailPath = oEvent.getSource().getParent().getBindingContext("master3").getPath();
           detail = this.getModel("master3").getProperty(`${detailPath}`);
           this.getOwnerComponent().getModel("datiAppoggio").setProperty("/testata", detail);
-          this.getOwnerComponent()
-            .getModel("datiAppoggio")
-            .setProperty("/posizioni", detail.posizioni);
+          this.getOwnerComponent().getModel("datiAppoggio").setProperty("/posizioni", detail.posizioni);
           if (level) {
-            this.getOwnerComponent()
-              .getModel("datiAppoggio")
-              .setProperty("/posizioneCorrente", detail);
-            this.getOwnerComponent()
-              .getModel("datiAppoggio")
-              .setProperty("/schedulazioni", detail.schedulazioni.results);
-            this.getOwnerComponent()
-              .getModel("datiAppoggio")
-              .setProperty(
+            this.getOwnerComponent().getModel("datiAppoggio").setProperty("/posizioneCorrente", detail);
+            this.getOwnerComponent().getModel("datiAppoggio").setProperty("/schedulazioni", detail.schedulazioni.results);
+            this.getOwnerComponent().getModel("datiAppoggio").setProperty(
                 "/testata",
                 this.getModel("master3").getProperty(`${detailPath[0] + detailPath[1]}`)
               );
@@ -1699,14 +1752,7 @@ sap.ui.define(
       },
       handleCloseVariazioni: function (oEvent) {
         this.getRouter().navTo("master", {
-          layout: oEvent
-            .getSource()
-            .getParent()
-            .getParent()
-            .getParent()
-            .getParent()
-            .getParent()
-            .setLayout(),
+          layout: oEvent.getSource().getParent().getParent().getParent().getParent().getParent().setLayout(),
           prevApp: this.prevApp,
         });
       },

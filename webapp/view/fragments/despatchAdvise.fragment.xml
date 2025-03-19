@@ -1,183 +1,216 @@
-<core:FragmentDefinition   xmlns="sap.m"
-xmlns:core="sap.ui.core"
-xmlns:f="sap.f"
-xmlns:fb="sap.ui.comp.filterbar"
-xmlns:ui="sap.ui.table"
-xmlns:mvc="sap.ui.core.mvc">
-
-   
-<fb:FilterBar        
-useToolbar="false"
-search=".onSearchData"
-showFilterConfiguration="false"
-showGoOnFB="true"
-showClearOnFB="true"
-clear="onFilterBarClear"
-filterContainerWidth="20rem"
-class="sapUiSmallMarginBottom"
+<core:FragmentDefinition
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:f="sap.f"
+  xmlns:fb="sap.ui.comp.filterbar"
+  xmlns:ui="sap.ui.table"
+  xmlns:mvc="sap.ui.core.mvc"
 >
-<fb:filterGroupItems>
-  <fb:FilterGroupItem
+  <fb:FilterBar
+    useToolbar="false"
+    search=".onSearchData"
+    showFilterConfiguration="false"
+    showGoOnFB="true"
+    showClearOnFB="true"
+    clear="onFilterBarClear"
+    filterContainerWidth="20rem"
+    class="sapUiSmallMarginBottom"
+  >
+    <fb:filterGroupItems>
+      <fb:FilterGroupItem
         name="Num iDoc"
         label="Num iDoc"
         groupName="gr1"
         visibleInFilterBar="true"
-    >
+      >
         <fb:control>
-           <Input/>
+          <ComboBox
+            items="{filtersModel>/desadv/numiDoc/items}"
+            value="{filtersModel>/desadv/numiDoc/value}"
+          >
+            <core:ListItem
+              key="{filtersModel>Key}"
+              text="{filtersModel>Text}"
+            />
+          </ComboBox>
         </fb:control>
-    </fb:FilterGroupItem>
-    <fb:FilterGroupItem
+      </fb:FilterGroupItem>
+      <fb:FilterGroupItem
         name="Num Consegna"
         label="Num Consegna"
         groupName="gr1"
         visibleInFilterBar="true"
-    >
+      >
         <fb:control>
-           <Input/>
+          <ComboBox
+            items="{filtersModel>/desadv/numConsegna/items}"
+            value="{filtersModel>/desadv/numConsegna/value}"
+          >
+            <core:ListItem
+              key="{filtersModel>Key}"
+              text="{filtersModel>Text}"
+            />
+          </ComboBox>
         </fb:control>
-    </fb:FilterGroupItem>
-    <fb:FilterGroupItem
-        name="Num iDoc"
-        label="Num iDoc"
-        groupName="gr2"
+      </fb:FilterGroupItem>
+      <fb:FilterGroupItem
+        name="Data DDT"
+        label="Data DDT"
+        groupName="gr1"
         visibleInFilterBar="true"
-    >
+      >
         <fb:control>
-           <Input/>
+          <DatePicker
+            tooltip="Data DDT"
+            secondaryCalendarType="Gregorian"
+            change="handleChange"
+            value="{filtersModel>/desadv/dataDDT}"
+            valueFormat="dd/MM/yyyy"
+            displayFormat="dd/MM/yyyy"
+          />
         </fb:control>
-    </fb:FilterGroupItem>
-    <fb:FilterGroupItem
-    name="Data DDT"
-    label="Data DDT"
-    groupName="gr1"
-    visibleInFilterBar="true"
->
-    <fb:control>
-    <DatePicker
-    tooltip="..."
-    secondaryCalendarType="Gregorian"
-    change="handleChange"
-    />
-    </fb:control>
-</fb:FilterGroupItem> 
-    <fb:FilterGroupItem
-    name="Num DDT Cliente"
-    label="Num DDT Cliente"
-    groupName="gr1"
-    visibleInFilterBar="true"
->
-    <fb:control>
-       <Input/>
-    </fb:control>
-</fb:FilterGroupItem>
-<fb:FilterGroupItem
-name="BP"
-label="BP"
-groupName="gr1"
-visibleInFilterBar="true"
->
-<fb:control>
-   <Input/>
-</fb:control>
-</fb:FilterGroupItem>
-    <fb:FilterGroupItem
+      </fb:FilterGroupItem>
+      <fb:FilterGroupItem
+        name="Num DDT Cliente"
+        label="Num DDT Cliente"
+        groupName="gr1"
+        visibleInFilterBar="true"
+      >
+        <fb:control>
+          <ComboBox
+            items="{filtersModel>/desadv/numDDTCliente/items}"
+            value="{filtersModel>/desadv/numDDTCliente/value}"
+          >
+            <core:ListItem
+              key="{filtersModel>Key}"
+              text="{filtersModel>Text}"
+            />
+          </ComboBox>
+        </fb:control>
+      </fb:FilterGroupItem>
+      <fb:FilterGroupItem
+        name="BP"
+        label="BP"
+        groupName="gr1"
+        visibleInFilterBar="true"
+      >
+        <fb:control>
+          <ComboBox
+            items="{filtersModel>/desadv/bp/items}"
+            value="{filtersModel>/desadv/bp/value}"
+          >
+            <core:ListItem
+              key="{filtersModel>Key}"
+              text="{filtersModel>Text}"
+            />
+          </ComboBox>
+        </fb:control>
+      </fb:FilterGroupItem>
+      <fb:FilterGroupItem
         name="Data Creazione Doc"
         label="Data Creazione Doc"
         groupName="gr1"
         visibleInFilterBar="true"
-    >
+      >
         <fb:control>
-        <DatePicker
-        tooltip="..."
-        secondaryCalendarType="Gregorian"
-        change="handleChange"
-        />
+          <DatePicker
+            tooltip="Data Creazione Doc"
+            value="{filtersModel>/desadv/dataCreaDoc}"
+            secondaryCalendarType="Gregorian"
+            change="handleChange"
+            valueFormat="dd/MM/yyyy"
+            displayFormat="dd/MM/yyyy"
+          />
         </fb:control>
-    </fb:FilterGroupItem>                
-
-    
-</fb:filterGroupItems>
-</fb:FilterBar>
-
-
-
-
-<ui:Table
-rows="{/ProductCollection}"
-selectionMode="MultiToggle"
-paste="onPaste"
-ariaLabelledBy="title">
-<ui:extension>
-  <OverflowToolbar style="Clear">
-    <ToolbarSpacer
-    />
-    <Button
-    text="Archivia"
-    icon="sap-icon://bbyd-active-sales"
-    press="moveToArchive"
-    type="Emphasized"
-    visible="{=${datiAppoggio>/currentPage} === 'archivio' ? false:true}"
-   
-  />
-  </OverflowToolbar>
-</ui:extension>
-<ui:columns>
-  <ui:Column width="7rem">
-    <Label text="Num iDoc" />
-    <ui:template>
-      <Text text="{Name}" wrapping="false" />
-    </ui:template>
-  </ui:Column>
- 
-  <ui:Column width="11rem">
-    <Label text="Num. Consegna" />
-    <ui:template>
-      <Text text="{Name}" wrapping="false" />
-    </ui:template>
-  </ui:Column>
-  <ui:Column width="11rem">
-    <Label text="Data DDT" />
-    <ui:template>
-      <Text text="{Name}" wrapping="false" />
-    </ui:template>
-  </ui:Column>
-  <ui:Column width="9rem">
-    <Label text="Num. DDT" />
-    <ui:template>
-      <Text text="{Name}" wrapping="false" />
-    </ui:template>
-  </ui:Column>
-  
-  <ui:Column width="11rem">
-    <Label text="BP" />
-    <ui:template>
-      <Text text="{Name}" wrapping="false" />
-    </ui:template>
-  </ui:Column>
-
-  <ui:Column width="11rem">
-    <Label text="Data Creazione Doc" />
-    <ui:template>
-      <Text text="{Name}" wrapping="false" />
-    </ui:template>
-  </ui:Column>
-
-  <ui:Column width="11rem">
-    <Label text="Stato" />
-    <ui:template>
-      <Text text="{Name}" wrapping="false" />
-    </ui:template>
-  </ui:Column>
- 
-  <ui:Column width="11rem">
-    
-    <ui:template>
-      
-    </ui:template>
-  </ui:Column>
-
-</ui:columns>
-</ui:Table>
-   
+      </fb:FilterGroupItem>
+    </fb:filterGroupItems>
+  </fb:FilterBar>
+  <ui:Table
+    rows="{/ProductCollection}"
+    selectionMode="MultiToggle"
+    paste="onPaste"
+    ariaLabelledBy="title"
+  >
+    <ui:extension>
+      <OverflowToolbar style="Clear">
+        <ToolbarSpacer />
+        <Button
+          text="Archivia"
+          icon="sap-icon://bbyd-active-sales"
+          press="moveToArchive"
+          type="Emphasized"
+          visible="{=${datiAppoggio>/currentPage} === 'archivio' ? false:true}"
+        />
+      </OverflowToolbar>
+    </ui:extension>
+    <ui:columns>
+      <ui:Column width="7rem">
+        <Label text="Num iDoc" />
+        <ui:template>
+          <Text
+            text="{Name}"
+            wrapping="false"
+          />
+        </ui:template>
+      </ui:Column>
+      <ui:Column width="11rem">
+        <Label text="Num. Consegna" />
+        <ui:template>
+          <Text
+            text="{Name}"
+            wrapping="false"
+          />
+        </ui:template>
+      </ui:Column>
+      <ui:Column width="11rem">
+        <Label text="Data DDT" />
+        <ui:template>
+          <Text
+            text="{Name}"
+            wrapping="false"
+          />
+        </ui:template>
+      </ui:Column>
+      <ui:Column width="9rem">
+        <Label text="Num. DDT" />
+        <ui:template>
+          <Text
+            text="{Name}"
+            wrapping="false"
+          />
+        </ui:template>
+      </ui:Column>
+      <ui:Column width="11rem">
+        <Label text="BP" />
+        <ui:template>
+          <Text
+            text="{Name}"
+            wrapping="false"
+          />
+        </ui:template>
+      </ui:Column>
+      <ui:Column width="11rem">
+        <Label text="Data Creazione Doc" />
+        <ui:template>
+          <Text
+            text="{Name}"
+            wrapping="false"
+          />
+        </ui:template>
+      </ui:Column>
+      <ui:Column width="11rem">
+        <Label text="Stato" />
+        <ui:template>
+          <Text
+            text="{Name}"
+            wrapping="false"
+          />
+        </ui:template>
+      </ui:Column>
+      <ui:Column width="11rem">
+        <ui:template>
+        </ui:template>
+      </ui:Column>
+    </ui:columns>
+  </ui:Table>
 </core:FragmentDefinition>
