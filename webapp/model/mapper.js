@@ -324,6 +324,7 @@ sap.ui.define(
           }
         }
         if (key === "02") {
+          
           if (oFilterSet.dataRic) {
             let oDataRic = formatter.returnDate(oFilterSet.dataRic,"dd/MM/yyyy","yyyyMMdd");
             aFilters.push(
