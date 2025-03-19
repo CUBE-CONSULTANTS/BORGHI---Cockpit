@@ -93,7 +93,6 @@ sap.ui.define(
             }
           },
           desadv: {
-            dataCreaDoc: null,
             dataDDT: null,
             numiDoc: {
               value: null,
