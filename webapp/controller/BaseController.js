@@ -822,6 +822,9 @@ sap.ui.define(
             this.getOwnerComponent().setModel(modelMeta, "master3CO");
             this.getModel("master3CO").setSizeLimit(1000000);
           } else if (key === "03") {
+            let datiFiltrati = metadata.results.filter(
+              (x) => x.dettaglio_fattura.results.length > 0
+            );
             modelMeta = new JSONModel(metadata.results);
             modelMeta.getProperty("/").forEach((testata) => {
               testata.dettaglio_fattura = Object.values(testata.dettaglio_fattura.results);
@@ -940,7 +943,7 @@ sap.ui.define(
                 property = cell.getBindingInfo("text").parts[0].path;
               }
             });
-            let label;
+            let label;  
             if (el.getMultiLabels().length > 0) {
               el.getMultiLabels()[0].getText() === ""
                 ? (label = el.getMultiLabels()[1].getText())
@@ -966,6 +969,7 @@ sap.ui.define(
       // FINE EXCEL VARIAZIONI
       //DELETE X TUTTI I BUTTON
       onDeletePosition: async function (oEvent) {
+        debugger
         let oTable = oEvent.getSource().getParent().getParent();
         try {
           let arrayToProcess = await this._returnPayload(oTable, "delete");
@@ -1555,6 +1559,7 @@ sap.ui.define(
       archiveSingleItem: async function (oModel, Entity, elId, elIdTest) {
         try {
           this.showBusy(0);
+          if(oModel)
           await API.updateEntity(
             oModel,
             `${Entity}(id='${elId}',id_testata='${elIdTest}')`,
@@ -1577,14 +1582,32 @@ sap.ui.define(
       },
       archiveSelectedItems: async function (oModel, Entity, indices, table) {
         let aSelectedItems = indices.map((iIndex) => table.getContextByIndex(iIndex).getObject());
-        let promises = aSelectedItems.map((el) => {
-          let payload = [];
-          el.dettaglio_fattura.forEach((fat) => {
-            payload.push({ id_testata: fat.id_testata, id_posizione: fat.id });
+        let promises = [];
+        if(Entity === "/FileScartati"){
+         promises = aSelectedItems.map(el => {
+          let elId = el.id
+          return API.updateEntity(
+            oModel,
+            `${Entity}(id='${elId}')`,
+            { archiviazione: true, data_archiviazione: new Date()},
+            "PUT"
+          );
+         }) 
+        }else{
+          promises = aSelectedItems.map((el) => {
+            let payload = [];
+            if (el.hasOwnProperty("dettaglio_fattura")) {
+              el.dettaglio_fattura.forEach((fat) => {
+              el.dettaglio_fattura.forEach((fat) => {
+                payload.push({ id_testata: fat.id_testata, id_posizione: fat.id });
+              });
+            } else {
+              payload.push({ id_testata: el.id_testata, id_posizione: el.id });
+            }
+            return API.createEntity(oModel, `${Entity}`, { id: payload });
           });
-          return API.createEntity(oModel, `${Entity}`, { id: payload });
-        });
-
+        }
+              
         try {
           this.showBusy(0);
           let out = await Promise.allSettled(promises);
