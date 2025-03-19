@@ -854,7 +854,7 @@ sap.ui.define(
       //COSTRUZIONE DELLO SHEET
       buildSpreadSheet: function (aExportData) {
         if (aExportData.hasOwnProperty("DettaglioFatture")) {
-          aExportData = aExportData.DettaglioFatture;
+          aExportData = Object.values(aExportData)[0];
         }
         let exportData = Array.isArray(aExportData) ? aExportData : [aExportData];
 
