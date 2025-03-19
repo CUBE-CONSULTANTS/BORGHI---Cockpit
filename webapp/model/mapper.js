@@ -411,6 +411,130 @@ sap.ui.define(
               )
             );
           }
+        }if(key === "04"){
+          // aFilters.push(new sap.ui.model.Filter(
+          //   "archiviazione",
+          //   sap.ui.model.FilterOperator.EQ,
+          //   archivVal
+          // ))
+          if(oFilterSet.dataDDT){
+            let oDataDDT = formatter.returnDate(oFilterSet.dataDDT,"dd/MM/yyyy","yyyyMMdd");
+            aFilters.push(
+              new sap.ui.model.Filter(
+                "data_ddt",
+                sap.ui.model.FilterOperator.EQ,
+                oDataDDT
+              )
+            );
+          }
+          if(oFilterSet.dataCreaDoc){
+            let oDataDoc = formatter.returnDate(oFilterSet.dataDDT,"dd/MM/yyyy","yyyyMMdd");
+            aFilters.push(
+              new sap.ui.model.Filter(
+                "data_ddt",
+                sap.ui.model.FilterOperator.EQ,
+                oDataDoc
+              )
+            );
+          }
+          if (oFilterSet.numeroDDTCliente && oFilterSet.numeroDDTCliente.value) {
+            aFilters.push(
+              new sap.ui.model.Filter(
+                "numero_ddt_cliente",
+                sap.ui.model.FilterOperator.EQ,
+                oFilterSet.numeroDDTCliente.value
+              )
+            );
+          }
+          if (oFilterSet.numConsegna && oFilterSet.numConsegna.value){
+            aFilters.push(
+              new sap.ui.model.Filter(
+                "numero_consegna",
+                sap.ui.model.FilterOperator.EQ,
+                oFilterSet.numConsegna.value
+              )
+            );
+          }  
+          if (oFilterSet.numiDoc && oFilterSet.numiDoc.value){
+            aFilters.push(
+              new sap.ui.model.Filter(
+                "numero_consegna",
+                sap.ui.model.FilterOperator.EQ,
+                oFilterSet.numiDoc.value
+              )
+            );
+          }  
+          if (oFilterSet.bp && oFilterSet.bp.value){
+            aFilters.push(
+              new sap.ui.model.Filter(
+                "bp",
+                sap.ui.model.FilterOperator.EQ,
+                oFilterSet.bp.value
+              )
+            );
+          }  
+        }if (key === "05"){
+          // aFilters.push(new sap.ui.model.Filter(
+          //   "archiviazione",
+          //   sap.ui.model.FilterOperator.EQ,
+          //   archivVal
+          // ))
+          if(oFilterSet.dataDocCont){
+            let oDataDoc = formatter.returnDate(oFilterSet.dataDDT,"dd/MM/yyyy","yyyyMMdd");
+            aFilters.push(
+              new sap.ui.model.Filter(
+                "data_ddt",
+                sap.ui.model.FilterOperator.EQ,
+                oDataDoc
+              )
+            );
+          }
+          if(oFilterSet.dataFattura){
+            let oDataFatt = formatter.returnDate(oFilterSet.dataDDT,"dd/MM/yyyy","yyyyMMdd");
+            aFilters.push(
+              new sap.ui.model.Filter(
+                "data_ddt",
+                sap.ui.model.FilterOperator.EQ,
+                oDataFatt
+              )
+            );
+          }
+          if (oFilterSet.numiDoc && oFilterSet.numiDoc.value){
+            aFilters.push(
+              new sap.ui.model.Filter(
+                "numero_consegna",
+                sap.ui.model.FilterOperator.EQ,
+                oFilterSet.numiDoc.value
+              )
+            );
+          }  
+          if (oFilterSet.numDocCont && oFilterSet.numDocCont.value){
+            aFilters.push(
+              new sap.ui.model.Filter(
+                "numero_consegna",
+                sap.ui.model.FilterOperator.EQ,
+                oFilterSet.numDocCont.value
+              )
+            );
+          }  
+          if (oFilterSet.numFattVend && oFilterSet.numFattVend.value){
+            aFilters.push(
+              new sap.ui.model.Filter(
+                "numero_consegna",
+                sap.ui.model.FilterOperator.EQ,
+                oFilterSet.numFattVend.value
+              )
+            );
+          }  
+          if (oFilterSet.bp && oFilterSet.bp.value){
+            aFilters.push(
+              new sap.ui.model.Filter(
+                "bp",
+                oFilterSet.bp.value,
+                sap.ui.model.FilterOperator.EQ,
+              )
+            );
+          }  
         }
         if (key === "06") {
           aFilters.push(new sap.ui.model.Filter(

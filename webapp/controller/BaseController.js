@@ -335,6 +335,22 @@ sap.ui.define(
           );
           this.getModel("count").setProperty("/selfbilling", selfb.results);
 
+          // let desadv = await API.getEntity(
+          //   this.getOwnerComponent().getModel("despatchAdviceV2"),
+          //   "/Enitity/$count",
+          //   [],
+          //   []
+          // );
+          // this.getModel("count").setProperty("/despatch", desadv.results);
+
+          let invoice = await API.getEntity(
+            this.getOwnerComponent().getModel("invoiceV2"),
+            "/Invoice/$count",
+            [],
+            []
+          );
+          this.getModel("count").setProperty("/invoice", invoice.results);
+
           let fileScart = await API.getEntity(
             this.getOwnerComponent().getModel("fileScartatiV2"),
             "/FileScartati/$count",
