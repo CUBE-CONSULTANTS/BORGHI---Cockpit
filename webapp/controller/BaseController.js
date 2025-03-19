@@ -1576,13 +1576,15 @@ sap.ui.define(
         }
       },
       archiveSelectedItems: async function (oModel, Entity, indices, table) {
+        debugger
         let aSelectedItems = indices.map((iIndex) => table.getContextByIndex(iIndex).getObject());
         let promises = aSelectedItems.map((el) => {
-          return API.updateEntity(
+          debugger
+           return API.updateEntity(
             oModel,
-            `${Entity}(id=${el.id})`,
-            { archiviazione: true, data_archiviazione: new Date() },
-            "PUT"
+            Entity,
+           
+            "POST"
           );
         });
 
