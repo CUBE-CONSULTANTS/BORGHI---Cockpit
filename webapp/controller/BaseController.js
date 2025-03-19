@@ -269,27 +269,16 @@ sap.ui.define(
           matchcode.setSizeLimit(100000000);
           this.setModel(matchcode, "matchcode");
           let oModel = this.getOwnerComponent().getModel("modelloV2");
-          let clienti = await API.getEntity(
-            oModel,
-            "/EIGHTWEEK_MC_KDMAT",
-            [new Filter("Azione", FilterOperator.EQ, "CLIENTE")],
-            []
-          );
-          let materialiForn = await API.getEntity(
-            oModel,
-            "/EIGHTWEEK_MC_KDMAT",
-            [new Filter("Azione", FilterOperator.EQ, "KDMAT")],
-            []
-          );
-          let materialiSap = await API.getEntity(
-            oModel,
-            "/EIGHTWEEK_MC_KDMAT",
-            [new Filter("Azione", FilterOperator.EQ, "MATNR")],
-            []
-          );
+          let [clienti, materialiForn, materialiSap] = await Promise.all([
+            API.getEntity(oModel, "/EIGHTWEEK_MC_KDMAT", [new Filter("Azione", FilterOperator.EQ, "CLIENTE")], []),
+            API.getEntity(oModel, "/EIGHTWEEK_MC_KDMAT", [new Filter("Azione", FilterOperator.EQ, "KDMAT")], []),
+            API.getEntity(oModel, "/EIGHTWEEK_MC_KDMAT", [new Filter("Azione", FilterOperator.EQ, "MATNR")], [])
+          ]);
+
           this.getModel("matchcode").setProperty("/clienti", clienti.results);
           this.getModel("matchcode").setProperty("/materiali", materialiForn.results);
           this.getModel("matchcode").setProperty("/materialiSap", materialiSap.results);
+         
         } catch (error) {
           MessageBox.error("Errore durante il recupero dei dati");
         } finally {
@@ -300,69 +289,32 @@ sap.ui.define(
       _getCounters: async function (filterVal) {
         this.showBusy(0);
         try {
-          let delfor = await API.getEntity(
-            this.getOwnerComponent().getModel("modelloV2"),
-            "/Testata/$count",
-            [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, filterVal)],
-            []
-          );
+          let oModel = this.getOwnerComponent().getModel("modelloV2");
+          let calloffModel = this.getOwnerComponent().getModel("calloffV2");
+          let selfBillingModel = this.getOwnerComponent().getModel("selfBillingV2");
+          let desAdvModel = this.getOwnerComponent().getModel("despatchAdviceV2");
+
+          let invoiceModel = this.getOwnerComponent().getModel("invoiceV2");
+          let fileScartatiModel = this.getOwnerComponent().getModel("fileScartatiV2");
+          let [delfor, calloff, selfb, desadv, invoice, fileScart] = await Promise.all([
+              API.getEntity(oModel, "/Testata/$count", [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, filterVal)], []),
+              filterVal ? API.getEntity(calloffModel, "/ContatoreTestate", [], []): API.getEntity(calloffModel, "/Testata/$count", [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, filterVal)], []),
+              API.getEntity(selfBillingModel, "/Testata/$count", [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, filterVal)], []),
+              API.getEntity(desAdvModel, "/Testata/$count", [],[]),
+              API.getEntity(invoiceModel, "/Invoice/$count", [], []),
+              API.getEntity(fileScartatiModel, "/FileScartati/$count", [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, filterVal)], [])
+          ]);
+  
           this.getModel("count").setProperty("/delivery", delfor.results);
-
-          let calloff;
-          if (filterVal) {
-            calloff = await API.getEntity(
-              this.getOwnerComponent().getModel("calloffV2"),
-              "/ContatoreTestate",
-              [],
-              []
-            );
-            this.getModel("count").setProperty("/calloff", calloff.results[0].ContatoreTestata);
-          } else {
-            calloff = await API.getEntity(
-              this.getOwnerComponent().getModel("calloffV2"),
-              "/Testata/$count",
-              [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, filterVal)],
-              []
-            );
-            this.getModel("count").setProperty("/calloff", calloff.results);
-          }
-
-          let selfb = await API.getEntity(
-            this.getOwnerComponent().getModel("selfBillingV2"),
-            "/Testata/$count",
-            [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, filterVal)],
-            []
-          );
+          this.getModel("count").setProperty("/calloff", filterVal ? calloff.results[0].ContatoreTestata : calloff.results);
           this.getModel("count").setProperty("/selfbilling", selfb.results);
-
-          // let desadv = await API.getEntity(
-          //   this.getOwnerComponent().getModel("despatchAdviceV2"),
-          //   "/Enitity/$count",
-          //   [],
-          //   []
-          // );
-          // this.getModel("count").setProperty("/despatch", desadv.results);
-
-          let invoice = await API.getEntity(
-            this.getOwnerComponent().getModel("invoiceV2"),
-            "/Invoice/$count",
-            // [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, filterVal)],
-            [],
-            []
-          );
+          this.getModel("count").setProperty("/despatch", desadv.results);
           this.getModel("count").setProperty("/invoice", invoice.results);
-
-          let fileScart = await API.getEntity(
-            this.getOwnerComponent().getModel("fileScartatiV2"),
-            "/FileScartati/$count",
-            [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, filterVal)],
-            []
-          );
           this.getModel("count").setProperty("/fileScartati", fileScart.results);
         } catch (error) {
-          console.log("Errore durante il recupero dei Dati");
+            console.error("Errore durante il recupero dei dati:", error);
         } finally {
-          this.hideBusy(0);
+            this.hideBusy(0);
         }
       },
       //COSTRUZIONE FILTRI X TUTTI I TAB
@@ -892,24 +844,30 @@ sap.ui.define(
             this.getOwnerComponent().setModel(modelMeta, "master3CO");
             this.getModel("master3CO").setSizeLimit(1000000);
           } else if (key === "03") {
-            let datiFiltrati = metadata.results.filter(
-              (x) => x.dettaglio_fattura.results.length > 0
-            );
+            // let datiFiltrati = metadata.results.filter(
+            //   (x) => x.dettaglio_fattura.results.length > 0
+            // );
             modelMeta = new JSONModel(metadata.results);
             modelMeta.getProperty("/").forEach((testata) => {
               testata.dettaglio_fattura = Object.values(testata.dettaglio_fattura.results);
             });
             this.getOwnerComponent().setModel(modelMeta, "master3SB");
             this.getModel("master3SB").setSizeLimit(1000000);
-          } else if (key == "06") {
+          } else if( key === "04"){
             modelMeta = new JSONModel(metadata.results);
-            this.getOwnerComponent().setModel(modelMeta, "master3Scart");
-            this.getModel("master3Scart").setSizeLimit(1000000);
-          } else if (key == "05") {
+            this.getOwnerComponent().setModel(modelMeta, "master3DesAdv");
+            this.getModel("master3DesAdv").setSizeLimit(1000000);
+          } 
+          else if (key == "05") {
             modelMeta = new JSONModel(metadata.results);
             this.getOwnerComponent().setModel(modelMeta, "master3Inv");
             this.getModel("master3Inv").setSizeLimit(1000000);
           }
+          else if (key == "06") {
+            modelMeta = new JSONModel(metadata.results);
+            this.getOwnerComponent().setModel(modelMeta, "master3Scart");
+            this.getModel("master3Scart").setSizeLimit(1000000);
+          } 
         } catch (error) {
           MessageBox.error("Errore durante la ricezione dei dati");
         } finally {

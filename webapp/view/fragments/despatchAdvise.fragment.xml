@@ -53,7 +53,7 @@
           </ComboBox>
         </fb:control>
       </fb:FilterGroupItem>
-      <fb:FilterGroupItem
+      <!-- <fb:FilterGroupItem
         name="Data DDT"
         label="Data DDT"
         groupName="gr1"
@@ -69,7 +69,7 @@
             displayFormat="dd/MM/yyyy"
           />
         </fb:control>
-      </fb:FilterGroupItem>
+      </fb:FilterGroupItem> -->
       <fb:FilterGroupItem
         name="Num DDT Cliente"
         label="Num DDT Cliente"
@@ -126,7 +126,7 @@
     </fb:filterGroupItems>
   </fb:FilterBar>
   <ui:Table
-    rows="{/ProductCollection}"
+    rows="{master3DesAdv>/}"
     selectionMode="MultiToggle"
     paste="onPaste"
     ariaLabelledBy="title"
@@ -148,7 +148,7 @@
         <Label text="Num iDoc" />
         <ui:template>
           <Text
-            text="{Name}"
+            text="{master3DesAdv>numero_idoc}"
             wrapping="false"
           />
         </ui:template>
@@ -157,25 +157,42 @@
         <Label text="Num. Consegna" />
         <ui:template>
           <Text
-            text="{Name}"
+          text="{master3DesAdv>numero_consegna}"
+            wrapping="false"
+          />
+        </ui:template>
+      </ui:Column>
+      <!-- <ui:Column width="11rem">
+        <Label text="Data DDT" />
+        <ui:template>
+          <DatePicker
+          editable="false"
+          value="{
+            path: 'master3DesAdv>data_creazione_documento',
+            type: 'sap.ui.model.type.Date',
+            formatOptions: {
+              pattern: 'dd/MM/yyyy'
+            }
+          }"
+          valueFormat="dd/MM/yyyy"
+          displayFormat="dd/MM/yyyy"
+        />
+        </ui:template>
+      </ui:Column> -->
+      <ui:Column width="9rem">
+        <Label text="Num. DDT" />
+        <ui:template>
+          <Text
+          text="{master3DesAdv>numero_ddt}"
             wrapping="false"
           />
         </ui:template>
       </ui:Column>
       <ui:Column width="11rem">
-        <Label text="Data DDT" />
+        <Label text="BP spedizione" />
         <ui:template>
           <Text
-            text="{Name}"
-            wrapping="false"
-          />
-        </ui:template>
-      </ui:Column>
-      <ui:Column width="9rem">
-        <Label text="Num. DDT" />
-        <ui:template>
-          <Text
-            text="{Name}"
+          text="{master3DesAdv>numero_bp_ship_to}"
             wrapping="false"
           />
         </ui:template>
@@ -184,7 +201,7 @@
         <Label text="BP" />
         <ui:template>
           <Text
-            text="{Name}"
+          text="{master3DesAdv>numero_bp_sold_to}"
             wrapping="false"
           />
         </ui:template>
@@ -192,10 +209,18 @@
       <ui:Column width="11rem">
         <Label text="Data Creazione Doc" />
         <ui:template>
-          <Text
-            text="{Name}"
-            wrapping="false"
-          />
+          <DatePicker
+          editable="false"
+          value="{
+            path: 'master3DesAdv>data_creazione_documento',
+            type: 'sap.ui.model.type.Date',
+            formatOptions: {
+              pattern: 'dd/MM/yyyy'
+            }
+          }"
+          valueFormat="dd/MM/yyyy"
+          displayFormat="dd/MM/yyyy"
+        />
         </ui:template>
       </ui:Column>
       <ui:Column width="11rem">
