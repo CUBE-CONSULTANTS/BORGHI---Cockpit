@@ -346,6 +346,7 @@ sap.ui.define(
           let invoice = await API.getEntity(
             this.getOwnerComponent().getModel("invoiceV2"),
             "/Invoice/$count",
+            // [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, filterVal)],
             [],
             []
           );
@@ -355,7 +356,6 @@ sap.ui.define(
             this.getOwnerComponent().getModel("fileScartatiV2"),
             "/FileScartati/$count",
             [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, filterVal)],
-
             []
           );
           this.getModel("count").setProperty("/fileScartati", fileScart.results);

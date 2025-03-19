@@ -169,9 +169,15 @@ sap.ui.define(
       },
       processaItems: function (items) {
         let itemList;
+        let excluded = []
         if (this.byId("idIconTabBar").getSelectedKey() === "02") {
+          excluded = items.filter((x) => x.posizione_43_44 === "35")
           items = items.filter((x) => x.posizione_43_44 !== "35");
+          
         }
+        let message35 
+        excluded.length > 0 ? message35 = "Le posizioni con Reason 35 non verranno processate." : message35 = "";
+
         itemList = items
           .map((item) => {
             if (item.hasOwnProperty("posizione_6_13")) {
@@ -181,7 +187,12 @@ sap.ui.define(
             }
           })
           .join("");
+       
         let message = `Vuoi continuare con questi elementi? \n ${itemList}`;
+          
+        if(message35){
+          message = `${message35}\nVuoi continuare con questi elementi? \n ${itemList}`
+        }
         let that = this;
 
         sap.m.MessageBox.confirm(message, {

@@ -268,7 +268,7 @@
         </ui:template>
       </ui:Column>
       <ui:Column
-        width="4rem"
+       
         hAlign="Center"
         tooltip="Stato"
         visible="{=${datiAppoggio>/currentPage} === 'archivio' ? false:true}"
