@@ -673,7 +673,21 @@ sap.ui.define(
             false
           );
         }
-
+        if (
+          oEvent
+            .getParameters()
+            .selectionSet[0].getBindingInfo("value")
+            .parts[0].path.includes("desadv")
+        ) {
+          modelMeta = await this.callData(
+            this.getOwnerComponent().getModel("despatchAdviceV2"),
+            "/Testata",
+            [],
+            [],
+            "04",
+            false
+          );
+        }
         if (
           oEvent
             .getParameters()
@@ -683,7 +697,7 @@ sap.ui.define(
           modelMeta = await this.callData(
             this.getOwnerComponent().getModel("invoiceV2"),
             "/Invoice",
-            [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, archivVal)],
+            [],
             [],
             "05",
             false
