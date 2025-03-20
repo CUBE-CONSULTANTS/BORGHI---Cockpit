@@ -408,12 +408,12 @@ sap.ui.define(["../model/API", "../model/formatter"], function (API, formatter) 
         }
       }
       if (key === "04") {
-        debugger;
-        // aFilters.push(new sap.ui.model.Filter(
-        //   "archiviazione",
-        //   sap.ui.model.FilterOperator.EQ,
-        //   archivVal
-        // ))
+       
+        aFilters.push(new sap.ui.model.Filter(
+          "archiviazione",
+          sap.ui.model.FilterOperator.EQ,
+          archivVal
+        ))
 
         if (oFilterSet.dataDDT) {
           let oDataDDT = formatter.returnDate(oFilterSet.dataDDT, "dd/MM/yyyy", "yyyyMMdd");
@@ -465,11 +465,11 @@ sap.ui.define(["../model/API", "../model/formatter"], function (API, formatter) 
         }
       }
       if (key === "05") {
-        // aFilters.push(new sap.ui.model.Filter(
-        //   "archiviazione",
-        //   sap.ui.model.FilterOperator.EQ,
-        //   archivVal
-        // ))
+        aFilters.push(new sap.ui.model.Filter(
+          "archiviazione",
+          sap.ui.model.FilterOperator.EQ,
+          archivVal
+        ))
         if (oFilterSet.dataDocCont) {
           let oDataDoc = formatter.returnDate(oFilterSet.dataDDT, "dd/MM/yyyy", "yyyyMMdd");
           aFilters.push(

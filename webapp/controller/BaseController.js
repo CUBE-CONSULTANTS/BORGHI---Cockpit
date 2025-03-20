@@ -345,8 +345,8 @@ sap.ui.define(
               [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, filterVal)],
               []
             ),
-            API.getEntity(desAdvModel, "/Testata/$count", [], []),
-            API.getEntity(invoiceModel, "/Invoice/$count", [], []),
+            API.getEntity(desAdvModel, "/Testata/$count", [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, filterVal)], []),
+            API.getEntity(invoiceModel, "/Invoice/$count", [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, filterVal)], []),
             API.getEntity(
               fileScartatiModel,
               "/FileScartati/$count",
