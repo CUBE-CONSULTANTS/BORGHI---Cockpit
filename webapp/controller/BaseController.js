@@ -218,7 +218,12 @@ sap.ui.define(
       },
       //NAVIGAZIONE VERSO VARIAZIONI
       navToAPP: function (oEvent) {
-        let level = oEvent.getSource().getParent().getParent().getBindingContext("master3").getPath();
+        let level = oEvent
+          .getSource()
+          .getParent()
+          .getParent()
+          .getBindingContext("master3")
+          .getPath();
         let oCodArt = oEvent
           .getSource()
           .getParent()
@@ -227,9 +232,14 @@ sap.ui.define(
           .getObject().codice_cliente_materiale;
 
         let oCodCliente;
-        oEvent.getSource().getParent().getParent().getBindingContext("master3").getObject().codice_cliente === null
-          ? (oCodCliente = oEvent.getSource().getParent().getParent().getBindingContext("master3").getObject()
-              .testata.codice_cliente)
+        oEvent.getSource().getParent().getParent().getBindingContext("master3").getObject()
+          .codice_cliente === null
+          ? (oCodCliente = oEvent
+              .getSource()
+              .getParent()
+              .getParent()
+              .getBindingContext("master3")
+              .getObject().testata.codice_cliente)
           : (oCodCliente = oEvent
               .getSource()
               .getParent()
@@ -260,9 +270,24 @@ sap.ui.define(
           this.setModel(matchcode, "matchcode");
           let oModel = this.getOwnerComponent().getModel("modelloV2");
           let [clienti, materialiForn, materialiSap] = await Promise.all([
-            API.getEntity(oModel, "/EIGHTWEEK_MC_KDMAT", [new Filter("Azione", FilterOperator.EQ, "CLIENTE")], []),
-            API.getEntity(oModel, "/EIGHTWEEK_MC_KDMAT", [new Filter("Azione", FilterOperator.EQ, "KDMAT")], []),
-            API.getEntity(oModel, "/EIGHTWEEK_MC_KDMAT", [new Filter("Azione", FilterOperator.EQ, "MATNR")], []),
+            API.getEntity(
+              oModel,
+              "/EIGHTWEEK_MC_KDMAT",
+              [new Filter("Azione", FilterOperator.EQ, "CLIENTE")],
+              []
+            ),
+            API.getEntity(
+              oModel,
+              "/EIGHTWEEK_MC_KDMAT",
+              [new Filter("Azione", FilterOperator.EQ, "KDMAT")],
+              []
+            ),
+            API.getEntity(
+              oModel,
+              "/EIGHTWEEK_MC_KDMAT",
+              [new Filter("Azione", FilterOperator.EQ, "MATNR")],
+              []
+            ),
           ]);
 
           this.getModel("matchcode").setProperty("/clienti", clienti.results);
@@ -297,7 +322,13 @@ sap.ui.define(
               : API.getEntity(
                   calloffModel,
                   "/Testata/$count",
-                  [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, filterVal)],
+                  [
+                    new sap.ui.model.Filter(
+                      "archiviazione",
+                      sap.ui.model.FilterOperator.EQ,
+                      filterVal
+                    ),
+                  ],
                   []
                 ),
             API.getEntity(
@@ -593,7 +624,10 @@ sap.ui.define(
         //GESTIONE FILTRI DELFOR
         if (
           (oEvent &&
-            oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("delivery")) ||
+            oEvent
+              .getParameters()
+              .selectionSet[0].getBindingInfo("value")
+              .parts[0].path.includes("delivery")) ||
           (!oEvent && filterTab === "01")
         ) {
           oFilterSet = this.getModel("filtersModel").getProperty("/delivery");
@@ -649,7 +683,10 @@ sap.ui.define(
         } // GESTIONE FILTRI CALLOFF
         else if (
           (oEvent &&
-            oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("callOff")) ||
+            oEvent
+              .getParameters()
+              .selectionSet[0].getBindingInfo("value")
+              .parts[0].path.includes("callOff")) ||
           (!oEvent && filterTab === "02")
         ) {
           oFilterSet = this.getModel("filtersModel").getProperty("/callOff");
@@ -696,7 +733,10 @@ sap.ui.define(
         } // GESTIONE FILTRI SELFBILLING
         else if (
           (oEvent &&
-            oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("selfBilling")) ||
+            oEvent
+              .getParameters()
+              .selectionSet[0].getBindingInfo("value")
+              .parts[0].path.includes("selfBilling")) ||
           (!oEvent && filterTab === "03")
         ) {
           oFilterSet = this.getModel("filtersModel").getProperty("/selfBilling");
@@ -727,7 +767,10 @@ sap.ui.define(
         } // GESTIONE FILTRI DESADV
         else if (
           (oEvent &&
-            oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("desadv")) ||
+            oEvent
+              .getParameters()
+              .selectionSet[0].getBindingInfo("value")
+              .parts[0].path.includes("desadv")) ||
           (!oEvent && filterTab === "04")
         ) {
           oFilterSet = this.getModel("filtersModel").getProperty("/desadv");
@@ -743,16 +786,29 @@ sap.ui.define(
         } // GESTIONE FILTRI INVOICE
         else if (
           (oEvent &&
-            oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("invoice")) ||
+            oEvent
+              .getParameters()
+              .selectionSet[0].getBindingInfo("value")
+              .parts[0].path.includes("invoice")) ||
           (!oEvent && filterTab === "05")
         ) {
           oFilterSet = this.getModel("filtersModel").getProperty("/invoice");
           let aFilters = mapper.buildFilters(oFilterSet, (key = "05"), operator);
-          await this.callData(this.getOwnerComponent().getModel("invoiceV2"), "/Invoice", aFilters, [], "05", false);
+          await this.callData(
+            this.getOwnerComponent().getModel("invoiceV2"),
+            "/Invoice",
+            aFilters,
+            [],
+            "05",
+            false
+          );
         } //GESTIONE FILTRI SCARTATI
         else if (
           (oEvent &&
-            oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("scartati")) ||
+            oEvent
+              .getParameters()
+              .selectionSet[0].getBindingInfo("value")
+              .parts[0].path.includes("scartati")) ||
           (!oEvent && filterTab === "06")
         ) {
           oFilterSet = this.getModel("filtersModel").getProperty("/scartati");
@@ -773,7 +829,9 @@ sap.ui.define(
         try {
           metadata = await API.getEntity(oModel, entity, aFilters, Expands);
           if (key === "01") {
-            let datiFiltrati = metadata.results.filter((x) => x.master !== null && x.posizioni.results.length > 0);
+            let datiFiltrati = metadata.results.filter(
+              (x) => x.master !== null && x.posizioni.results.length > 0
+            );
             if (filtrato) {
               datiFiltrati = metadata.results
                 .filter((x) => x.master !== null)
@@ -935,7 +993,10 @@ sap.ui.define(
               el.getMultiLabels()[0].getText() === ""
                 ? (label = el.getMultiLabels()[1].getText())
                 : el.getMultiLabels()[0].getText();
-              if (el.getMultiLabels()[0].getText() !== "" && el.getMultiLabels()[1].getText() !== 0) {
+              if (
+                el.getMultiLabels()[0].getText() !== "" &&
+                el.getMultiLabels()[1].getText() !== 0
+              ) {
                 label = el.getMultiLabels()[0].getText() + " " + el.getMultiLabels()[1].getText();
               }
             } else {
@@ -979,13 +1040,21 @@ sap.ui.define(
               ({ tableID, oModel, Entity } = this.getModelAndEntityByPart(selectedKey));
             } else {
               if (this.getModel("detailData").getProperty("/__metadata") !== undefined) {
-                if (this.getModel("detailData").getProperty("/__metadata").type.includes("Delivery")) {
+                if (
+                  this.getModel("detailData").getProperty("/__metadata").type.includes("Delivery")
+                ) {
                   oModel = this.getOwnerComponent().getModel("modelloV2");
-                } else if (this.getModel("detailData").getProperty("/__metadata").type.includes("CalloffService")) {
+                } else if (
+                  this.getModel("detailData")
+                    .getProperty("/__metadata")
+                    .type.includes("CalloffService")
+                ) {
                   oModel = this.getOwnerComponent().getModel("calloffV2");
                 }
               } else if (
-                this.getModel("detailData").getProperty("/DettaglioMaster3").__metadata.type.includes("SelfBilling")
+                this.getModel("detailData")
+                  .getProperty("/DettaglioMaster3")
+                  .__metadata.type.includes("SelfBilling")
               ) {
                 oModel = this.getOwnerComponent().getModel("selfBillingV2");
               }
@@ -1025,9 +1094,14 @@ sap.ui.define(
           aSelectedItems = aSelectedItems
             .map((item) => {
               if (item.posizioni) {
-                item.posizioni = item.posizioni.filter((pos) => pos.stato !== "53" && pos.stato !== "64");
+                item.posizioni = item.posizioni.filter(
+                  (pos) => pos.stato !== "53" && pos.stato !== "64"
+                );
               }
-              if ((item.stato !== "53" && item.stato !== "64") || (item.posizioni && item.posizioni.length > 0)) {
+              if (
+                (item.stato !== "53" && item.stato !== "64") ||
+                (item.posizioni && item.posizioni.length > 0)
+              ) {
                 return item;
               }
               return null;
@@ -1056,7 +1130,8 @@ sap.ui.define(
           action === "elab"
             ? (message =
                 "Verranno processate tutte le posizioni non ancora elaborate della Testata selezionata, continuare?")
-            : (message = "Verranno eliminate tutte le posizioni della Testata selezionata, continuare?");
+            : (message =
+                "Verranno eliminate tutte le posizioni della Testata selezionata, continuare?");
           if (flag) {
             return new Promise((resolve) => {
               MessageBox.confirm(message, {
@@ -1065,13 +1140,19 @@ sap.ui.define(
                   if (oAction === sap.m.MessageBox.Action.OK) {
                     testate.forEach((x) => {
                       if (x.hasOwnProperty("posizioni")) {
-                        x.posizioni.forEach((pos) => (pos["numero_progressivo_invio"] = x.numero_progressivo_invio));
+                        x.posizioni.forEach(
+                          (pos) => (pos["numero_progressivo_invio"] = x.numero_progressivo_invio)
+                        );
                         selectedPos = selectedPos.concat(x.posizioni);
                       } else if (x.hasOwnProperty("posizioni_testata")) {
-                        x.posizioni_testata.forEach((pos) => (pos["numero_progressivo_invio"] = x.progressivo_invio));
+                        x.posizioni_testata.forEach(
+                          (pos) => (pos["numero_progressivo_invio"] = x.progressivo_invio)
+                        );
                         selectedPos = selectedPos.concat(x.posizioni_testata);
                       } else if (x.hasOwnProperty("dettaglio_fattura")) {
-                        x.dettaglio_fattura.forEach((pos) => (pos["numero_progressivo_invio"] = x.progressivo_invio));
+                        x.dettaglio_fattura.forEach(
+                          (pos) => (pos["numero_progressivo_invio"] = x.progressivo_invio)
+                        );
                         selectedPos = selectedPos.concat(x.dettaglio_fattura);
                       }
                     });
@@ -1235,7 +1316,11 @@ sap.ui.define(
             let detailModel = this.getModel("detailData");
             detailModel.setData(dettaglio);
             detailModel.getProperty("/posizioni_testata/results").forEach((pos) => {
-              pos.posizione_14_19 = this.formatter.returnDate(pos.posizione_14_19, "yyyyMMdd", "dd/MM/yyyy");
+              pos.posizione_14_19 = this.formatter.returnDate(
+                pos.posizione_14_19,
+                "yyyyMMdd",
+                "dd/MM/yyyy"
+              );
             });
           } else if (this.getView().getControllerName().includes("DettSelfBilling")) {
             let dettaglio = await API.readByKey(
@@ -1243,7 +1328,9 @@ sap.ui.define(
               "/Testata",
               { id: this._id },
               [],
-              ["dettaglio_fattura,dettaglio_fattura/riferimento_ddt,dettaglio_fattura/riferimento_ddt/riga_fattura"]
+              [
+                "dettaglio_fattura,dettaglio_fattura/riferimento_ddt,dettaglio_fattura/riferimento_ddt/riga_fattura",
+              ]
             );
             this.getView().setModel(new JSONModel(), "detailData");
             let detailModel = this.getModel("detailData");
@@ -1257,7 +1344,10 @@ sap.ui.define(
               });
             });
             this.getModel("detailData").setProperty("/DettaglioMaster3", dettaglio);
-            this.getModel("detailData").setProperty("/DettaglioFatture", dettaglio.dettaglio_fattura.results);
+            this.getModel("detailData").setProperty(
+              "/DettaglioFatture",
+              dettaglio.dettaglio_fattura.results
+            );
           }
 
           //AGGIUNGERE LOGICHE X OGNI DETTAGLIO SE ESISTENTE
@@ -1343,12 +1433,16 @@ sap.ui.define(
             null: 4,
           };
           oState.Sorter.forEach((oSorter) => {
-            const oColumn = oTable.getColumns().find((oColumn) => this._getKey(oColumn) === oSorter.key);
+            const oColumn = oTable
+              .getColumns()
+              .find((oColumn) => this._getKey(oColumn) === oSorter.key);
 
             if (oColumn) {
               oColumn.setSorted(true);
               oColumn.setSortOrder(
-                oSorter.descending ? CoreLibrary.SortOrder.Descending : CoreLibrary.SortOrder.Ascending
+                oSorter.descending
+                  ? CoreLibrary.SortOrder.Descending
+                  : CoreLibrary.SortOrder.Ascending
               );
 
               const oProperty = this.oMetadataHelper.getProperty(oSorter.key);
@@ -1434,7 +1528,10 @@ sap.ui.define(
       onDownloadCumulativi: async function (oEvent) {
         let numIdoc = oEvent.getSource().getBindingContext("master3").getObject().numero_idoc;
         let dest = oEvent.getSource().getBindingContext("master3").getObject().destinatario;
-        let rffon = oEvent.getSource().getBindingContext("master3").getObject().numero_ordine_acquisto;
+        let rffon = oEvent
+          .getSource()
+          .getBindingContext("master3")
+          .getObject().numero_ordine_acquisto;
         await this.getReportCumulativi(dest, numIdoc, rffon);
       },
       getReportCumulativi: async function (dest, numIdoc, rffon) {
@@ -1477,7 +1574,10 @@ sap.ui.define(
         let oModel = new JSONModel();
         oModel.setData({ logs: sortedLogs });
         if (!this._oDialog) {
-          this._oDialog = sap.ui.xmlfragment("programmi.consegne.edi.view.fragments.detailStato", this);
+          this._oDialog = sap.ui.xmlfragment(
+            "programmi.consegne.edi.view.fragments.detailStato",
+            this
+          );
           this.getView().addDependent(this._oDialog);
         }
         this._oDialog.setModel(oModel, "logData");
@@ -1485,7 +1585,14 @@ sap.ui.define(
       },
       // SPOSTAMENTO IN ARCHIVIO SIA TOOLBAR CHE POSIZIONALE
       moveToArchive: async function (oEvent) {
-        let part = oEvent.getSource().getParent().getParent().getParent().getParent().getParent().getSelectedKey();
+        let part = oEvent
+          .getSource()
+          .getParent()
+          .getParent()
+          .getParent()
+          .getParent()
+          .getParent()
+          .getSelectedKey();
         let { tableID, oModel, Entity } = this.getModelAndEntityByPart(part);
         if (tableID === "treetableCallOff") {
           let elId = oEvent.getSource().getBindingContext("master3CO").getObject().id;
@@ -1579,7 +1686,7 @@ sap.ui.define(
           : (archivVal = false);
         let aSelectedItems = indices.map((iIndex) => table.getContextByIndex(iIndex).getObject());
         let promises = [];
-        if (Entity === "/FileScartati") {
+        if (Entity === "/FileScartati" || Entity === "/Invoice") {
           promises = aSelectedItems.map((el) => {
             let elId = el.id;
             return API.updateEntity(
@@ -1645,19 +1752,31 @@ sap.ui.define(
       dettaglioNav: function (oEvent) {
         let level, detailPath, detail;
         if (oEvent.getSource().getParent().getBindingContext("master3") !== undefined) {
-          level = oEvent.getSource().getParent().getBindingContext("master3").getPath().includes("posizioni");
+          level = oEvent
+            .getSource()
+            .getParent()
+            .getBindingContext("master3")
+            .getPath()
+            .includes("posizioni");
           detailPath = oEvent.getSource().getParent().getBindingContext("master3").getPath();
           detail = this.getModel("master3").getProperty(`${detailPath}`);
           this.getOwnerComponent().getModel("datiAppoggio").setProperty("/testata", detail);
-          this.getOwnerComponent().getModel("datiAppoggio").setProperty("/posizioni", detail.posizioni);
+          this.getOwnerComponent()
+            .getModel("datiAppoggio")
+            .setProperty("/posizioni", detail.posizioni);
           if (level) {
-            this.getOwnerComponent().getModel("datiAppoggio").setProperty("/posizioneCorrente", detail);
+            this.getOwnerComponent()
+              .getModel("datiAppoggio")
+              .setProperty("/posizioneCorrente", detail);
             this.getOwnerComponent()
               .getModel("datiAppoggio")
               .setProperty("/schedulazioni", detail.schedulazioni.results);
             this.getOwnerComponent()
               .getModel("datiAppoggio")
-              .setProperty("/testata", this.getModel("master3").getProperty(`${detailPath[0] + detailPath[1]}`));
+              .setProperty(
+                "/testata",
+                this.getModel("master3").getProperty(`${detailPath[0] + detailPath[1]}`)
+              );
             let oNextUIState;
             this.getOwnerComponent()
               .getHelper()
@@ -1706,7 +1825,14 @@ sap.ui.define(
       },
       handleCloseVariazioni: function (oEvent) {
         this.getRouter().navTo("master", {
-          layout: oEvent.getSource().getParent().getParent().getParent().getParent().getParent().setLayout(),
+          layout: oEvent
+            .getSource()
+            .getParent()
+            .getParent()
+            .getParent()
+            .getParent()
+            .getParent()
+            .setLayout(),
           prevApp: this.prevApp,
         });
       },
