@@ -167,6 +167,23 @@
         </ui:template>
       </ui:Column>
       <ui:Column >
+        <Label text="Data Creazione Doc" />
+        <ui:template>
+          <DatePicker
+          editable="false"
+          value="{
+            path: 'master3DesAdv>data_creazione_documento',
+            type: 'sap.ui.model.type.Date',
+            formatOptions: {
+              pattern: 'dd/MM/yyyy'
+            }
+          }"
+          valueFormat="dd/MM/yyyy"
+          displayFormat="dd/MM/yyyy"
+        />
+        </ui:template>
+      </ui:Column>
+      <ui:Column >
         <Label text="Num. Consegna" />
         <ui:template>
           <Text
@@ -202,7 +219,7 @@
         </ui:template>
       </ui:Column>
       <ui:Column>
-        <Label text="BP spedizione" />
+        <Label text="Committente" />
         <ui:template>
           <Text
           text="{master3DesAdv>numero_bp_ship_to}"
@@ -211,7 +228,7 @@
         </ui:template>
       </ui:Column>
       <ui:Column >
-        <Label text="BP" />
+        <Label text="Destinatario" />
         <ui:template>
           <Text
           text="{master3DesAdv>numero_bp_sold_to}"
@@ -219,23 +236,7 @@
           />
         </ui:template>
       </ui:Column>
-      <ui:Column >
-        <Label text="Data Creazione Doc" />
-        <ui:template>
-          <DatePicker
-          editable="false"
-          value="{
-            path: 'master3DesAdv>data_creazione_documento',
-            type: 'sap.ui.model.type.Date',
-            formatOptions: {
-              pattern: 'dd/MM/yyyy'
-            }
-          }"
-          valueFormat="dd/MM/yyyy"
-          displayFormat="dd/MM/yyyy"
-        />
-        </ui:template>
-      </ui:Column>
+      
       <!-- <ui:Column width="11rem">
         <Label text="Stato" />
         <ui:template>
