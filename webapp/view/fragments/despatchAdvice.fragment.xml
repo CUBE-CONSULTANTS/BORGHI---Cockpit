@@ -127,6 +127,7 @@
     </fb:filterGroupItems>
   </fb:FilterBar>
   <ui:Table
+    id= "tableDes"
     rows="{master3DesAdv>/}"
     selectionMode="{=${datiAppoggio>/currentPage} === 'archivio' ? 'Single':'MultiToggle'}"
     ariaLabelledBy="title"
@@ -134,6 +135,18 @@
     <ui:extension>
       <OverflowToolbar style="Clear">
         <ToolbarSpacer />
+        <Button
+        icon="sap-icon://sort"
+        text="Ordinamento"
+        press="sortCategories"
+      />
+      
+      <Button
+        text="Esporta excel"
+        icon="sap-icon://excel-attachment"
+        press="downloadExcelFile"
+      
+      />
         <Button
           text="Archivia"
           icon="sap-icon://bbyd-active-sales"
