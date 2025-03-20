@@ -984,6 +984,7 @@ sap.ui.define(
       // FINE EXCEL VARIAZIONI
       //DELETE X TUTTI I BUTTON
       onDeletePosition: async function (oEvent) {
+        let archivVal
         this.getModel("datiAppoggio").getProperty("/currentPage") === "archivio"
           ? (archivVal = true)
           : (archivVal = false);
@@ -1598,6 +1599,7 @@ sap.ui.define(
         }
       },
       archiveSingleItem: async function (oModel, Entity, elId, elIdTest) {
+        let archivVal
         this.getModel("datiAppoggio").getProperty("/currentPage") === "archivio"
           ? (archivVal = true)
           : (archivVal = false);
@@ -1625,6 +1627,7 @@ sap.ui.define(
         }
       },
       archiveSelectedItems: async function (oModel, Entity, indices, table) {
+        let archivVal
         this.getModel("datiAppoggio").getProperty("/currentPage") === "archivio"
           ? (archivVal = true)
           : (archivVal = false);
