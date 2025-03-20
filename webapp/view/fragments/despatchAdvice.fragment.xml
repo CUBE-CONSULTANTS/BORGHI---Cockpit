@@ -37,6 +37,23 @@
         </fb:control>
       </fb:FilterGroupItem>
       <fb:FilterGroupItem
+      name="Data Creazione Doc"
+      label="Data Creazione Doc"
+      groupName="gr1"
+      visibleInFilterBar="true"
+    >
+      <fb:control>
+        <DatePicker
+          tooltip="Data Creazione Doc"
+          value="{filtersModel>/desadv/dataCreaDoc}"
+          secondaryCalendarType="Gregorian"
+          change="handleChange"
+          valueFormat="dd/MM/yyyy"
+          displayFormat="dd/MM/yyyy"
+        />
+      </fb:control>
+    </fb:FilterGroupItem>
+      <fb:FilterGroupItem
         name="Num Consegna"
         label="Num Consegna"
         groupName="gr1"
@@ -107,23 +124,7 @@
           </ComboBox>
         </fb:control>
       </fb:FilterGroupItem>
-      <fb:FilterGroupItem
-        name="Data Creazione Doc"
-        label="Data Creazione Doc"
-        groupName="gr1"
-        visibleInFilterBar="true"
-      >
-        <fb:control>
-          <DatePicker
-            tooltip="Data Creazione Doc"
-            value="{filtersModel>/desadv/dataCreaDoc}"
-            secondaryCalendarType="Gregorian"
-            change="handleChange"
-            valueFormat="dd/MM/yyyy"
-            displayFormat="dd/MM/yyyy"
-          />
-        </fb:control>
-      </fb:FilterGroupItem>
+    
     </fb:filterGroupItems>
   </fb:FilterBar>
   <ui:Table

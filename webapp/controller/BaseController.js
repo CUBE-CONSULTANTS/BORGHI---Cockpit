@@ -163,11 +163,11 @@ sap.ui.define(
             break;
           case "04":
             oTable = this.byId("tableDes");
-            aSorters = this.sortTables(oTable, ["customer", "data_ricezione"]);
+            aSorters = this.sortTables(oTable, ["data_creazione_documento", "numero_ddt"]);
             break;  
           case "05":
             oTable = this.byId("tableInvoice");
-            aSorters = this.sortTables(oTable, ["customer", "data_ricezione"]);
+            aSorters = this.sortTables(oTable, ["data_di_fatturazione", "fattura_di_vendita"]);
             break;  
           case "06":
             oTable = this.byId("tableScartati");
