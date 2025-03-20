@@ -112,9 +112,9 @@ class="sapUiSmallMarginBottom"
 
 <ui:Table
 rows="{master3Inv>/}"
-selectionMode="MultiToggle"
 paste="onPaste"
 ariaLabelledBy="title"
+selectionMode="{=${datiAppoggio>/currentPage} === 'archivio' ? 'Single':'MultiToggle'}"
 id="tableInvoice">
 <ui:extension>
   <OverflowToolbar style="Clear">

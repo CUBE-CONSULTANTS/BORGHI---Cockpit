@@ -95,7 +95,7 @@
                     <IconTabFilter
                         icon="sap-icon://letter"
                         iconColor="Default"
-                        
+                        count="{count>/despatch}"
                         text="Despatch Advice"
                         key="04"
                         
@@ -106,7 +106,7 @@
                     <IconTabFilter
                         icon="sap-icon://sales-order"
                         iconColor="Default"
-                        
+                        count="{count>/invoice}"
                         text="Invoice"
                         key="05"
                        

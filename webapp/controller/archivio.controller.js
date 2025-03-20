@@ -53,8 +53,12 @@ sap.ui.define(
           this.onFiltersBuilding(oEvent, selectedKey);
           break;
          case "04":
+          await this.onSearchData(undefined, selectedKey)
+          this.onFiltersBuilding(oEvent, selectedKey);
           break;
          case "05":
+          await this.onSearchData(undefined, selectedKey)
+          this.onFiltersBuilding(oEvent, selectedKey);
           break;
          case "06":
           await this.onSearchData(undefined, selectedKey)
