@@ -853,6 +853,41 @@ sap.ui.define(
           this.hideBusy(0);
         }
       },
+      //DOWLOAD MAIN TABLE 
+      downloadExcelFile: function (oEvent) {
+        let selectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
+        !selectedKey ? (selectedKey = key) : (selectedKey = selectedKey);
+        let oModel;
+        
+        switch (selectedKey) {
+          case "01":
+            oModel = this.getModel("master3");
+            break;
+          case "02":
+            oModel = this.getModel("master3CO");
+            break;
+          case "03":
+            oModel = this.getModel("master3SB");
+            break;
+          case "04": 
+          oModel = this.getModel("master3DesAdv")
+            break;  
+          case "05":
+            oModel = this.getModel("master3Inv");
+            break; 
+          case "06":
+            oModel = this.getModel("master3Scart");
+            break;
+          default:
+        }
+        let aData = oModel.getProperty("/");
+        if (!aData || aData.length === 0) {
+          MessageToast.show("Nessun dato disponibile per l'esportazione");
+          return;
+        }
+        this.buildSpreadSheet(aData);
+      },
+
       // DOWNLOAD DI EXCEL X DETTAGLI
       downloadExcelFileDett: function (oEvent) {
         let oModel = this.getModel("detailData");
