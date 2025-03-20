@@ -748,22 +748,27 @@ sap.ui.define(
           (!oEvent && filterTab === "03")
         ) {
           oFilterSet = this.getModel("filtersModel").getProperty("/selfBilling");
-
+          
           let aFilters = mapper.buildFilters(oFilterSet, (key = "03"), operator);
           let filters = {
             fatture: aFilters.find((f) => f.sPath === "dettaglio_fattura/numero_fattura"),
           };
           Object.keys(filters).forEach((key) => {
             if (filters[key]) {
-              let index = aFilters.findIndex((f) => f.sPath === key);
+              let index;
+              if (key === "fatture") {
+                index = aFilters.findIndex((f) => f.sPath === "dettaglio_fattura/numero_fattura");
+              } else {
+                index = aFilters.findIndex((f) => f.sPath === key);
+              }
               if (index !== -1) aFilters.splice(index, 1);
             }
           });
-          let posizioniFilter = `archiviazione eq '${valPosArch}'`;
+          let posizioniFilter = `archiviazione eq ${valPosArch}`;
           if (filters.fatture) {
-            posizioniFilter += `and dettaglio_fattura($filter=numero_fattura eq '${filters.fatture.oValue1}'`;
+            posizioniFilter += ` and numero_fattura eq '${filters.fatture.oValue1}'`;
           }
-          let expandQuery = `dettaglio_fattura($filter=${posizioniFilter}),dettaglio_fattura/riferimento_ddt,dettaglio_fattura/riferimento_ddt/riga_fattura`;
+          let expandQuery = `dettaglio_fattura($filter=${posizioniFilter}),dettaglio_fattura($expand=riferimento_ddt),dettaglio_fattura/riferimento_ddt($expand=riga_fattura)`;
           await this.callData(
             this.getOwnerComponent().getModel("selfBillingV2"),
             "/Testata",
