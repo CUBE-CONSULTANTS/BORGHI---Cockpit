@@ -266,11 +266,52 @@ sap.ui.define(
           MessageBox.error("Nessun file selezionato");
         }
       },
-      reportSB: function (oEvent) {
+      reportSB: async function (oEvent) {
         // /sap/opu/odata/sap/ZEDIFACT_IDOC_SRV/SELFBILLING_VDA4908_REPORT_SET?$filter=(KNREF eq '0000707511' and KUNNR eq '00217881' and NOTA_CREDITO eq 'test' and DATA_NOTA eq '20250313' and NUM_BOLLA eq 'Off 25/2025' and DATA_BOLLA eq '20250313' and COD_ARTICOLO_CLIENTE eq 'test_art' and NUM_ORDINE eq '1234' and QUANT_PRELEVATA eq '1' and PREZZO eq '100' and VALORE eq '123')&$format=json,
-        ;
-        let obj = oEvent.getSource().getBindingContext("master3SB").getObject();
+        let aData = oEvent.getSource().getBindingContext("master3SB").getObject()
+        let aPostData = []; 
+        if (Array.isArray(aData)) {
+          aData.forEach((item) => {
+            this._processItem(item, aPostData);
+          });
+        } else if (typeof aData === 'object' && aData !== null) {
+          this._processItem(aData, aPostData);
+        } 
+        try {
+          this.showBusy(0)
+          let report = await API.createEntity(this.getOwnerComponent().getModel("selfBillingV2"), "/REPORT_SET", {"d":aPostData}, {})
+        } catch (error) {
+          MessageBox.error("Errore durante il recupero dei dati")
+        }finally {
+          this.hideBusy(0)
+        }
       },
+      _processItem: function (item, aPostData) {
+        let supplier = item.supplier;
+        let fatture = item.dettaglio_fattura || [];
+        fatture.forEach((fattura) => {
+          let numero_fattura = fattura.numero_fattura;
+          let data_fattura = fattura.data_fattura;
+          let ddt = fattura.riferimento_ddt?.results || [];
+            ddt.forEach((data) => {
+              let payload = {
+                KUNNR: supplier,                              
+                NOTA_CREDITO: numero_fattura,                
+                DATA_NOTA: data_fattura,                   
+                NUM_ORDINE: data.order_number,     
+                KNREF: data.nad_cn_consegna,                 
+                NUM_BOLLA: data.num_ddt_cliente,             
+                DATA_BOLLA: data.data_ddt_cliente,          
+                COD_ARTICOLO_CLIENTE: data.riga_fattura?.codice_articolo_cliente_da_transcodificare,  
+                QUANT_PRELEVATA: data.riga_fattura?.qty_delivery,  
+                PREZZO: data.riga_fattura?.unit_price,      
+                VALORE: data.riga_fattura?.total_price,  
+              };
+              aPostData.push(payload);
+            });
+        });
+      }
+
     });
   }
 );
