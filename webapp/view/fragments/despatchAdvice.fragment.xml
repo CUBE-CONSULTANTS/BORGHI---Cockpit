@@ -219,7 +219,7 @@
         </ui:template>
       </ui:Column>
       <ui:Column>
-        <Label text="Committente" />
+        <Label text="Spedito A:" />
         <ui:template>
           <Text
           text="{master3DesAdv>numero_bp_ship_to}"
@@ -228,7 +228,7 @@
         </ui:template>
       </ui:Column>
       <ui:Column >
-        <Label text="Destinatario" />
+        <Label text="Venduto a:" />
         <ui:template>
           <Text
           text="{master3DesAdv>numero_bp_sold_to}"

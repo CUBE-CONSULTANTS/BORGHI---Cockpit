@@ -161,6 +161,14 @@ sap.ui.define(
             oTable = this.byId("treetableSB");
             aSorters = this.sortTables(oTable, ["customer", "data_ricezione"]);
             break;
+          case "04":
+            oTable = this.byId("tableDes");
+            aSorters = this.sortTables(oTable, ["customer", "data_ricezione"]);
+            break;  
+          case "05":
+            oTable = this.byId("tableInvoice");
+            aSorters = this.sortTables(oTable, ["customer", "data_ricezione"]);
+            break;  
           case "06":
             oTable = this.byId("tableScartati");
             aSorters = this.sortTables(oTable, ["filename", "data_ricezione"]);

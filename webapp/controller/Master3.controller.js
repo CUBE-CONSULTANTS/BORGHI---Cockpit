@@ -94,6 +94,12 @@ sap.ui.define(
           case "03":
             oModel = this.getModel("master3SB");
             break;
+          case "04": 
+          oModel = this.getModel("master3DesAdv")
+            break;  
+          case "05":
+            oModel = this.getModel("master3Inv");
+            break; 
           case "06":
             oModel = this.getModel("master3Scart");
             break;
