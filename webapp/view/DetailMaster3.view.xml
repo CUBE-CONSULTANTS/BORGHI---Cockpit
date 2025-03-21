@@ -207,6 +207,7 @@
                         tooltip="Dettaglio"
                         app:p13nKey="dettaglio_col"
                         sortProperty="dettaglio"
+                        showSortMenuEntry="false"
                       >
                         <m:Label text=" " />
                         <ui:template>
@@ -300,6 +301,7 @@
                         </ui:template>
                       </ui:Column>
                       <ui:Column
+                      showSortMenuEntry="false"
                         width="10rem"
                         tooltip="Codice cliente materiale"
                         app:p13nKey="codice_cliente_materiale_col"
@@ -315,6 +317,7 @@
                         tooltip="Codice materiale fornitore"
                         app:p13nKey="codice_materiale_fornitore_col"
                         sortProperty="Cod. Mat. Fornitore"
+                        showSortMenuEntry="false"
                       >
                         <m:Label text="Cod. Mat. Fornitore" />
                         <ui:template>
@@ -326,6 +329,7 @@
                         tooltip="Descrizione materiale"
                         app:p13nKey="descrizione_materiale_col"
                         sortProperty="Descr. Mat."
+                        showSortMenuEntry="false"
                       >
                         <m:Label text="Descr. Mat." />
                         <ui:template>
@@ -338,6 +342,7 @@
                         sortProperty="Punto di scarico"
                         tooltip="Punto di scarico"
                         app:p13nKey="punto_scarico_col"
+                        showSortMenuEntry="false"
                       >
                         <m:Label text="P. scarico" />
                         <ui:template>
@@ -361,6 +366,7 @@
                         tooltip="Testo riga"
                         sortProperty="Testo riga"
                         app:p13nKey="testo_riga_col"
+                        showSortMenuEntry="false"
                       >
                         <m:Label text="Testo riga" />
                         <ui:template>
@@ -372,6 +378,7 @@
                         tooltip="Data inizio calcolo quantità cumulata"
                         sortProperty="Data inizio calcolo quantità cumulata"
                         app:p13nKey="data_inizio_calc_quantita_cumulata_col"
+                        showSortMenuEntry="false"
                       >
                         <m:Label text="Data inizio calc. q. cumulata" />
                         <ui:template>
@@ -386,6 +393,7 @@
                         tooltip="Progressivo invio"
                         sortProperty="Progressivo invio"
                         app:p13nKey="progressivo_invio_col"
+                        showSortMenuEntry="false"
                       >
                         <m:Label text="P. invio" />
                         <ui:template>
@@ -397,6 +405,7 @@
                         sortProperty="Data progressivo invio"
                         tooltip="Data progressivo invio"
                         app:p13nKey="data_progressivo_invio_col"
+                        showSortMenuEntry="false"
                       >
                         <m:Label text="Data p. invio" />
                         <ui:template>
@@ -423,6 +432,7 @@
                         tooltip="Data Numero Ultima Schedulazione Ricevuta"
                         sortProperty="Data Numero Ultima Schedulazione Ricevuta"
                         app:p13nKey="data_numero_ultima_schedulazione_ricevuta_col"
+                        showSortMenuEntry="false"
                       >
                         <m:Label text="Data N. Schedulazione" />
                         <ui:template>
@@ -437,6 +447,7 @@
                         tooltip="Numero ordine di acquisto"
                         sortProperty="Numero ordine di acquisto"
                         app:p13nKey="numero_ordine_acquisto_col"
+                        showSortMenuEntry="false"
                       >
                         <m:Label text="N. ordine di acquisto" />
                         <ui:template>
@@ -448,6 +459,7 @@
                         tooltip="Ultima quantità spedita"
                         sortProperty="Ultima quantità spedita"
                         app:p13nKey="ultima_quantita_spedita_col"
+                        showSortMenuEntry="false"
                       >
                         <m:Label text="Ultima q. spedita" />
                         <ui:template>
@@ -459,6 +471,7 @@
                         sortProperty="Numero Ultima bolla ricevuta dal cliente"
                         tooltip="Numero Ultima bolla ricevuta dal cliente"
                         app:p13nKey="numero_ultima_bolla_ricevuta_cliente_col"
+                        showSortMenuEntry="false"
                       >
                         <m:Label text="N. bolla ricevuta cliente" />
                         <ui:template>
@@ -485,6 +498,7 @@
                       tooltip="Cumulativo Quantità Ord"
                       app:p13nKey="cumulativo_quantita_ordinata_col"
                       sortProperty="Cumulativo Quantità Ord"
+                      showSortMenuEntry="false"
                     >
                       <m:Label text="Cumulativo Quant Ord" />
                       <ui:template>
@@ -496,6 +510,7 @@
                         tooltip="Quantità cumulativa ricevuta"
                         sortProperty="Quantità cumulativa ricevuta"
                         app:p13nKey="quantita_cumulativa_ricevuta_col"
+                        showSortMenuEntry="false"
                       >
                         <m:Label text="Q. cumulativa ricevuta" />
                         <ui:template>
@@ -507,6 +522,7 @@
                         tooltip="Ultima quantità ordinata"
                         sortProperty="Ultima quantità ordinata"
                         app:p13nKey="ultima_quantita_ordinata_col"
+                        showSortMenuEntry="false"
                       >
                         <m:Label text="Ultima q. ordinata" />
                         <ui:template>
@@ -518,6 +534,7 @@
                         tooltip="Release number"
                         sortProperty="Release number"
                         app:p13nKey="release_number_col"
+                        showSortMenuEntry="false"
                       >
                         <m:Label text="Release number" />
                         <ui:template>
@@ -529,6 +546,7 @@
                         sortProperty="Quantità cumulativa precedente"
                         tooltip="Quantità cumulativa precedente"
                         app:p13nKey="quantita_cumulativa_precedente_col"
+                        showSortMenuEntry="false"
                       >
                         <m:Label text="Q. cumulativa precedente" />
                         <ui:template>
@@ -552,6 +570,7 @@
                         tooltip="Quantità ricevuta e accettata"
                         sortProperty="Quantità ricevuta e accettata"
                         app:p13nKey="quantita_ricevuta_e_accettata_col"
+                        showSortMenuEntry="false"
                       >
                         <m:Label text="Q. ricevuta e accettata" />
                         <ui:template>
@@ -563,6 +582,7 @@
                         tooltip="Contatto cliente"
                         sortProperty="Contatto cliente"
                         app:p13nKey="contatto_cliente_col"
+                        showSortMenuEntry="false"
                       >
                         <m:Label text="Contatto cliente" />
                         <ui:template>
@@ -574,6 +594,7 @@
                         tooltip="Info contatto email"
                         sortProperty="Info contatto email"
                         app:p13nKey="informazioni_contatto_email_col"
+                        showSortMenuEntry="false"
                       >
                         <m:Label text="Info contatto email" />
                         <ui:template>
@@ -585,6 +606,7 @@
                         tooltip="Info contatto telefonico"
                         sortProperty="Info contatto telefonico"
                         app:p13nKey="informazioni_contatto_telefonico_col"
+                        showSortMenuEntry="false"
                       >
                         <m:Label text="Info contatto telefonico" />
                         <ui:template>
@@ -596,6 +618,7 @@
                         tooltip="Info contatto fax"
                         sortProperty="Info contatto fax"
                         app:p13nKey="informazioni_contatto_fax_col"
+                        showSortMenuEntry="false"
                       >
                         <m:Label text="Info contatto fax" />
                         <ui:template>
@@ -607,6 +630,7 @@
                       tooltip="Contatto cliente"
                       sortProperty="Contatto cliente"
                       app:p13nKey="contatto_cliente_col"
+                      showSortMenuEntry="false"
                     >
                       <m:Label text="Contatto cliente" />
                       <ui:template>
