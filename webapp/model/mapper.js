@@ -296,6 +296,15 @@ sap.ui.define(["../model/API", "../model/formatter"], function (API, formatter) 
             )
           );
         }
+        if (oFilterSet.descrcliente && oFilterSet.descrcliente.value) {
+          aFilters.push(
+            new sap.ui.model.Filter(
+              "descrizione_cliente",
+              sap.ui.model.FilterOperator.EQ,
+              oFilterSet.descrcliente.value
+            )
+          );
+        }
         if (oFilterSet.materiale && oFilterSet.materiale.value) {
           aFilters.push(
             new sap.ui.model.Filter(

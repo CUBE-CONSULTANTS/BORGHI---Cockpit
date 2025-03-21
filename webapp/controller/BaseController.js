@@ -373,6 +373,7 @@ sap.ui.define(
           ];
 
           let aClienti = [...new Set(aData.map((item) => item.codice_cliente))];
+          let aDescrizioni = [...new Set(aData.map((item) => item.descrizione_cliente))]
           let aNumProgInvio = [...new Set(aData.map((item) => item.numero_progressivo_invio))];
           let aMateriali = [];
           let aMessaggi = [];
@@ -393,6 +394,10 @@ sap.ui.define(
           this.getModel("filtersModel").setProperty(
             "/delivery/cliente/items",
             aClienti.map((c) => ({ Key: c, Text: c }))
+          );
+          this.getModel("filtersModel").setProperty(
+            "/delivery/descrcliente/items",
+            aDescrizioni.map((d) => ({ Key: d, Text: d }))
           );
           this.getModel("filtersModel").setProperty(
             "/delivery/materiale/items",
