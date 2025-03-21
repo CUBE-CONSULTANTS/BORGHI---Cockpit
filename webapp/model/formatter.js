@@ -17,11 +17,11 @@ sap.ui.define([
       return "";
     },
     formatTime: function(ms) {
-      const totalSeconds = Math.floor(ms / 1000);
-      const hours = Math.floor(totalSeconds / 3600);
-      const minutes = Math.floor((totalSeconds % 3600) / 60);
-      const seconds = totalSeconds % 60;
-  
+      const date = new Date(ms); 
+      const hours = date.getHours(); 
+      const minutes = date.getMinutes(); 
+      const seconds = date.getSeconds(); 
+
       return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
     },
     formatDateString: function (dateString) {
@@ -35,6 +35,13 @@ sap.ui.define([
     parseDate: function (dateStr) {
       let parts = dateStr.split("/");
       return new Date(parts[2], parts[1] - 1, parts[0]);
+    },
+    formatDateToYYYYMMDD(dateString) {
+      const date = new Date(dateString);
+      const formattedDate = date.getFullYear().toString() +
+                            String(date.getMonth() + 1).padStart(2, '0') +
+                            String(date.getDate()).padStart(2, '0');
+      return formattedDate;
     },
     returnDate: function (sVal,inpPatForm,OutPatForm){
       if (sVal === "" || sVal === undefined || sVal === null) {

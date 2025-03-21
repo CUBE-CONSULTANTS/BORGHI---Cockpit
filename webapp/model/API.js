@@ -92,10 +92,16 @@ sap.ui.define(
         });
       },
 
-      createEntity: function (oModel, Entity, oRecords, headers = {}) {
+      createEntity: function (oModel, Entity, oRecords, headers = {},Expands = []) {
+        let urlParameters = {};
+    
+        if (Expands.length > 0) {
+            urlParameters.$expand = Expands.join(",");
+        }
         return new Promise((resolve, reject) => {
           oModel.create(Entity, oRecords, {
             headers: headers,
+            urlParameters: Object.keys(urlParameters).length > 0 ? urlParameters : undefined,
             success: function (res) {
               resolve(res);
             },

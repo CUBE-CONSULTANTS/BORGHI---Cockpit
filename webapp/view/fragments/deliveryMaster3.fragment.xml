@@ -68,6 +68,22 @@
      </fb:control>
       </fb:FilterGroupItem>
       <fb:FilterGroupItem
+        name="DescrCliente"
+        label="Descrizione Cliente"
+        groupName="Group1"
+        visibleInFilterBar="true"
+      >
+        <fb:control>
+
+        <ComboBox 
+            items="{filtersModel>/delivery/descrcliente/items}" 
+            value="{filtersModel>/delivery/descrcliente/value}">
+            <core:ListItem key="{filtersModel>Key}" text="{filtersModel>Text}" />
+        </ComboBox>
+
+     </fb:control>
+      </fb:FilterGroupItem>
+      <fb:FilterGroupItem
         name="Materiale"
         label="Materiale"
         groupName="Group1"

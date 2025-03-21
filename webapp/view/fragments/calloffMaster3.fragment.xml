@@ -49,7 +49,22 @@
                     </ComboBox> 
                     </fb:control>
                 </fb:FilterGroupItem>
+                <!-- <fb:FilterGroupItem
+        name="DescrCliente"
+        label="Descrizione Cliente"
+        groupName="Group1"
+        visibleInFilterBar="true"
+      >
+        <fb:control>
 
+        <ComboBox 
+            items="{filtersModel>/callOff/descrcliente/items}" 
+            value="{filtersModel>/callOff/descrcliente/value}">
+            <core:ListItem key="{filtersModel>Key}" text="{filtersModel>Text}" />
+        </ComboBox>
+
+     </fb:control>
+      </fb:FilterGroupItem> -->
             <fb:FilterGroupItem
                     name="Materiale"
                     label="Materiale"

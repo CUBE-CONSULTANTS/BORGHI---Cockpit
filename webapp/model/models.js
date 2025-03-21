@@ -49,6 +49,10 @@ sap.ui.define(
 							value: null,
 							items: [],
 						},
+            descrcliente: {
+              value: null,
+              items: [],
+            },
             materiale: {
 							value: null,
 							items: [],
@@ -68,6 +72,10 @@ sap.ui.define(
 							value: null,
 							items: [],
 						},
+            descrcliente:{
+              value: null,
+              items: [],
+            },
             materiale : {
 							value: null,
 							items: [],
@@ -83,6 +91,10 @@ sap.ui.define(
 							value: null,
 							items: [],
 						},
+            descrClienti: {
+              value: null,
+              items: [],
+            },
             fornitori:{
               value: null,
               items: [],

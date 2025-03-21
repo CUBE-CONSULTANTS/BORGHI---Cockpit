@@ -49,6 +49,20 @@ xmlns:mvc="sap.ui.core.mvc">
                       </ComboBox>
                     </fb:control>
                 </fb:FilterGroupItem>
+                <!-- <fb:FilterGroupItem
+                    name="descrCliente"
+                    label="Descrizione Cliente"
+                    groupName="Group1"
+                    visibleInFilterBar="true"
+                >
+                    <fb:control>
+                      <ComboBox 
+                      items="{filtersModel>/selfBilling/descrClienti/items}" 
+                      value="{filtersModel>/selfBilling/descrClienti/value}">
+                      <core:ListItem key="{filtersModel>Key}" text="{filtersModel>Text}" />
+                      </ComboBox>
+                    </fb:control>
+                </fb:FilterGroupItem> -->
                 
                  <fb:FilterGroupItem
                     name="Fornitore"
