@@ -296,11 +296,11 @@ sap.ui.define(
           let ddt = fattura.riferimento_ddt?.results || [];
             ddt.forEach((data) => {
               let payload = {
-                KUNNR: supplier,                              
+                COD_CLIENTE: supplier,                              
                 NOTA_CREDITO: numero_fattura,                
                 DATA_NOTA: data_fattura,                   
                 NUM_ORDINE: data.order_number,     
-                KNREF: data.nad_cn_consegna,                 
+                STABILIMENTO: data.nad_cn_consegna,                 
                 NUM_BOLLA: data.num_ddt_cliente,             
                 DATA_BOLLA: data.data_ddt_cliente,          
                 COD_ARTICOLO_CLIENTE: data.riga_fattura?.codice_articolo_cliente_da_transcodificare,  
