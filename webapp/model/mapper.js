@@ -6,34 +6,19 @@ sap.ui.define(["../model/API", "../model/formatter"], function (API, formatter) 
         tablePos: [
           {
             key: "stato_col",
-            label: "Stato",
-            path: "Stato",
+            label: "N. IDoc",
+            path: "numero_idoc",
+          },
+          {
+            key: "idoc_col",
+            label: "Codice",
+            path: "codice",
           },
           {
             key: "dettaglio_col",
             label: " ",
             path: "",
           },
-          // {
-          //   key: "utente_col",
-          //   label: "Utente",
-          //   path: "utente",
-          // },
-          // {
-          //   key: "ora_errore_col",
-          //   label: "Ora Errore",
-          //   path: "ora/ms",
-          // },
-          // {
-          //   key: "data_errore_col",
-          //   label: "Data Errore",
-          //   path: "data",
-          // },
-          // {
-          //   key: "messaggio_col",
-          //   label: "Messaggio",
-          //   path: "messaggio",
-          // },
           {
             key: "destinatario_col",
             label: "Destinatario",
