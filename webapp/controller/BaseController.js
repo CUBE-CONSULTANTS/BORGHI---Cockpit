@@ -418,6 +418,7 @@ sap.ui.define(
         } else if (key === "02") {
           let aData = this.getModel("master3CO").getProperty("/");
           let aClienti = [...new Set(aData.map((item) => item.codice_terre_cliente))];
+          // let aDescrizioni = [...new Set(aData.map((item) => item.descrizione_cliente))]
           let aReason = [];
           let aMateriali = [];
           aData.forEach((item) => {
@@ -447,9 +448,14 @@ sap.ui.define(
             "/callOff/clienti/items",
             aClienti.map((m) => ({ Key: m, Text: m }))
           );
+          // this.getModel("filtersModel").setProperty(
+          //   "/callOff/descrcliente/items",
+          //   aDescrizioni.map((m) => ({ Key: m, Text: m }))
+          // );
         } else if (key === "03") {
           let aData = this.getModel("master3SB").getProperty("/");
           let aClienti = [...new Set(aData.map((item) => item.customer))];
+          // let aDescrizioni = [...new Set(aClienti.map((item) => item.descrizione_cliente))];
           let aFornitori = [...new Set(aData.map((item) => item.supplier))];
           let aFatture = [];
           aData.forEach((item) => {
@@ -474,6 +480,10 @@ sap.ui.define(
             "/selfBilling/fornitori/items",
             aFornitori.map((m) => ({ Key: m, Text: m }))
           );
+           // this.getModel("filtersModel").setProperty(
+          //   "/callOff/descrClienti/items",
+          //   aDescrizioni.map((m) => ({ Key: m, Text: m }))
+          // );
         } else if (key === "04") {
           let aData = this.getModel("master3DesAdv").getProperty("/");
           let aIdoc = [...new Set(aData.map((item) => item.numero_idoc))];
