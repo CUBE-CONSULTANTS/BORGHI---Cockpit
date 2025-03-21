@@ -279,7 +279,8 @@ sap.ui.define(
         } 
         try {
           this.showBusy(0)
-          let report = await API.createEntity(this.getOwnerComponent().getModel("selfBillingV2"), "/REPORT_SET", {"d":aPostData}, {})
+          let report = await API.createEntity(this.getOwnerComponent().getModel("selfBillingV2"), "/REPORT_SET", {"DATI":aPostData}, {})
+          debugger
         } catch (error) {
           MessageBox.error("Errore durante il recupero dei dati")
         }finally {
