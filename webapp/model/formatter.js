@@ -36,6 +36,13 @@ sap.ui.define([
       let parts = dateStr.split("/");
       return new Date(parts[2], parts[1] - 1, parts[0]);
     },
+    formatDateToYYYYMMDD(dateString) {
+      const date = new Date(dateString);
+      const formattedDate = date.getFullYear().toString() +
+                            String(date.getMonth() + 1).padStart(2, '0') +
+                            String(date.getDate()).padStart(2, '0');
+      return formattedDate;
+    },
     returnDate: function (sVal,inpPatForm,OutPatForm){
       if (sVal === "" || sVal === undefined || sVal === null) {
           return "";

@@ -200,7 +200,7 @@ sap.ui.define(
                     actions: [sap.m.MessageBox.Action.CLOSE],
                     emphasizedAction: sap.m.MessageBox.Action.CLOSE,
                     onClose: async function (oAction) {
-                      that._refreshData(key);
+                      that._refreshData(key,false);
                     },
                   });
                 } else {
@@ -255,7 +255,7 @@ sap.ui.define(
             } else {
               oEvent.getSource().getParent().getParent().getParent().close();
               MessageToast.show("File caricato con Successo");
-              await this._refreshData("01");
+              await this._refreshData("01",false);
             }
           } catch (error) {
             MessageBox.error("Errore durante il caricamento del File");
@@ -298,11 +298,11 @@ sap.ui.define(
               let payload = {
                 COD_CLIENTE: supplier,                              
                 NOTA_CREDITO: numero_fattura,                
-                DATA_NOTA: data_fattura,                   
+                DATA_NOTA: formatter.formatDateToYYYYMMDD(data_fattura),                   
                 NUM_ORDINE: data.order_number,     
                 STABILIMENTO: data.nad_cn_consegna,                 
                 NUM_BOLLA: data.num_ddt_cliente,             
-                DATA_BOLLA: data.data_ddt_cliente,          
+                DATA_BOLLA: formatter.formatDateToYYYYMMDD(data.data_ddt_cliente),      
                 COD_ARTICOLO_CLIENTE: data.riga_fattura?.codice_articolo_cliente_da_transcodificare,  
                 QUANT_PRELEVATA: data.riga_fattura?.qty_delivery,  
                 PREZZO: data.riga_fattura?.unit_price,      
