@@ -89,6 +89,13 @@
             />
             <m:Text text="{detailData>/master/nome_file}" />
           </m:VBox>
+          <m:VBox class="sapUiTinyMarginBottom" visible="{=${detailData>/numero_idoc} ? true : false }">
+            <m:Label
+              text="IDoc"
+              design="Bold"
+            />
+            <m:Text text="{detailData>/numero_idoc}" />
+          </m:VBox>
           <m:VBox>
             <m:Label
               text="Data Ricezione"
