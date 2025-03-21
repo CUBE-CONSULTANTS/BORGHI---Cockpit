@@ -718,7 +718,7 @@ sap.ui.define(
           (!oEvent && filterTab === "03")
         ) {
           oFilterSet = this.getModel("filtersModel").getProperty("/selfBilling");
-          
+
           let aFilters = mapper.buildFilters(oFilterSet, (key = "03"), operator);
           let filters = {
             fatture: aFilters.find((f) => f.sPath === "dettaglio_fattura/numero_fattura"),
@@ -853,12 +853,12 @@ sap.ui.define(
           this.hideBusy(0);
         }
       },
-      //DOWLOAD MAIN TABLE 
+      //DOWLOAD MAIN TABLE
       downloadExcelFile: function (oEvent) {
         let selectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
         !selectedKey ? (selectedKey = key) : (selectedKey = selectedKey);
         let oModel;
-        
+
         switch (selectedKey) {
           case "01":
             oModel = this.getModel("master3");
@@ -869,12 +869,12 @@ sap.ui.define(
           case "03":
             oModel = this.getModel("master3SB");
             break;
-          case "04": 
-          oModel = this.getModel("master3DesAdv")
-            break;  
+          case "04":
+            oModel = this.getModel("master3DesAdv");
+            break;
           case "05":
             oModel = this.getModel("master3Inv");
-            break; 
+            break;
           case "06":
             oModel = this.getModel("master3Scart");
             break;
