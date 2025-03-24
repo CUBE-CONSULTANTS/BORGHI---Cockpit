@@ -13,20 +13,7 @@ sap.ui.define(
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
   ],
-  function (
-    BaseController,
-    JSONModel,
-    Sorter,
-    CoreLibrary,
-    Fragment,
-    MessageBox,
-    MessageToast,
-    API,
-    models,
-    formatter,
-    Filter,
-    FilterOperator
-  ) {
+  function (BaseController, JSONModel, Sorter, CoreLibrary, Fragment, MessageBox, MessageToast, API, models, formatter, Filter, FilterOperator) {
     "use strict";
 
     const SortOrder = CoreLibrary.SortOrder;
@@ -37,8 +24,26 @@ sap.ui.define(
       onInit: async function () {
         this.setModel(models.createMainModel(), "main");
         this.setModel(models.createCountModel(), "count");
-        this.setModel(models.createEdiFiltersModel(), "filtersModel");
+        let modF = models.createEdiFiltersModel();
+        debugger;
+        modF.setSizeLimit(1000000);
+        this.setModel(modF, "filtersModel");
         this.getRouter().getRoute("master3").attachPatternMatched(this._onObjectMatched, this);
+
+        // prova per applicare suggerimenti a tutte le combobox
+
+        // Trova tutte le ComboBox nella vista
+        let aComboBoxes = this.getView()
+          .findAggregatedObjects(true)
+          .filter(function (oControl) {
+            return oControl instanceof sap.m.ComboBox;
+          });
+
+        aComboBoxes.forEach(function (oComboBox) {
+          oComboBox.setFilterFunction(function (sTerm, oItem) {
+            return oItem.getText().match(new RegExp(sTerm, "i")) || oItem.getKey().match(new RegExp(sTerm, "i"));
+          });
+        });
       },
       _onObjectMatched: async function (oEvent) {
         this.getOwnerComponent().getModel("datiAppoggio").setProperty("/currentPage", "master3");
@@ -129,33 +134,32 @@ sap.ui.define(
           : (oBindingContext = oEvent.getSource().getBindingContext("master3"));
 
         let log;
-        oBindingContext.getObject().log
-          ? (log = oBindingContext.getObject().log.results)
-          : (log = oBindingContext.getObject().log_posizioni.results);
+        oBindingContext.getObject().log ? (log = oBindingContext.getObject().log.results) : (log = oBindingContext.getObject().log_posizioni.results);
         debugger;
 
         log.sort((a, b) => {
-          let dateA = new Date(a.data);
-          let dateB = new Date(b.data);
+          // let dateA = new Date(a.data);
+          // let dateB = new Date(b.data);
 
-          return dateA - dateB;
+          // return dateA - dateB;
+          const timestampA = new Date(a.data).getTime() + a.ora.ms;
+          const timestampB = new Date(b.data).getTime() + b.ora.ms;
+          return timestampA - timestampB; // Ordinamento decrescente (più recente prima)
         });
 
-        log.sort((a, b) => {
-          let dateTimeA = a.ora.ms;
-          // dateTimeA.setMilliseconds(dateTimeA.getMilliseconds() + a.ora);
+        // log.sort((a, b) => {
+        //   let dateTimeA = a.ora.ms;
+        //   // dateTimeA.setMilliseconds(dateTimeA.getMilliseconds() + a.ora);
 
-          let dateTimeB = b.ora.ms;
-          // dateTimeB.setMilliseconds(dateTimeB.getMilliseconds() + b.ora);
+        //   let dateTimeB = b.ora.ms;
+        //   // dateTimeB.setMilliseconds(dateTimeB.getMilliseconds() + b.ora);
 
-          return dateTimeA - dateTimeB;
-        });
+        //   return dateTimeA - dateTimeB;
+        // });
         let lastIndexMessage;
 
         //sortare i log per data e ora
-        oBindingContext.getObject().log
-          ? (lastIndexMessage = oBindingContext.getObject().log.results.length - 1)
-          : (lastIndexMessage = oBindingContext.getObject().log_posizioni.results.length - 1);
+        oBindingContext.getObject().log ? (lastIndexMessage = oBindingContext.getObject().log.results.length - 1) : (lastIndexMessage = oBindingContext.getObject().log_posizioni.results.length - 1);
         // let log;
         // oBindingContext.getObject().log
         //   ? (log = oBindingContext.getObject().log.results)
@@ -300,13 +304,7 @@ sap.ui.define(
         }
         try {
           this.showBusy(0);
-          let report = await API.createEntity(
-            this.getOwnerComponent().getModel("selfBillingV2"),
-            "/REPORT_SET",
-            { DATI: aPostData },
-            {},
-            ["DATI,DATI($expand= DATI)"]
-          );
+          let report = await API.createEntity(this.getOwnerComponent().getModel("selfBillingV2"), "/REPORT_SET", { DATI: aPostData }, {}, ["DATI,DATI($expand= DATI)"]);
           this.buildSpreadSheet(report.DATI.results);
         } catch (error) {
           MessageBox.error("Errore durante il recupero dei dati");

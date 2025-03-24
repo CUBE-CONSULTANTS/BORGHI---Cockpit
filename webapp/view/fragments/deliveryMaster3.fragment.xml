@@ -77,7 +77,8 @@
 
         <ComboBox 
             items="{filtersModel>/delivery/descrcliente/items}" 
-            value="{filtersModel>/delivery/descrcliente/value}">
+            value="{filtersModel>/delivery/descrcliente/value}"
+            id="deliveryDescCli">
             <core:ListItem key="{filtersModel>Key}" text="{filtersModel>Text}" />
         </ComboBox>
 
