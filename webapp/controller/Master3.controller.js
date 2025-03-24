@@ -122,32 +122,58 @@ sap.ui.define(
       },
 
       statoButtonPress: function (oEvent) {
+        debugger;
         let oBindingContext;
         oEvent.getSource().getBindingContext("master3") === undefined
           ? (oBindingContext = oEvent.getSource().getBindingContext("master3CO"))
           : (oBindingContext = oEvent.getSource().getBindingContext("master3"));
-        let lastIndexMessage;
-        oBindingContext.getObject().log
-          ? (lastIndexMessage = oBindingContext.getObject().log.results.length - 1)
-          : (lastIndexMessage = oBindingContext.getObject().log_posizioni.results.length - 1);
+
         let log;
         oBindingContext.getObject().log
           ? (log = oBindingContext.getObject().log.results)
           : (log = oBindingContext.getObject().log_posizioni.results);
+        debugger;
+
+        log.sort((a, b) => {
+          let dateA = new Date(a.data);
+          let dateB = new Date(b.data);
+
+          return dateA - dateB;
+        });
+
+        log.sort((a, b) => {
+          let dateTimeA = a.ora.ms;
+          // dateTimeA.setMilliseconds(dateTimeA.getMilliseconds() + a.ora);
+
+          let dateTimeB = b.ora.ms;
+          // dateTimeB.setMilliseconds(dateTimeB.getMilliseconds() + b.ora);
+
+          return dateTimeA - dateTimeB;
+        });
+        let lastIndexMessage;
+
+        //sortare i log per data e ora
+        oBindingContext.getObject().log
+          ? (lastIndexMessage = oBindingContext.getObject().log.results.length - 1)
+          : (lastIndexMessage = oBindingContext.getObject().log_posizioni.results.length - 1);
+        // let log;
+        // oBindingContext.getObject().log
+        //   ? (log = oBindingContext.getObject().log.results)
+        //   : (log = oBindingContext.getObject().log_posizioni.results);
+
         let message = log[lastIndexMessage].messaggio;
 
         MessageBox.information(message);
       },
       processaItems: function (items) {
         let itemList;
-        let excluded = []
+        let excluded = [];
         if (this.byId("idIconTabBar").getSelectedKey() === "02") {
-          excluded = items.filter((x) => x.posizione_43_44 === "35")
+          excluded = items.filter((x) => x.posizione_43_44 === "35");
           items = items.filter((x) => x.posizione_43_44 !== "35");
-          
         }
-        let message35 
-        excluded.length > 0 ? message35 = "Le posizioni con Reason 35 non verranno processate." : message35 = "";
+        let message35;
+        excluded.length > 0 ? (message35 = "Le posizioni con Reason 35 non verranno processate.") : (message35 = "");
 
         itemList = items
           .map((item) => {
@@ -158,11 +184,11 @@ sap.ui.define(
             }
           })
           .join("");
-       
+
         let message = `Vuoi continuare con questi elementi? \n ${itemList}`;
-          
-        if(message35){
-          message = `${message35}\nVuoi continuare con questi elementi? \n ${itemList}`
+
+        if (message35) {
+          message = `${message35}\nVuoi continuare con questi elementi? \n ${itemList}`;
         }
         let that = this;
 
@@ -200,7 +226,7 @@ sap.ui.define(
                     actions: [sap.m.MessageBox.Action.CLOSE],
                     emphasizedAction: sap.m.MessageBox.Action.CLOSE,
                     onClose: async function (oAction) {
-                      that._refreshData(key,false);
+                      that._refreshData(key, false);
                     },
                   });
                 } else {
@@ -217,12 +243,7 @@ sap.ui.define(
       },
 
       onCumulativi: async function (oEvent) {
-        let obj = oEvent
-          .getSource()
-          .getParent()
-          .getParent()
-          .getBindingContext("modelloReport")
-          .getObject();
+        let obj = oEvent.getSource().getParent().getParent().getBindingContext("modelloReport").getObject();
         let numIdoc = obj.idoc_number;
         let dest = obj.destinatario;
         let rffon = obj.numero_ordine_acquisto;
@@ -255,7 +276,7 @@ sap.ui.define(
             } else {
               oEvent.getSource().getParent().getParent().getParent().close();
               MessageToast.show("File caricato con Successo");
-              await this._refreshData("01",false);
+              await this._refreshData("01", false);
             }
           } catch (error) {
             MessageBox.error("Errore durante il caricamento del File");
@@ -268,23 +289,29 @@ sap.ui.define(
       },
       reportSB: async function (oEvent) {
         // /sap/opu/odata/sap/ZEDIFACT_IDOC_SRV/SELFBILLING_VDA4908_REPORT_SET?$filter=(KNREF eq '0000707511' and KUNNR eq '00217881' and NOTA_CREDITO eq 'test' and DATA_NOTA eq '20250313' and NUM_BOLLA eq 'Off 25/2025' and DATA_BOLLA eq '20250313' and COD_ARTICOLO_CLIENTE eq 'test_art' and NUM_ORDINE eq '1234' and QUANT_PRELEVATA eq '1' and PREZZO eq '100' and VALORE eq '123')&$format=json,
-        let aData = oEvent.getSource().getBindingContext("master3SB").getObject()
-        let aPostData = []; 
+        let aData = oEvent.getSource().getBindingContext("master3SB").getObject();
+        let aPostData = [];
         if (Array.isArray(aData)) {
           aData.forEach((item) => {
             this._processItem(item, aPostData);
           });
-        } else if (typeof aData === 'object' && aData !== null) {
+        } else if (typeof aData === "object" && aData !== null) {
           this._processItem(aData, aPostData);
-        } 
+        }
         try {
-          this.showBusy(0)
-          let report = await API.createEntity(this.getOwnerComponent().getModel("selfBillingV2"), "/REPORT_SET", {"DATI":aPostData}, {},["DATI,DATI($expand= DATI)"])
-          this.buildSpreadSheet(report.DATI.results)
+          this.showBusy(0);
+          let report = await API.createEntity(
+            this.getOwnerComponent().getModel("selfBillingV2"),
+            "/REPORT_SET",
+            { DATI: aPostData },
+            {},
+            ["DATI,DATI($expand= DATI)"]
+          );
+          this.buildSpreadSheet(report.DATI.results);
         } catch (error) {
-          MessageBox.error("Errore durante il recupero dei dati")
-        }finally {
-          this.hideBusy(0)
+          MessageBox.error("Errore durante il recupero dei dati");
+        } finally {
+          this.hideBusy(0);
         }
       },
       _processItem: function (item, aPostData) {
@@ -294,25 +321,24 @@ sap.ui.define(
           let numero_fattura = fattura.numero_fattura;
           let data_fattura = fattura.data_fattura;
           let ddt = fattura.riferimento_ddt?.results || [];
-            ddt.forEach((data) => {
-              let payload = {
-                KUNNR: supplier,                              
-                NOTA_CREDITO: numero_fattura,                
-                DATA_NOTA: formatter.formatDateToYYYYMMDD(data_fattura),                   
-                NUM_ORDINE: data.order_number,     
-                KNREF: data.nad_cn_consegna,                 
-                NUM_BOLLA: data.num_ddt_cliente,             
-                DATA_BOLLA: formatter.formatDateToYYYYMMDD(data.data_ddt_cliente),      
-                COD_ARTICOLO_CLIENTE: data.riga_fattura?.codice_articolo_cliente_da_transcodificare,  
-                QUANT_PRELEVATA: data.riga_fattura?.qty_delivery,  
-                PREZZO: data.riga_fattura?.unit_price,      
-                VALORE: data.riga_fattura?.total_price,  
-              };
-              aPostData.push(payload);
-            });
+          ddt.forEach((data) => {
+            let payload = {
+              KUNNR: supplier,
+              NOTA_CREDITO: numero_fattura,
+              DATA_NOTA: formatter.formatDateToYYYYMMDD(data_fattura),
+              NUM_ORDINE: data.order_number,
+              KNREF: data.nad_cn_consegna,
+              NUM_BOLLA: data.num_ddt_cliente,
+              DATA_BOLLA: formatter.formatDateToYYYYMMDD(data.data_ddt_cliente),
+              COD_ARTICOLO_CLIENTE: data.riga_fattura?.codice_articolo_cliente_da_transcodificare,
+              QUANT_PRELEVATA: data.riga_fattura?.qty_delivery,
+              PREZZO: data.riga_fattura?.unit_price,
+              VALORE: data.riga_fattura?.total_price,
+            };
+            aPostData.push(payload);
+          });
         });
-      }
-
+      },
     });
   }
 );

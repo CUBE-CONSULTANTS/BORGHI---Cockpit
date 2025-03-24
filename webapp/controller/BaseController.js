@@ -373,7 +373,7 @@ sap.ui.define(
           ];
 
           let aClienti = [...new Set(aData.map((item) => item.codice_cliente))];
-          let aDescrizioni = [...new Set(aData.map((item) => item.descrizione_cliente))]
+          let aDescrizioni = [...new Set(aData.map((item) => item.descrizione_cliente))];
           let aNumProgInvio = [...new Set(aData.map((item) => item.numero_progressivo_invio))];
           let aMateriali = [];
           let aMessaggi = [];
@@ -480,7 +480,7 @@ sap.ui.define(
             "/selfBilling/fornitori/items",
             aFornitori.map((m) => ({ Key: m, Text: m }))
           );
-           // this.getModel("filtersModel").setProperty(
+          // this.getModel("filtersModel").setProperty(
           //   "/callOff/descrClienti/items",
           //   aDescrizioni.map((m) => ({ Key: m, Text: m }))
           // );
@@ -648,7 +648,7 @@ sap.ui.define(
               if (index !== -1) aFilters.splice(index, 1);
             }
           });
-          let expandQuery = `posizioni,posizioni($expand=log,schedulazioni,testata),master`;
+          let expandQuery = `posizioni,posizioni($expand=log($orderby=data,ora),schedulazioni,testata),master`;
 
           let posizioniFilter = "";
           let masterFilter = "";
