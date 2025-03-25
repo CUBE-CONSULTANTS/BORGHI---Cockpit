@@ -165,7 +165,28 @@ sap.ui.define(
         //   ? (log = oBindingContext.getObject().log.results)
         //   : (log = oBindingContext.getObject().log_posizioni.results);
 
-        let message = log[lastIndexMessage].messaggio;
+        // let data = log[lastIndexMessage].data;
+        // let ms = log[lastIndexMessage].ora.ms;
+        // let ore = Math.floor(ms / (1000 * 60 * 60));
+        // let minuti = Math.floor((ms % (1000 * 60 * 60)) / (1000 * 60));
+        // let secondi = Math.floor((ms % (1000 * 60)) / 1000);
+        // let millisecondi = ms % 1000;
+        // data.setHours(ore, minuti, secondi, millisecondi);
+
+        let giorno = String(log[lastIndexMessage].data.getDate()).padStart(2, "0");
+        let mese = String(log[lastIndexMessage].data.getMonth() + 1).padStart(2, "0");
+        let anno = log[lastIndexMessage].data.getFullYear();
+        let dataFormattata = `${giorno}/${mese}/${anno}`;
+
+        let msTotali = log[lastIndexMessage].ora.ms;
+        let ore = Math.floor(msTotali / (1000 * 60 * 60));
+        let minuti = Math.floor((msTotali % (1000 * 60 * 60)) / (1000 * 60));
+        let secondi = Math.floor((msTotali % (1000 * 60)) / 1000);
+        let ms = msTotali % 1000;
+        let oraFormattata = `${String(ore).padStart(2, "0")}:${String(minuti).padStart(2, "0")}:${String(ms).padStart(3, "0")}`;
+        let timestampCompleto = `${dataFormattata} ${oraFormattata}`;
+
+        let message = `Data: ${timestampCompleto}\n ${log[lastIndexMessage].messaggio}`;
 
         MessageBox.information(message);
       },
