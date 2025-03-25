@@ -179,7 +179,7 @@ sap.ui.define(
         let dataFormattata = `${giorno}/${mese}/${anno}`;
 
         let msTotali = log[lastIndexMessage].ora.ms;
-        let ore = Math.floor(msTotali / (1000 * 60 * 60));
+        let ore = Math.floor(msTotali / (1000 * 60 * 60)) + 1;
         let minuti = Math.floor((msTotali % (1000 * 60 * 60)) / (1000 * 60));
         let secondi = Math.floor((msTotali % (1000 * 60)) / 1000);
         let ms = msTotali % 1000;
