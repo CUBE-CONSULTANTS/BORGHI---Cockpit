@@ -1,24 +1,6 @@
 sap.ui.define(
-  [
-    "./BaseController",
-    "sap/ui/model/json/JSONModel",
-    "sap/ui/model/Sorter",
-    "sap/ui/core/library",
-    "sap/ui/core/Fragment",
-    "sap/m/MessageBox",
-    "../model/models",
-    "../model/API"
-  ],
-  function (
-    BaseController,
-    JSONModel,
-    Sorter,
-    CoreLibrary,
-    Fragment,
-    MessageBox,
-    models,
-    API
-  ) {
+  ["./BaseController", "sap/ui/model/json/JSONModel", "sap/ui/model/Sorter", "sap/ui/core/library", "sap/ui/core/Fragment", "sap/m/MessageBox", "../model/models", "../model/API"],
+  function (BaseController, JSONModel, Sorter, CoreLibrary, Fragment, MessageBox, models, API) {
     "use strict";
 
     const SortOrder = CoreLibrary.SortOrder;
@@ -28,7 +10,22 @@ sap.ui.define(
         this.setModel(models.createMainModel(), "main");
         this.setModel(models.createCountModel(), "count");
         this.setModel(models.createEdiFiltersModel(), "filtersModel");
-        this.getRouter().getRoute("archivio").attachPatternMatched(this._onObjectMatched.bind(this));      
+        this.getRouter().getRoute("archivio").attachPatternMatched(this._onObjectMatched.bind(this));
+
+        // prova per applicare suggerimenti a tutte le combobox
+
+        // Trova tutte le ComboBox nella vista
+        let aComboBoxes = this.getView()
+          .findAggregatedObjects(true)
+          .filter(function (oControl) {
+            return oControl instanceof sap.m.ComboBox;
+          });
+
+        aComboBoxes.forEach(function (oComboBox) {
+          oComboBox.setFilterFunction(function (sTerm, oItem) {
+            return oItem.getText().match(new RegExp(sTerm, "i")) || oItem.getKey().match(new RegExp(sTerm, "i"));
+          });
+        });
       },
       _onObjectMatched: async function (oEvent) {
         this.getOwnerComponent().getModel("datiAppoggio").setProperty("/currentPage", "archivio");
@@ -40,35 +37,33 @@ sap.ui.define(
         let selectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
         !selectedKey ? (selectedKey = key) : (selectedKey = selectedKey);
         switch (selectedKey) {
-         case "01":
-          await this.onSearchData(undefined, selectedKey)
-          this.onFiltersBuilding(oEvent, selectedKey);
-          break;
-         case "02":
-          await this.onSearchData(undefined, selectedKey)
-          this.onFiltersBuilding(oEvent, selectedKey);
-          break;
-         case "03":
-          await this.onSearchData(undefined, selectedKey)
-          this.onFiltersBuilding(oEvent, selectedKey);
-          break;
-         case "04":
-          await this.onSearchData(undefined, selectedKey)
-          this.onFiltersBuilding(oEvent, selectedKey);
-          break;
-         case "05":
-          await this.onSearchData(undefined, selectedKey)
-          this.onFiltersBuilding(oEvent, selectedKey);
-          break;
-         case "06":
-          await this.onSearchData(undefined, selectedKey)
-          this.onFiltersBuilding(oEvent, selectedKey);
-          break;
+          case "01":
+            await this.onSearchData(undefined, selectedKey);
+            this.onFiltersBuilding(oEvent, selectedKey);
+            break;
+          case "02":
+            await this.onSearchData(undefined, selectedKey);
+            this.onFiltersBuilding(oEvent, selectedKey);
+            break;
+          case "03":
+            await this.onSearchData(undefined, selectedKey);
+            this.onFiltersBuilding(oEvent, selectedKey);
+            break;
+          case "04":
+            await this.onSearchData(undefined, selectedKey);
+            this.onFiltersBuilding(oEvent, selectedKey);
+            break;
+          case "05":
+            await this.onSearchData(undefined, selectedKey);
+            this.onFiltersBuilding(oEvent, selectedKey);
+            break;
+          case "06":
+            await this.onSearchData(undefined, selectedKey);
+            this.onFiltersBuilding(oEvent, selectedKey);
+            break;
         }
         this.hideBusy(0);
-       },
-      
-      
+      },
     });
   }
 );
