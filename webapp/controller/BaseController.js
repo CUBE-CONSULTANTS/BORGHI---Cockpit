@@ -22,6 +22,7 @@ sap.ui.define(
     "../model/formatter",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
+    "sap/m/p13n/FilterController",
   ],
   function (
     Controller,
@@ -45,7 +46,8 @@ sap.ui.define(
     CoreLibrary,
     formatter,
     Filter,
-    FilterOperator
+    FilterOperator,
+    FilterController
   ) {
     "use strict";
 
@@ -564,6 +566,7 @@ sap.ui.define(
       //FINE CLEAR FILTERBAR
       // CHIAMATE DI ARCHIVIO E MONITOR SIA IN OBJECTMATCHED CHE CON SEARCH SU FILTERBAR
       onSearchData: async function (oEvent, filterTab) {
+        debugger;
         let oFilterSet;
         let key;
         let operator;
@@ -599,7 +602,11 @@ sap.ui.define(
           let masterFilter = "";
           let logFilter = "";
           if (filters.stato) {
-            posizioniFilter += `stato eq '${filters.stato.oValue1}'`;
+            if (filters.stato.oValue1 === null) {
+              posizioniFilter += `stato eq ${filters.stato.oValue1}`;
+            } else {
+              posizioniFilter += `stato eq '${filters.stato.oValue1}'`;
+            }
           }
           if (filters.materiale) {
             posizioniFilter += posizioniFilter ? ` and ` : "";
@@ -1242,6 +1249,9 @@ sap.ui.define(
             Groups: new GroupController({
               control: oTable,
             }),
+            // Filter: new FilterController({
+            //   control: oTable,
+            // }),
           },
         });
 
@@ -1262,6 +1272,7 @@ sap.ui.define(
         return sKey ? sKey.getValue() : null;
       },
       handleStateChange: function (tableId, oEvt) {
+        debugger;
         const oTable = this.getView().byId(tableId);
         const oState = oEvt.getParameter("state");
 
@@ -1334,6 +1345,15 @@ sap.ui.define(
             oTable.getBinding("rows").sort(aSorter);
           }
         }
+
+        // let aFilter = [];
+        // Object.keys(oState.Filter).forEach((sFilterKey) => {
+        //   const filterPath = this.oMetadataHelper.getProperty(sFilterKey).path;
+
+        //   oState.Filter[sFilterKey].forEach(function (oConditon) {
+        //     aFilter.push(new Filter(filterPath, oConditon.operator, oConditon.values[0]));
+        //   });
+        // });
       },
       //fine configurazione Engine x tutte tabelle, da richiamare nei controller dei dettagli,
       // dopo aver mappato le colonne in mapper e definite il custData nelle view di dettaglio

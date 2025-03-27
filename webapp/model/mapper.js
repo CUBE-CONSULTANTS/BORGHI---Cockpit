@@ -254,50 +254,22 @@ sap.ui.define(["../model/API", "../model/formatter"], function (API, formatter) 
       operator === "eq" ? (archivVal = true) : (archivVal = false);
 
       if (key === "01") {
-        aFilters.push(
-          new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, archivVal)
-        );
+        aFilters.push(new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, archivVal));
         if (oFilterSet.dataRic) {
           let oDataRic = formatter.returnDate(oFilterSet.dataRic, "dd/MM/yyyy", "yyyyMMdd");
-          aFilters.push(
-            new sap.ui.model.Filter("data_ricezione", sap.ui.model.FilterOperator.EQ, oDataRic)
-          );
+          aFilters.push(new sap.ui.model.Filter("data_ricezione", sap.ui.model.FilterOperator.EQ, oDataRic));
         }
         if (oFilterSet.numProg && oFilterSet.numProg.value) {
-          aFilters.push(
-            new sap.ui.model.Filter(
-              "numero_progressivo_invio",
-              sap.ui.model.FilterOperator.EQ,
-              oFilterSet.numProg.value
-            )
-          );
+          aFilters.push(new sap.ui.model.Filter("numero_progressivo_invio", sap.ui.model.FilterOperator.EQ, oFilterSet.numProg.value));
         }
         if (oFilterSet.cliente && oFilterSet.cliente.value) {
-          aFilters.push(
-            new sap.ui.model.Filter(
-              "codice_cliente",
-              sap.ui.model.FilterOperator.EQ,
-              oFilterSet.cliente.value
-            )
-          );
+          aFilters.push(new sap.ui.model.Filter("codice_cliente", sap.ui.model.FilterOperator.EQ, oFilterSet.cliente.value));
         }
         if (oFilterSet.descrcliente && oFilterSet.descrcliente.value) {
-          aFilters.push(
-            new sap.ui.model.Filter(
-              "descrizione_cliente",
-              sap.ui.model.FilterOperator.EQ,
-              oFilterSet.descrcliente.value
-            )
-          );
+          aFilters.push(new sap.ui.model.Filter("descrizione_cliente", sap.ui.model.FilterOperator.EQ, oFilterSet.descrcliente.value));
         }
         if (oFilterSet.materiale && oFilterSet.materiale.value) {
-          aFilters.push(
-            new sap.ui.model.Filter(
-              "posizioni/codice_cliente_materiale",
-              sap.ui.model.FilterOperator.EQ,
-              oFilterSet.materiale.value
-            )
-          );
+          aFilters.push(new sap.ui.model.Filter("posizioni/codice_cliente_materiale", sap.ui.model.FilterOperator.EQ, oFilterSet.materiale.value));
         }
         if (oFilterSet.stato && oFilterSet.stato.value) {
           if (oFilterSet.stato.value === "In Errore") {
@@ -309,68 +281,32 @@ sap.ui.define(["../model/API", "../model/formatter"], function (API, formatter) 
           } else if (oFilterSet.stato.value === "In Elaborazione") {
             oFilterSet.stato.value = "64";
           }
-          aFilters.push(
-            new sap.ui.model.Filter("stato", sap.ui.model.FilterOperator.EQ, oFilterSet.stato.value)
-          );
+          aFilters.push(new sap.ui.model.Filter("stato", sap.ui.model.FilterOperator.EQ, oFilterSet.stato.value));
         }
         if (oFilterSet.messaggio && oFilterSet.messaggio.value) {
-          aFilters.push(
-            new sap.ui.model.Filter(
-              "messaggio",
-              sap.ui.model.FilterOperator.EQ,
-              oFilterSet.messaggio.value
-            )
-          );
+          aFilters.push(new sap.ui.model.Filter("messaggio", sap.ui.model.FilterOperator.EQ, oFilterSet.messaggio.value));
         }
       }
       if (key === "02") {
         if (oFilterSet.dataRic) {
           let oDataRic = formatter.returnDate(oFilterSet.dataRic, "dd/MM/yyyy", "yyyyMMdd");
-          aFilters.push(
-            new sap.ui.model.Filter("data_ricezione", sap.ui.model.FilterOperator.EQ, oDataRic)
-          );
+          aFilters.push(new sap.ui.model.Filter("data_ricezione", sap.ui.model.FilterOperator.EQ, oDataRic));
         }
         if (oFilterSet.cliente && oFilterSet.cliente.value) {
-          aFilters.push(
-            new sap.ui.model.Filter(
-              "codice_cliente_terre",
-              sap.ui.model.FilterOperator.EQ,
-              oFilterSet.cliente.value
-            )
-          );
+          aFilters.push(new sap.ui.model.Filter("codice_cliente_terre", sap.ui.model.FilterOperator.EQ, oFilterSet.cliente.value));
         }
         if (oFilterSet.descrcliente && oFilterSet.descrcliente.value) {
-          aFilters.push(
-            new sap.ui.model.Filter(
-              "descrizione_cliente",
-              sap.ui.model.FilterOperator.EQ,
-              oFilterSet.descrcliente.value
-            )
-          );
+          aFilters.push(new sap.ui.model.Filter("descrizione_cliente", sap.ui.model.FilterOperator.EQ, oFilterSet.descrcliente.value));
         }
         if (oFilterSet.materiale && oFilterSet.materiale.value) {
-          aFilters.push(
-            new sap.ui.model.Filter(
-              "posizioni_testata/posizione_6_28",
-              sap.ui.model.FilterOperator.EQ,
-              oFilterSet.materiale.value
-            )
-          );
+          aFilters.push(new sap.ui.model.Filter("posizioni_testata/posizione_6_28", sap.ui.model.FilterOperator.EQ, oFilterSet.materiale.value));
         }
         if (oFilterSet.reason && oFilterSet.reason.value) {
-          aFilters.push(
-            new sap.ui.model.Filter(
-              "posizioni_testata/posizione_43_44",
-              sap.ui.model.FilterOperator.EQ,
-              oFilterSet.reason.value
-            )
-          );
+          aFilters.push(new sap.ui.model.Filter("posizioni_testata/posizione_43_44", sap.ui.model.FilterOperator.EQ, oFilterSet.reason.value));
         }
       }
       if (key === "03") {
-        aFilters.push(
-          new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, archivVal)
-        );
+        aFilters.push(new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, archivVal));
         if (oFilterSet.dataRic) {
           let oDataRic = formatter.returnDate(oFilterSet.dataRic, "dd/MM/yyyy", "yyyyMMdd");
           // eq 2025-01-22T00:00:00Z
@@ -378,198 +314,85 @@ sap.ui.define(["../model/API", "../model/formatter"], function (API, formatter) 
           let month = oDataRic.substring(4, 6);
           let day = oDataRic.substring(6, 8);
           let formattedDate = new Date(`${year}-${month}-${day}T00:00:00Z`).toISOString();
-          aFilters.push(
-            new sap.ui.model.Filter("data_ricezione", sap.ui.model.FilterOperator.EQ, formattedDate)
-          );
+          aFilters.push(new sap.ui.model.Filter("data_ricezione", sap.ui.model.FilterOperator.EQ, formattedDate));
         }
         if (oFilterSet.clienti && oFilterSet.clienti.value) {
-          aFilters.push(
-            new sap.ui.model.Filter(
-              "customer",
-              sap.ui.model.FilterOperator.EQ,
-              oFilterSet.clienti.value
-            )
-          );
+          aFilters.push(new sap.ui.model.Filter("customer", sap.ui.model.FilterOperator.EQ, oFilterSet.clienti.value));
         }
         if (oFilterSet.descrClienti && oFilterSet.descrClienti.value) {
-          aFilters.push(
-            new sap.ui.model.Filter(
-              "descrizione_cliente",
-              sap.ui.model.FilterOperator.EQ,
-              oFilterSet.descrClienti.value
-            )
-          );
+          aFilters.push(new sap.ui.model.Filter("descrizione_cliente", sap.ui.model.FilterOperator.EQ, oFilterSet.descrClienti.value));
         }
         if (oFilterSet.fornitori && oFilterSet.fornitori.value) {
-          aFilters.push(
-            new sap.ui.model.Filter(
-              "supplier",
-              sap.ui.model.FilterOperator.EQ,
-              oFilterSet.fornitori.value
-            )
-          );
+          aFilters.push(new sap.ui.model.Filter("supplier", sap.ui.model.FilterOperator.EQ, oFilterSet.fornitori.value));
         }
         if (oFilterSet.fatture && oFilterSet.fatture.value) {
-          aFilters.push(
-            new sap.ui.model.Filter(
-              "dettaglio_fattura/numero_fattura",
-              sap.ui.model.FilterOperator.EQ,
-              oFilterSet.fatture.value
-            )
-          );
+          aFilters.push(new sap.ui.model.Filter("dettaglio_fattura/numero_fattura", sap.ui.model.FilterOperator.EQ, oFilterSet.fatture.value));
         }
       }
       if (key === "04") {
-       
-        aFilters.push(new sap.ui.model.Filter(
-          "archiviazione",
-          sap.ui.model.FilterOperator.EQ,
-          archivVal
-        ))
+        aFilters.push(new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, archivVal));
 
         if (oFilterSet.dataDDT) {
           let oDataDDT = formatter.returnDate(oFilterSet.dataDDT, "dd/MM/yyyy", "yyyyMMdd");
-          aFilters.push(
-            new sap.ui.model.Filter("data_ddt", sap.ui.model.FilterOperator.EQ, oDataDDT)
-          );
+          aFilters.push(new sap.ui.model.Filter("data_ddt", sap.ui.model.FilterOperator.EQ, oDataDDT));
         }
         if (oFilterSet.dataCreaDoc) {
           let oDataDoc = formatter.returnDate(oFilterSet.dataDDT, "dd/MM/yyyy", "yyyyMMdd");
-          aFilters.push(
-            new sap.ui.model.Filter("data_ddt", sap.ui.model.FilterOperator.EQ, oDataDoc)
-          );
+          aFilters.push(new sap.ui.model.Filter("data_ddt", sap.ui.model.FilterOperator.EQ, oDataDoc));
         }
         if (oFilterSet.numDDTCliente && oFilterSet.numDDTCliente.value) {
-          aFilters.push(
-            new sap.ui.model.Filter(
-              "numero_ddt",
-              sap.ui.model.FilterOperator.EQ,
-              oFilterSet.numDDTCliente.value
-            )
-          );
+          aFilters.push(new sap.ui.model.Filter("numero_ddt", sap.ui.model.FilterOperator.EQ, oFilterSet.numDDTCliente.value));
         }
         if (oFilterSet.numConsegna && oFilterSet.numConsegna.value) {
-          aFilters.push(
-            new sap.ui.model.Filter(
-              "numero_consegna",
-              sap.ui.model.FilterOperator.EQ,
-              oFilterSet.numConsegna.value
-            )
-          );
+          aFilters.push(new sap.ui.model.Filter("numero_consegna", sap.ui.model.FilterOperator.EQ, oFilterSet.numConsegna.value));
         }
         if (oFilterSet.numiDoc && oFilterSet.numiDoc.value) {
-          aFilters.push(
-            new sap.ui.model.Filter(
-              "numero_idoc",
-              sap.ui.model.FilterOperator.EQ,
-              oFilterSet.numiDoc.value
-            )
-          );
+          aFilters.push(new sap.ui.model.Filter("numero_idoc", sap.ui.model.FilterOperator.EQ, oFilterSet.numiDoc.value));
         }
         if (oFilterSet.bp && oFilterSet.bp.value) {
-          aFilters.push(
-            new sap.ui.model.Filter(
-              "numero_bp_ship_to",
-              sap.ui.model.FilterOperator.EQ,
-              oFilterSet.bp.value
-            )
-          );
+          aFilters.push(new sap.ui.model.Filter("numero_bp_ship_to", sap.ui.model.FilterOperator.EQ, oFilterSet.bp.value));
         }
       }
       if (key === "05") {
-        aFilters.push(new sap.ui.model.Filter(
-          "archiviazione",
-          sap.ui.model.FilterOperator.EQ,
-          archivVal
-        ))
+        aFilters.push(new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, archivVal));
         if (oFilterSet.dataDocCont) {
           let oDataDoc = formatter.returnDate(oFilterSet.dataDDT, "dd/MM/yyyy", "yyyyMMdd");
-          aFilters.push(
-            new sap.ui.model.Filter(
-              "data_creazione_doc_contabile",
-              sap.ui.model.FilterOperator.EQ,
-              oDataDoc
-            )
-          );
+          aFilters.push(new sap.ui.model.Filter("data_creazione_doc_contabile", sap.ui.model.FilterOperator.EQ, oDataDoc));
         }
         if (oFilterSet.dataFattura) {
           let oDataFatt = formatter.returnDate(oFilterSet.dataDDT, "dd/MM/yyyy", "yyyyMMdd");
-          aFilters.push(
-            new sap.ui.model.Filter(
-              "data_di_fatturazione",
-              sap.ui.model.FilterOperator.EQ,
-              oDataFatt
-            )
-          );
+          aFilters.push(new sap.ui.model.Filter("data_di_fatturazione", sap.ui.model.FilterOperator.EQ, oDataFatt));
         }
         if (oFilterSet.numiDoc && oFilterSet.numiDoc.value) {
-          aFilters.push(
-            new sap.ui.model.Filter(
-              "numero_idoc",
-              sap.ui.model.FilterOperator.EQ,
-              oFilterSet.numiDoc.value
-            )
-          );
+          aFilters.push(new sap.ui.model.Filter("numero_idoc", sap.ui.model.FilterOperator.EQ, oFilterSet.numiDoc.value));
         }
         if (oFilterSet.numDocCont && oFilterSet.numDocCont.value) {
-          aFilters.push(
-            new sap.ui.model.Filter(
-              "numero_documento_contabile",
-              sap.ui.model.FilterOperator.EQ,
-              oFilterSet.numDocCont.value
-            )
-          );
+          aFilters.push(new sap.ui.model.Filter("numero_documento_contabile", sap.ui.model.FilterOperator.EQ, oFilterSet.numDocCont.value));
         }
         if (oFilterSet.numFattVend && oFilterSet.numFattVend.value) {
-          aFilters.push(
-            new sap.ui.model.Filter(
-              "fattura_di_vendita",
-              sap.ui.model.FilterOperator.EQ,
-              oFilterSet.numFattVend.value
-            )
-          );
+          aFilters.push(new sap.ui.model.Filter("fattura_di_vendita", sap.ui.model.FilterOperator.EQ, oFilterSet.numFattVend.value));
         }
         if (oFilterSet.bp && oFilterSet.bp.value) {
-          aFilters.push(
-            new sap.ui.model.Filter("BP", oFilterSet.bp.value, sap.ui.model.FilterOperator.EQ)
-          );
+          aFilters.push(new sap.ui.model.Filter("BP", oFilterSet.bp.value, sap.ui.model.FilterOperator.EQ));
         }
       }
       if (key === "06") {
-        aFilters.push(
-          new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, archivVal)
-        );
+        aFilters.push(new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, archivVal));
         if (oFilterSet.dataRic) {
           let oDataRic = formatter.returnDate(oFilterSet.dataRic, "dd/MM/yyyy", "yyyyMMdd");
 
-          aFilters.push(
-            new sap.ui.model.Filter("data_ricezione", sap.ui.model.FilterOperator.EQ, oDataRic)
-          );
+          aFilters.push(new sap.ui.model.Filter("data_ricezione", sap.ui.model.FilterOperator.EQ, oDataRic));
         }
         if (oFilterSet.nomeFile && oFilterSet.nomeFile.value) {
-          aFilters.push(
-            new sap.ui.model.Filter(
-              "filename",
-              sap.ui.model.FilterOperator.EQ,
-              oFilterSet.nomeFile.value
-            )
-          );
+          aFilters.push(new sap.ui.model.Filter("filename", sap.ui.model.FilterOperator.EQ, oFilterSet.nomeFile.value));
         }
       }
       return aFilters;
     },
     _formatCumulativi: function (aData) {
       aData.forEach((element) => {
-        element.DataFineCalcCumu = formatter.returnDate(
-          element.DataFineCalcCumu,
-          "yyyyMMdd",
-          "dd/MM/yyyy"
-        );
-        element.DataInitCalcCumu = formatter.returnDate(
-          element.DataInitCalcCumu,
-          "yyyyMMdd",
-          "dd/MM/yyyy"
-        );
+        element.DataFineCalcCumu = formatter.returnDate(element.DataFineCalcCumu, "yyyyMMdd", "dd/MM/yyyy");
+        element.DataInitCalcCumu = formatter.returnDate(element.DataInitCalcCumu, "yyyyMMdd", "dd/MM/yyyy");
         element.DataLips1 = formatter.returnDate(element.DataLips1, "yyyyMMdd", "dd/MM/yyyy");
         element.DataLips2 = formatter.returnDate(element.DataLips2, "yyyyMMdd", "dd/MM/yyyy");
         element.DataLips3 = formatter.returnDate(element.DataLips3, "yyyyMMdd", "dd/MM/yyyy");
@@ -663,15 +486,9 @@ sap.ui.define(["../model/API", "../model/formatter"], function (API, formatter) 
         positions.forEach((position) => {
           let positionRow = { ...row, ...this._cleanAndFormatData(position) };
           let schedules =
-            (position.schedulazioni?.results &&
-              position.schedulazioni.results.length > 0 &&
-              position.schedulazioni.results) ||
-            (position.riferimento_ddt?.results &&
-              position.riferimento_ddt.results.length > 0 &&
-              position.riferimento_ddt.results) ||
-            (Array.isArray(position.riferimento_ddt) &&
-              position.riferimento_ddt.length > 0 &&
-              position.riferimento_ddt) ||
+            (position.schedulazioni?.results && position.schedulazioni.results.length > 0 && position.schedulazioni.results) ||
+            (position.riferimento_ddt?.results && position.riferimento_ddt.results.length > 0 && position.riferimento_ddt.results) ||
+            (Array.isArray(position.riferimento_ddt) && position.riferimento_ddt.length > 0 && position.riferimento_ddt) ||
             (position.riferimento_ddt ? [position.riferimento_ddt] : []);
           if (schedules.length > 0) {
             schedules.forEach((schedule) => {
@@ -679,9 +496,7 @@ sap.ui.define(["../model/API", "../model/formatter"], function (API, formatter) 
                 ...positionRow,
                 ...this._cleanAndFormatData(schedule),
               };
-              let invoiceLines = Array.isArray(schedule.riga_fattura)
-                ? schedule.riga_fattura
-                : [schedule.riga_fattura];
+              let invoiceLines = Array.isArray(schedule.riga_fattura) ? schedule.riga_fattura : [schedule.riga_fattura];
               invoiceLines.forEach((invoice) => {
                 let invoiceRow = {
                   ...scheduleRow,
@@ -733,7 +548,14 @@ sap.ui.define(["../model/API", "../model/formatter"], function (API, formatter) 
         ["edi", "payload_db", "id"].forEach((key) => delete cleanedData.master[key]);
       }
       Object.keys(cleanedData).forEach((key) => {
-        if (key.toLowerCase().includes("data") || key.toLowerCase().includes("date")) {
+        debugger;
+        if (key.toLowerCase().includes("data_nota") || key.toLowerCase().includes("data_bolla") || key.toLowerCase().includes("data_fattura")) {
+          cleanedData[key] = formatter.returnDate(cleanedData[key], "yyyyMMdd", "dd/MM/YYYY");
+        }
+        if (
+          (key.toLowerCase().includes("data") || key.toLowerCase().includes("date")) &&
+          !(key.toLowerCase().includes("data_nota") || key.toLowerCase().includes("data_bolla") || key.toLowerCase().includes("data_fattura"))
+        ) {
           cleanedData[key] = formatter.formatDate(cleanedData[key]);
         }
         if (key.toLowerCase().includes("posizione_14_19") && !cleanedData[key].includes("/")) {
