@@ -621,8 +621,27 @@ sap.ui.define(
             masterFilter = `data_ricezione eq '${filters.data_ricezione.oValue1}'`;
           }
           if (posizioniFilter) {
-            expandQuery = `posizioni($filter=${posizioniFilter}),posizioni($expand=log,schedulazioni,testata),master`;
+            // if (masterFilter && logFilter) {
+            //   expandQuery = `posizioni($filter=${posizioniFilter}),posizioni($expand=log($filter=${logFilter}),schedulazioni,testata),master($filter=${masterFilter})`;
+            // } else
+
+            if (masterFilter) {
+              expandQuery = `posizioni($filter=${posizioniFilter}),posizioni($expand=log,schedulazioni,testata),master($filter=${masterFilter})`;
+            } else if (logFilter) {
+              expandQuery = `posizioni($filter=${posizioniFilter}),posizioni($expand=log($filter=${logFilter}),schedulazioni,testata),master`;
+            } else {
+              expandQuery = `posizioni($filter=${posizioniFilter}),posizioni($expand=log,schedulazioni,testata),master`;
+            }
+          } else if (masterFilter) {
+            expandQuery = `posizioni,posizioni($expand=log,schedulazioni,testata),master($filter=${masterFilter})`;
+          } else if (logFilter) {
+            expandQuery = `posizioni,posizioni($expand=log($filter=${logFilter}),schedulazioni,testata),master`;
+          } else if (logFilter && masterFilter) {
+            expandQuery = `posizioni,posizioni($expand=log($filter=${logFilter}),schedulazioni,testata),master($filter=${masterFilter})`;
+          } else {
+            expandQuery = `posizioni,posizioni($expand=log,schedulazioni,testata),master`;
           }
+
           await this.callData(this.getOwnerComponent().getModel("modelloV2"), "/Testata", aFilters, [expandQuery], "01", filtrato);
         } // GESTIONE FILTRI CALLOFF
         else if ((oEvent && oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("callOff")) || (!oEvent && filterTab === "02")) {

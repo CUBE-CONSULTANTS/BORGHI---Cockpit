@@ -263,7 +263,7 @@ sap.ui.define(["../model/API", "../model/formatter"], function (API, formatter) 
           aFilters.push(new sap.ui.model.Filter("numero_progressivo_invio", sap.ui.model.FilterOperator.EQ, oFilterSet.numProg.value));
         }
         if (oFilterSet.cliente && oFilterSet.cliente.value) {
-          aFilters.push(new sap.ui.model.Filter("codice_cliente", sap.ui.model.FilterOperator.EQ, oFilterSet.cliente.value));
+          aFilters.push(new sap.ui.model.Filter("codice_cliente", sap.ui.model.FilterOperator.Contains, oFilterSet.cliente.value));
         }
         if (oFilterSet.descrcliente && oFilterSet.descrcliente.value) {
           aFilters.push(new sap.ui.model.Filter("descrizione_cliente", sap.ui.model.FilterOperator.EQ, oFilterSet.descrcliente.value));
