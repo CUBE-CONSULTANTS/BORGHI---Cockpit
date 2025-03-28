@@ -25,7 +25,7 @@ sap.ui.define(
         this.setModel(models.createMainModel(), "main");
         this.setModel(models.createCountModel(), "count");
         let modF = models.createEdiFiltersModel();
-        debugger;
+
         modF.setSizeLimit(1000000);
         this.setModel(modF, "filtersModel");
         this.getRouter().getRoute("master3").attachPatternMatched(this._onObjectMatched, this);
@@ -127,7 +127,6 @@ sap.ui.define(
       },
 
       statoButtonPress: function (oEvent) {
-        debugger;
         let oBindingContext;
         oEvent.getSource().getBindingContext("master3") === undefined
           ? (oBindingContext = oEvent.getSource().getBindingContext("master3CO"))
@@ -135,7 +134,6 @@ sap.ui.define(
 
         let log;
         oBindingContext.getObject().log ? (log = oBindingContext.getObject().log.results) : (log = oBindingContext.getObject().log_posizioni.results);
-        debugger;
 
         log.sort((a, b) => {
           // let dateA = new Date(a.data);
@@ -313,7 +311,6 @@ sap.ui.define(
         }
       },
       reportSB: async function (oEvent) {
-        debugger;
         // /sap/opu/odata/sap/ZEDIFACT_IDOC_SRV/SELFBILLING_VDA4908_REPORT_SET?$filter=(KNREF eq '0000707511' and KUNNR eq '00217881' and NOTA_CREDITO eq 'test' and DATA_NOTA eq '20250313' and NUM_BOLLA eq 'Off 25/2025' and DATA_BOLLA eq '20250313' and COD_ARTICOLO_CLIENTE eq 'test_art' and NUM_ORDINE eq '1234' and QUANT_PRELEVATA eq '1' and PREZZO eq '100' and VALORE eq '123')&$format=json,
         let aData = oEvent.getSource().getBindingContext("master3SB").getObject();
         let aPostData = [];

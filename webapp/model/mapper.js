@@ -548,7 +548,6 @@ sap.ui.define(["../model/API", "../model/formatter"], function (API, formatter) 
         ["edi", "payload_db", "id"].forEach((key) => delete cleanedData.master[key]);
       }
       Object.keys(cleanedData).forEach((key) => {
-        debugger;
         if (key.toLowerCase().includes("data_nota") || key.toLowerCase().includes("data_bolla") || key.toLowerCase().includes("data_fattura")) {
           cleanedData[key] = formatter.returnDate(cleanedData[key], "yyyyMMdd", "dd/MM/YYYY");
         }

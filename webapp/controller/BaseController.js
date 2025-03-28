@@ -566,7 +566,6 @@ sap.ui.define(
       //FINE CLEAR FILTERBAR
       // CHIAMATE DI ARCHIVIO E MONITOR SIA IN OBJECTMATCHED CHE CON SEARCH SU FILTERBAR
       onSearchData: async function (oEvent, filterTab) {
-        debugger;
         let oFilterSet;
         let key;
         let operator;
@@ -840,6 +839,12 @@ sap.ui.define(
         }
         let exportData = Array.isArray(aExportData) ? aExportData : [aExportData];
 
+        exportData.forEach((el) => {
+          el.posizioni.results.forEach((x) => {
+            x.codice_cliente = x.testata.codice_cliente;
+            x.data_progressivo_invio = x.testata.data_progressivo_invio;
+          });
+        });
         let flatExportData;
         if (!aExportData.RFFON) {
           flatExportData = mapper._formatExcelData(exportData);
@@ -1291,7 +1296,6 @@ sap.ui.define(
         return sKey ? sKey.getValue() : null;
       },
       handleStateChange: function (tableId, oEvt) {
-        debugger;
         const oTable = this.getView().byId(tableId);
         const oState = oEvt.getParameter("state");
 
