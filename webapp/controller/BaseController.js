@@ -1277,9 +1277,9 @@ sap.ui.define(
             Groups: new GroupController({
               control: oTable,
             }),
-            // Filter: new FilterController({
-            //   control: oTable,
-            // }),
+            Filter: new FilterController({
+              control: oTable,
+            }),
           },
         });
 
@@ -1288,7 +1288,7 @@ sap.ui.define(
       openPosizioniDialog: function (oEvent) {
         let tableId = oEvent.getSource().getParent().getParent().getId().split("--").pop();
         let oTable = this.byId(tableId);
-        Engine.getInstance().show(oTable, ["Columns", "Sorter"], {
+        Engine.getInstance().show(oTable, ["Columns", "Sorter","Filter"], {
           contentHeight: "35rem",
           contentWidth: "32rem",
           source: oEvent.getSource(),
@@ -1372,19 +1372,19 @@ sap.ui.define(
             oTable.getBinding("rows").sort(aSorter);
           }
         }
+        let aFilter = [];
+        Object.keys(oState.Filter).forEach((sFilterKey) => {
+          const filterPath = this.oMetadataHelper.getProperty(sFilterKey).path;
 
-        // let aFilter = [];
-        // Object.keys(oState.Filter).forEach((sFilterKey) => {
-        //   const filterPath = this.oMetadataHelper.getProperty(sFilterKey).path;
-
-        //   oState.Filter[sFilterKey].forEach(function (oConditon) {
-        //     aFilter.push(new Filter(filterPath, oConditon.operator, oConditon.values[0]));
-        //   });
-        // });
+          oState.Filter[sFilterKey].forEach(function (oConditon) {
+            aFilter.push(new Filter(filterPath, oConditon.operator, oConditon.values[0]));
+          });
+        });
+        if (oTable.getBinding("rows")) {
+          oTable.getBinding("rows").filter(aFilter);
+        }
       },
-      //fine configurazione Engine x tutte tabelle, da richiamare nei controller dei dettagli,
-      // dopo aver mappato le colonne in mapper e definite il custData nelle view di dettaglio
-
+      //fine configurazione Engine x tutte tabelle
       //DOWNLOAD EDI, VALIDO X TUTTI I TAB, DA AGGIUNGERE I BINDING CONTEXT
       downloadEdi: async function (oEvent) {
         let oBindingContext;
