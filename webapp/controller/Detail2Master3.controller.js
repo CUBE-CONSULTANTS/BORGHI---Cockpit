@@ -8,12 +8,10 @@ sap.ui.define(
       {
         formatter: formatter,
         onInit: function () {
-               
           this.getRouter().getRoute("Detail2Master3").attachPatternMatched(this._onProductMatched, this);
         },
 
-        _onProductMatched: function (oEvent) {
-          
+        _onProductMatched: function (oEvent) {  
           this._product = oEvent.getParameter("arguments").product || this._product || "0";
           let productData = this.getModel("datiAppoggio").getData();
           let codiceClienteMateriale = productData.posizioneCorrente.codice_cliente_materiale;
@@ -32,27 +30,8 @@ sap.ui.define(
               numeroProgressivoInvio: numeroProgressivoInvio,
               cliente: cliente,
             });
-            
-          // datiElementoSelect = datiElementoSelect.map((item) => {
-          //     if (item.data_spedizione_richiesta_da) {
-          //       item.data_spedizione_richiesta_da = formatter.formatDate(
-          //         item.data_spedizione_richiesta_da
-          //       );
-          //     }
-          //     if (item.data_spedizione_richiesta_a) {
-          //       item.data_spedizione_richiesta_a = formatter.formatDate(
-          //         item.data_spedizione_richiesta_a
-          //       );
-          //     }
-          //     return item;
-          //   })
-          //   .sort((a, b) => {
-          //     let dateA = formatter.parseDate(a.data_spedizione_richiesta_da);
-          //     let dateB = formatter.parseDate(b.data_spedizione_richiesta_da);
-          //     return dateA - dateB;
-          //   });
 
-          this.getView().setModel(
+          this.setModel(
             new JSONModel({
               datiElementoSelect,
               codiceClienteMateriale,
@@ -85,10 +64,6 @@ sap.ui.define(
             }
         },
 
-        onExit: function () {
-          this.getRouter().getRoute("master3").detachPatternMatched(this._onProductMatched, this);
-          this.getRouter().getRoute("detailMaster3").detachPatternMatched(this._onProductMatched, this);
-        },
       }
     );
   }

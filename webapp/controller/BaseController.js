@@ -119,6 +119,15 @@ sap.ui.define(
           this.getRouter().navTo("home", {}, undefined, true);
         }
       },
+      _onRouteChange: function (oEvent) {
+        let sCurrentRoute = oEvent.getParameter("name"); 
+        let aRoutesToCloseDetail = ["home", "master3", "archivio"];   
+        if (aRoutesToCloseDetail.includes(sCurrentRoute)) {
+            let oFlexibleColumnLayout = this.getOwnerComponent().getModel("layout");
+            let sNextLayout = oFlexibleColumnLayout.getProperty("/actionButtonsInfo/endColumn/closeColumn"); 
+            this.getModel("layout").setProperty("/layout", sNextLayout);
+        }
+      },
       showBusy: function (delay) {
         // sap.ui.core.BusyIndicator.show(delay || 0);
         sap.ui.core.BusyIndicator.show(delay);

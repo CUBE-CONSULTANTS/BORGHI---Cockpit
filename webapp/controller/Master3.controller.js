@@ -29,10 +29,6 @@ sap.ui.define(
         modF.setSizeLimit(1000000);
         this.setModel(modF, "filtersModel");
         this.getRouter().getRoute("master3").attachPatternMatched(this._onObjectMatched, this);
-
-        // prova per applicare suggerimenti a tutte le combobox
-
-        // Trova tutte le ComboBox nella vista
         let aComboBoxes = this.getView()
           .findAggregatedObjects(true)
           .filter(function (oControl) {
@@ -46,6 +42,7 @@ sap.ui.define(
         });
       },
       _onObjectMatched: async function (oEvent) {
+        this._onRouteChange(oEvent)
         this.getOwnerComponent().getModel("datiAppoggio").setProperty("/currentPage", "master3");
         await this._getCounters(false);
         this.onFilterSelect(null, "01");
@@ -53,6 +50,9 @@ sap.ui.define(
 
       onFilterSelect: async function (oEvent, key) {
         this.showBusy(0);
+        let oFlexibleColumnLayout = this.getOwnerComponent().getModel("layout");
+        let sNextLayout = oFlexibleColumnLayout.getProperty("/actionButtonsInfo/endColumn/closeColumn");
+        this.getModel("layout").setProperty("/layout", sNextLayout);
         let selectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
         !selectedKey ? (selectedKey = key) : (selectedKey = selectedKey);
         switch (selectedKey) {
@@ -134,43 +134,14 @@ sap.ui.define(
 
         let log;
         oBindingContext.getObject().log ? (log = oBindingContext.getObject().log.results) : (log = oBindingContext.getObject().log_posizioni.results);
-
         log.sort((a, b) => {
-          // let dateA = new Date(a.data);
-          // let dateB = new Date(b.data);
-
-          // return dateA - dateB;
           const timestampA = new Date(a.data).getTime() + a.ora.ms;
           const timestampB = new Date(b.data).getTime() + b.ora.ms;
-          return timestampA - timestampB; // Ordinamento decrescente (più recente prima)
+          return timestampA - timestampB; 
         });
 
-        // log.sort((a, b) => {
-        //   let dateTimeA = a.ora.ms;
-        //   // dateTimeA.setMilliseconds(dateTimeA.getMilliseconds() + a.ora);
-
-        //   let dateTimeB = b.ora.ms;
-        //   // dateTimeB.setMilliseconds(dateTimeB.getMilliseconds() + b.ora);
-
-        //   return dateTimeA - dateTimeB;
-        // });
         let lastIndexMessage;
-
-        //sortare i log per data e ora
         oBindingContext.getObject().log ? (lastIndexMessage = oBindingContext.getObject().log.results.length - 1) : (lastIndexMessage = oBindingContext.getObject().log_posizioni.results.length - 1);
-        // let log;
-        // oBindingContext.getObject().log
-        //   ? (log = oBindingContext.getObject().log.results)
-        //   : (log = oBindingContext.getObject().log_posizioni.results);
-
-        // let data = log[lastIndexMessage].data;
-        // let ms = log[lastIndexMessage].ora.ms;
-        // let ore = Math.floor(ms / (1000 * 60 * 60));
-        // let minuti = Math.floor((ms % (1000 * 60 * 60)) / (1000 * 60));
-        // let secondi = Math.floor((ms % (1000 * 60)) / 1000);
-        // let millisecondi = ms % 1000;
-        // data.setHours(ore, minuti, secondi, millisecondi);
-
         let giorno = String(log[lastIndexMessage].data.getDate()).padStart(2, "0");
         let mese = String(log[lastIndexMessage].data.getMonth() + 1).padStart(2, "0");
         let anno = log[lastIndexMessage].data.getFullYear();

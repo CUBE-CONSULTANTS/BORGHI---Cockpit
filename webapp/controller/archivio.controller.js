@@ -12,9 +12,6 @@ sap.ui.define(
         this.setModel(models.createEdiFiltersModel(), "filtersModel");
         this.getRouter().getRoute("archivio").attachPatternMatched(this._onObjectMatched.bind(this));
 
-        // prova per applicare suggerimenti a tutte le combobox
-
-        // Trova tutte le ComboBox nella vista
         let aComboBoxes = this.getView()
           .findAggregatedObjects(true)
           .filter(function (oControl) {
@@ -28,12 +25,16 @@ sap.ui.define(
         });
       },
       _onObjectMatched: async function (oEvent) {
+        this._onRouteChange(oEvent)
         this.getOwnerComponent().getModel("datiAppoggio").setProperty("/currentPage", "archivio");
         await this._getCounters(true);
         this.onFilterSelect(null, "01");
       },
       onFilterSelect: async function (oEvent, key) {
         this.showBusy(0);
+        let oFlexibleColumnLayout = this.getOwnerComponent().getModel("layout");
+        let sNextLayout = oFlexibleColumnLayout.getProperty("/actionButtonsInfo/endColumn/closeColumn");
+        this.getModel("layout").setProperty("/layout", sNextLayout);
         let selectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
         !selectedKey ? (selectedKey = key) : (selectedKey = selectedKey);
         switch (selectedKey) {
