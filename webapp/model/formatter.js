@@ -44,7 +44,7 @@ sap.ui.define([
       return formattedDate;
     },
     returnDate: function (sVal,inpPatForm,OutPatForm){
-      if (sVal === "" || sVal === undefined || sVal === null) {
+      if (sVal === "" || sVal === undefined || sVal === null || sVal === "00000000") {
           return "";
         }      
         let inputFormat = DateFormat.getDateInstance({
