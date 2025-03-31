@@ -156,7 +156,6 @@ sap.ui.define(
         let timestampCompleto = `${dataFormattata} ${oraFormattata}`;
 
         let message = `Data: ${timestampCompleto}\n ${log[lastIndexMessage].messaggio}`;
-
         MessageBox.information(message);
       },
       processaItems: function (items) {
@@ -294,7 +293,7 @@ sap.ui.define(
         }
         try {
           this.showBusy(0);
-          let report = await API.createEntity(this.getOwnerComponent().getModel("selfBillingV2"), "/REPORT_SET", { DATI: aPostData }, {}, ["DATI,DATI($expand= DATI)"]);
+          let report = await API.createEntity(this.getOwnerComponent().getModel("selfBillingV2"), "/REPORT_SET", { DATI: aPostData }, {}, ["DATI"]);
           this.buildSpreadSheet(report.DATI.results, "Report Verifica Prezzi e Quantità");
         } catch (error) {
           MessageBox.error("Errore durante il recupero dei dati");
@@ -311,11 +310,11 @@ sap.ui.define(
           let ddt = fattura.riferimento_ddt?.results || [];
           ddt.forEach((data) => {
             let payload = {
-              KUNNR: supplier,
+              CLIENTE: supplier,
               NOTA_CREDITO: numero_fattura,
               DATA_NOTA: formatter.formatDateToYYYYMMDD(data_fattura),
               NUM_ORDINE: data.order_number,
-              KNREF: data.nad_cn_consegna,
+              STABILIMENTO: data.nad_cn_consegna,
               NUM_BOLLA: data.num_ddt_cliente,
               DATA_BOLLA: formatter.formatDateToYYYYMMDD(data.data_ddt_cliente),
               COD_ARTICOLO_CLIENTE: data.riga_fattura?.codice_articolo_cliente_da_transcodificare,
