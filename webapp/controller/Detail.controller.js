@@ -15,6 +15,13 @@ sap.ui.define(
           this.prevApp = "archivio"
         } 
         let detailData = this.getModel("datiAppoggio").getProperty("/");
+        if(detailData.testata === "") {
+            let oFlexibleColumnLayout = this.getOwnerComponent().getModel("layout");
+            let sNextLayout = oFlexibleColumnLayout.getProperty("/actionButtonsInfo/endColumn/closeColumn"); 
+            this.getModel("layout").setProperty("/layout", sNextLayout);
+            this.getRouter().navTo("home");
+            return;         
+        }
         let oDetailModel = new JSONModel(detailData);
         this.setModel(oDetailModel, "detailData");
         this.grafico()

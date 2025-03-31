@@ -32,6 +32,7 @@ sap.ui.define(
     this.prevApp = undefined;
    },
    _onObjectMatched: async function (oEvent) {
+    
     if (oEvent.getParameters().arguments.prevApp === "master3") {
      this.prevApp = "master3";
      this.getModel("main").setProperty("/backToMon", true);

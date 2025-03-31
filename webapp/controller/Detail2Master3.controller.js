@@ -15,6 +15,13 @@ sap.ui.define(
           this._product = oEvent.getParameter("arguments").product || this._product || "0";
           let productData = this.getModel("datiAppoggio").getData();
           let codiceClienteMateriale = productData.posizioneCorrente.codice_cliente_materiale;
+          if(codiceClienteMateriale === undefined){
+            let oFlexibleColumnLayout = this.getOwnerComponent().getModel("layout");
+            let sNextLayout = oFlexibleColumnLayout.getProperty("/actionButtonsInfo/endColumn/closeColumn"); 
+            this.getModel("layout").setProperty("/layout", sNextLayout);
+            this.getRouter().navTo("home");
+            return;
+          }
           let numeroOrdineAcquisto = productData.posizioneCorrente.numero_ordine_acquisto;
           let materiale = productData.posizioneCorrente.descrizione_materiale;
           let idoc = productData.posizioneCorrente.numero_idoc;
