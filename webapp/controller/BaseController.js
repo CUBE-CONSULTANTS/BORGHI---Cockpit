@@ -850,7 +850,9 @@ sap.ui.define(
           return;
         }    
         this.showBusy(0)
-        this.buildSpreadSheet(aData, "Export Dettaglio");
+        let date = formatter.formatDate(new Date())
+        let filename = `Dettaglio ${oModel.getProperty("/codice_cliente")} - ${oModel.getProperty("/numero_progressivo_invio")} - ${date}`
+        this.buildSpreadSheet(aData, filename);
         this.hideBusy(0)
       },
       //COSTRUZIONE DELLO SHEET
