@@ -543,6 +543,7 @@ sap.ui.define(["../model/API", "../model/formatter"], function (API, formatter) 
         "testata",
         "schedulazioni",
         "archiviazione",
+        "DATI"
       ].forEach((key) => delete cleanedData[key]);
       if (cleanedData.master) {
         ["edi", "payload_db", "id"].forEach((key) => delete cleanedData.master[key]);
