@@ -851,7 +851,15 @@ sap.ui.define(
         }    
         this.showBusy(0)
         let date = formatter.formatDate(new Date())
-        let filename = `Dettaglio ${oModel.getProperty("/codice_cliente")} - ${oModel.getProperty("/numero_progressivo_invio")} - ${date}`
+        let codCliente 
+        oModel.getProperty("/codice_cliente") ?
+        codCliente = oModel.getProperty("/codice_cliente") : oModel.getProperty("/sender_id") ?
+        codCliente = oModel.getProperty("/sender_id") : codCliente = oModel.getProperty("/DettaglioMaster3/customer")
+        let progrInvio
+        oModel.getProperty("/numero_progressivo_invio") ? 
+        progrInvio = oModel.getProperty("/numero_progressivo_invio") : oModel.getProperty("/progressivo_invio")?
+        progrInvio = oModel.getProperty("/progressivo_invio") : progrInvio = oModel.getProperty("/DettaglioMaster3/new_trasmission")
+        let filename = `Dettaglio ${codCliente} - ${progrInvio} - ${date}`
         this.buildSpreadSheet(aData, filename);
         this.hideBusy(0)
       },
