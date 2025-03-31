@@ -574,6 +574,7 @@ sap.ui.define(
         this.getModel("datiAppoggio").getProperty("/currentPage") === "archivio" ? (operator = "eq") : (operator = "ne");
         operator === "ne" ? (valPosArch = false) : (valPosArch = true);
         //GESTIONE FILTRI DELFOR
+        this.showBusy(0)
         if ((oEvent && oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("delivery")) || (!oEvent && filterTab === "01")) {
           this.getModel("filtersModel").setSizeLimit(1000000);
           oFilterSet = this.getModel("filtersModel").getProperty("/delivery");
@@ -724,6 +725,7 @@ sap.ui.define(
           let aFilters = mapper.buildFilters(oFilterSet, (key = "06"), operator);
           await this.callData(this.getOwnerComponent().getModel("fileScartatiV2"), "/FileScartati", aFilters, [], "06", false);
         }
+        this.hideBusy(0)
       },
       //gestione CHIAMATE E BINDING X TAB
       callData: async function (oModel, entity, aFilters, Expands, key, filtrato) {
@@ -747,7 +749,6 @@ sap.ui.define(
             modelMeta.getProperty("/").forEach((testata) => {
               testata.posizioni = Object.values(testata.posizioni.results);
             });
-
             this.getOwnerComponent().setModel(modelMeta, "master3");
             this.getModel("master3").setSizeLimit(1000000);
           } else if (key === "02") {
@@ -839,19 +840,13 @@ sap.ui.define(
         }
         let exportData = Array.isArray(aExportData) ? aExportData : [aExportData];
 
-        exportData.forEach((el) => {
-          el.posizioni.results.forEach((x) => {
-            x.codice_cliente = x.testata.codice_cliente;
-            x.data_progressivo_invio = x.testata.data_progressivo_invio;
-          });
-        });
         let flatExportData;
         if (!aExportData.RFFON) {
           flatExportData = mapper._formatExcelData(exportData);
         } else {
           flatExportData = mapper._formatCumulativi(exportData);
         }
-
+        //cambio nome file
         let oSpreadsheet = new Spreadsheet({
           dataSource: flatExportData,
           workbook: {
