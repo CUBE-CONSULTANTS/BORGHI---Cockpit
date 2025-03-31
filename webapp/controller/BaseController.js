@@ -801,26 +801,33 @@ sap.ui.define(
       downloadExcelFile: function (oEvent) {
         let selectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
         !selectedKey ? (selectedKey = key) : (selectedKey = selectedKey);
-        let oModel;
+        let oModel
+        let filename 
 
         switch (selectedKey) {
           case "01":
             oModel = this.getModel("master3");
+            filename = "Export Excel Delivery Forecast"
             break;
           case "02":
             oModel = this.getModel("master3CO");
+            filename = "Export Excel Call Off"
             break;
           case "03":
             oModel = this.getModel("master3SB");
+            filename = "Export Excel Self Billing"
             break;
           case "04":
             oModel = this.getModel("master3DesAdv");
+            filename = "Export Excel Despatch Advice"
             break;
           case "05":
             oModel = this.getModel("master3Inv");
+            filename = "Export Excel Invoice"
             break;
           case "06":
             oModel = this.getModel("master3Scart");
+            filename = "Export Excel File Scartati"
             break;
           default:
         }
@@ -829,7 +836,9 @@ sap.ui.define(
           MessageToast.show("Nessun dato disponibile per l'esportazione");
           return;
         }
-        this.buildSpreadSheet(aData);
+        this.showBusy(0)
+        this.buildSpreadSheet(aData, filename);
+        this.hideBusy(0)
       },
 
       // DOWNLOAD DI EXCEL X DETTAGLI
@@ -839,11 +848,13 @@ sap.ui.define(
         if (!aData || aData.length === 0) {
           MessageToast.show("Nessun dato disponibile per l'esportazione");
           return;
-        }
-        this.buildSpreadSheet(aData);
+        }    
+        this.showBusy(0)
+        this.buildSpreadSheet(aData, "Export Dettaglio");
+        this.hideBusy(0)
       },
       //COSTRUZIONE DELLO SHEET
-      buildSpreadSheet: function (aExportData) {
+      buildSpreadSheet: function (aExportData, filename) {
         if (aExportData.hasOwnProperty("DettaglioFatture")) {
           aExportData = Object.values(aExportData)[0];
         }
@@ -855,14 +866,14 @@ sap.ui.define(
         } else {
           flatExportData = mapper._formatCumulativi(exportData);
         }
-        //cambio nome file
+
         let oSpreadsheet = new Spreadsheet({
           dataSource: flatExportData,
           workbook: {
             columns: this._getExcelColumns(flatExportData),
             hierarchyLevel: "Level",
           },
-          fileName: "Export",
+          fileName: filename,
           showProgress: true,
           worker: true,
         });
@@ -1438,8 +1449,7 @@ sap.ui.define(
           this.showBusy(0);
           let oModel = this.getOwnerComponent().getModel("modelloV2");
           let res = await API.getEntity(oModel, `/DELFOR_CUMULATIVI(IdocNum='${numIdoc}',Stabilimento='${dest}', RFFON ='${rffon}')`);
-          console.log(res);
-          this.buildSpreadSheet(res.results);
+          this.buildSpreadSheet(res.results, "Report Cumulativi");
         } catch (error) {
           MessageBox.error("Errore durante il download del Report");
         } finally {
@@ -1617,7 +1627,9 @@ sap.ui.define(
         let oRow35 = oEvent.getSource().getBindingContext("master3CO").getObject();
         let aData = [];
         aData.push(oRow35);
-        this.buildSpreadSheet(aData);
+        this.showBusy(0);
+        this.buildSpreadSheet(aData, "Report Stock Level");
+        this.hideBusy(0);
       },
       // NAVIGAZIONE NEI DETTAGLI
       dettaglioNav: function (oEvent) {
