@@ -288,21 +288,31 @@ sap.ui.define(
           let calloffModel = this.getOwnerComponent().getModel("calloffV2");
           let selfBillingModel = this.getOwnerComponent().getModel("selfBillingV2");
           let desAdvModel = this.getOwnerComponent().getModel("despatchAdviceV2");
-
           let invoiceModel = this.getOwnerComponent().getModel("invoiceV2");
           let fileScartatiModel = this.getOwnerComponent().getModel("fileScartatiV2");
-          let [delfor, calloff, selfb, desadv, invoice, fileScart] = await Promise.all([
+          debugger
+          let entityCO, filtersCO, expandCO
+          if(filterVal) {
+            entityCO = "/ContatoreTestate" 
+            filtersCO = []
+            expandCO = []
+          }else{
+                  
+            entityCO = "/ContatoreTestateMonitor"
+            filtersCO = []
+            expandCO = []
+          }  
+
+          let [delfor, calloff, selfb, desadv, invoice, fileScart] = await Promise.all([     
             API.getEntity(oModel, "/Testata/$count", [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, filterVal)], []),
-            filterVal
-              ? API.getEntity(calloffModel, "/ContatoreTestate", [], [])
-              : API.getEntity(calloffModel, "/Testata/$count", [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, filterVal)], []),
+            API.getEntity(calloffModel, entityCO, filtersCO, expandCO),
             API.getEntity(selfBillingModel, "/Testata/$count", [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, filterVal)], []),
             API.getEntity(desAdvModel, "/Testata/$count", [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, filterVal)], []),
             API.getEntity(invoiceModel, "/Invoice/$count", [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, filterVal)], []),
             API.getEntity(fileScartatiModel, "/FileScartati/$count", [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, filterVal)], []),
           ]);
           this.getModel("count").setProperty("/delivery", delfor.results);
-          this.getModel("count").setProperty("/calloff", filterVal ? calloff.results[0].ContatoreTestata : calloff.results);
+          this.getModel("count").setProperty("/calloff", filterVal ? calloff.results[0].ContatoreTestata : calloff.results[0].ContatoreTestata);
           this.getModel("count").setProperty("/selfbilling", selfb.results);
           this.getModel("count").setProperty("/despatch", desadv.results);
           this.getModel("count").setProperty("/invoice", invoice.results);
@@ -606,7 +616,6 @@ sap.ui.define(
             }
           });
           let expandQuery = `posizioni,posizioni($expand=log($orderby=data,ora),schedulazioni,testata),master`;
-
           let posizioniFilter = "";
           let masterFilter = "";
           let logFilter = "";
@@ -675,7 +684,6 @@ sap.ui.define(
               if (index !== -1) aFilters.splice(index, 1);
             }
           });
-
           let posizioniFilter = `archiviazione eq '${valPosArch}'`;
           if (filters.materiale) {
             posizioniFilter += ` and posizione_6_28 eq '${filters.materiale.oValue1}'`;
