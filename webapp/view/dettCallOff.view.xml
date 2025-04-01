@@ -33,7 +33,7 @@
             <ObjectPageDynamicHeaderTitle>
                 <expandedHeading>
                     <m:Title
-                        text="{detailData>/sender_id}  {detailData>/progressivo_invio}"
+                        text="{detailData>/codice_cliente_committente}  {detailData>/progressivo_invio}"
                         wrapping="true"
                         class="sapUiSmallMarginEnd"
                     />
@@ -52,7 +52,7 @@
                             class="sapUiTinyMarginEnd"
                         >
                             <m:Title
-                                text="{detailData>/sender_id}"
+                                text="{detailData>/codice_cliente_committente}"
                                 wrapping="true"
                             />
                         </m:FlexBox>
@@ -77,9 +77,10 @@
                 fitContainer="true"
             >
                 <m:VBox class="sapUiSmallMarginEnd">
+                  
                     <m:VBox class="sapUiTinyMarginBottom">
                         <m:Label
-                            text="Cliente"
+                            text="Codice Terre Cliente"
                             design="Bold"
                         />
                         <m:Text
@@ -106,6 +107,15 @@
                     </m:VBox>
                 </m:VBox>
                 <m:VBox class="sapUiSmallMarginEnd">
+                  <m:VBox class="sapUiTinyMarginBottom">
+                        <m:Label
+                            text="Sender ID"
+                            design="Bold"
+                        />
+                        <m:Text
+                            text="{detailData>/sender_id}"
+                        />
+                    </m:VBox>
                     <m:VBox class="sapUiTinyMarginBottom">
                         <m:Label
                             text="Num. progressivo invio"
@@ -208,7 +218,7 @@
                                           <m:Label text="Cliente" />
                                           <ui:template>
                                               <m:ObjectIdentifier
-                                                  text="{detailData>posizione_77_86}"
+                                                  text="{detailData>codice_cliente_committente}"
                                               />
                                           </ui:template>
                                       </ui:Column>  

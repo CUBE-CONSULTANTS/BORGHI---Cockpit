@@ -49,7 +49,7 @@
                     </ComboBox> 
                     </fb:control>
                 </fb:FilterGroupItem>
-                <!-- <fb:FilterGroupItem
+                <fb:FilterGroupItem
         name="DescrCliente"
         label="Descrizione Cliente"
         groupName="Group1"
@@ -64,7 +64,7 @@
         </ComboBox>
 
      </fb:control>
-      </fb:FilterGroupItem> -->
+      </fb:FilterGroupItem>
             <fb:FilterGroupItem
                     name="Materiale"
                     label="Materiale"
@@ -154,7 +154,7 @@
 					<ui:Column width="11rem">
 						<Label text="Cliente" />
 						<ui:template>
-							<Text text="{master3CO>codice_terre_cliente}" wrapping="false" />
+							<Text text="{master3CO>codice_cliente_committente}  {master3CO>codice_cliente_committente_descrizione} " wrapping="false" />
 						</ui:template>
 					</ui:Column>
           <ui:Column width="7rem">

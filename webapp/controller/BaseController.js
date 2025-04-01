@@ -382,8 +382,8 @@ sap.ui.define(
           );
         } else if (key === "02") {
           let aData = this.getModel("master3CO").getProperty("/");
-          let aClienti = [...new Set(aData.map((item) => item.codice_terre_cliente))];
-          // let aDescrizioni = [...new Set(aData.map((item) => item.descrizione_cliente))]
+          let aClienti = [...new Set(aData.map((item) => item.codice_cliente_committente))];
+          let aDescrizioni = [...new Set(aData.map((item) => item.codice_cliente_committente_descrizione))]
           let aReason = [];
           let aMateriali = [];
           aData.forEach((item) => {
@@ -413,10 +413,10 @@ sap.ui.define(
             "/callOff/clienti/items",
             aClienti.map((m) => ({ Key: m, Text: m }))
           );
-          // this.getModel("filtersModel").setProperty(
-          //   "/callOff/descrcliente/items",
-          //   aDescrizioni.map((m) => ({ Key: m, Text: m }))
-          // );
+          this.getModel("filtersModel").setProperty(
+            "/callOff/descrcliente/items",
+            aDescrizioni.map((m) => ({ Key: m, Text: m }))
+          );
         } else if (key === "03") {
           let aData = this.getModel("master3SB").getProperty("/");
           let aClienti = [...new Set(aData.map((item) => item.customer))];
