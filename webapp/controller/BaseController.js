@@ -1134,7 +1134,7 @@ sap.ui.define(
         let itemList = items
           .map((item) => {
             if (item.hasOwnProperty("posizione_6_13")) {
-              return `Codice Cliente: ${item.posizione_77_86} - Codice cliente materiale: ${item.posizione_6_28} - Progressivo Invio: ${item.testata.progressivo_invio} \n`;
+              return `Codice Cliente: ${item.codice_cliente_committente} - Codice cliente materiale: ${item.posizione_6_28} - Progressivo Invio: ${item.testata.progressivo_invio} \n`;
             } else {
               return `Codice Cliente: ${item.testata.codice_cliente} - Codice cliente materiale: ${item.codice_cliente_materiale} - Progressivo Invio: ${item.testata.numero_progressivo_invio} \n`;
             }
