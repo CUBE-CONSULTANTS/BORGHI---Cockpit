@@ -290,7 +290,7 @@ sap.ui.define(
           let desAdvModel = this.getOwnerComponent().getModel("despatchAdviceV2");
           let invoiceModel = this.getOwnerComponent().getModel("invoiceV2");
           let fileScartatiModel = this.getOwnerComponent().getModel("fileScartatiV2");
-          debugger
+          
           let entityCO, filtersCO, expandCO
           if(filterVal) {
             entityCO = "/ContatoreTestate" 
@@ -639,10 +639,6 @@ sap.ui.define(
             masterFilter = `data_ricezione eq '${filters.data_ricezione.oValue1}'`;
           }
           if (posizioniFilter) {
-            // if (masterFilter && logFilter) {
-            //   expandQuery = `posizioni($filter=${posizioniFilter}),posizioni($expand=log($filter=${logFilter}),schedulazioni,testata),master($filter=${masterFilter})`;
-            // } else
-
             if (masterFilter) {
               expandQuery = `posizioni($filter=${posizioniFilter}),posizioni($expand=log,schedulazioni,testata),master($filter=${masterFilter})`;
             } else if (logFilter) {
@@ -659,10 +655,10 @@ sap.ui.define(
           } else {
             expandQuery = `posizioni,posizioni($expand=log,schedulazioni,testata),master`;
           }
-
           await this.callData(this.getOwnerComponent().getModel("modelloV2"), "/Testata", aFilters, [expandQuery], "01", filtrato);
         } // GESTIONE FILTRI CALLOFF
         else if ((oEvent && oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("callOff")) || (!oEvent && filterTab === "02")) {
+          
           this.getModel("filtersModel").setSizeLimit(1000000);
           oFilterSet = this.getModel("filtersModel").getProperty("/callOff");
           let aFilters = mapper.buildFilters(oFilterSet, (key = "02"), operator);
@@ -684,7 +680,7 @@ sap.ui.define(
               if (index !== -1) aFilters.splice(index, 1);
             }
           });
-          let posizioniFilter = `archiviazione eq '${valPosArch}'`;
+          let posizioniFilter = `archiviazione eq ${valPosArch}`;
           if (filters.materiale) {
             posizioniFilter += ` and posizione_6_28 eq '${filters.materiale.oValue1}'`;
           }
