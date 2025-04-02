@@ -170,8 +170,7 @@ sap.ui.define(
           message =  oBindingContext.getObject().message  
         } else{
           message =  oBindingContext.getObject().message_log
-        }
-        
+        }     
         if(message){
           MessageBox.information(message)
         }else{

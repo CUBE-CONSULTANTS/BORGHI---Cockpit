@@ -1417,11 +1417,14 @@ sap.ui.define(
           oBindingContext = oEvent.getSource().getBindingContext("master3");
         } else if (oEvent.getSource().getBindingContext("master3CO") !== undefined) {
           oBindingContext = oEvent.getSource().getBindingContext("master3CO");
+        } else if (oEvent.getSource().getBindingContext("master3DesAdv") !== undefined) {
+          oBindingContext = oEvent.getSource().getBindingContext("master3DesAdv");
+        } else if (oEvent.getSource().getBindingContext("master3Inv") !== undefined) {
+          oBindingContext = oEvent.getSource().getBindingContext("master3Inv");
         }
         let objId = oBindingContext.getObject().id;
         let selectedKey = this.byId("idIconTabBar")?.getSelectedKey();
         let { tableId, oModel, Entity } = this.getModelAndEntityByPart(selectedKey);
-
         try {
           this.showBusy(0);
           let base64Edi = await API.readByKey(oModel, "/GetFileEdi", { id_testata: objId }, [], []);
