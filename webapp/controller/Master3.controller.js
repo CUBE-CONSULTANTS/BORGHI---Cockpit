@@ -158,6 +158,17 @@ sap.ui.define(
         let message = `Data: ${timestampCompleto}\n ${log[lastIndexMessage].messaggio}`;
         MessageBox.information(message);
       },
+      statoInvButtonPress: function (oEvent){
+        let message
+        oEvent.getSource().getBindingInfo("icon").parts[0].path === 'stato_edi' ?
+         message = oEvent.getSource().getBindingContext("master3Inv").getObject().message_log : 
+         message = oEvent.getSource().getBindingContext("master3Inv").getObject().message  
+        if(message){
+          MessageBox.information(message)
+        }else{
+          MessageBox.information("Nessun Log disponibile")
+        }          
+      },
       processaItems: function (items) {
         let itemList;
         let excluded = [];
