@@ -160,9 +160,18 @@ sap.ui.define(
       },
       statoInvButtonPress: function (oEvent){
         let message
-        oEvent.getSource().getBindingInfo("icon").parts[0].path === 'stato_edi' ?
-         message = oEvent.getSource().getBindingContext("master3Inv").getObject().message_log : 
-         message = oEvent.getSource().getBindingContext("master3Inv").getObject().message  
+        let oBindingContext  
+         oEvent.getSource().getBindingContext("master3DesAdv") === undefined ? 
+         oBindingContext = oEvent.getSource().getBindingContext("master3Inv") :
+         oBindingContext = oEvent.getSource().getBindingContext("master3DesAdv")
+        if(oBindingContext === oEvent.getSource().getBindingContext("master3Inv")) {
+          oEvent.getSource().getBindingInfo("icon").parts[0].path === 'stato_edi' ?
+          message =  oBindingContext.getObject().message_log : 
+          message =  oBindingContext.getObject().message  
+        } else{
+          message =  oBindingContext.getObject().message_log
+        }
+        
         if(message){
           MessageBox.information(message)
         }else{
