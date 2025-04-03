@@ -1432,7 +1432,9 @@ sap.ui.define(
           const url = window.URL.createObjectURL(blob);
           const a = document.createElement("a");
           a.href = url;
-          a.download = base64Edi.nome_file;
+          let nomeFile
+          base64Edi.nome_file ? nomeFile = base64Edi.nome_file : nomeFile = base64Edi.file_name
+          a.download = nomeFile
           document.body.appendChild(a);
           a.click();
           document.body.removeChild(a);
