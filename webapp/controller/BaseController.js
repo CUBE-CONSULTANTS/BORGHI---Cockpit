@@ -617,7 +617,7 @@ sap.ui.define(
               if (index !== -1) aFilters.splice(index, 1);
             }
           });
-          let expandQuery = `posizioni,posizioni($expand=log($orderby=data,ora),schedulazioni,testata),master`;
+          let expandQuery = `posizioni,posizioni($expand=log($orderby=data,ora),testata),master`;
           let posizioniFilter = "";
           let masterFilter = "";
           let logFilter = "";
@@ -642,20 +642,20 @@ sap.ui.define(
           }
           if (posizioniFilter) {
             if (masterFilter) {
-              expandQuery = `posizioni($filter=${posizioniFilter}),posizioni($expand=log,schedulazioni,testata),master($filter=${masterFilter})`;
+              expandQuery = `posizioni($filter=${posizioniFilter}),posizioni($expand=log,testata),master($filter=${masterFilter})`;
             } else if (logFilter) {
-              expandQuery = `posizioni($filter=${posizioniFilter}),posizioni($expand=log($filter=${logFilter}),schedulazioni,testata),master`;
+              expandQuery = `posizioni($filter=${posizioniFilter}),posizioni($expand=log($filter=${logFilter}),testata),master`;
             } else {
-              expandQuery = `posizioni($filter=${posizioniFilter}),posizioni($expand=log,schedulazioni,testata),master`;
+              expandQuery = `posizioni($filter=${posizioniFilter}),posizioni($expand=log,testata),master`;
             }
           } else if (masterFilter) {
-            expandQuery = `posizioni,posizioni($expand=log,schedulazioni,testata),master($filter=${masterFilter})`;
+            expandQuery = `posizioni,posizioni($expand=log,testata),master($filter=${masterFilter})`;
           } else if (logFilter) {
-            expandQuery = `posizioni,posizioni($expand=log($filter=${logFilter}),schedulazioni,testata),master`;
+            expandQuery = `posizioni,posizioni($expand=log($filter=${logFilter}),testata),master`;
           } else if (logFilter && masterFilter) {
-            expandQuery = `posizioni,posizioni($expand=log($filter=${logFilter}),schedulazioni,testata),master($filter=${masterFilter})`;
+            expandQuery = `posizioni,posizioni($expand=log($filter=${logFilter}),testata),master($filter=${masterFilter})`;
           } else {
-            expandQuery = `posizioni,posizioni($expand=log,schedulazioni,testata),master`;
+            expandQuery = `posizioni,posizioni($expand=log,testata),master`;
           }
           await this.callData(this.getOwnerComponent().getModel("modelloV2"), "/Testata", aFilters, [expandQuery], "01", filtrato);
         } // GESTIONE FILTRI CALLOFF
