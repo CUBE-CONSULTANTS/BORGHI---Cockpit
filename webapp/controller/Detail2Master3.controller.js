@@ -1,6 +1,10 @@
 sap.ui.define(
-  ["./BaseController", "sap/ui/model/json/JSONModel", "../model/formatter"],
-  function (BaseController, JSONModel, formatter) {
+  ["./BaseController", "sap/ui/model/json/JSONModel", "../model/formatter",
+	"sap/m/MessageBox", "../model/API",],
+  function (BaseController,
+	JSONModel,
+	formatter,
+	MessageBox, API) {
     "use strict";
     
     return BaseController.extend(
@@ -11,7 +15,8 @@ sap.ui.define(
           this.getRouter().getRoute("Detail2Master3").attachPatternMatched(this._onProductMatched, this);
         },
 
-        _onProductMatched: function (oEvent) {  
+        _onProductMatched: async function (oEvent) {  
+          debugger
           this._product = oEvent.getParameter("arguments").product || this._product || "0";
           let productData = this.getModel("datiAppoggio").getData();
           let codiceClienteMateriale = productData.posizioneCorrente.codice_cliente_materiale;
@@ -25,10 +30,21 @@ sap.ui.define(
           let numeroOrdineAcquisto = productData.posizioneCorrente.numero_ordine_acquisto;
           let materiale = productData.posizioneCorrente.descrizione_materiale;
           let idoc = productData.posizioneCorrente.numero_idoc;
-          let datiElementoSelect = productData.posizioneCorrente.schedulazioni.results;
           let numeroProgressivoInvio = this.getModel("datiAppoggio").getProperty("/testata").numero_progressivo_invio;
           let cliente = this.getModel("datiAppoggio").getProperty("/testata").codice_buyer;
-          this.getView().setModel(new JSONModel(),"detailData2");
+          let testataId = productData.testata.id;
+          let posizioneId = productData.posizioneCorrente.id;
+          try {
+            this.showBusy(0)
+            let datiElementoSelect = await API.readByKey(
+              this.getOwnerComponent().getModel("modelloV2"),
+              "/Testata",
+              { id: testataId, id_master: productData.testata.id_master },
+              [],
+              [`posizioni($filter=id eq '${posizioneId}';$expand=schedulazioni)`]
+            );
+            let schedulazioni = datiElementoSelect.posizioni.results[0].schedulazioni.results;
+            this.getView().setModel(new JSONModel(),"detailData2");
           this.getView().getModel("detailData2").setProperty("/DettaglioMaster3", {
               codiceClienteMateriale: codiceClienteMateriale,
               numeroOrdineAcquisto: numeroOrdineAcquisto,
@@ -40,7 +56,7 @@ sap.ui.define(
 
           this.setModel(
             new JSONModel({
-              datiElementoSelect,
+              schedulazioni: schedulazioni,
               codiceClienteMateriale,
               numeroOrdineAcquisto,
               materiale,
@@ -48,6 +64,12 @@ sap.ui.define(
             }),
             "detailSched"
           );
+          } catch (error) {
+            MessageBox.error("Errore durante il recupero delle Schedulazioni")
+          }finally{
+            this.hideBusy(0)
+          }
+          
         },       
         handleClose: function (oEvent) { 
           let currentBegColViewName = oEvent.getSource().getParent().getParent().getParent().getParent().getParent().getCurrentBeginColumnPage().getProperty("viewName");

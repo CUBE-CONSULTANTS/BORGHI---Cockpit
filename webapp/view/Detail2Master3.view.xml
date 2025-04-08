@@ -68,7 +68,7 @@
         showTimeFilter="false"
         sortOldestFirst="true"
         content="{
-          path: 'detailSched>/datiElementoSelect',
+          path: 'detailSched>/schedulazioni',
           sorter: {
             path: 'detailSched>data_spedizione_richiesta_da',
             descending: false

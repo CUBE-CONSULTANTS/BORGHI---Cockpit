@@ -1663,10 +1663,7 @@ sap.ui.define(
           this.getOwnerComponent().getModel("datiAppoggio").setProperty("/posizioni", detail.posizioni);
           if (level) {
             this.getOwnerComponent().getModel("datiAppoggio").setProperty("/posizioneCorrente", detail);
-            this.getOwnerComponent().getModel("datiAppoggio").setProperty("/schedulazioni", detail.schedulazioni.results);
-            this.getOwnerComponent()
-              .getModel("datiAppoggio")
-              .setProperty("/testata", this.getModel("master3").getProperty(`${detailPath[0] + detailPath[1]}`));
+            this.getOwnerComponent().getModel("datiAppoggio").setProperty("/testata", this.getModel("master3").getProperty(`${detailPath[0] + detailPath[1]}`));
             let oNextUIState;
             this.getOwnerComponent()
               .getHelper()
