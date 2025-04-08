@@ -340,6 +340,8 @@ sap.ui.define(
                     return "Non Elaborato";
                   } else if (pos.stato === "64") {
                     return "In Elaborazione";
+                  }else if(pos.stato === '50'){
+                    return "Variante: Da non Processare"
                   }
                   return pos.stato;
                 })
@@ -1041,9 +1043,9 @@ sap.ui.define(
           aSelectedItems = aSelectedItems
             .map((item) => {
               if (item.posizioni) {
-                item.posizioni = item.posizioni.filter((pos) => pos.stato !== "53" && pos.stato !== "64");
+                item.posizioni = item.posizioni.filter((pos) => pos.stato !== "53" && pos.stato !== "64" && pos.stato !== "50");
               }
-              if ((item.stato !== "53" && item.stato !== "64") || (item.posizioni && item.posizioni.length > 0)) {
+              if ((item.stato !== "53" && item.stato !== "64" && item.stato !== "50") || (item.posizioni && item.posizioni.length > 0)) {
                 return item;
               }
               return null;
@@ -1123,7 +1125,7 @@ sap.ui.define(
         items = items.filter((item) => item.posizione_43_44 !== "35");
         items = items
           .map((item) => {
-            if (item.stato !== "53" && item.stato !== "64") {
+            if (item.stato !== "53" && item.stato !== "64" && item.stato !== "50") {
               return item;
             }
             return null;

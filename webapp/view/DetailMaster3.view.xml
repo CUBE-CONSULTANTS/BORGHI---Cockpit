@@ -238,9 +238,9 @@
                         <m:Label text="Stato" />
                         <ui:template>
                           <m:Button
-                            icon="{= ${detailData>stato} === '53' ? 'sap-icon://status-positive' : ${detailData>stato} === '51' ? 'sap-icon://status-negative' : ${detailData>stato} === '64'? 'sap-icon://pending'  :'sap-icon://in-progress'}"
-                            type="{= ${detailData>stato} === '53' ? 'Accept' : ${detailData>stato} === '51' ? 'Negative' : ${detailData>stato} === '64'? 'Critical' : 'Ghost'}"
-                            tooltip="{= ${detailData>stato} === '53' ? 'Elaborato Positivamente' : ${detailData>stato} === '51' ? 'In Errore' : ${detailData>stato} === '64' ? 'In Elaborazione' : 'Non Elaborato'}"           
+                            icon="{= ${detailData>stato} === '53' ? 'sap-icon://status-positive' : ${detailData>stato} === '51' ? 'sap-icon://status-negative' : ${detailData>stato} === '64'? 'sap-icon://pending'  : ${detailData>stato} === '50' ? 'sap-icon://cancel' :'sap-icon://in-progress'}"
+                            type="{= ${detailData>stato} === '53' ? 'Accept' : ${detailData>stato} === '51' ? 'Negative' : ${detailData>stato} === '64'? 'Critical' : ${detailData>stato} === '50' ? 'Warning' : 'Ghost'}"
+                            tooltip="{= ${detailData>stato} === '53' ? 'Elaborato Positivamente' : ${detailData>stato} === '51' ? 'In Errore' : ${detailData>stato} === '64' ? 'In Elaborazione' : ${detailData>stato} === '50' ? 'Variante: Da non Processare' : 'Non Elaborato'}"           
                             press="onStatoPress"                                
                             />
                         </ui:template>
