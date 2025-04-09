@@ -72,8 +72,8 @@
               </fb:FilterGroupItem>
           
               <fb:FilterGroupItem
-                name="Codice Articolo Fornitore"
-                label="Codice Articolo Fornitore"
+                name="Codice Articolo Cliente"
+                label="Codice Articolo Cliente"
                 groupName="Group1"
                 visibleInFilterBar="true"
               >
