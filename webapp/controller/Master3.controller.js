@@ -164,7 +164,7 @@ sap.ui.define(
         
       },
       statoInvButtonPress: function (oEvent){
-        debugger
+        
         let message
         let oBindingContext  
          oEvent.getSource().getBindingContext("master3DesAdv") === undefined ? 

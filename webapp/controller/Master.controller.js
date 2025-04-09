@@ -149,6 +149,7 @@ sap.ui.define(
      );
    },
    onClientiComboBoxChange: async function (oEvent) {
+    
     let idMatComboBox = this.byId("idMatComboBox");
     let idMatnrComboBox = this.byId("idMatnrComboBox");
     if(idMatComboBox.getValue || idMatnrComboBox.getValue){
@@ -169,26 +170,38 @@ sap.ui.define(
     }
    },
    onMaterialiComboBoxChange: async function(oEvent){
-    try {
-     this.showBusy(0);
-     let materialiSap = await API.getEntity(this.getOwnerComponent().getModel("modelloV2"),"/EIGHTWEEK_MC_KDMAT",[new Filter("Kdmat", FilterOperator.EQ, oEvent.getSource().getValue().split(" -")[0]), new Filter("Azione", FilterOperator.EQ, "MATNR")],[]);
-     this.getModel("matchcode").setProperty("/materiali", materialiSap.results);
-    } catch (error) {
-     MessageBox.error("Errore durante il recupero dei materiali Sap");
-    } finally {
-     this.hideBusy(0);
+    
+    if(oEvent.getSource().getValue().split(" -")[0] !== ''){
+      try {
+        this.showBusy(0);
+        let materialiSap = await API.getEntity(this.getOwnerComponent().getModel("modelloV2"),"/EIGHTWEEK_MC_KDMAT",[new Filter("Kdmat", FilterOperator.EQ, oEvent.getSource().getValue().split(" -")[0]), new Filter("Azione", FilterOperator.EQ, "MATNR")],[]);
+        this.getModel("matchcode").setProperty("/materiali", materialiSap.results);
+       } catch (error) {
+        MessageBox.error("Errore durante il recupero dei materiali Sap");
+       } finally {
+        this.hideBusy(0);
+       }
+    }else{
+      this._getMatchCode()
     }
+    
    },
    onMaterialiSapChange: async function(oEvent){
-    try {
-      this.showBusy(0);
-      let materiali = await API.getEntity(this.getOwnerComponent().getModel("modelloV2"),"/EIGHTWEEK_MC_KDMAT",[new Filter("Matnr", FilterOperator.EQ, oEvent.getSource().getValue().split(" -")[0]), new Filter("Azione", FilterOperator.EQ, "KDMAT")],[]);
-      this.getModel("matchcode").setProperty("/materiali", materiali.results);
-     } catch (error) {
-      MessageBox.error("Errore durante il recupero dei materiali Sap");
-     } finally {
-      this.hideBusy(0);
+    
+    if(oEvent.getSource().getValue().split(" -")[0] !== ''){
+      try {
+        this.showBusy(0);
+        let materiali = await API.getEntity(this.getOwnerComponent().getModel("modelloV2"),"/EIGHTWEEK_MC_KDMAT",[new Filter("Matnr", FilterOperator.EQ, oEvent.getSource().getValue().split(" -")[0]), new Filter("Azione", FilterOperator.EQ, "KDMAT")],[]);
+        this.getModel("matchcode").setProperty("/materiali", materiali.results);
+       } catch (error) {
+        MessageBox.error("Errore durante il recupero dei materiali Sap");
+       } finally {
+        this.hideBusy(0);
       }
+    }else{
+      this._getMatchCode()
+    }
+    
    },
    navToHome: function () {
     this.refreshOnExit();
