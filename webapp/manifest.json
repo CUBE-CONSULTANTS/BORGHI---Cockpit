@@ -320,7 +320,7 @@
 					]
 				},
 				{
-					"pattern": "Detail2Master3/{product}/{layout}",
+					"pattern": "Detail2Master3/{idTestata}/{idPosizione}/{layout}",
 					"name": "Detail2Master3",
 					"target": [
             

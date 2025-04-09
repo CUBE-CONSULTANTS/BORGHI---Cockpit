@@ -16,8 +16,6 @@ sap.ui.define(
         },
 
         _onProductMatched: async function (oEvent) {  
-          
-          this._product = oEvent.getParameter("arguments").product || this._product || "0";
           let productData = this.getModel("datiAppoggio").getData();
           let codiceClienteMateriale = productData.posizioneCorrente.codice_cliente_materiale;
           if(codiceClienteMateriale === undefined){
@@ -32,8 +30,8 @@ sap.ui.define(
           let idoc = productData.posizioneCorrente.numero_idoc;
           let numeroProgressivoInvio = this.getModel("datiAppoggio").getProperty("/testata").numero_progressivo_invio;
           let cliente = this.getModel("datiAppoggio").getProperty("/testata").codice_buyer;
-          let testataId = productData.testata.id;
-          let posizioneId = productData.posizioneCorrente.id;
+          let testataId = oEvent.getParameter("arguments").idTestata
+          let posizioneId = oEvent.getParameter("arguments").idPosizione
           try {
             this.showBusy(0)
             let datiElementoSelect = await API.readByKey(

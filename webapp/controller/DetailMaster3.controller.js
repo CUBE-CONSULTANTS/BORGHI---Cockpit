@@ -49,11 +49,9 @@ sap.ui.define(
             this.hideBusy(0)
           }  
         },
-        buttonDetailSched: function (oEvent) {
-          
+        buttonDetailSched: function (oEvent) {   
           let detailPath = oEvent.getSource().getParent().getBindingContext("detailData").getPath();
           let detail = this.getView().getModel("detailData").getProperty(`${detailPath}`);
-          this.getOwnerComponent().getModel("datiAppoggio").setProperty("/schedulazioni", detail.schedulazioni.results);
           this.getOwnerComponent().getModel("datiAppoggio").setProperty("/posizioneCorrente", detail);
 
           let oNextUIState;
@@ -63,7 +61,8 @@ sap.ui.define(
               function (oHelper) {
                 oNextUIState = oHelper.getNextUIState(1);
                 this.getRouter().navTo("Detail2Master3", {
-                  product: detail.id,
+                  idTestata: detail.id_testata,
+                  idPosizione: detail.id,
                   layout: oNextUIState.layout,
                 });
               }.bind(this)

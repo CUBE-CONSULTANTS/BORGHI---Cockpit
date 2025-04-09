@@ -1659,11 +1659,9 @@ sap.ui.define(
           level = oEvent.getSource().getParent().getBindingContext("master3").getPath().includes("posizioni");
           detailPath = oEvent.getSource().getParent().getBindingContext("master3").getPath();
           detail = this.getModel("master3").getProperty(`${detailPath}`);
-          this.getOwnerComponent().getModel("datiAppoggio").setProperty("/testata", detail);
-          this.getOwnerComponent().getModel("datiAppoggio").setProperty("/posizioni", detail.posizioni);
+          
           if (level) {
             this.getOwnerComponent().getModel("datiAppoggio").setProperty("/posizioneCorrente", detail);
-            this.getOwnerComponent().getModel("datiAppoggio").setProperty("/testata", this.getModel("master3").getProperty(`${detailPath[0] + detailPath[1]}`));
             let oNextUIState;
             this.getOwnerComponent()
               .getHelper()
@@ -1671,13 +1669,13 @@ sap.ui.define(
                 function (oHelper) {
                   oNextUIState = oHelper.getNextUIState(1);
                   this.getRouter().navTo("Detail2Master3", {
-                    product: detail.id,
+                    idTestata: detail.id_testata,
+                    idPosizione: detail.id,
                     layout: oNextUIState.layout,
                   });
                 }.bind(this)
               );
           } else {
-            detailPath = oEvent.getSource().getParent().getBindingContext("master3").getPath();
             this.getRouter().navTo("detailMaster3", {
               id: detail.id,
               idmaster: detail.id_master,
@@ -1685,7 +1683,6 @@ sap.ui.define(
             });
           }
         } else if (oEvent.getSource().getParent().getBindingContext("master3CO") !== undefined) {
-          detailPath = oEvent.getSource().getParent().getBindingContext("master3CO").getPath();
           detail = this.getView().getModel("master3CO").getProperty(`${detailPath}`);
           this.getRouter().navTo("dettCallOff", {
             id: detail.id,
@@ -1693,9 +1690,7 @@ sap.ui.define(
             layout: "OneColumn",
           });
         } else if (oEvent.getSource().getParent().getBindingContext("master3SB") !== undefined) {
-          detailPath = oEvent.getSource().getParent().getBindingContext("master3SB").getPath();
           detail = this.getModel("master3SB").getProperty(`${detailPath}`);
-
           this.getRouter().navTo("dettSelfBilling", {
             id: detail.id,
             layout: "OneColumn",
