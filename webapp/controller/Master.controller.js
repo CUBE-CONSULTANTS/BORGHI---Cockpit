@@ -98,6 +98,7 @@ sap.ui.define(
         if (!labels.includes(week.WEEK)) {
          labels.push(week.WEEK.slice(0, 4) + "/" + week.WEEK.slice(4));
         }
+        week.QTY = formatter.convertNegative(week.QTY);
         week.PERC = formatter.formattedPerc(week.PERC);
        });
       });

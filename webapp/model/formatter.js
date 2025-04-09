@@ -57,10 +57,18 @@ sap.ui.define([
         return outputFormat.format(inputDate);   
     },
     formattedPerc:function (val){
-      let numVal = parseFloat(val);
-      let formatted = numVal.toFixed(2);  
-      
-      return formatted + ' %';
+      if (typeof val === 'string' && val.endsWith('-')) {
+        let numVal = parseFloat(val.slice(0, -1)) * -1;
+        let formatted = numVal.toFixed(2);
+        return formatted + ' %';
+      } else {  
+        let numVal = parseFloat(val);
+        if (isNaN(numVal)) {
+          return 'N/A %'; 
+        }
+        let formatted = numVal.toFixed(2);
+        return formatted + ' %';
+      }
     },
     convertNegative: function(value) {
       if (typeof value === "string" && value.endsWith("-")) {
