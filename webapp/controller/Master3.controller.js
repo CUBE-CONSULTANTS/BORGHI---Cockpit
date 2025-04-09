@@ -186,7 +186,7 @@ sap.ui.define(
             message =  oBindingContext.getObject().message_log
           }
         }     
-        if(message){
+        if(message && message !== 'null'){
           MessageBox.information(message)
         }else{
           MessageBox.information("Nessun Log disponibile")
