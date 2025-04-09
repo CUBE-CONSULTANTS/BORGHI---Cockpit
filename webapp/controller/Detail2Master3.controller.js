@@ -16,7 +16,7 @@ sap.ui.define(
         },
 
         _onProductMatched: async function (oEvent) {  
-          debugger
+          
           this._product = oEvent.getParameter("arguments").product || this._product || "0";
           let productData = this.getModel("datiAppoggio").getData();
           let codiceClienteMateriale = productData.posizioneCorrente.codice_cliente_materiale;
