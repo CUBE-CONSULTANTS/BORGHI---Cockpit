@@ -296,7 +296,7 @@
           <Button
             visible="{= ${master3>numero_progressivo_invio} ? false : true}"
             icon="{= ${master3>stato} === '53' ? 'sap-icon://status-positive' : ${master3>stato} === '51' ? 'sap-icon://status-negative' : ${master3>stato} === '64' ? 'sap-icon://pending' : ${master3>stato} === '50' ? 'sap-icon://cancel' :'sap-icon://in-progress'}"
-            type="{= ${master3>stato} === '53' ? 'Accept' : ${master3>stato} === '51' ? 'Negative' : ${master3>stato} === '64' ? 'Critical' : ${master3>stato} === '50' ? 'Warning' : 'Ghost'}"
+            type="{= ${master3>stato} === '53' ? 'Accept' : ${master3>stato} === '51' ? 'Negative' : ${master3>stato} === '64' ? 'Critical' : ${master3>stato} === '50' ? 'Attention' : 'Ghost'}"
             tooltip="{= ${master3>stato} === '53' ? 'Elaborato Positivamente' : ${master3>stato} === '51' ? 'In Errore' : ${master3>stato} === '64' ? 'In Elaborazione' : ${master3>stato} === '50' ? 'Variante: Da non Processare' : 'Non Elaborato'}"           
             press="statoButtonPress"
           />
