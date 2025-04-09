@@ -27,7 +27,7 @@ sap.ui.define(
         this.grafico()
       },
       grafico: function () {
-        debugger
+        
         let oDetailData = this.getModel("detailData").getData()
         let dataChart = []
         let dataChartPercentuali = []
