@@ -38,12 +38,12 @@ sap.ui.define(
             this.showBusy(0)
             let datiElementoSelect = await API.readByKey(
               this.getOwnerComponent().getModel("modelloV2"),
-              "/Testata",
-              { id: testataId, id_master: productData.testata.id_master },
+              "/Posizioni",
+              { id: posizioneId, id_testata: testataId  },
               [],
-              [`posizioni($filter=id eq '${posizioneId}';$expand=schedulazioni)`]
+              [`schedulazioni`]
             );
-            let schedulazioni = datiElementoSelect.posizioni.results[0].schedulazioni.results;
+            let schedulazioni = datiElementoSelect.schedulazioni.results;
             this.getView().setModel(new JSONModel(),"detailData2");
           this.getView().getModel("detailData2").setProperty("/DettaglioMaster3", {
               codiceClienteMateriale: codiceClienteMateriale,
