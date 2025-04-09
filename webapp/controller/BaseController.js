@@ -1030,6 +1030,7 @@ sap.ui.define(
       },
       // UTILITY X POST (ELABORAZIONE E DELETE)
       _returnPayload: async function (table, action) {
+        
         let indices = table.getSelectedIndices();
         let testate = [];
         let selectedPos = [];
@@ -1052,8 +1053,8 @@ sap.ui.define(
             })
             .filter((item) => item !== null);
 
-          let errorMessage = "Non è possibile rielaborare elementi già processati.";
-          if (aSelectedItems.length === 0) {
+          let errorMessage = "Non è possibile elaborare Varianti o rielaborare elementi già processati.";
+          if (aSelectedItems.length === 0 || aSelectedItems[0].posizioni.length === 0) {
             MessageBox.error(errorMessage);
             return [];
           }
@@ -1133,8 +1134,8 @@ sap.ui.define(
           .filter((item) => item !== null);
 
         if (items.length === 0) {
-          MessageBox.error("Non è possibile Rielaborare elementi già processati");
-          return [];
+          MessageBox.error("Non è possibile elaborare Varianti o rielaborare elementi già processati");
+          return;
         }
 
         let itemList = items
