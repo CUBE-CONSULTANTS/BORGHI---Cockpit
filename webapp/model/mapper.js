@@ -280,6 +280,8 @@ sap.ui.define(["../model/API", "../model/formatter"], function (API, formatter) 
             oFilterSet.stato.value = "53";
           } else if (oFilterSet.stato.value === "In Elaborazione") {
             oFilterSet.stato.value = "64";
+          } else if (oFilterSet.stato.value === "Variante: Da non Processare") {
+            oFilterSet.stato.value = "50";
           }
           aFilters.push(new sap.ui.model.Filter("stato", sap.ui.model.FilterOperator.EQ, oFilterSet.stato.value));
         }
