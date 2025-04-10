@@ -876,7 +876,7 @@ sap.ui.define(
         }
         let exportData = Array.isArray(aExportData) ? aExportData : [aExportData];     
         let flatExportData;
-        if (!aExportData[0].RFFON) {
+        if (!exportData[0].RFFON || exportData[0].RFFON === undefined) {
           flatExportData = mapper._formatExcelData(exportData);
         } else {         
           flatExportData = mapper._formatCumulativi(exportData);
