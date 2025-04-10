@@ -143,7 +143,7 @@ sap.ui.define(
   
           let lastIndexMessage;
           oBindingContext.getObject().log ? (lastIndexMessage = oBindingContext.getObject().log.results.length - 1) : (lastIndexMessage = oBindingContext.getObject().log_posizioni.results.length - 1);
-          debugger
+          
           let dataFormattata = formatter.returnDate(formatter.formatDateToYYYYMMDD(String(log[lastIndexMessage].data)),"yyyyMMdd","dd/MM/yyyy")
           let oraFormattata = formatter.formatTime(log[lastIndexMessage].ora.ms);
           let timestampCompleto = `${dataFormattata} ${oraFormattata}`;

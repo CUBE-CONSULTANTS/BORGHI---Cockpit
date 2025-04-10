@@ -17,19 +17,19 @@ sap.ui.define([
       return "";
     },
     formatTime: function(ms) {
-      debugger
-      const date = new Date(ms); // ms è UTC ma Date lo converte in locale
-      const hours = date.getHours(); 
+      const date = new Date(ms);
+      let hours = date.getHours(); 
       const minutes = date.getMinutes(); 
-      const seconds = date.getSeconds(); 
-
-      const timezoneOffset = -date.getTimezoneOffset(); // in minuti
-      const sign = timezoneOffset >= 0 ? '+' : '-';
-      const offsetHours = Math.floor(Math.abs(timezoneOffset) / 60);
-      const offsetMinutes = Math.abs(timezoneOffset) % 60;
-      const timezoneFormatted = `${sign}${String(offsetHours).padStart(2, '0')}:${String(offsetMinutes).padStart(2, '0')}`;
-
-      return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')} ${timezoneFormatted}`;
+      const seconds = date.getSeconds();
+      const correctionHours = -date.getTimezoneOffset() / 60;
+      hours += correctionHours;
+      if (hours >= 24) {
+        hours = hours - 24;
+      }
+      if (hours < 0) {
+        hours = hours + 24;
+      }
+      return `${String(Math.floor(hours)).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
     },
     formatDateString: function (dateString) {
       if (!dateString) return ""; 
