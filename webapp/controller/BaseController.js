@@ -327,7 +327,6 @@ sap.ui.define(
       onFiltersBuilding: function (oEvent, key) {
         if (key === "01") {
           let aData = this.getModel("master3").getProperty("/");
-
           let aStato = [
             ...new Set(
               aData.flatMap((item) =>
@@ -561,6 +560,7 @@ sap.ui.define(
         await this._getMatchCode();
       },
       onFilterBarClear: async function (oEvent) {
+        
         let operator, archivVal;
         this.getModel("datiAppoggio").getProperty("/currentPage") === "archivio" ? (operator = "eq") : (operator = "ne");
         this.getModel("datiAppoggio").getProperty("/currentPage") === "archivio" ? (archivVal = true) : (archivVal = false);
@@ -596,6 +596,7 @@ sap.ui.define(
         operator === "ne" ? (valPosArch = false) : (valPosArch = true);
         //GESTIONE FILTRI DELFOR
         this.showBusy(0)
+        
         if ((oEvent && oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("delivery")) || (!oEvent && filterTab === "01")) {
           this.getModel("filtersModel").setSizeLimit(1000000);
           oFilterSet = this.getModel("filtersModel").getProperty("/delivery");

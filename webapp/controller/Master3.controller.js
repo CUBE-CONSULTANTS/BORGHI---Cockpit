@@ -107,7 +107,6 @@ sap.ui.define(
           console.error("Errore durante la selezione delle posizioni:", error);
         }
       },
-
       importaPress: function (oEvent) {
         if (!this._oDialog2) {
           Fragment.load({
