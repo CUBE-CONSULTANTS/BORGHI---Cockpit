@@ -875,7 +875,7 @@ sap.ui.define(
         }
         let exportData = Array.isArray(aExportData) ? aExportData : [aExportData];     
         let flatExportData;
-        if (aExportData.forEach(data => (!data.RFFON))) {
+        if (!aExportData[0].RFFON) {
           flatExportData = mapper._formatExcelData(exportData);
         } else {         
           flatExportData = mapper._formatCumulativi(exportData);
@@ -886,6 +886,10 @@ sap.ui.define(
           workbook: {
             columns: this._getExcelColumns(flatExportData),
             hierarchyLevel: "Level",
+            context: {
+              sheetName: 'Foglio1',
+              metaSheetName: 'Foglio1',
+            }
           },
           fileName: filename,
           showProgress: true,
@@ -1732,6 +1736,7 @@ sap.ui.define(
             });
           }
         } else if (oEvent.getSource().getParent().getBindingContext("master3CO") !== undefined) {
+          detailPath = oEvent.getSource().getParent().getBindingContext("master3CO").getPath();
           detail = this.getView().getModel("master3CO").getProperty(`${detailPath}`);
           this.getRouter().navTo("dettCallOff", {
             id: detail.id,
@@ -1739,6 +1744,7 @@ sap.ui.define(
             layout: "OneColumn",
           });
         } else if (oEvent.getSource().getParent().getBindingContext("master3SB") !== undefined) {
+          detailPath = oEvent.getSource().getParent().getBindingContext("master3SB").getPath();
           detail = this.getModel("master3SB").getProperty(`${detailPath}`);
           this.getRouter().navTo("dettSelfBilling", {
             id: detail.id,
