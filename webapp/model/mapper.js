@@ -333,14 +333,10 @@ sap.ui.define(["../model/API", "../model/formatter"], function (API, formatter) 
       }
       if (key === "04") {
         aFilters.push(new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, archivVal));
-
-        if (oFilterSet.dataDDT) {
-          let oDataDDT = formatter.returnDate(oFilterSet.dataDDT, "dd/MM/yyyy", "yyyyMMdd");
-          aFilters.push(new sap.ui.model.Filter("data_ddt", sap.ui.model.FilterOperator.EQ, oDataDDT));
-        }
         if (oFilterSet.dataCreaDoc) {
-          let oDataDoc = formatter.returnDate(oFilterSet.dataDDT, "dd/MM/yyyy", "yyyyMMdd");
-          aFilters.push(new sap.ui.model.Filter("data_ddt", sap.ui.model.FilterOperator.EQ, oDataDoc));
+          let oDataDoc = formatter.returnDate(oFilterSet.dataCreaDoc, "dd/MM/yyyy", "yyyyMMdd");
+          // let oDataDoc = formatter.convertiDataInTimestampSAP(oFilterSet.dataCreaDoc)
+          aFilters.push(new sap.ui.model.Filter("data_creazione_documento", sap.ui.model.FilterOperator.EQ, oDataDoc));
         }
         if (oFilterSet.numDDTCliente && oFilterSet.numDDTCliente.value) {
           aFilters.push(new sap.ui.model.Filter("numero_ddt", sap.ui.model.FilterOperator.EQ, oFilterSet.numDDTCliente.value));

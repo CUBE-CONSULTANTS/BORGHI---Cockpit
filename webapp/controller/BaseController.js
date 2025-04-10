@@ -659,8 +659,7 @@ sap.ui.define(
           }
           await this.callData(this.getOwnerComponent().getModel("modelloV2"), "/Testata", aFilters, [expandQuery], "01", filtrato);
         } // GESTIONE FILTRI CALLOFF
-        else if ((oEvent && oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("callOff")) || (!oEvent && filterTab === "02")) {
-          
+        else if ((oEvent && oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("callOff")) || (!oEvent && filterTab === "02")) {         
           this.getModel("filtersModel").setSizeLimit(1000000);
           oFilterSet = this.getModel("filtersModel").getProperty("/callOff");
           let aFilters = mapper.buildFilters(oFilterSet, (key = "02"), operator);
@@ -725,6 +724,7 @@ sap.ui.define(
         else if ((oEvent && oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("desadv")) || (!oEvent && filterTab === "04")) {
           this.getModel("filtersModel").setSizeLimit(1000000);
           oFilterSet = this.getModel("filtersModel").getProperty("/desadv");
+          debugger
           let aFilters = mapper.buildFilters(oFilterSet, (key = "04"), operator);
           await this.callData(this.getOwnerComponent().getModel("despatchAdviceV2"), "/Testata", aFilters, [], "04", false);
         } // GESTIONE FILTRI INVOICE

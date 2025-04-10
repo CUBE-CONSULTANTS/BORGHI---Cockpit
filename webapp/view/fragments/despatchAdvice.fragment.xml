@@ -71,23 +71,7 @@
           </ComboBox>
         </fb:control>
       </fb:FilterGroupItem>
-      <!-- <fb:FilterGroupItem
-        name="Data DDT"
-        label="Data DDT"
-        groupName="gr1"
-        visibleInFilterBar="true"
-      >
-        <fb:control>
-          <DatePicker
-            tooltip="Data DDT"
-            secondaryCalendarType="Gregorian"
-            change="handleChange"
-            value="{filtersModel>/desadv/dataDDT}"
-            valueFormat="dd/MM/yyyy"
-            displayFormat="dd/MM/yyyy"
-          />
-        </fb:control>
-      </fb:FilterGroupItem> -->
+      
       <fb:FilterGroupItem
         name="Num DDT Cliente"
         label="Num DDT Cliente"
@@ -202,23 +186,7 @@
           />
         </ui:template>
       </ui:Column>
-      <!-- <ui:Column width="11rem">
-        <Label text="Data DDT" />
-        <ui:template>
-          <DatePicker
-          editable="false"
-          value="{
-            path: 'master3DesAdv>data_creazione_documento',
-            type: 'sap.ui.model.type.Date',
-            formatOptions: {
-              pattern: 'dd/MM/yyyy'
-            }
-          }"
-          valueFormat="dd/MM/yyyy"
-          displayFormat="dd/MM/yyyy"
-        />
-        </ui:template>
-      </ui:Column> -->
+      
       <ui:Column >
         <Label text="Num. DDT" />
         <ui:template>

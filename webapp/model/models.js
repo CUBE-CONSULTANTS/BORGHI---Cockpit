@@ -105,7 +105,7 @@ sap.ui.define(
             }
           },
           desadv: {
-            dataDDT: null,
+           
             numiDoc: {
               value: null,
               items: [],
