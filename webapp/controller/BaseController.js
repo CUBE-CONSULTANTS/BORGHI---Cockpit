@@ -1056,7 +1056,7 @@ sap.ui.define(
             .filter((item) => item !== null);
 
           let errorMessage = "Non è possibile elaborare Varianti o rielaborare elementi già processati.";
-          if (aSelectedItems.length === 0 || aSelectedItems[0].posizioni.length === 0) {
+          if (aSelectedItems.length === 0 || aSelectedItems[0].posizioni?.length === 0) {
             MessageBox.error(errorMessage);
             return [];
           }

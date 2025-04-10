@@ -143,17 +143,9 @@ sap.ui.define(
   
           let lastIndexMessage;
           oBindingContext.getObject().log ? (lastIndexMessage = oBindingContext.getObject().log.results.length - 1) : (lastIndexMessage = oBindingContext.getObject().log_posizioni.results.length - 1);
-          let giorno = String(log[lastIndexMessage].data.getDate()).padStart(2, "0");
-          let mese = String(log[lastIndexMessage].data.getMonth() + 1).padStart(2, "0");
-          let anno = log[lastIndexMessage].data.getFullYear();
-          let dataFormattata = `${giorno}/${mese}/${anno}`;
-  
-          let msTotali = log[lastIndexMessage].ora.ms;
-          let ore = Math.floor(msTotali / (1000 * 60 * 60)) + 1;
-          let minuti = Math.floor((msTotali % (1000 * 60 * 60)) / (1000 * 60));
-          let secondi = Math.floor((msTotali % (1000 * 60)) / 1000);
-          let ms = msTotali % 1000;
-          let oraFormattata = `${String(ore).padStart(2, "0")}:${String(minuti).padStart(2, "0")}:${String(ms).padStart(3, "0")}`;
+          debugger
+          let dataFormattata = formatter.returnDate(formatter.formatDateToYYYYMMDD(String(log[lastIndexMessage].data)),"yyyyMMdd","dd/MM/yyyy")
+          let oraFormattata = formatter.formatTime(log[lastIndexMessage].ora.ms);
           let timestampCompleto = `${dataFormattata} ${oraFormattata}`;
   
           let message = `Data: ${timestampCompleto}\n ${log[lastIndexMessage].messaggio}`;
