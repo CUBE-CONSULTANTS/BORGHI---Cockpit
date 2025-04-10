@@ -724,7 +724,6 @@ sap.ui.define(
         else if ((oEvent && oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("desadv")) || (!oEvent && filterTab === "04")) {
           this.getModel("filtersModel").setSizeLimit(1000000);
           oFilterSet = this.getModel("filtersModel").getProperty("/desadv");
-          debugger
           let aFilters = mapper.buildFilters(oFilterSet, (key = "04"), operator);
           await this.callData(this.getOwnerComponent().getModel("despatchAdviceV2"), "/Testata", aFilters, [], "04", false);
         } // GESTIONE FILTRI INVOICE

@@ -37,8 +37,10 @@ sap.ui.define([
       return new Date(parts[2], parts[1] - 1, parts[0]);
     },
     convertiDataInTimestampSAP(dataString) {
-      const [giorno, mese, anno] = dataString.split("/").map(Number)
-      return new Date(anno, mese - 1, giorno);
+      let [giorno, mese, anno] = dataString.split("/").map(Number);
+        let dataObj = new Date(anno, mese - 1, giorno);  
+        let timestamp = dataObj.getTime();
+        return timestamp;
     },
     formatDateToYYYYMMDD(dateString) {
       const date = new Date(dateString);
