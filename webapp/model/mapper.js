@@ -402,31 +402,29 @@ sap.ui.define(["../model/API", "../model/formatter"], function (API, formatter) 
       });
 
       let mapping = {
-        IdocNum: "Numero IDOC",
-        DataFineCalcCumu: "Data fine calcolo cumulativi",
-        DataInitCalcCumu: "Data inizio calcolo cumulativi",
-        Vbeln: "Scheduling Agreement",
-        Posnr: "N° pos",
         Kunnr: "Cliente",
-        Name1: "Ragione sociale",
-        Matnr: "Cod Articolo",
-        RFFON: "Num Ordine",
+        Name1: "Descrizione",
+        Matnr: "Cod Materiale SAP",
+        Vbeln: "Piano di Consegna",
+        Posnr: "Posizione",
+        RFFON: "Rif. Ordine Cliente",
         CumuRicevuto: "Cumulativo Ricevuto",
         CumuSped: "Cumulativo Spedito",
         CumuTran: "Cumulativo in transito",
-        Stabilimento: "Stabilimento",
-        Meins: "UdM",
         DataLips1: "Data DDT 1",
-        NumeroLips1: "Numero DDT 1",
-        QuanLips1: "Quantità DDT 1",
+        NumeroLips1: "Num. DDT 1",
+        QuanLips1: "Qtà DDT 1",
         DataLips2: "Data DDT 2",
-        NumeroLips2: "Numero DDT 2",
-        QuanLips2: "Quantità DDT 2",
+        NumeroLips2: "Num. DDT 2",
+        QuanLips2: "Qtà DDT 2",
         DataLips3: "Data DDT 3",
-        NumeroLips3: "Numero DDT 3",
-        QuanLips3: "Quantità DDT 3",
+        NumeroLips3: "Num. DDT 3",
+        QuanLips3: "Qtà DDT 3",
+        DataInitCalcCumu: "Data inizio calcolo cumulativi",
+        DataFineCalcCumu: "Data fine calcolo cumulativi",       
+        IdocNum: "Numero IDOC",
       };
-
+      
       let newDataset = aData.map((element) => {
         let newElement = {};
         for (let key in element) {
@@ -442,34 +440,28 @@ sap.ui.define(["../model/API", "../model/formatter"], function (API, formatter) 
       let output = [];
       newDataset.forEach((element) => {
         let riga = {
-          "Dettaglio Cumulativi": "->",
-          "Numero IDOC": element["Numero IDOC"],
-          "Data fine calcolo cumulativi": element["Data fine calcolo cumulativi"],
-          "Data inizio calcolo cumulativi": element["Data inizio calcolo cumulativi"],
-          "Scheduling Agreement": element["Scheduling Agreement"],
-          "N° pos": element["N° pos"],
           Cliente: element["Cliente"],
-          "Ragione sociale": element["Ragione sociale"],
-          "Cod Articolo": element["Cod Articolo"],
-          "Num Ordine": element["Num Ordine"],
+          "Descrizione": element["Descrizione"],
+          "Cod Materiale SAP": element["Cod Materiale SAP"],
+          "Piano di Consegna": element["Piano di Consegna"],
+          "Posizione": element["Posizione"],
+          "Rif. Ordine Cliente": element["Rif. Ordine Cliente"],
           "Cumulativo Ricevuto": element["Cumulativo Ricevuto"],
           "Cumulativo Spedito": element["Cumulativo Spedito"],
-          "Cumulativo in transito": element["Cumulativo in transito"],
-          Stabilimento: element["Stabilimento"],
-          UdM: element["UdM"],
-
-          "Dettaglio DDT": "->",
+          "Cumulativo in transito": element["Cumulativo in transito"],       
           "Data DDT 1": element["Data DDT 1"],
-          "Numero DDT 1": element["Numero DDT 1"],
-          "Quantità DDT 1": element["Quantità DDT 1"],
+          "Num. DDT 1": element["Num. DDT 1"],
+          "Qtà DDT 1": element["Qtà DDT 1"],
           "Data DDT 2": element["Data DDT 2"],
-          "Numero DDT 2": element["Numero DDT 2"],
-          "Quantità DDT 2": element["Quantità DDT 2"],
+          "Num. DDT 2": element["Num. DDT 2"],
+          "Qtà DDT 2": element["Qtà DDT 2"],
           "Data DDT 3": element["Data DDT 3"],
-          "Numero DDT 3": element["Numero DDT 3"],
-          "Quantità DDT 3": element["Quantità DDT 3"],
+          "Num. DDT 3": element["Num. DDT 3"],
+          "Qtà DDT 3": element["Qtà DDT 3"],
+          "Data inizio calcolo cumulativi": element["Data inizio calcolo cumulativi"],
+          "Data fine calcolo cumulativi": element["Data fine calcolo cumulativi"],
+          "Numero IDOC": element["Numero IDOC"],
         };
-
         output.push(riga);
       });
 

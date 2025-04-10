@@ -268,14 +268,6 @@ sap.ui.define(
           }.bind(this),
         });
       },
-
-      onCumulativi: async function (oEvent) {
-        let obj = oEvent.getSource().getParent().getParent().getBindingContext("modelloReport").getObject();
-        let numIdoc = obj.idoc_number;
-        let dest = obj.destinatario;
-        let rffon = obj.numero_ordine_acquisto;
-        await this.getReportCumulativi(dest, numIdoc, rffon);
-      },
       downloadTemplate: function (oEvent) {
         let sExcelFilePath = "programmi/consegne/edi/public/TemplateCaricamentoManuale.xlsx";
         let link = document.createElement("a");

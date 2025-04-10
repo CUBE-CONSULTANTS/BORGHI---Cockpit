@@ -874,12 +874,11 @@ sap.ui.define(
         if (aExportData.hasOwnProperty("DettaglioFatture")) {
           aExportData = Object.values(aExportData)[0];
         }
-        let exportData = Array.isArray(aExportData) ? aExportData : [aExportData];
-
+        let exportData = Array.isArray(aExportData) ? aExportData : [aExportData];     
         let flatExportData;
-        if (!aExportData.RFFON) {
+        if (aExportData.forEach(data => (!data.RFFON))) {
           flatExportData = mapper._formatExcelData(exportData);
-        } else {
+        } else {         
           flatExportData = mapper._formatCumulativi(exportData);
         }
 
@@ -1460,22 +1459,58 @@ sap.ui.define(
         return new Blob([bytes], { type: mimeType });
       },
       // GESTIONE CUMULATIVI X ARCHIVIO E MONITOR
-      onDownloadCumulativi: async function (oEvent) {
-        let numIdoc = oEvent.getSource().getBindingContext("master3").getObject().numero_idoc;
-        let dest = oEvent.getSource().getBindingContext("master3").getObject().destinatario;
-        let rffon = oEvent.getSource().getBindingContext("master3").getObject().numero_ordine_acquisto;
-        await this.getReportCumulativi(dest, numIdoc, rffon);
+      onDownloadCumulativi: async function (oEvent) {      
+        let oHeaderData = oEvent.getSource().getBindingContext("master3").getObject()
+        let aPosizioni = oHeaderData.posizioni;
+        let aPosizioniFiltrate = aPosizioni.filter(pos => pos.stato === '53');
+        if (aPosizioniFiltrate.length === 0) {
+          MessageBox.information("Nessuna posizione con stato 'Elaborato Positivamente' trovata per questa testata.");
+          return;
+        }
+        this.showBusy(0);
+        let allPromises = [];
+        let combinedResults = [];
+        aPosizioniFiltrate.forEach(pos => {
+          if (pos.destinatario && pos.numero_idoc && pos.numero_ordine_acquisto) {
+            allPromises.push(
+              this.getReportCumulativi(pos.destinatario, pos.numero_idoc, pos.numero_ordine_acquisto)
+            );
+          } else {
+            MessageBox.error("Dati mancanti per la posizione:", pos);
+          }
+        });
+        try {
+          const settledResults = await Promise.allSettled(allPromises);
+          settledResults.forEach(result => {
+            if (result.status === 'fulfilled' && result.value) {
+              combinedResults = combinedResults.concat(result.value);
+            } else if (result.status === 'rejected') {
+              MessageBox.error("Errore nel recupero dei cumulativi:", result.reason);
+            }
+          });
+          if (combinedResults.length > 0) {
+            this.buildSpreadSheet(combinedResults, "Report Cumulativi Elaborati");
+          } else {
+            MessageBox.warning("Nessun dato cumulativo trovato per le posizioni elaborate positivamente.");
+          }
+        } catch (error) {
+          MessageBox.error("Errore durante il recupero aggregato dei report cumulativi.");
+        } finally {
+          this.hideBusy(0);
+        }
       },
       getReportCumulativi: async function (dest, numIdoc, rffon) {
         try {
-          this.showBusy(0);
           let oModel = this.getOwnerComponent().getModel("modelloV2");
-          let res = await API.getEntity(oModel, `/DELFOR_CUMULATIVI(IdocNum='${numIdoc}',Stabilimento='${dest}', RFFON ='${rffon}')`);
-          this.buildSpreadSheet(res.results, "Report Cumulativi");
+          if (!dest || !numIdoc || !rffon) {
+            return [];
+          }
+          let sPath = `/DELFOR_CUMULATIVI(IdocNum='${numIdoc}',Stabilimento='${dest}',RFFON='${rffon}')`;
+          let res = await API.getEntity(oModel, sPath);
+          return res.results || [];
         } catch (error) {
-          MessageBox.error("Errore durante il download del Report");
-        } finally {
-          this.hideBusy(0);
+          MessageBox.error(`Errore durante il recupero del report per IdocNum='${numIdoc}', Stabilimento='${dest}', RFFON='${rffon}':`, error);
+          return [];
         }
       },
       // LOG DEI PROCESSAMENTI

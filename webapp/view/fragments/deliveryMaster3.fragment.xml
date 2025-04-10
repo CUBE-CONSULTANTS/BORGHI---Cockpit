@@ -375,22 +375,22 @@
               tooltip="{= ${master3>numero_progressivo_invio} ? 'Confronto Programmazione Cliente' : 'Confronto Programmazione Materiale'}"
             />
             <Button
-              icon="sap-icon://download"
-              tooltip="Dowload file edi"
-              
-              class="sapUiTinyMarginBegin"
-              press="downloadEdi"
-              visible="{=${master3>master/template} !== 'LOCALE'  &amp;&amp; ${master3>numero_progressivo_invio} ? true : false}"
-            />
-            <Button
               tooltip="Report Cumulativi"
               icon="sap-icon://excel-attachment"
               press="onDownloadCumulativi"
               class="sapUiTinyMarginBegin"
               type="Emphasized"
-              visible="{= ${datiAppoggio>/currentPage} === 'archivio' &amp;&amp; !${master3>numero_progressivo_invio} ? true : false
-              || ${datiAppoggio>/currentPage} === 'master3' &amp;&amp; !${master3>numero_progressivo_invio} &amp;&amp; ${master3>stato} === '53' ? true : false}"
-              />
+              visible="{= ${datiAppoggio>/currentPage} === 'archivio' &amp;&amp; ${master3>numero_progressivo_invio} ? true : false }"
+                />
+                <!-- || ${datiAppoggio>/currentPage} === 'master3' &amp;&amp; ${master3>numero_progressivo_invio} &amp;&amp; ${master3>stato} === '53' ? true : false}" --> 
+            <Button
+              icon="sap-icon://download"
+              tooltip="Dowload file edi"              
+              class="sapUiTinyMarginBegin"
+              press="downloadEdi"
+              visible="{=${master3>master/template} !== 'LOCALE'  &amp;&amp; ${master3>numero_progressivo_invio} ? true : false}"
+            />
+            
           </HBox>
         </ui:template>
       </ui:Column>
