@@ -1469,7 +1469,6 @@ sap.ui.define(
         }
         this.showBusy(0);
         let allPromises = [];
-        let combinedResults = [];
         aPosizioniFiltrate.forEach(pos => {
           if (pos.destinatario && pos.numero_idoc && pos.numero_ordine_acquisto) {
             allPromises.push(
@@ -1479,25 +1478,7 @@ sap.ui.define(
             MessageBox.error("Dati mancanti per la posizione:", pos);
           }
         });
-        try {
-          const settledResults = await Promise.allSettled(allPromises);
-          settledResults.forEach(result => {
-            if (result.status === 'fulfilled' && result.value) {
-              combinedResults = combinedResults.concat(result.value);
-            } else if (result.status === 'rejected') {
-              MessageBox.error("Errore nel recupero dei cumulativi:", result.reason);
-            }
-          });
-          if (combinedResults.length > 0) {
-            this.buildSpreadSheet(combinedResults, "Report Cumulativi Elaborati");
-          } else {
-            MessageBox.warning("Nessun dato cumulativo trovato per le posizioni elaborate positivamente.");
-          }
-        } catch (error) {
-          MessageBox.error("Errore durante il recupero aggregato dei report cumulativi.");
-        } finally {
-          this.hideBusy(0);
-        }
+        await this.resolveCumulativi(allPromises)
       },
       getReportCumulativi: async function (dest, numIdoc, rffon) {
         try {
@@ -1511,6 +1492,39 @@ sap.ui.define(
         } catch (error) {
           MessageBox.error(`Errore durante il recupero del report per IdocNum='${numIdoc}', Stabilimento='${dest}', RFFON='${rffon}':`, error);
           return [];
+        }
+      },
+      resolveCumulativi: async function (allPromises) {
+        let combinedResults = [];
+        try {
+          const settledResults = await Promise.allSettled(allPromises);
+          settledResults.forEach(result => {
+            if (result.status === 'fulfilled' && result.value) {
+              combinedResults = combinedResults.concat(result.value);
+            } else if (result.status === 'rejected') {
+              MessageBox.error("Errore nel recupero dei cumulativi:", result.reason);
+            }
+          });
+          if (combinedResults.length > 0) {
+            const filteredResults = combinedResults.filter(item => {
+              const cumuTran = parseFloat(item.CumuTran); 
+              const qtaDDT1 = parseFloat(item.QuanLips1); 
+              const isCumuTranValid = !isNaN(cumuTran);
+              const isQtaDDT1Valid = !isNaN(qtaDDT1);
+              return isCumuTranValid && cumuTran !== 0 && isQtaDDT1Valid && cumuTran !== qtaDDT1;
+            });
+            if (filteredResults.length > 0) {
+            this.buildSpreadSheet(combinedResults, "Report Cumulativi Elaborati");
+            } else {
+              MessageBox.information("Nessun dato cumulativo soddisfa i criteri di stampa.")
+            }
+          } else {
+            MessageBox.warning("Nessun dato cumulativo trovato per le posizioni elaborate positivamente.");
+          }
+        } catch (error) {
+          MessageBox.error("Errore durante il recupero aggregato dei report cumulativi.");
+        } finally {
+          this.hideBusy(0);
         }
       },
       // LOG DEI PROCESSAMENTI
