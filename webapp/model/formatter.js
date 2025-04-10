@@ -37,10 +37,11 @@ sap.ui.define([
       return new Date(parts[2], parts[1] - 1, parts[0]);
     },
     convertiDataInTimestampSAP(dataString) {
-      let [giorno, mese, anno] = dataString.split("/").map(Number);
-        let dataObj = new Date(anno, mese - 1, giorno);  
-        let timestamp = dataObj.getTime();
-        return timestamp;
+      let year = dataString.substring(0, 4);
+          let month = dataString.substring(4, 6);
+          let day = dataString.substring(6, 8);
+          let formattedDate = new Date(`${year}-${month}-${day}T00:00:00Z`).toISOString();
+          return formattedDate;
     },
     formatDateToYYYYMMDD(dateString) {
       const date = new Date(dateString);

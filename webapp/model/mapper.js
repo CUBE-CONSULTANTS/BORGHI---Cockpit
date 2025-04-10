@@ -311,11 +311,7 @@ sap.ui.define(["../model/API", "../model/formatter"], function (API, formatter) 
         aFilters.push(new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, archivVal));
         if (oFilterSet.dataRic) {
           let oDataRic = formatter.returnDate(oFilterSet.dataRic, "dd/MM/yyyy", "yyyyMMdd");
-          // eq 2025-01-22T00:00:00Z
-          let year = oDataRic.substring(0, 4);
-          let month = oDataRic.substring(4, 6);
-          let day = oDataRic.substring(6, 8);
-          let formattedDate = new Date(`${year}-${month}-${day}T00:00:00Z`).toISOString();
+          let formattedDate = formatter.convertiDataInTimestampSAP(oDataRic);
           aFilters.push(new sap.ui.model.Filter("data_ricezione", sap.ui.model.FilterOperator.EQ, formattedDate));
         }
         if (oFilterSet.clienti && oFilterSet.clienti.value) {
@@ -335,8 +331,8 @@ sap.ui.define(["../model/API", "../model/formatter"], function (API, formatter) 
         aFilters.push(new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, archivVal));
         if (oFilterSet.dataCreaDoc) {
           let oDataDoc = formatter.returnDate(oFilterSet.dataCreaDoc, "dd/MM/yyyy", "yyyyMMdd");
-          // let oDataDoc = formatter.convertiDataInTimestampSAP(oFilterSet.dataCreaDoc)
-          aFilters.push(new sap.ui.model.Filter("data_creazione_documento", sap.ui.model.FilterOperator.EQ, oDataDoc));
+          let formattedDate = formatter.convertiDataInTimestampSAP(oDataDoc);
+          aFilters.push(new sap.ui.model.Filter("data_creazione_documento", sap.ui.model.FilterOperator.EQ, formattedDate));
         }
         if (oFilterSet.numDDTCliente && oFilterSet.numDDTCliente.value) {
           aFilters.push(new sap.ui.model.Filter("numero_ddt", sap.ui.model.FilterOperator.EQ, oFilterSet.numDDTCliente.value));
@@ -354,12 +350,14 @@ sap.ui.define(["../model/API", "../model/formatter"], function (API, formatter) 
       if (key === "05") {
         aFilters.push(new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, archivVal));
         if (oFilterSet.dataDocCont) {
-          let oDataDoc = formatter.returnDate(oFilterSet.dataDDT, "dd/MM/yyyy", "yyyyMMdd");
-          aFilters.push(new sap.ui.model.Filter("data_creazione_doc_contabile", sap.ui.model.FilterOperator.EQ, oDataDoc));
+          let oDataDoc = formatter.returnDate(oFilterSet.dataDocCont, "dd/MM/yyyy", "yyyyMMdd");
+          let formattedDate = formatter.convertiDataInTimestampSAP(oDataDoc);
+          aFilters.push(new sap.ui.model.Filter("data_creazione_doc_contabile", sap.ui.model.FilterOperator.EQ, formattedDate));
         }
         if (oFilterSet.dataFattura) {
-          let oDataFatt = formatter.returnDate(oFilterSet.dataDDT, "dd/MM/yyyy", "yyyyMMdd");
-          aFilters.push(new sap.ui.model.Filter("data_di_fatturazione", sap.ui.model.FilterOperator.EQ, oDataFatt));
+          let oDataFatt = formatter.returnDate(oFilterSet.dataFattura, "dd/MM/yyyy", "yyyyMMdd");      
+          let formattedDate = formatter.convertiDataInTimestampSAP(oDataFatt);
+          aFilters.push(new sap.ui.model.Filter("data_di_fatturazione", sap.ui.model.FilterOperator.EQ, formattedDate));
         }
         if (oFilterSet.numiDoc && oFilterSet.numiDoc.value) {
           aFilters.push(new sap.ui.model.Filter("numero_idoc", sap.ui.model.FilterOperator.EQ, oFilterSet.numiDoc.value));
