@@ -163,7 +163,9 @@
           <ui:Column width="7rem">
 						<Label text="N. progr. invio" />
 						<ui:template>
-							<Text  text="{master3CO>progressivo_invio}" wrapping="false" />
+              <ObjectIdentifier
+              title="{master3CO>progressivo_invio}"
+              />
 						</ui:template>
 					</ui:Column>
           <ui:Column width="11rem">
