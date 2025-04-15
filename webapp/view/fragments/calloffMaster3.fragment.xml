@@ -154,7 +154,10 @@
 					<ui:Column width="11rem">
 						<Label text="Cliente" />
 						<ui:template>
-							<Text text="{master3CO>codice_cliente_committente}  {master3CO>codice_cliente_committente_descrizione} " wrapping="false" />
+              <ObjectIdentifier
+            title="{master3CO>codice_cliente_committente}"
+            text="{master3CO>codice_cliente_committente_descrizione}"
+          />
 						</ui:template>
 					</ui:Column>
           <ui:Column width="7rem">
