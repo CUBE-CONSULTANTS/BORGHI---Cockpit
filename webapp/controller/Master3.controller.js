@@ -155,7 +155,6 @@ sap.ui.define(
         
       },
       statoInvButtonPress: function (oEvent){
-        
         let message
         let oBindingContext  
          oEvent.getSource().getBindingContext("master3DesAdv") === undefined ? 
@@ -163,25 +162,26 @@ sap.ui.define(
          oBindingContext = oEvent.getSource().getBindingContext("master3DesAdv")
         if(oBindingContext === oEvent.getSource().getBindingContext("master3Inv")) {
          if( oEvent.getSource().getBindingInfo("icon").parts[0].path === 'stato_edi' ){
-          if(oBindingContext.getObject().stato === '51'){
+          if(oBindingContext.getObject().stato_edi === '51'){
             message = "Errore durante il salvataggio SFTP"
-          }else{
-            message =  oBindingContext.getObject().message_log 
-            message =  oBindingContext.getObject().message  
+          }else if (oBindingContext.getObject().stato_edi === '53'){
+            message =  "Caricato con successo su SFTP"
+          }else if (oBindingContext.getObject().stato_edi === null){
+            message =  "In attesa di caricamento su SFTP"
           }
          }       
         } else{
           if(oBindingContext.getObject().stato === '51'){
             message = "Errore durante il salvataggio SFTP"
-          }else{
-            message =  oBindingContext.getObject().message_log
+          }else if (oBindingContext.getObject().stato_edi === null){
+            message =  "In attesa di caricamento su SFTP"
+          }else if (oBindingContext.getObject().stato === '53'){
+            message =  "Caricato con successo su SFTP"
           }
         }     
-        if(message && message !== 'null'){
+
           MessageBox.information(message)
-        }else{
-          MessageBox.information("Nessun Log disponibile")
-        }          
+                
       },
       processaItems: function (items) {
         let itemList;
