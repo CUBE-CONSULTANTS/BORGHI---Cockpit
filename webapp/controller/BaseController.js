@@ -1116,7 +1116,10 @@ sap.ui.define(
       //processamento dettagli
       onProcessaButtonDetail: function (oEvent) {
         
+        let oModel
         let table = oEvent.getSource().getParent().getParent();
+        table.getId().includes('tablePosCO') ? oModel =  this.getOwnerComponent().getModel("calloffV2") :
+         oModel =  this.getOwnerComponent().getModel("modelloV2");
         let indices = table.getSelectedIndices();
         let items = [];
         let that = this;
@@ -1172,7 +1175,7 @@ sap.ui.define(
 
             let payload = items.map((x) => x.id);
             let obj = { id: payload };
-            let oModel = this.getOwnerComponent().getModel("modelloV2");
+            
             this.showBusy(0);
             try {
               let res = await API.createEntity(oModel, "/Processamento", obj);
