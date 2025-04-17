@@ -294,11 +294,11 @@ sap.ui.define(["../model/API", "../model/formatter"], function (API, formatter) 
           let oDataRic = formatter.returnDate(oFilterSet.dataRic, "dd/MM/yyyy", "yyyyMMdd");
           aFilters.push(new sap.ui.model.Filter("data_ricezione", sap.ui.model.FilterOperator.EQ, oDataRic));
         }
-        if (oFilterSet.cliente && oFilterSet.cliente.value) {
-          aFilters.push(new sap.ui.model.Filter("codice_cliente_terre", sap.ui.model.FilterOperator.EQ, oFilterSet.cliente.value));
+        if (oFilterSet.clienti && oFilterSet.clienti.value) {
+          aFilters.push(new sap.ui.model.Filter("codice_cliente_committente", sap.ui.model.FilterOperator.EQ, oFilterSet.clienti.value));
         }
         if (oFilterSet.descrcliente && oFilterSet.descrcliente.value) {
-          aFilters.push(new sap.ui.model.Filter("descrizione_cliente", sap.ui.model.FilterOperator.EQ, oFilterSet.descrcliente.value));
+          aFilters.push(new sap.ui.model.Filter("codice_cliente_committente_descrizione", sap.ui.model.FilterOperator.EQ, oFilterSet.descrcliente.value));
         }
         if (oFilterSet.materiale && oFilterSet.materiale.value) {
           aFilters.push(new sap.ui.model.Filter("posizioni_testata/posizione_6_28", sap.ui.model.FilterOperator.EQ, oFilterSet.materiale.value));
