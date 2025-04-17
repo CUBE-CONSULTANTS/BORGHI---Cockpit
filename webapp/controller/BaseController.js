@@ -1115,6 +1115,7 @@ sap.ui.define(
       },
       //processamento dettagli
       onProcessaButtonDetail: function (oEvent) {
+        
         let table = oEvent.getSource().getParent().getParent();
         let indices = table.getSelectedIndices();
         let items = [];
@@ -1126,6 +1127,7 @@ sap.ui.define(
         items = indices.map(function (iIndex) {
           return table.getContextByIndex(iIndex).getObject();
         });
+
         items = items.filter((item) => item.posizione_43_44 !== "35");
         items = items
           .map((item) => {
@@ -1140,11 +1142,16 @@ sap.ui.define(
           MessageBox.error("Non è possibile elaborare Varianti o rielaborare elementi già processati");
           return;
         }
-
+        let cliente
+        let progrInvio 
+        if(this.getModel("detailData")){
+          cliente = this.getModel("detailData").getProperty("/codice_cliente_committente")
+         progrInvio = this.getModel("detailData").getProperty("/progressivo_invio") 
+        } 
         let itemList = items
           .map((item) => {
             if (item.hasOwnProperty("posizione_6_13")) {
-              return `Codice Cliente: ${item.codice_cliente_committente} - Codice cliente materiale: ${item.posizione_6_28} - Progressivo Invio: ${item.testata.progressivo_invio} \n`;
+              return `Codice Cliente: ${cliente} - Codice cliente materiale: ${item.posizione_6_28} - Progressivo Invio: ${progrInvio} \n`;
             } else {
               return `Codice Cliente: ${item.testata.codice_cliente} - Codice cliente materiale: ${item.codice_cliente_materiale} - Progressivo Invio: ${item.testata.numero_progressivo_invio} \n`;
             }

@@ -33,7 +33,7 @@
             <ObjectPageDynamicHeaderTitle>
                 <expandedHeading>
                     <m:Title
-                        text="{detailData>/codice_cliente_committente}  {detailData>/progressivo_invio}"
+                        text="{detailData>/codice_cliente_committente} - {detailData>/progressivo_invio}"
                         wrapping="true"
                         class="sapUiSmallMarginEnd"
                     />
@@ -77,8 +77,12 @@
                 fitContainer="true"
             >
                 <m:VBox class="sapUiSmallMarginEnd">
-                  
                     <m:VBox class="sapUiTinyMarginBottom">
+                      <m:Label text="Codice Cliente Committente" design="Bold" />
+                      <m:Text text="{detailData>/codice_cliente_committente}"/>
+                    </m:VBox>
+                    <m:VBox class="sapUiTinyMarginBottom">
+                     
                         <m:Label
                             text="Codice Terre Cliente"
                             design="Bold"
