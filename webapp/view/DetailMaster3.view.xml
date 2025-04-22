@@ -307,12 +307,12 @@
                       </ui:Column>
                       <ui:Column
                         width="10rem"
-                        tooltip="Consignment"
+                        tooltip="Conto Deposito"
                         app:p13nKey="consignment_col"
                         sortProperty="Consignment"
                         showSortMenuEntry="false"
                       >
-                        <m:Label text="Consignment" />
+                        <m:Label text="Conto Deposito" />
                         <ui:template>
                           <m:ObjectIdentifier text="{detailData>consignment}" />
                         </ui:template>

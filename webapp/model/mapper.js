@@ -42,7 +42,7 @@ sap.ui.define(["../model/API", "../model/formatter"], function (API, formatter) 
           },
           {
             key: "consignment_col",
-            label: "Consignment",
+            label: "Conto Deposito",
             path: "consignment",
           },
           {
