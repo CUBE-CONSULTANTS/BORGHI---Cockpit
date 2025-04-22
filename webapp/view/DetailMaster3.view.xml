@@ -305,7 +305,19 @@
                           <m:ObjectIdentifier text="{detailData>descrizione_materiale}" />
                         </ui:template>
                       </ui:Column>
-                    
+                      <ui:Column
+                        width="10rem"
+                        tooltip="Consignment"
+                        app:p13nKey="consignment_col"
+                        sortProperty="Consignment"
+                        showSortMenuEntry="false"
+                      >
+                        <m:Label text="Consignment" />
+                        <ui:template>
+                          <m:ObjectIdentifier text="{detailData>consignment}" />
+                        </ui:template>
+                      </ui:Column>
+
                       <ui:Column
                         width="10rem"
                         sortProperty="Punto di scarico"

@@ -29,6 +29,7 @@ sap.ui.define(["../model/API", "../model/formatter"], function (API, formatter) 
             label: "Codice cliente materiale",
             path: "codice_cliente_materiale",
           },
+
           {
             key: "codice_materiale_fornitore_col",
             label: "Codice materiale fornitore",
@@ -38,6 +39,11 @@ sap.ui.define(["../model/API", "../model/formatter"], function (API, formatter) 
             key: "descrizione_materiale_col",
             label: "Descrizione materiale",
             path: "descrizione_materiale",
+          },
+          {
+            key: "consignment_col",
+            label: "Consignment",
+            path: "consignment",
           },
           {
             key: "punto_scarico_col",
