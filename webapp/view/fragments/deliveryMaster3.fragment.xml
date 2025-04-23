@@ -137,6 +137,7 @@
         arrayNames: ['posizioni']
       }
     }"
+    firstVisibleRowChanged="onTreeScroll"
     selectionMode="{=${datiAppoggio>/currentPage} === 'archivio' ? 'Single':'MultiToggle'}"
   >
 

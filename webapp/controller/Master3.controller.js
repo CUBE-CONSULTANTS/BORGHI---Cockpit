@@ -13,7 +13,8 @@ sap.ui.define(
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
   ],
-  function (BaseController, JSONModel, Sorter, CoreLibrary, Fragment, MessageBox, MessageToast, API, models, formatter, Filter, FilterOperator) {
+  function (BaseController, JSONModel, Sorter, CoreLibrary, Fragment, MessageBox, 
+    MessageToast, API, models, formatter, Filter, FilterOperator) {
     "use strict";
 
     const SortOrder = CoreLibrary.SortOrder;
@@ -24,11 +25,12 @@ sap.ui.define(
       onInit: async function () {
         this.setModel(models.createMainModel(), "main");
         this.setModel(models.createCountModel(), "count");
+        this.setModel(models.createPaginationModel(), "pagination");
         let modF = models.createEdiFiltersModel();
-
         modF.setSizeLimit(1000000);
         this.setModel(modF, "filtersModel");
         this.getRouter().getRoute("master3").attachPatternMatched(this._onObjectMatched, this);
+
         let aComboBoxes = this.getView()
           .findAggregatedObjects(true)
           .filter(function (oControl) {
@@ -41,6 +43,7 @@ sap.ui.define(
           });
         });
       },
+
       _onObjectMatched: async function (oEvent) {
         this._onRouteChange(oEvent)
         this.getOwnerComponent().getModel("datiAppoggio").setProperty("/currentPage", "master3");
@@ -133,55 +136,55 @@ sap.ui.define(
 
         let log;
         oBindingContext.getObject().log ? (log = oBindingContext.getObject().log.results) : (log = oBindingContext.getObject().log_posizioni.results);
-        if(log.length > 0){
+        if (log.length > 0) {
           log.sort((a, b) => {
             const timestampA = new Date(a.data).getTime() + a.ora.ms;
             const timestampB = new Date(b.data).getTime() + b.ora.ms;
-            return timestampA - timestampB; 
+            return timestampA - timestampB;
           });
-  
+
           let lastIndexMessage;
           oBindingContext.getObject().log ? (lastIndexMessage = oBindingContext.getObject().log.results.length - 1) : (lastIndexMessage = oBindingContext.getObject().log_posizioni.results.length - 1);
-          
-          let dataFormattata = formatter.returnDate(formatter.formatDateToYYYYMMDD(String(log[lastIndexMessage].data)),"yyyyMMdd","dd/MM/yyyy")
+
+          let dataFormattata = formatter.returnDate(formatter.formatDateToYYYYMMDD(String(log[lastIndexMessage].data)), "yyyyMMdd", "dd/MM/yyyy")
           let oraFormattata = formatter.formatTime(log[lastIndexMessage].ora.ms);
           let timestampCompleto = `${dataFormattata} ${oraFormattata}`;
-  
+
           let message = `Data: ${timestampCompleto}\n ${log[lastIndexMessage].messaggio}`;
           MessageBox.information(message);
-        }else{
+        } else {
           MessageBox.information("Nessun Log disponibile")
         }
-        
-      },
-      statoInvButtonPress: function (oEvent){
-        let message
-        let oBindingContext  
-         oEvent.getSource().getBindingContext("master3DesAdv") === undefined ? 
-         oBindingContext = oEvent.getSource().getBindingContext("master3Inv") :
-         oBindingContext = oEvent.getSource().getBindingContext("master3DesAdv")
-        if(oBindingContext === oEvent.getSource().getBindingContext("master3Inv")) {
-         if( oEvent.getSource().getBindingInfo("icon").parts[0].path === 'stato_edi' ){
-          if(oBindingContext.getObject().stato_edi === '51'){
-            message = "Errore durante il salvataggio SFTP"
-          }else if (oBindingContext.getObject().stato_edi === '53'){
-            message =  "Caricato con successo su SFTP"
-          }else if (oBindingContext.getObject().stato_edi === null){
-            message =  "In attesa di caricamento su SFTP"
-          }
-         }       
-        } else{
-          if(oBindingContext.getObject().stato === '51'){
-            message = "Errore durante il salvataggio SFTP"
-          }else if (oBindingContext.getObject().stato_edi === null){
-            message =  "In attesa di caricamento su SFTP"
-          }else if (oBindingContext.getObject().stato === '53'){
-            message =  "Caricato con successo su SFTP"
-          }
-        }     
 
-          MessageBox.information(message)
-                
+      },
+      statoInvButtonPress: function (oEvent) {
+        let message
+        let oBindingContext
+        oEvent.getSource().getBindingContext("master3DesAdv") === undefined ?
+          oBindingContext = oEvent.getSource().getBindingContext("master3Inv") :
+          oBindingContext = oEvent.getSource().getBindingContext("master3DesAdv")
+        if (oBindingContext === oEvent.getSource().getBindingContext("master3Inv")) {
+          if (oEvent.getSource().getBindingInfo("icon").parts[0].path === 'stato_edi') {
+            if (oBindingContext.getObject().stato_edi === '51') {
+              message = "Errore durante il salvataggio SFTP"
+            } else if (oBindingContext.getObject().stato_edi === '53') {
+              message = "Caricato con successo su SFTP"
+            } else if (oBindingContext.getObject().stato_edi === null) {
+              message = "In attesa di caricamento su SFTP"
+            }
+          }
+        } else {
+          if (oBindingContext.getObject().stato === '51') {
+            message = "Errore durante il salvataggio SFTP"
+          } else if (oBindingContext.getObject().stato_edi === null) {
+            message = "In attesa di caricamento su SFTP"
+          } else if (oBindingContext.getObject().stato === '53') {
+            message = "Caricato con successo su SFTP"
+          }
+        }
+
+        MessageBox.information(message)
+
       },
       processaItems: function (items) {
         let itemList;

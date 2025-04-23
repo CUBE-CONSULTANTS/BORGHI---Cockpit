@@ -296,8 +296,7 @@ sap.ui.define(
             entityCO = "/ContatoreTestate" 
             filtersCO = []
             expandCO = []
-          }else{
-                  
+          }else{                
             entityCO = "/ContatoreTestateMonitor"
             filtersCO = []
             expandCO = []
@@ -596,7 +595,6 @@ sap.ui.define(
         operator === "ne" ? (valPosArch = false) : (valPosArch = true);
         //GESTIONE FILTRI DELFOR
         this.showBusy(0)
-        
         if ((oEvent && oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("delivery")) || (!oEvent && filterTab === "01")) {
           this.getModel("filtersModel").setSizeLimit(1000000);
           oFilterSet = this.getModel("filtersModel").getProperty("/delivery");
@@ -658,7 +656,26 @@ sap.ui.define(
           } else {
             expandQuery = `posizioni,posizioni($expand=log,testata),master`;
           }
-          await this.callData(this.getOwnerComponent().getModel("modelloV2"), "/Testata", aFilters, [expandQuery], "01", filtrato);
+          if (oEvent) { 
+            debugger
+            this.getModel("pagination").setProperty("/", {
+                pageSize: 20,
+                currentPage: 0,
+                totalCount: 0,
+                isLoading: false,
+                hasMore: true
+            });
+          }
+          debugger
+          const oPagination = this.getModel("pagination").getData();
+          const top = oPagination.pageSize;
+          const skip = oPagination.currentPage * oPagination.pageSize;
+          if(aFilters.length === 1 && aFilters[0].sPath === 'archiviazione' && expandQuery === 'posizioni,posizioni($expand=log,testata),master'){
+            await this.callData(this.getOwnerComponent().getModel("modelloV2"), "/Testata", aFilters, [expandQuery], "01", filtrato,top,skip);
+          }else{
+            await this.callData(this.getOwnerComponent().getModel("modelloV2"), "/Testata", aFilters, [expandQuery], "01", filtrato,undefined,undefined);
+          }
+         
         } // GESTIONE FILTRI CALLOFF
         else if ((oEvent && oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("callOff")) || (!oEvent && filterTab === "02")) {         
           this.getModel("filtersModel").setSizeLimit(1000000);
@@ -742,11 +759,30 @@ sap.ui.define(
         }
         this.hideBusy(0)
       },
+      _getTabCountKey: function(tabKey) {
+        const map = {
+          "01": "/delivery",
+          "02": "/calloff",
+          "03": "/selfbilling",
+          "04": "/despatch",
+          "05": "/invoice",
+          "06": "/fileScartati"
+        };
+        return map[tabKey] || "/delivery";
+      },
       //gestione CHIAMATE E BINDING X TAB
-      callData: async function (oModel, entity, aFilters, Expands, key, filtrato) {
+      callData: async function (oModel, entity, aFilters, Expands, key, filtrato,top,skip) {
         let metadata, modelMeta;
         try {
-          metadata = await API.getEntity(oModel, entity, aFilters, Expands);
+          const oPaginationModel = this.getModel("pagination");
+          oPaginationModel.setProperty("/isLoading", true)
+          const params = {
+            $top: top,
+            $skip: skip,
+            $count: true
+          };
+
+          metadata = await API.getEntity(oModel, entity, aFilters, Expands,params);
           if (key === "01") {
             let datiFiltrati = metadata.results.filter((x) => x.master !== null && x.posizioni.results.length > 0);
             if (filtrato) {
@@ -764,13 +800,33 @@ sap.ui.define(
             modelMeta.getProperty("/").forEach((testata) => {
               testata.posizioni = Object.values(testata.posizioni.results);
             });
-            this.getOwnerComponent().setModel(modelMeta, "master3");
+            if(top && skip){
+              const oTreeModel = this.getModel("master3") || new JSONModel({});
+              let aCurrentData = oTreeModel.getData()
+              if (!Array.isArray(aCurrentData)) {
+                    aCurrentData = [];
+                  }
+              const aNewData = modelMeta.getProperty("/") || []
+              const aExistingIds = new Set(aCurrentData.map(item => item.id));
+              const aFilteredNew = aNewData.filter(item => !aExistingIds.has(item.id));
+              const aMergedData = [...aCurrentData, ...aFilteredNew];
+              oTreeModel.setData(aMergedData);
+              this.getOwnerComponent().setModel(oTreeModel, "master3");  
+              const iTotalCount = Number(this.getModel("count").getProperty(this._getTabCountKey(key)));
+              this.getModel("pagination").setProperty("/totalCount", iTotalCount);
+              this.getModel("pagination").setProperty("/hasMore", aMergedData.length < iTotalCount)
+              this.getModel("pagination").setProperty("/isLoading", false)
+              }else{
+              this.getOwnerComponent().setModel(modelMeta, "master3");
+              this.getModel("pagination").setProperty("/isLoading", false)
+            }
             this.getModel("master3").setSizeLimit(1000000);
+           
           } else if (key === "02") {
             let datiFiltrati = metadata.results.filter((x) => x.master !== null && x.posizioni_testata.results.length > 0);
             modelMeta = new JSONModel(datiFiltrati);
             modelMeta.getProperty("/").forEach((testata) => {
-              testata.posizioni_testata = Object.values(testata.posizioni_testata.results);
+               testata.posizioni_testata = Object.values(testata.posizioni_testata.results);
             });
             this.getOwnerComponent().setModel(modelMeta, "master3CO");
             this.getModel("master3CO").setSizeLimit(1000000);
@@ -801,6 +857,59 @@ sap.ui.define(
           MessageBox.error("Errore durante la ricezione dei dati");
         } finally {
           this.hideBusy(0);
+        }
+      },
+      onTreeScroll: function (oEvent) {
+        debugger
+        const oTreeTable = this.byId("treetableMain");
+        const oPagination = this.getModel("pagination").getData();
+    
+        if (oPagination.isLoading || !oPagination.hasMore) return;
+    
+        const iFirstVisibleRow = oEvent.getParameter("firstVisibleRow");
+        const iVisibleRowCount = oTreeTable.getVisibleRowCount();
+        const iTotalRows = this.getModel("master3").getData()?.length || 0;
+        const iLoadThreshold = Math.floor(iVisibleRowCount * 0.3); // Carica prima che arrivi in fondo
+    
+        if ((iFirstVisibleRow + iVisibleRowCount) >= (iTotalRows - iLoadThreshold)) {
+            this._loadMoreData();
+        }
+    },
+      // _debounce: function (fn, delay) {
+      //   debugger
+      //   let timer;
+      //   return function (...args) {
+      //     clearTimeout(timer);
+      //     timer = setTimeout(() => fn.apply(this, args), delay);
+      //   };
+      // },
+      _loadMoreData: async function () {
+        debugger
+        const oPaginationModel = this.getModel("pagination");
+        const oPagination = oPaginationModel.getData();
+    
+        if (oPagination.isLoading || !oPagination.hasMore) return;
+    
+        oPaginationModel.setProperty("/isLoading", true);
+    
+        try {
+            const iCurrentPage = oPagination.currentPage;
+            const iNextPage = iCurrentPage + 1;
+            oPaginationModel.setProperty("/currentPage", iNextPage);
+    
+            await this.onSearchData(undefined, '01');
+    
+            const aLoadedData = this.getModel("master3").getData();
+            const iTotalLoaded = Array.isArray(aLoadedData) ? aLoadedData.length : 0;
+            const iTotalCount = Number(this.getModel("count").getProperty("/delivery"));
+    
+            const bHasMore = iTotalLoaded < iTotalCount;
+            oPaginationModel.setProperty("/hasMore", bHasMore);
+        } catch (error) {
+            oPaginationModel.setProperty("/currentPage", oPagination.currentPage);
+            console.error("Errore durante il caricamento della pagina:", error);
+        } finally {
+            oPaginationModel.setProperty("/isLoading", false);
         }
       },
       //DOWLOAD MAIN TABLE

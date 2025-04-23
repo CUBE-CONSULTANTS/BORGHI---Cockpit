@@ -4,22 +4,22 @@ sap.ui.define(
     "use strict";
 
     return {
-      getEntity: function (oModel, Entity, aFilters = [], Expands = []) {
-        let urlParameters = {};
-        if (Expands.length > 0) {
-          
+      getEntity: function (oModel, Entity, aFilters = [], Expands = [],params = {}) {
+        let urlParameters = {...params};
+        if (urlParameters.$top === undefined) delete urlParameters.$top;
+        if (urlParameters.$skip === undefined) delete urlParameters.$skip;
+        if (Expands.length > 0) {       
           urlParameters.$expand = Expands.join(",");
         }
-
         return new Promise((resolve, reject) => {
           oModel.read(Entity, {
             filters: aFilters.length > 0 ? aFilters : undefined,
-            urlParameters: urlParameters,
+            urlParameters: Object.keys(urlParameters).length > 0 ? urlParameters : undefined,
             success: (odata) => {
               resolve({
                 results: odata.results || odata,
                 success: true,
-              });
+            });
             },
             error: (err) => {
               reject({ success: false, error: err });

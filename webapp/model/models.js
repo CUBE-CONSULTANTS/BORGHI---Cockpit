@@ -37,6 +37,15 @@ sap.ui.define(
           selfbilling: "",
 				});
 			},
+      createPaginationModel: function(){
+        return new JSONModel({
+          pageSize: 20,
+          currentPage: 0,
+          totalCount: 0,
+          isLoading: false,
+          hasMore: true 
+        })
+      },
 			createEdiFiltersModel: function () {
 				return new JSONModel({
 					delivery: {
