@@ -670,7 +670,7 @@ sap.ui.define(
           const oPagination = this.getModel("pagination").getData();
           const top = oPagination.pageSize;
           const skip = oPagination.currentPage * oPagination.pageSize;
-          if(aFilters.length === 1 && aFilters[0].sPath === 'archiviazione' && expandQuery === 'posizioni,posizioni($expand=log,testata),master'){
+          if(aFilters.length === 1 && aFilters[0].sPath === 'archiviazione' && expandQuery === `posizioni,posizioni($expand=log($orderby=data,ora),testata),master`){
             await this.callData(this.getOwnerComponent().getModel("modelloV2"), "/Testata", aFilters, [expandQuery], "01", filtrato,top,skip);
           }else{
             await this.callData(this.getOwnerComponent().getModel("modelloV2"), "/Testata", aFilters, [expandQuery], "01", filtrato,undefined,undefined);
@@ -865,14 +865,14 @@ sap.ui.define(
         const iFirstVisibleRow = oEvent.getParameter("firstVisibleRow");
         const iVisibleRowCount = oTreeTable.getVisibleRowCount();
         const iTotalRows = this.getModel("master3").getData()?.length || 0;
-        // const iLoadThreshold = Math.floor(iVisibleRowCount * 0.1); 
-        // if ((iFirstVisibleRow + iVisibleRowCount) >= (iTotalRows - iLoadThreshold)) {
-        //     this._loadMoreData();
-        // }
-        const isNearEnd = (iFirstVisibleRow + iVisibleRowCount) >= iTotalRows;
-        if (isNearEnd) { 
+        const iLoadThreshold = Math.floor(iVisibleRowCount * 0.3); 
+        if ((iFirstVisibleRow + iVisibleRowCount) >= (iTotalRows - iLoadThreshold)) {
             this._loadMoreData();
         }
+        // const isNearEnd = (iFirstVisibleRow + iVisibleRowCount) >= iTotalRows;
+        // if (isNearEnd) { 
+        //     this._loadMoreData();
+        // }
     },
       _loadMoreData: async function () {
         debugger
