@@ -626,15 +626,15 @@ sap.ui.define(
           } else if (masterFilter) {
             expandQuery = `posizioni,posizioni($expand=log($orderby=data,ora),testata),master($filter=${masterFilter})`;
           } else if (logFilter) {
-            expandQuery = `posizioni,posizioni($expand=log($filter=${logFilter};$orderby=data,ora)),testata),master`;
+            expandQuery = `posizioni,posizioni($expand=log($filter=${logFilter};$orderby=data,ora),testata),master`;
           } else if (logFilter && masterFilter) {
-            expandQuery = `posizioni,posizioni($expand=log($filter=${logFilter};$orderby=data,ora)),testata),master($filter=${masterFilter})`;
+            expandQuery = `posizioni,posizioni($expand=log($filter=${logFilter};$orderby=data,ora),testata),master($filter=${masterFilter})`;
           } else {
             expandQuery = `posizioni,posizioni($expand=log($orderby=data,ora),testata),master`;
           }
           if (oEvent) {
             this.getModel("pagination").setProperty("/", {
-              pageSize: 25,
+              pageSize: 45,
               currentPage: 0,
               totalCount: 0,
               isLoading: false,
