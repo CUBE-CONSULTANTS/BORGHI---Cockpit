@@ -323,73 +323,48 @@ sap.ui.define(
         }
       },
       //COSTRUZIONE FILTRI X TUTTI I TAB
-      onFiltersBuilding: function (oEvent, key) {
+      onFiltersBuilding: async function (oEvent, key) {
+        let archivFlag
+        this.getModel("datiAppoggio").getProperty("/currentPage") === "master3"? 
+        archivFlag = false : archivFlag = true
         if (key === "01") {
-          let aData = this.getModel("master3").getProperty("/");
-          let aStato = [
-            ...new Set(
-              aData.flatMap((item) =>
-                item.posizioni.map((pos) => {
-                  if (pos.stato === "51") {
-                    return "In Errore";
-                  } else if (pos.stato === "53") {
-                    return "Elaborato Positivamente";
-                  } else if (pos.stato === null) {
-                    return "Non Elaborato";
-                  } else if (pos.stato === "64") {
-                    return "In Elaborazione";
-                  } else if (pos.stato === '50') {
-                    return "Variante: Da non Processare"
-                  }
-                  return pos.stato;
-                })
-              )
-            ),
-          ];
-
-          let aClienti = [...new Set(aData.map((item) => item.codice_cliente))];
-          let aDescrizioni = [...new Set(aData.map((item) => item.descrizione_cliente))];
-          let aNumProgInvio = [...new Set(aData.map((item) => item.numero_progressivo_invio))];
-          let aMateriali = [];
-          let aMessaggi = [];
-          aData.forEach((item) => {
-            if (item.posizioni) {
-              item.posizioni.forEach((pos) => {
-                if (pos.codice_cliente_materiale) {
-                  aMateriali.push(pos.codice_cliente_materiale);
-                }
-                if (pos.log) {
-                  pos.log.results.forEach((res) => aMessaggi.push(res.messaggio));
-                }
-              });
-            }
-          });
-          aMateriali = [...new Set(aMateriali)];
-          aMessaggi = [...new Set(aMessaggi)];
-          this.getModel("filtersModel").setProperty(
-            "/delivery/cliente/items",
-            aClienti.map((c) => ({ Key: c, Text: c }))
-          );
-          this.getModel("filtersModel").setProperty(
-            "/delivery/descrcliente/items",
-            aDescrizioni.map((d) => ({ Key: d, Text: d }))
-          );
-          this.getModel("filtersModel").setProperty(
-            "/delivery/materiale/items",
-            aMateriali.map((m) => ({ Key: m, Text: m }))
-          );
-          this.getModel("filtersModel").setProperty(
-            "/delivery/numProg/items",
-            aNumProgInvio.map((n) => ({ Key: n, Text: n }))
-          );
-          this.getModel("filtersModel").setProperty(
-            "/delivery/stato/items",
-            aStato.map((n) => ({ Key: n, Text: n }))
-          );
-          this.getModel("filtersModel").setProperty(
-            "/delivery/messaggio/items",
-            aMessaggi.map((n) => ({ Key: n, Text: n }))
-          );
+          try {
+            let allPromises = []        
+            allPromises.push(API.getEntity(this.getOwnerComponent().getModel("modelloV2"), "/ProgressivoInvioVH", [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, archivFlag)], []))
+            allPromises.push(API.getEntity(this.getOwnerComponent().getModel("modelloV2"), "/ClienteVH", [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, archivFlag)], []))
+            allPromises.push(API.getEntity(this.getOwnerComponent().getModel("modelloV2"), "/DescrClienteVH", [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, archivFlag)], []))
+            allPromises.push(API.getEntity(this.getOwnerComponent().getModel("modelloV2"), "/MaterialeVH", [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, archivFlag)], []))
+            allPromises.push(API.getEntity(this.getOwnerComponent().getModel("modelloV2"), "/StatoVH", [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, archivFlag)], []))
+            allPromises.push(API.getEntity(this.getOwnerComponent().getModel("modelloV2"), "/MessaggioVH", [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, archivFlag)], []))
+            const [aNumProgInvio, aClienti, aDescrizioni, aMateriali, aStato, aMessaggi] = await Promise.allSettled(allPromises);
+            
+            this.getModel("filtersModel").setProperty(
+              "/delivery/numProg/items",
+              aNumProgInvio.value.results.map((n) => ({ Key: n.numero_progressivo_invio, Text: n.numero_progressivo_invio }))
+            );
+            this.getModel("filtersModel").setProperty(
+              "/delivery/cliente/items",
+              aClienti.value.results.map((c) => ({ Key: c.codice_cliente, Text: c.codice_cliente }))
+            );
+            this.getModel("filtersModel").setProperty(
+              "/delivery/descrcliente/items",
+              aDescrizioni.value.results.map((d) => ({ Key: d.descrizione_cliente, Text: d.descrizione_cliente }))
+            );
+            this.getModel("filtersModel").setProperty(
+              "/delivery/materiale/items",
+              aMateriali.value.results.map((m) => ({ Key: m.codice_cliente_materiale, Text: m.codice_cliente_materiale }))
+            );        
+            this.getModel("filtersModel").setProperty(
+              "/delivery/stato/items",
+              aStato.value.results.map((n) => ({ Key: n.stato, Text: n.descrizione_stato}))
+            );
+            this.getModel("filtersModel").setProperty(
+              "/delivery/messaggio/items",
+              aMessaggi.value.results.map((n) => ({ Key: n.messaggio, Text: n.messaggio }))
+            );
+          } catch (error) {
+            MessageBox.error("Errore durante il caricamento dei Filtri")
+          }
         } else if (key === "02") {
           let aData = this.getModel("master3CO").getProperty("/");
           let aClienti = [...new Set(aData.map((item) => item.codice_cliente_committente))];
@@ -598,6 +573,7 @@ sap.ui.define(
         if ((oEvent && oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("delivery")) || (!oEvent && filterTab === "01")) {
           this.getModel("filtersModel").setSizeLimit(1000000);
           oFilterSet = this.getModel("filtersModel").getProperty("/delivery");
+          
           let aFilters = mapper.buildFilters(oFilterSet, (key = "01"), operator);
           let filters = {
             data_ricezione: aFilters.find((f) => f.sPath === "data_ricezione"),
@@ -658,7 +634,7 @@ sap.ui.define(
           }
           if (oEvent) {
             this.getModel("pagination").setProperty("/", {
-              pageSize: 11,
+              pageSize: 25,
               currentPage: 0,
               totalCount: 0,
               isLoading: false,
@@ -668,11 +644,7 @@ sap.ui.define(
           const oPagination = this.getModel("pagination").getData();
           const top = oPagination.pageSize;
           const skip = oPagination.currentPage * oPagination.pageSize;
-          if (aFilters.length === 1 && aFilters[0].sPath === 'archiviazione' && expandQuery === `posizioni,posizioni($expand=log($orderby=data,ora),testata),master`) {
-            await this.callData(this.getOwnerComponent().getModel("modelloV2"), "/Testata", aFilters, [expandQuery], "01", filtrato, top, skip);
-          } else {
-            await this.callData(this.getOwnerComponent().getModel("modelloV2"), "/Testata", aFilters, [expandQuery], "01", filtrato, undefined, undefined);
-          }
+          await this.callData(this.getOwnerComponent().getModel("modelloV2"), "/Testata", aFilters, [expandQuery], "01", filtrato, top, skip);     
         } // GESTIONE FILTRI CALLOFF
         else if ((oEvent && oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("callOff")) || (!oEvent && filterTab === "02")) {
           this.getModel("filtersModel").setSizeLimit(1000000);
@@ -710,7 +682,7 @@ sap.ui.define(
           let expandQuery = `posizioni_testata($filter=${posizioniFilter}),posizioni_testata($expand=log_posizioni,testata),master${masterFilter}`;
           if (oEvent) {
             this.getModel("pagination").setProperty("/", {
-              pageSize: 11,
+              pageSize: 15,
               currentPage: 0,
               totalCount: 0,
               isLoading: false,

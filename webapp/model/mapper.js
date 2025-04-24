@@ -278,6 +278,7 @@ sap.ui.define(["../model/API", "../model/formatter"], function (API, formatter) 
           aFilters.push(new sap.ui.model.Filter("posizioni/codice_cliente_materiale", sap.ui.model.FilterOperator.EQ, oFilterSet.materiale.value));
         }
         if (oFilterSet.stato && oFilterSet.stato.value) {
+          
           if (oFilterSet.stato.value === "In Errore") {
             oFilterSet.stato.value = "51";
           } else if (oFilterSet.stato.value === "Non Elaborato") {
@@ -290,6 +291,17 @@ sap.ui.define(["../model/API", "../model/formatter"], function (API, formatter) 
             oFilterSet.stato.value = "50";
           }
           aFilters.push(new sap.ui.model.Filter("stato", sap.ui.model.FilterOperator.EQ, oFilterSet.stato.value));
+          if (oFilterSet.stato.value === "51") {
+            oFilterSet.stato.value = "In Errore";
+          } else if (oFilterSet.stato.value === null) {
+            oFilterSet.stato.value = "Non Elaborato";
+          } else if (oFilterSet.stato.value === "53") {
+            oFilterSet.stato.value = "Elaborato Positivamente";
+          } else if (oFilterSet.stato.value === "64") {
+            oFilterSet.stato.value = "In Elaborazione";
+          } else if (oFilterSet.stato.value === "50") {
+            oFilterSet.stato.value = "Variante: Da non Processare";
+          }
         }
         if (oFilterSet.messaggio && oFilterSet.messaggio.value) {
           aFilters.push(new sap.ui.model.Filter("messaggio", sap.ui.model.FilterOperator.EQ, oFilterSet.messaggio.value));

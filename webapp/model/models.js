@@ -39,7 +39,7 @@ sap.ui.define(
 			},
       createPaginationModel: function(){
         return new JSONModel({
-          pageSize: 11,
+          pageSize: 25,
           currentPage: 0,
           totalCount: 0,
           isLoading: false,

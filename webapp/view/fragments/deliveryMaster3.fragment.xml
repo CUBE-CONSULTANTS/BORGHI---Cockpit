@@ -108,7 +108,7 @@
           <ComboBox 
           items="{filtersModel>/delivery/stato/items}" 
           selectedKey="{filtersModel>/delivery/stato/value}">
-          <core:ListItem key="{filtersModel>Key}" text="{filtersModel>Text}" />
+          <core:ListItem key="{filtersModel>Text}" text="{filtersModel>Text}" />
       </ComboBox>
         </fb:control>
       </fb:FilterGroupItem>

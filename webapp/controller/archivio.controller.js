@@ -39,7 +39,7 @@ sap.ui.define(
         let selectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
         !selectedKey ? (selectedKey = key) : (selectedKey = selectedKey);
         this.getModel("pagination").setData({
-          pageSize: 11, 
+          pageSize: 25, 
           currentPage: 0, 
           totalCount: 0,
           isLoading: false,
