@@ -641,20 +641,20 @@ sap.ui.define(
           }
           if (posizioniFilter) {
             if (masterFilter) {
-              expandQuery = `posizioni($filter=${posizioniFilter}),posizioni($expand=log,testata),master($filter=${masterFilter})`;
+              expandQuery = `posizioni($filter=${posizioniFilter}),posizioni($expand=log($orderby=data,ora),testata),master($filter=${masterFilter})`;
             } else if (logFilter) {
-              expandQuery = `posizioni($filter=${posizioniFilter}),posizioni($expand=log($filter=${logFilter}),testata),master`;
+              expandQuery = `posizioni($filter=${posizioniFilter}),posizioni($expand=log($filter=${logFilter};$orderby=data,ora),testata),master`;
             } else {
-              expandQuery = `posizioni($filter=${posizioniFilter}),posizioni($expand=log,testata),master`;
+              expandQuery = `posizioni($filter=${posizioniFilter}),posizioni($expand=log($orderby=data,ora),testata),master`;
             }
           } else if (masterFilter) {
-            expandQuery = `posizioni,posizioni($expand=log,testata),master($filter=${masterFilter})`;
+            expandQuery = `posizioni,posizioni($expand=log($orderby=data,ora),testata),master($filter=${masterFilter})`;
           } else if (logFilter) {
-            expandQuery = `posizioni,posizioni($expand=log($filter=${logFilter}),testata),master`;
+            expandQuery = `posizioni,posizioni($expand=log($filter=${logFilter};$orderby=data,ora)),testata),master`;
           } else if (logFilter && masterFilter) {
-            expandQuery = `posizioni,posizioni($expand=log($filter=${logFilter}),testata),master($filter=${masterFilter})`;
+            expandQuery = `posizioni,posizioni($expand=log($filter=${logFilter};$orderby=data,ora)),testata),master($filter=${masterFilter})`;
           } else {
-            expandQuery = `posizioni,posizioni($expand=log,testata),master`;
+            expandQuery = `posizioni,posizioni($expand=log($orderby=data,ora),testata),master`;
           }
           if (oEvent) { 
             debugger
