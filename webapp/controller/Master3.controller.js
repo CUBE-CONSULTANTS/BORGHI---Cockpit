@@ -58,32 +58,15 @@ sap.ui.define(
         this.getModel("layout").setProperty("/layout", sNextLayout);
         let selectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
         !selectedKey ? (selectedKey = key) : (selectedKey = selectedKey);
-        switch (selectedKey) {
-          case "01":
-            await this.onSearchData(undefined, selectedKey);
-            this.onFiltersBuilding(oEvent, selectedKey);
-            break;
-          case "02":
-            await this.onSearchData(undefined, selectedKey);
-            this.onFiltersBuilding(oEvent, selectedKey);
-            break;
-          case "03":
-            await this.onSearchData(undefined, selectedKey);
-            this.onFiltersBuilding(oEvent, selectedKey);
-            break;
-          case "04":
-            await this.onSearchData(undefined, selectedKey);
-            this.onFiltersBuilding(oEvent, selectedKey);
-            break;
-          case "05":
-            await this.onSearchData(undefined, selectedKey);
-            this.onFiltersBuilding(oEvent, selectedKey);
-            break;
-          case "06":
-            await this.onSearchData(undefined, selectedKey);
-            this.onFiltersBuilding(oEvent, selectedKey);
-            break;
-        }
+        this.getModel("pagination").setData({
+          pageSize: 21, 
+          currentPage: 0, 
+          totalCount: 0,
+          isLoading: false,
+          hasMore: true 
+        });
+        await this.onSearchData(undefined, selectedKey);
+        this.onFiltersBuilding(oEvent, selectedKey);
         this.hideBusy(0);
       },
       onProcessaButton: async function (oEvent) {

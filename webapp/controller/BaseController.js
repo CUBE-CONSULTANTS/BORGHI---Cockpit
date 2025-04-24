@@ -120,12 +120,12 @@ sap.ui.define(
         }
       },
       _onRouteChange: function (oEvent) {
-        let sCurrentRoute = oEvent.getParameter("name"); 
-        let aRoutesToCloseDetail = ["home", "master3", "archivio"];   
+        let sCurrentRoute = oEvent.getParameter("name");
+        let aRoutesToCloseDetail = ["home", "master3", "archivio"];
         if (aRoutesToCloseDetail.includes(sCurrentRoute)) {
-            let oFlexibleColumnLayout = this.getOwnerComponent().getModel("layout");
-            let sNextLayout = oFlexibleColumnLayout.getProperty("/actionButtonsInfo/endColumn/closeColumn"); 
-            this.getModel("layout").setProperty("/layout", sNextLayout);
+          let oFlexibleColumnLayout = this.getOwnerComponent().getModel("layout");
+          let sNextLayout = oFlexibleColumnLayout.getProperty("/actionButtonsInfo/endColumn/closeColumn");
+          this.getModel("layout").setProperty("/layout", sNextLayout);
         }
       },
       showBusy: function (delay) {
@@ -290,19 +290,19 @@ sap.ui.define(
           let desAdvModel = this.getOwnerComponent().getModel("despatchAdviceV2");
           let invoiceModel = this.getOwnerComponent().getModel("invoiceV2");
           let fileScartatiModel = this.getOwnerComponent().getModel("fileScartatiV2");
-          
+
           let entityCO, filtersCO, expandCO
-          if(filterVal) {
-            entityCO = "/ContatoreTestate" 
+          if (filterVal) {
+            entityCO = "/ContatoreTestate"
             filtersCO = []
             expandCO = []
-          }else{                
+          } else {
             entityCO = "/ContatoreTestateMonitor"
             filtersCO = []
             expandCO = []
-          }  
+          }
 
-          let [delfor, calloff, selfb, desadv, invoice, fileScart] = await Promise.all([     
+          let [delfor, calloff, selfb, desadv, invoice, fileScart] = await Promise.all([
             API.getEntity(oModel, "/Testata/$count", [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, filterVal)], []),
             API.getEntity(calloffModel, entityCO, filtersCO, expandCO),
             API.getEntity(selfBillingModel, "/Testata/$count", [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, filterVal)], []),
@@ -338,7 +338,7 @@ sap.ui.define(
                     return "Non Elaborato";
                   } else if (pos.stato === "64") {
                     return "In Elaborazione";
-                  }else if(pos.stato === '50'){
+                  } else if (pos.stato === '50') {
                     return "Variante: Da non Processare"
                   }
                   return pos.stato;
@@ -559,7 +559,7 @@ sap.ui.define(
         await this._getMatchCode();
       },
       onFilterBarClear: async function (oEvent) {
-        
+
         let operator, archivVal;
         this.getModel("datiAppoggio").getProperty("/currentPage") === "archivio" ? (operator = "eq") : (operator = "ne");
         this.getModel("datiAppoggio").getProperty("/currentPage") === "archivio" ? (archivVal = true) : (archivVal = false);
@@ -656,27 +656,27 @@ sap.ui.define(
           } else {
             expandQuery = `posizioni,posizioni($expand=log($orderby=data,ora),testata),master`;
           }
-          if (oEvent) { 
-            debugger
+          if (oEvent) {
+
             this.getModel("pagination").setProperty("/", {
-                pageSize: 20,
-                currentPage: 0,
-                totalCount: 0,
-                isLoading: false,
-                hasMore: true
+              pageSize: 20,
+              currentPage: 0,
+              totalCount: 0,
+              isLoading: false,
+              hasMore: true
             });
           }
-          debugger
+
           const oPagination = this.getModel("pagination").getData();
           const top = oPagination.pageSize;
           const skip = oPagination.currentPage * oPagination.pageSize;
-          if(aFilters.length === 1 && aFilters[0].sPath === 'archiviazione' && expandQuery === `posizioni,posizioni($expand=log($orderby=data,ora),testata),master`){
-            await this.callData(this.getOwnerComponent().getModel("modelloV2"), "/Testata", aFilters, [expandQuery], "01", filtrato,top,skip);
-          }else{
-            await this.callData(this.getOwnerComponent().getModel("modelloV2"), "/Testata", aFilters, [expandQuery], "01", filtrato,undefined,undefined);
-          }     
+          if (aFilters.length === 1 && aFilters[0].sPath === 'archiviazione' && expandQuery === `posizioni,posizioni($expand=log($orderby=data,ora),testata),master`) {
+            await this.callData(this.getOwnerComponent().getModel("modelloV2"), "/Testata", aFilters, [expandQuery], "01", filtrato, top, skip);
+          } else {
+            await this.callData(this.getOwnerComponent().getModel("modelloV2"), "/Testata", aFilters, [expandQuery], "01", filtrato, undefined, undefined);
+          }
         } // GESTIONE FILTRI CALLOFF
-        else if ((oEvent && oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("callOff")) || (!oEvent && filterTab === "02")) {         
+        else if ((oEvent && oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("callOff")) || (!oEvent && filterTab === "02")) {
           this.getModel("filtersModel").setSizeLimit(1000000);
           oFilterSet = this.getModel("filtersModel").getProperty("/callOff");
           let aFilters = mapper.buildFilters(oFilterSet, (key = "02"), operator);
@@ -710,7 +710,25 @@ sap.ui.define(
             masterFilter = `($filter=data_ricezione eq '${filters.data_ricezione.oValue1}')`;
           }
           let expandQuery = `posizioni_testata($filter=${posizioniFilter}),posizioni_testata($expand=log_posizioni,testata),master${masterFilter}`;
-          await this.callData(this.getOwnerComponent().getModel("calloffV2"), "/Testata", aFilters, [expandQuery], "02", filtrato);
+          if (oEvent) {
+
+            this.getModel("pagination").setProperty("/", {
+              pageSize: 20,
+              currentPage: 0,
+              totalCount: 0,
+              isLoading: false,
+              hasMore: true
+            });
+          }
+
+          const oPagination = this.getModel("pagination").getData();
+          const top = oPagination.pageSize;
+          const skip = oPagination.currentPage * oPagination.pageSize;
+          if (expandQuery === `posizioni_testata($filter=archiviazione eq ${valPosArch}),posizioni_testata($expand=log_posizioni,testata),master`) {
+            await this.callData(this.getOwnerComponent().getModel("calloffV2"), "/Testata", aFilters, [expandQuery], "02", filtrato, top, skip);
+          } else {
+            await this.callData(this.getOwnerComponent().getModel("calloffV2"), "/Testata", aFilters, [expandQuery], "02", filtrato);
+          }
         } // GESTIONE FILTRI SELFBILLING
         else if ((oEvent && oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("selfBilling")) || (!oEvent && filterTab === "03")) {
           this.getModel("filtersModel").setSizeLimit(1000000);
@@ -758,7 +776,7 @@ sap.ui.define(
         }
         this.hideBusy(0)
       },
-      _getTabCountKey: function(tabKey) {
+      _getTabCountKey: function (tabKey) {
         const map = {
           "01": "/delivery",
           "02": "/calloff",
@@ -770,7 +788,7 @@ sap.ui.define(
         return map[tabKey] || "/delivery";
       },
       //gestione CHIAMATE E BINDING X TAB
-      callData: async function (oModel, entity, aFilters, Expands, key, filtrato,top,skip) {
+      callData: async function (oModel, entity, aFilters, Expands, key, filtrato, top, skip) {
         let metadata, modelMeta;
         try {
           const oPaginationModel = this.getModel("pagination");
@@ -781,7 +799,7 @@ sap.ui.define(
             $count: true
           };
 
-          metadata = await API.getEntity(oModel, entity, aFilters, Expands,params);
+          metadata = await API.getEntity(oModel, entity, aFilters, Expands, params);
           if (key === "01") {
             let datiFiltrati = metadata.results.filter((x) => x.master !== null && x.posizioni.results.length > 0);
             if (filtrato) {
@@ -799,34 +817,53 @@ sap.ui.define(
             modelMeta.getProperty("/").forEach((testata) => {
               testata.posizioni = Object.values(testata.posizioni.results);
             });
-            if(top && skip){
+            if (top && skip) {
               const oTreeModel = this.getModel("master3") || new JSONModel({});
               let aCurrentData = oTreeModel.getData()
               if (!Array.isArray(aCurrentData)) {
-                    aCurrentData = [];
+                aCurrentData = [];
               }
               const aNewData = modelMeta.getProperty("/") || []
               const aExistingIds = new Set(aCurrentData.map(item => item.id));
               const aFilteredNew = aNewData.filter(item => !aExistingIds.has(item.id));
               const aMergedData = [...aCurrentData, ...aFilteredNew];
               oTreeModel.setData(aMergedData);
-              this.getOwnerComponent().setModel(oTreeModel, "master3");  
+              this.getOwnerComponent().setModel(oTreeModel, "master3");
               const iTotalCount = Number(this.getModel("count").getProperty(this._getTabCountKey(key)));
               this.getModel("pagination").setProperty("/totalCount", iTotalCount);
               this.getModel("pagination").setProperty("/hasMore", aMergedData.length < iTotalCount)
               this.getModel("pagination").setProperty("/isLoading", false)
-              }else{
+            } else {
               this.getOwnerComponent().setModel(modelMeta, "master3");
               this.getModel("pagination").setProperty("/isLoading", false)
             }
-            this.getModel("master3").setSizeLimit(1000000);         
+            this.getModel("master3").setSizeLimit(1000000);
           } else if (key === "02") {
             let datiFiltrati = metadata.results.filter((x) => x.master !== null && x.posizioni_testata.results.length > 0);
             modelMeta = new JSONModel(datiFiltrati);
             modelMeta.getProperty("/").forEach((testata) => {
-               testata.posizioni_testata = Object.values(testata.posizioni_testata.results);
+              testata.posizioni_testata = Object.values(testata.posizioni_testata.results);
             });
-            this.getOwnerComponent().setModel(modelMeta, "master3CO");
+            if (top && skip) {
+              const oTreeModel = this.getModel("master3CO") || new JSONModel({});
+              let aCurrentData = oTreeModel.getData()
+              if (!Array.isArray(aCurrentData)) {
+                aCurrentData = [];
+              }
+              const aNewData = modelMeta.getProperty("/") || []
+              const aExistingIds = new Set(aCurrentData.map(item => item.id));
+              const aFilteredNew = aNewData.filter(item => !aExistingIds.has(item.id));
+              const aMergedData = [...aCurrentData, ...aFilteredNew];
+              oTreeModel.setData(aMergedData);
+              this.getOwnerComponent().setModel(oTreeModel, "master3CO");
+              const iTotalCount = Number(this.getModel("count").getProperty(this._getTabCountKey(key)));
+              this.getModel("pagination").setProperty("/totalCount", iTotalCount);
+              this.getModel("pagination").setProperty("/hasMore", aMergedData.length < iTotalCount)
+              this.getModel("pagination").setProperty("/isLoading", false)
+            } else {
+              this.getOwnerComponent().setModel(modelMeta, "master3CO");
+              this.getModel("pagination").setProperty("/isLoading", false)
+            }
             this.getModel("master3CO").setSizeLimit(1000000);
           } else if (key === "03") {
             // let datiFiltrati = metadata.results.filter(
@@ -858,48 +895,57 @@ sap.ui.define(
         }
       },
       onTreeScroll: function (oEvent) {
-        debugger
-        const oTreeTable = this.byId("treetableMain");
-        const oPagination = this.getModel("pagination").getData();  
-        if (oPagination.isLoading || !oPagination.hasMore) return; 
+        const oPagination = this.getModel("pagination").getData();
+        const sSelectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
+        let oTreeTable, sModelName;
+        if (sSelectedKey === '01') {
+          oTreeTable = this.byId("treetableMain");
+          sModelName = "master3";
+        } else if (sSelectedKey === '02') {
+          oTreeTable = this.byId("treetableCallOff");
+          sModelName = "master3CO";
+        }
+        if (oPagination.isLoading || !oPagination.hasMore) return;
         const iFirstVisibleRow = oEvent.getParameter("firstVisibleRow");
         const iVisibleRowCount = oTreeTable.getVisibleRowCount();
-        const iTotalRows = this.getModel("master3").getData()?.length || 0;
-        const iLoadThreshold = Math.floor(iVisibleRowCount * 0.3); 
+        const iTotalRows = this.getModel(sModelName).getData()?.length || 0;
+        const iLoadThreshold = Math.floor(iVisibleRowCount * 0.3);
         if ((iFirstVisibleRow + iVisibleRowCount) >= (iTotalRows - iLoadThreshold)) {
-            this._loadMoreData();
-        }
-        // const isNearEnd = (iFirstVisibleRow + iVisibleRowCount) >= iTotalRows;
-        // if (isNearEnd) { 
-        //     this._loadMoreData();
-        // }
-    },
-      _loadMoreData: async function () {
-        debugger
-        const oPaginationModel = this.getModel("pagination");
-        const oPagination = oPaginationModel.getData();
-    
-        if (oPagination.isLoading || !oPagination.hasMore) return;    
-        oPaginationModel.setProperty("/isLoading", true);
-        try {
-            const iCurrentPage = oPagination.currentPage;
-            const iNextPage = iCurrentPage + 1;
-            oPaginationModel.setProperty("/currentPage", iNextPage);  
-            await this.onSearchData(undefined, '01');   
-            const aLoadedData = this.getModel("master3").getData();
-            const iTotalLoaded = Array.isArray(aLoadedData) ? aLoadedData.length : 0;
-            const iTotalCount = Number(this.getModel("count").getProperty("/delivery"));   
-            const bHasMore = iTotalLoaded < iTotalCount;
-            oPaginationModel.setProperty("/hasMore", bHasMore);
-        } catch (error) {
-            oPaginationModel.setProperty("/currentPage", oPagination.currentPage);
-            console.error("Errore durante il caricamento della pagina:", error);
-        } finally {
-            oPaginationModel.setProperty("/isLoading", false);
+          this._loadMoreData();
         }
       },
-            // _debounce: function (fn, delay) {
-      //   debugger
+      _loadMoreData: async function () {
+        const oPaginationModel = this.getModel("pagination");
+        const oPagination = oPaginationModel.getData();
+        const sSelectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
+        let sModelName, sCountPath;
+        if (sSelectedKey === '01') {
+          sModelName = "master3";
+          sCountPath = "/delivery";
+        } else if (sSelectedKey === '02') {
+          sModelName = "master3CO";
+          sCountPath = "/calloff";
+        }
+        if (oPagination.isLoading || !oPagination.hasMore) return;
+        oPaginationModel.setProperty("/isLoading", true);
+        try {
+          const iCurrentPage = oPagination.currentPage;
+          const iNextPage = iCurrentPage + 1;
+          oPaginationModel.setProperty("/currentPage", iNextPage);
+          await this.onSearchData(undefined, sSelectedKey);
+          const aLoadedData = this.getModel(sModelName)?.getData();
+          const iTotalLoaded = Array.isArray(aLoadedData) ? aLoadedData.length : 0;
+          const iTotalCount = Number(this.getModel("count").getProperty(sCountPath));
+          const bHasMore = iTotalLoaded < iTotalCount;
+          oPaginationModel.setProperty("/hasMore", bHasMore);
+        } catch (error) {
+          oPaginationModel.setProperty("/currentPage", oPagination.currentPage);
+          console.error("Errore durante il caricamento della pagina:", error);
+        } finally {
+          oPaginationModel.setProperty("/isLoading", false);
+        }
+      },
+      // _debounce: function (fn, delay) {
       //   let timer;
       //   return function (...args) {
       //     clearTimeout(timer);
@@ -911,7 +957,7 @@ sap.ui.define(
         let selectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
         !selectedKey ? (selectedKey = key) : (selectedKey = selectedKey);
         let oModel
-        let filename 
+        let filename
 
         switch (selectedKey) {
           case "01":
@@ -957,17 +1003,17 @@ sap.ui.define(
         if (!aData || aData.length === 0) {
           MessageToast.show("Nessun dato disponibile per l'esportazione");
           return;
-        }    
+        }
         this.showBusy(0)
         let date = formatter.formatDate(new Date())
-        let codCliente 
+        let codCliente
         oModel.getProperty("/codice_cliente") ?
-        codCliente = oModel.getProperty("/codice_cliente") : oModel.getProperty("/sender_id") ?
-        codCliente = oModel.getProperty("/sender_id") : codCliente = oModel.getProperty("/DettaglioMaster3/customer")
+          codCliente = oModel.getProperty("/codice_cliente") : oModel.getProperty("/sender_id") ?
+            codCliente = oModel.getProperty("/sender_id") : codCliente = oModel.getProperty("/DettaglioMaster3/customer")
         let progrInvio
-        oModel.getProperty("/numero_progressivo_invio") ? 
-        progrInvio = oModel.getProperty("/numero_progressivo_invio") : oModel.getProperty("/progressivo_invio")?
-        progrInvio = oModel.getProperty("/progressivo_invio") : progrInvio = oModel.getProperty("/DettaglioMaster3/new_trasmission")
+        oModel.getProperty("/numero_progressivo_invio") ?
+          progrInvio = oModel.getProperty("/numero_progressivo_invio") : oModel.getProperty("/progressivo_invio") ?
+            progrInvio = oModel.getProperty("/progressivo_invio") : progrInvio = oModel.getProperty("/DettaglioMaster3/new_trasmission")
         let filename = `Dettaglio ${codCliente} - ${progrInvio} - ${date}`
         this.buildSpreadSheet(aData, filename);
         this.hideBusy(0)
@@ -977,11 +1023,11 @@ sap.ui.define(
         if (aExportData.hasOwnProperty("DettaglioFatture")) {
           aExportData = Object.values(aExportData)[0];
         }
-        let exportData = Array.isArray(aExportData) ? aExportData : [aExportData];     
+        let exportData = Array.isArray(aExportData) ? aExportData : [aExportData];
         let flatExportData;
         if (!exportData[0].RFFON || exportData[0].RFFON === undefined) {
           flatExportData = mapper._formatExcelData(exportData);
-        } else {         
+        } else {
           flatExportData = mapper._formatCumulativi(exportData);
         }
 
@@ -1136,7 +1182,7 @@ sap.ui.define(
       },
       // UTILITY X POST (ELABORAZIONE E DELETE)
       _returnPayload: async function (table, action) {
-        
+
         let indices = table.getSelectedIndices();
         let testate = [];
         let selectedPos = [];
@@ -1218,11 +1264,11 @@ sap.ui.define(
       },
       //processamento dettagli
       onProcessaButtonDetail: function (oEvent) {
-        
+
         let oModel
         let table = oEvent.getSource().getParent().getParent();
-        table.getId().includes('tablePosCO') ? oModel =  this.getOwnerComponent().getModel("calloffV2") :
-         oModel =  this.getOwnerComponent().getModel("modelloV2");
+        table.getId().includes('tablePosCO') ? oModel = this.getOwnerComponent().getModel("calloffV2") :
+          oModel = this.getOwnerComponent().getModel("modelloV2");
         let indices = table.getSelectedIndices();
         let items = [];
         let that = this;
@@ -1249,11 +1295,11 @@ sap.ui.define(
           return;
         }
         let cliente
-        let progrInvio 
-        if(this.getModel("detailData")){
+        let progrInvio
+        if (this.getModel("detailData")) {
           cliente = this.getModel("detailData").getProperty("/codice_cliente_committente")
-         progrInvio = this.getModel("detailData").getProperty("/progressivo_invio") 
-        } 
+          progrInvio = this.getModel("detailData").getProperty("/progressivo_invio")
+        }
         let itemList = items
           .map((item) => {
             if (item.hasOwnProperty("posizione_6_13")) {
@@ -1278,7 +1324,7 @@ sap.ui.define(
 
             let payload = items.map((x) => x.id);
             let obj = { id: payload };
-            
+
             this.showBusy(0);
             try {
               let res = await API.createEntity(oModel, "/Processamento", obj);
@@ -1432,7 +1478,7 @@ sap.ui.define(
       openPosizioniDialog: function (oEvent) {
         let tableId = oEvent.getSource().getParent().getParent().getId().split("--").pop();
         let oTable = this.byId(tableId);
-        Engine.getInstance().show(oTable, ["Columns", "Sorter","Filter"], {
+        Engine.getInstance().show(oTable, ["Columns", "Sorter", "Filter"], {
           contentHeight: "35rem",
           contentWidth: "32rem",
           source: oEvent.getSource(),
@@ -1576,7 +1622,7 @@ sap.ui.define(
         return new Blob([bytes], { type: mimeType });
       },
       // GESTIONE CUMULATIVI X ARCHIVIO E MONITOR
-      onDownloadCumulativi: async function (oEvent) {      
+      onDownloadCumulativi: async function (oEvent) {
         let oHeaderData = oEvent.getSource().getBindingContext("master3").getObject()
         let aPosizioni = oHeaderData.posizioni;
         let aPosizioniFiltrate = aPosizioni.filter(pos => pos.stato === '53');
@@ -1624,14 +1670,14 @@ sap.ui.define(
           });
           if (combinedResults.length > 0) {
             const filteredResults = combinedResults.filter(item => {
-              const cumuTran = parseFloat(item.CumuTran); 
-              const qtaDDT1 = parseFloat(item.QuanLips1); 
+              const cumuTran = parseFloat(item.CumuTran);
+              const qtaDDT1 = parseFloat(item.QuanLips1);
               const isCumuTranValid = !isNaN(cumuTran);
               const isQtaDDT1Valid = !isNaN(qtaDDT1);
               return isCumuTranValid && cumuTran !== 0 && isQtaDDT1Valid && cumuTran !== qtaDDT1;
             });
             if (filteredResults.length > 0) {
-            this.buildSpreadSheet(combinedResults, "Report Cumulativi Elaborati");
+              this.buildSpreadSheet(combinedResults, "Report Cumulativi Elaborati");
             } else {
               MessageBox.information("Nessun dato cumulativo soddisfa i criteri di stampa.")
             }
@@ -1826,7 +1872,7 @@ sap.ui.define(
           level = oEvent.getSource().getParent().getBindingContext("master3").getPath().includes("posizioni");
           detailPath = oEvent.getSource().getParent().getBindingContext("master3").getPath();
           detail = this.getModel("master3").getProperty(`${detailPath}`);
-          
+
           if (level) {
             this.getOwnerComponent().getModel("datiAppoggio").setProperty("/posizioneCorrente", detail);
             let oNextUIState;
