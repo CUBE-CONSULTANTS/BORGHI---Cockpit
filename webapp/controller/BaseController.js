@@ -658,7 +658,7 @@ sap.ui.define(
           }
           if (oEvent) {
             this.getModel("pagination").setProperty("/", {
-              pageSize: 16,
+              pageSize: 11,
               currentPage: 0,
               totalCount: 0,
               isLoading: false,
@@ -710,7 +710,7 @@ sap.ui.define(
           let expandQuery = `posizioni_testata($filter=${posizioniFilter}),posizioni_testata($expand=log_posizioni,testata),master${masterFilter}`;
           if (oEvent) {
             this.getModel("pagination").setProperty("/", {
-              pageSize: 16,
+              pageSize: 11,
               currentPage: 0,
               totalCount: 0,
               isLoading: false,
