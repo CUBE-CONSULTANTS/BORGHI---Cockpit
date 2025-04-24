@@ -112,7 +112,7 @@ class="sapUiSmallMarginBottom"
 
 <ui:Table
 rows="{master3Inv>/}"
-paste="onPaste"
+width="100%"
 ariaLabelledBy="title"
 selectionMode="{=${datiAppoggio>/currentPage} === 'archivio' ? 'Single':'MultiToggle'}"
 id="tableInvoice">
@@ -238,7 +238,7 @@ id="tableInvoice">
     </ui:template>
   </ui:Column>
   <!-- press="statoInvButtonPress" -->
-  <ui:Column width="11rem">
+  <ui:Column width="15rem">
     <ui:template>
       <Button
               icon="sap-icon://download"
