@@ -609,7 +609,10 @@ sap.ui.define(
           }
           if (filters.messaggio) {
             filtrato = true;
-            filters.messaggio.oValue1 = filters.messaggio.oValue1.replace(/'/g, "''");
+            filters.messaggio.oValue1 = filters.messaggio.oValue1.replace(/'/g, "''"); 
+            if(filters.messaggio.oValue1.includes('/')){
+              filters.messaggio.oValue1 = filters.messaggio.oValue1.replace(/\//g, ' ')
+            }        
             // let encodedMessage = encodeURIComponent(filters.messaggio.oValue1);
             logFilter = `messaggio eq '${filters.messaggio.oValue1}'`;
           }
