@@ -674,8 +674,7 @@ sap.ui.define(
             await this.callData(this.getOwnerComponent().getModel("modelloV2"), "/Testata", aFilters, [expandQuery], "01", filtrato,top,skip);
           }else{
             await this.callData(this.getOwnerComponent().getModel("modelloV2"), "/Testata", aFilters, [expandQuery], "01", filtrato,undefined,undefined);
-          }
-         
+          }     
         } // GESTIONE FILTRI CALLOFF
         else if ((oEvent && oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("callOff")) || (!oEvent && filterTab === "02")) {         
           this.getModel("filtersModel").setSizeLimit(1000000);
@@ -805,7 +804,7 @@ sap.ui.define(
               let aCurrentData = oTreeModel.getData()
               if (!Array.isArray(aCurrentData)) {
                     aCurrentData = [];
-                  }
+              }
               const aNewData = modelMeta.getProperty("/") || []
               const aExistingIds = new Set(aCurrentData.map(item => item.id));
               const aFilteredNew = aNewData.filter(item => !aExistingIds.has(item.id));
@@ -820,8 +819,7 @@ sap.ui.define(
               this.getOwnerComponent().setModel(modelMeta, "master3");
               this.getModel("pagination").setProperty("/isLoading", false)
             }
-            this.getModel("master3").setSizeLimit(1000000);
-           
+            this.getModel("master3").setSizeLimit(1000000);         
           } else if (key === "02") {
             let datiFiltrati = metadata.results.filter((x) => x.master !== null && x.posizioni_testata.results.length > 0);
             modelMeta = new JSONModel(datiFiltrati);
@@ -862,47 +860,35 @@ sap.ui.define(
       onTreeScroll: function (oEvent) {
         debugger
         const oTreeTable = this.byId("treetableMain");
-        const oPagination = this.getModel("pagination").getData();
-    
-        if (oPagination.isLoading || !oPagination.hasMore) return;
-    
+        const oPagination = this.getModel("pagination").getData();  
+        if (oPagination.isLoading || !oPagination.hasMore) return; 
         const iFirstVisibleRow = oEvent.getParameter("firstVisibleRow");
         const iVisibleRowCount = oTreeTable.getVisibleRowCount();
         const iTotalRows = this.getModel("master3").getData()?.length || 0;
-        const iLoadThreshold = Math.floor(iVisibleRowCount * 0.3); // Carica prima che arrivi in fondo
-    
-        if ((iFirstVisibleRow + iVisibleRowCount) >= (iTotalRows - iLoadThreshold)) {
+        // const iLoadThreshold = Math.floor(iVisibleRowCount * 0.1); 
+        // if ((iFirstVisibleRow + iVisibleRowCount) >= (iTotalRows - iLoadThreshold)) {
+        //     this._loadMoreData();
+        // }
+        const isNearEnd = (iFirstVisibleRow + iVisibleRowCount) >= iTotalRows;
+        if (isNearEnd) { 
             this._loadMoreData();
         }
     },
-      // _debounce: function (fn, delay) {
-      //   debugger
-      //   let timer;
-      //   return function (...args) {
-      //     clearTimeout(timer);
-      //     timer = setTimeout(() => fn.apply(this, args), delay);
-      //   };
-      // },
       _loadMoreData: async function () {
         debugger
         const oPaginationModel = this.getModel("pagination");
         const oPagination = oPaginationModel.getData();
     
-        if (oPagination.isLoading || !oPagination.hasMore) return;
-    
+        if (oPagination.isLoading || !oPagination.hasMore) return;    
         oPaginationModel.setProperty("/isLoading", true);
-    
         try {
             const iCurrentPage = oPagination.currentPage;
             const iNextPage = iCurrentPage + 1;
-            oPaginationModel.setProperty("/currentPage", iNextPage);
-    
-            await this.onSearchData(undefined, '01');
-    
+            oPaginationModel.setProperty("/currentPage", iNextPage);  
+            await this.onSearchData(undefined, '01');   
             const aLoadedData = this.getModel("master3").getData();
             const iTotalLoaded = Array.isArray(aLoadedData) ? aLoadedData.length : 0;
-            const iTotalCount = Number(this.getModel("count").getProperty("/delivery"));
-    
+            const iTotalCount = Number(this.getModel("count").getProperty("/delivery"));   
             const bHasMore = iTotalLoaded < iTotalCount;
             oPaginationModel.setProperty("/hasMore", bHasMore);
         } catch (error) {
@@ -912,6 +898,14 @@ sap.ui.define(
             oPaginationModel.setProperty("/isLoading", false);
         }
       },
+            // _debounce: function (fn, delay) {
+      //   debugger
+      //   let timer;
+      //   return function (...args) {
+      //     clearTimeout(timer);
+      //     timer = setTimeout(() => fn.apply(this, args), delay);
+      //   };
+      // },
       //DOWLOAD MAIN TABLE
       downloadExcelFile: function (oEvent) {
         let selectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
