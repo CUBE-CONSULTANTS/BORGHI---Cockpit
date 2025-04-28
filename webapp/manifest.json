@@ -55,7 +55,7 @@
 				"odataVersion": "2.0"
 				}
 			},
-      		"fileScartatiService": {
+      "fileScartatiService": {
 				"uri": "/odata/v4/file-scartati/",
 				"type": "OData",
 				"settings": {

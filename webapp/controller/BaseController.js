@@ -366,42 +366,33 @@ sap.ui.define(
             MessageBox.error("Errore durante il caricamento dei Filtri")
           }
         } else if (key === "02") {
-          let aData = this.getModel("master3CO").getProperty("/");
-          let aClienti = [...new Set(aData.map((item) => item.codice_cliente_committente))];
-          let aDescrizioni = [...new Set(aData.map((item) => item.codice_cliente_committente_descrizione))]
-          let aReason = [];
-          let aMateriali = [];
-          aData.forEach((item) => {
-            if (item.posizioni_testata) {
-              item.posizioni_testata.forEach((pos) => {
-                if (pos.posizione_6_28) {
-                  aMateriali.push(pos.posizione_6_28);
-                }
-                if (pos.posizione_43_44) {
-                  aReason.push(pos.posizione_43_44);
-                }
-              });
-            }
-          });
-          aReason = [...new Set(aReason)];
-          aMateriali = [...new Set(aMateriali)];
-
-          this.getModel("filtersModel").setProperty(
-            "/callOff/materiale/items",
-            aMateriali.map((m) => ({ Key: m, Text: m }))
-          );
-          this.getModel("filtersModel").setProperty(
-            "/callOff/reason/items",
-            aReason.map((m) => ({ Key: m, Text: m }))
-          );
-          this.getModel("filtersModel").setProperty(
-            "/callOff/clienti/items",
-            aClienti.map((m) => ({ Key: m, Text: m }))
-          );
-          this.getModel("filtersModel").setProperty(
-            "/callOff/descrcliente/items",
-            aDescrizioni.map((m) => ({ Key: m, Text: m }))
-          );
+          try {
+            
+            let allPromises = []        
+            allPromises.push(API.getEntity(this.getOwnerComponent().getModel("calloffV2"), "/ClienteVH", [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, archivFlag)], []))
+            allPromises.push(API.getEntity(this.getOwnerComponent().getModel("calloffV2"), "/DescrClienteVH", [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, archivFlag)], []))
+            allPromises.push(API.getEntity(this.getOwnerComponent().getModel("calloffV2"), "/MaterialeVH", [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, archivFlag)], []))
+            allPromises.push(API.getEntity(this.getOwnerComponent().getModel("calloffV2"), "/ReasonVH", [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, archivFlag)], []))
+            const [aClienti, aDescrizioni, aMateriali, aReason] = await Promise.allSettled(allPromises);
+            this.getModel("filtersModel").setProperty(
+              "/callOff/materiale/items",
+              aMateriali.value.results.map((m) => ({ Key: m.posizione_6_28, Text: m.posizione_6_28 }))
+            );
+            this.getModel("filtersModel").setProperty(
+              "/callOff/reason/items",
+              aReason.value.results.map((m) => ({ Key: m.posizione_43_44, Text: m.posizione_43_44 }))
+            );
+            this.getModel("filtersModel").setProperty(
+              "/callOff/clienti/items",
+              aClienti.value.results.map((c) => ({ Key: c.codice_cliente_committente, Text: c.codice_cliente_committente }))
+            );
+            this.getModel("filtersModel").setProperty(
+              "/callOff/descrcliente/items",
+              aDescrizioni.value.results.map((m) => ({ Key: m.codice_cliente_committente_descrizione, Text: m.codice_cliente_committente_descrizione }))
+            );
+          }catch{
+            MessageBox.error("Errore durante il caricamento dei Filtri")
+          }
         } else if (key === "03") {
           let aData = this.getModel("master3SB").getProperty("/");
           let aClienti = [...new Set(aData.map((item) => item.customer))];
