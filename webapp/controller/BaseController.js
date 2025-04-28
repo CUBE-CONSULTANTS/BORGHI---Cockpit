@@ -600,11 +600,8 @@ sap.ui.define(
           }
           if (filters.messaggio) {
             filtrato = true;
-            filters.messaggio.oValue1 = filters.messaggio.oValue1.replace(/'/g, "''"); 
-            if(filters.messaggio.oValue1.includes('/')){
-              filters.messaggio.oValue1 = filters.messaggio.oValue1.replace(/\//g, ' ')
-            }        
-            // let encodedMessage = encodeURIComponent(filters.messaggio.oValue1);
+            filters.messaggio.oValue1 = filters.messaggio.oValue1.replace(/'/g, "''");
+            filters.messaggio.oValue1 = filters.messaggio.oValue1.replace(/\//g, "%2F");
             logFilter = `messaggio eq '${filters.messaggio.oValue1}'`;
           }
           if (filters.data_ricezione) {
@@ -629,7 +626,7 @@ sap.ui.define(
           }
           if (oEvent) {
             this.getModel("pagination").setProperty("/", {
-              pageSize: 45,
+              pageSize: 25,
               currentPage: 0,
               totalCount: 0,
               isLoading: false,
@@ -677,7 +674,7 @@ sap.ui.define(
           let expandQuery = `posizioni_testata($filter=${posizioniFilter}),posizioni_testata($expand=log_posizioni,testata),master${masterFilter}`;
           if (oEvent) {
             this.getModel("pagination").setProperty("/", {
-              pageSize: 15,
+              pageSize: 25,
               currentPage: 0,
               totalCount: 0,
               isLoading: false,
@@ -687,11 +684,7 @@ sap.ui.define(
           const oPagination = this.getModel("pagination").getData();
           const top = oPagination.pageSize;
           const skip = oPagination.currentPage * oPagination.pageSize;
-          if (expandQuery === `posizioni_testata($filter=archiviazione eq ${valPosArch}),posizioni_testata($expand=log_posizioni,testata),master`) {
-            await this.callData(this.getOwnerComponent().getModel("calloffV2"), "/Testata", aFilters, [expandQuery], "02", filtrato, top, skip);
-          } else {
-            await this.callData(this.getOwnerComponent().getModel("calloffV2"), "/Testata", aFilters, [expandQuery], "02", filtrato);
-          }
+          await this.callData(this.getOwnerComponent().getModel("calloffV2"), "/Testata", aFilters, [expandQuery], "02", filtrato, top, skip);
         } // GESTIONE FILTRI SELFBILLING
         else if ((oEvent && oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("selfBilling")) || (!oEvent && filterTab === "03")) {
           this.getModel("filtersModel").setSizeLimit(1000000);
@@ -854,6 +847,8 @@ sap.ui.define(
         } catch (error) {
           MessageBox.error("Errore durante la ricezione dei dati");
         } finally {
+          
+          this.onExpandFirstLevel()
           this.hideBusy(0);
         }
       },
