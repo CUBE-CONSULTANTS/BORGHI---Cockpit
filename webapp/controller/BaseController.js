@@ -583,7 +583,7 @@ sap.ui.define(
               if (index !== -1) aFilters.splice(index, 1);
             }
           });
-          let expandQuery = `posizioni,posizioni($expand=log($orderby=data,ora),testata),master`;
+          let expandQuery = `master,posizioni,posizioni($expand=log($orderby=data,ora),testata)`;
           let posizioniFilter = "";
           let masterFilter = "";
           let logFilter = "";
@@ -601,7 +601,9 @@ sap.ui.define(
           if (filters.messaggio) {
             filtrato = true;
             filters.messaggio.oValue1 = filters.messaggio.oValue1.replace(/'/g, "''");
-            filters.messaggio.oValue1 = encodeURIComponent(filters.messaggio.oValue1);
+            if(filters.messaggio.oValue1.includes('/')){
+              filters.messaggio.oValue1 = filters.messaggio.oValue1.replace(/\//g, "%2F")
+            }
             logFilter = `messaggio eq '${filters.messaggio.oValue1}'`
           }
           if (filters.data_ricezione) {
@@ -609,20 +611,20 @@ sap.ui.define(
           }
           if (posizioniFilter) {
             if (masterFilter) {
-              expandQuery = `posizioni($filter=${posizioniFilter}),posizioni($expand=log($orderby=data,ora),testata),master($filter=${masterFilter})`;
+              expandQuery = `master($filter=${masterFilter}),posizioni($filter=${posizioniFilter}),posizioni($expand=log($orderby=data,ora),testata)`;
             } else if (logFilter) {
-              expandQuery = `posizioni($filter=${posizioniFilter}),posizioni($expand=log($filter=${logFilter};$orderby=data,ora),testata),master`;
+              expandQuery = `master,posizioni($filter=${posizioniFilter}),posizioni($expand=log($filter=${logFilter};$orderby=data,ora),testata)`;
             } else {
-              expandQuery = `posizioni($filter=${posizioniFilter}),posizioni($expand=log($orderby=data,ora),testata),master`;
+              expandQuery = `master,posizioni($filter=${posizioniFilter}),posizioni($expand=log($orderby=data,ora),testata)`;
             }
           } else if (masterFilter) {
-            expandQuery = `posizioni,posizioni($expand=log($orderby=data,ora),testata),master($filter=${masterFilter})`;
+            expandQuery = `master($filter=${masterFilter}),posizioni,posizioni($expand=log($orderby=data,ora),testata)`;
           } else if (logFilter) {
-            expandQuery = `posizioni,posizioni($expand=log($filter=${logFilter};$orderby=data,ora),testata),master`;
+            expandQuery = `master,posizioni,posizioni($expand=log($filter=${logFilter};$orderby=data,ora),testata)`;
           } else if (logFilter && masterFilter) {
-            expandQuery = `posizioni,posizioni($expand=log($filter=${logFilter};$orderby=data,ora),testata),master($filter=${masterFilter})`;
+            expandQuery = `master($filter=${masterFilter}),posizioni,posizioni($expand=log($filter=${logFilter};$orderby=data,ora),testata)`;
           } else {
-            expandQuery = `posizioni,posizioni($expand=log($orderby=data,ora),testata),master`;
+            expandQuery = `master,posizioni,posizioni($expand=log($orderby=data,ora),testata)`;
           }
           if (oEvent) {
             this.getModel("pagination").setProperty("/", {
@@ -633,11 +635,19 @@ sap.ui.define(
               hasMore: true
             });
           }
-          
+          // let finalQuery = `$expand=${expandQuery}`;
+          // let encodedQuery = encodeURIComponent(finalQuery);
+          // let finalQuery2 = encodeURIComponent(`${expandQuery}`)
           const oPagination = this.getModel("pagination").getData();
           const top = oPagination.pageSize;
           const skip = oPagination.currentPage * oPagination.pageSize;
-          await this.callData(this.getOwnerComponent().getModel("modelloV2"), "/Testata", aFilters, [expandQuery], "01", filtrato, top, skip);     
+          if(aFilters.length === 1 && aFilters[0].sPath === 'archiviazione' && expandQuery === 'master,posizioni,posizioni($expand=log($orderby=data,ora),testata)'){
+            await this.callData(this.getOwnerComponent().getModel("modelloV2"), "/Testata", aFilters, [expandQuery], "01", filtrato,top,skip);
+          }else{
+            await this.callData(this.getOwnerComponent().getModel("modelloV2"), "/Testata", aFilters, [expandQuery], "01", filtrato,undefined,undefined);
+            // await this.callData(this.getOwnerComponent().getModel("modelloV2"), `/Testata?${encodedQuery}`, aFilters, [], "01", filtrato, undefined, undefined);
+          }
+          // await this.callData(this.getOwnerComponent().getModel("modelloV2"), "/Testata", aFilters, [expandQuery], "01", filtrato, top, skip);     
         } // GESTIONE FILTRI CALLOFF
         else if ((oEvent && oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("callOff")) || (!oEvent && filterTab === "02")) {
           this.getModel("filtersModel").setSizeLimit(1000000);
@@ -685,7 +695,11 @@ sap.ui.define(
           const oPagination = this.getModel("pagination").getData();
           const top = oPagination.pageSize;
           const skip = oPagination.currentPage * oPagination.pageSize;
-          await this.callData(this.getOwnerComponent().getModel("calloffV2"), "/Testata", aFilters, [expandQuery], "02", filtrato, top, skip);
+          if (expandQuery === `posizioni_testata($filter=archiviazione eq ${valPosArch}),posizioni_testata($expand=log_posizioni,testata),master`) {
+            await this.callData(this.getOwnerComponent().getModel("calloffV2"), "/Testata", aFilters, [expandQuery], "02", filtrato, top, skip);
+          } else {
+            await this.callData(this.getOwnerComponent().getModel("calloffV2"), "/Testata", aFilters, [expandQuery], "02", filtrato);
+          } 
         } // GESTIONE FILTRI SELFBILLING
         else if ((oEvent && oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("selfBilling")) || (!oEvent && filterTab === "03")) {
           this.getModel("filtersModel").setSizeLimit(1000000);
@@ -774,25 +788,27 @@ sap.ui.define(
             modelMeta.getProperty("/").forEach((testata) => {
               testata.posizioni = Object.values(testata.posizioni.results);
             });
-            if (top && skip) {
+            if (top) {
+              
               const oTreeModel = this.getModel("master3") || new JSONModel({});
               let aCurrentData = oTreeModel.getData()
-              if (!Array.isArray(aCurrentData)) {
-                aCurrentData = [];
-              }
-              const aNewData = modelMeta.getProperty("/") || []
-              const aExistingIds = new Set(aCurrentData.map(item => item.id));
-              const aFilteredNew = aNewData.filter(item => !aExistingIds.has(item.id));
-              const aMergedData = [...aCurrentData, ...aFilteredNew];
-              oTreeModel.setData(aMergedData);
-              this.getOwnerComponent().setModel(oTreeModel, "master3");
-              const iTotalCount = Number(this.getModel("count").getProperty(this._getTabCountKey(key)));
-              this.getModel("pagination").setProperty("/totalCount", iTotalCount);
-              this.getModel("pagination").setProperty("/hasMore", aMergedData.length < iTotalCount)
-              this.getModel("pagination").setProperty("/isLoading", false)
+                if (!Array.isArray(aCurrentData)) {
+                  aCurrentData = [];
+                }
+                const aNewData = modelMeta.getProperty("/") || []
+                const aExistingIds = new Set(aCurrentData.map(item => item.id));
+                const aFilteredNew = aNewData.filter(item => !aExistingIds.has(item.id));
+                const aMergedData = [...aCurrentData, ...aFilteredNew];
+                oTreeModel.setData(aMergedData);
+                this.getOwnerComponent().setModel(oTreeModel, "master3");
+                const iTotalCount = Number(this.getModel("count").getProperty(this._getTabCountKey(key)));
+                this.getModel("pagination").setProperty("/totalCount", iTotalCount);
+                this.getModel("pagination").setProperty("/hasMore", aMergedData.length < iTotalCount)
+                this.getModel("pagination").setProperty("/isLoading", false) 
             } else {
               this.getOwnerComponent().setModel(modelMeta, "master3");
               this.getModel("pagination").setProperty("/isLoading", false)
+              this.getModel("pagination").setProperty("/hasMore", false)
             }
             this.getModel("master3").setSizeLimit(1000000);
           } else if (key === "02") {
@@ -801,7 +817,7 @@ sap.ui.define(
             modelMeta.getProperty("/").forEach((testata) => {
               testata.posizioni_testata = Object.values(testata.posizioni_testata.results);
             });
-            if (top && skip) {
+            if (top) {
               const oTreeModel = this.getModel("master3CO") || new JSONModel({});
               let aCurrentData = oTreeModel.getData()
               if (!Array.isArray(aCurrentData)) {
@@ -820,6 +836,7 @@ sap.ui.define(
             } else {
               this.getOwnerComponent().setModel(modelMeta, "master3CO");
               this.getModel("pagination").setProperty("/isLoading", false)
+              this.getModel("pagination").setProperty("/hasMore", false)
             }
             this.getModel("master3CO").setSizeLimit(1000000);
           } else if (key === "03") {
@@ -854,6 +871,7 @@ sap.ui.define(
         }
       },
       onTreeScroll: function (oEvent) {
+        
         const oPagination = this.getModel("pagination").getData();
         const sSelectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
         let oTreeTable, sModelName;
@@ -868,14 +886,9 @@ sap.ui.define(
         const iFirstVisibleRow = oEvent.getParameter("firstVisibleRow");
         const iVisibleRowCount = oTreeTable.getVisibleRowCount();
         const iTotalRows = this.getModel(sModelName).getData()?.length || 0;
-        const iTotalCount = Number(this.getModel("count").getProperty(sSelectedKey === '01' ? "/delivery" : "/calloff"));
-        if (iTotalRows >= iTotalCount) {
-          this.getModel("pagination").setProperty("/hasMore", false);
-          return;
-        }
-        const iLoadThreshold = Math.floor(iVisibleRowCount * 0.3);
+        const iLoadThreshold = Math.floor(iVisibleRowCount * 0.3);   
         if ((iFirstVisibleRow + iVisibleRowCount) >= (iTotalRows - iLoadThreshold)) {
-          this._loadMoreData();
+            this._loadMoreData();
         }
       },
       _loadMoreData: async function () {
