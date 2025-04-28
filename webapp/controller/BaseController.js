@@ -601,8 +601,8 @@ sap.ui.define(
           if (filters.messaggio) {
             filtrato = true;
             filters.messaggio.oValue1 = filters.messaggio.oValue1.replace(/'/g, "''");
-            filters.messaggio.oValue1 = filters.messaggio.oValue1.replace(/\//g, "%2F");
-            logFilter = `messaggio eq '${filters.messaggio.oValue1}'`;
+            filters.messaggio.oValue1 = encodeURIComponent(filters.messaggio.oValue1);
+            logFilter = `messaggio eq '${filters.messaggio.oValue1}'`
           }
           if (filters.data_ricezione) {
             masterFilter = `data_ricezione eq '${filters.data_ricezione.oValue1}'`;
@@ -633,6 +633,7 @@ sap.ui.define(
               hasMore: true
             });
           }
+          
           const oPagination = this.getModel("pagination").getData();
           const top = oPagination.pageSize;
           const skip = oPagination.currentPage * oPagination.pageSize;
@@ -857,8 +858,8 @@ sap.ui.define(
         const sSelectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
         let oTreeTable, sModelName;
         if (sSelectedKey === '01') {
-          oTreeTable = this.byId("treetableMain");
           sModelName = "master3";
+          oTreeTable = this.byId("treetableMain");
         } else if (sSelectedKey === '02') {
           oTreeTable = this.byId("treetableCallOff");
           sModelName = "master3CO";
@@ -867,6 +868,11 @@ sap.ui.define(
         const iFirstVisibleRow = oEvent.getParameter("firstVisibleRow");
         const iVisibleRowCount = oTreeTable.getVisibleRowCount();
         const iTotalRows = this.getModel(sModelName).getData()?.length || 0;
+        const iTotalCount = Number(this.getModel("count").getProperty(sSelectedKey === '01' ? "/delivery" : "/calloff"));
+        if (iTotalRows >= iTotalCount) {
+          this.getModel("pagination").setProperty("/hasMore", false);
+          return;
+        }
         const iLoadThreshold = Math.floor(iVisibleRowCount * 0.3);
         if ((iFirstVisibleRow + iVisibleRowCount) >= (iTotalRows - iLoadThreshold)) {
           this._loadMoreData();
