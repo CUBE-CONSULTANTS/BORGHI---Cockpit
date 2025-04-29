@@ -639,9 +639,6 @@ sap.ui.define(
               hasMore: true
             });
           }
-          // let finalQuery = `$expand=${expandQuery}`;
-          // let encodedQuery = encodeURIComponent(finalQuery);
-          // let finalQuery2 = encodeURIComponent(`${expandQuery}`)
           const oPagination = this.getModel("pagination").getData();
           const top = oPagination.pageSize;
           const skip = oPagination.currentPage * oPagination.pageSize;
@@ -649,9 +646,7 @@ sap.ui.define(
             await this.callData(this.getOwnerComponent().getModel("modelloV2"), "/Testata", aFilters, [expandQuery], "01", filtrato,top,skip);
           }else{
             await this.callData(this.getOwnerComponent().getModel("modelloV2"), "/Testata", aFilters, [expandQuery], "01", filtrato,undefined,undefined);
-            // await this.callData(this.getOwnerComponent().getModel("modelloV2"), `/Testata?${encodedQuery}`, aFilters, [], "01", filtrato, undefined, undefined);
           }
-          // await this.callData(this.getOwnerComponent().getModel("modelloV2"), "/Testata", aFilters, [expandQuery], "01", filtrato, top, skip);     
         } // GESTIONE FILTRI CALLOFF
         else if ((oEvent && oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("callOff")) || (!oEvent && filterTab === "02")) {
           this.getModel("filtersModel").setSizeLimit(1000000);
@@ -699,7 +694,8 @@ sap.ui.define(
           const oPagination = this.getModel("pagination").getData();
           const top = oPagination.pageSize;
           const skip = oPagination.currentPage * oPagination.pageSize;
-          if (expandQuery === `posizioni_testata($filter=archiviazione eq ${valPosArch}),posizioni_testata($expand=log_posizioni,testata),master`) {
+          
+          if (aFilters.length === 0 && expandQuery === `posizioni_testata($filter=archiviazione eq ${valPosArch}),posizioni_testata($expand=log_posizioni,testata),master`) {
             await this.callData(this.getOwnerComponent().getModel("calloffV2"), "/Testata", aFilters, [expandQuery], "02", filtrato, top, skip);
           } else {
             await this.callData(this.getOwnerComponent().getModel("calloffV2"), "/Testata", aFilters, [expandQuery], "02", filtrato);
