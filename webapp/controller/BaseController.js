@@ -324,169 +324,45 @@ sap.ui.define(
       },
       //COSTRUZIONE FILTRI X TUTTI I TAB
       onFiltersBuilding: async function (oEvent, key) {
-        let archivFlag
-        this.getModel("datiAppoggio").getProperty("/currentPage") === "master3"? 
-        archivFlag = false : archivFlag = true
-        if (key === "01") {
-          try {
-            let allPromises = []        
-            allPromises.push(API.getEntity(this.getOwnerComponent().getModel("modelloV2"), "/ProgressivoInvioVH", [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, archivFlag)], []))
-            allPromises.push(API.getEntity(this.getOwnerComponent().getModel("modelloV2"), "/ClienteVH", [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, archivFlag)], []))
-            allPromises.push(API.getEntity(this.getOwnerComponent().getModel("modelloV2"), "/DescrClienteVH", [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, archivFlag)], []))
-            allPromises.push(API.getEntity(this.getOwnerComponent().getModel("modelloV2"), "/MaterialeVH", [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, archivFlag)], []))
-            allPromises.push(API.getEntity(this.getOwnerComponent().getModel("modelloV2"), "/StatoVH", [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, archivFlag)], []))
-            allPromises.push(API.getEntity(this.getOwnerComponent().getModel("modelloV2"), "/MessaggioVH", [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, archivFlag)], []))
-            const [aNumProgInvio, aClienti, aDescrizioni, aMateriali, aStato, aMessaggi] = await Promise.allSettled(allPromises);
-            
+        const archivFlag = this.getModel("datiAppoggio").getProperty("/currentPage") !== "master3";  
+        const buildFilter = () => [
+          new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, archivFlag)
+        ];   
+        const executeRequests = async (modelName, endpoints) => {
+          const model = this.getOwnerComponent().getModel(modelName);
+          const promises = endpoints.map(ep => API.getEntity(model, ep.path, buildFilter(), []));
+          return Promise.allSettled(promises);
+        };
+        const setProperties = (basePath, resultData) => {
+          resultData.forEach(({ resultKey, mapFn, propertyPath }) => {
             this.getModel("filtersModel").setProperty(
-              "/delivery/numProg/items",
-              aNumProgInvio.value.results.map((n) => ({ Key: n.numero_progressivo_invio, Text: n.numero_progressivo_invio }))
+              propertyPath,
+              resultKey.value.results.map(mapFn)
             );
-            this.getModel("filtersModel").setProperty(
-              "/delivery/cliente/items",
-              aClienti.value.results.map((c) => ({ Key: c.codice_cliente, Text: c.codice_cliente }))
-            );
-            this.getModel("filtersModel").setProperty(
-              "/delivery/descrcliente/items",
-              aDescrizioni.value.results.map((d) => ({ Key: d.descrizione_cliente, Text: d.descrizione_cliente }))
-            );
-            this.getModel("filtersModel").setProperty(
-              "/delivery/materiale/items",
-              aMateriali.value.results.map((m) => ({ Key: m.codice_cliente_materiale, Text: m.codice_cliente_materiale }))
-            );        
-            this.getModel("filtersModel").setProperty(
-              "/delivery/stato/items",
-              aStato.value.results.map((n) => ({ Key: n.stato, Text: n.descrizione_stato}))
-            );
-            this.getModel("filtersModel").setProperty(
-              "/delivery/messaggio/items",
-              aMessaggi.value.results.map((n) => ({ Key: n.messaggio, Text: n.messaggio }))
-            );
-          } catch (error) {
-            MessageBox.error("Errore durante il caricamento dei Filtri")
-          }
-        } else if (key === "02") {
-          try {
-            
-            let allPromises = []        
-            allPromises.push(API.getEntity(this.getOwnerComponent().getModel("calloffV2"), "/ClienteVH", [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, archivFlag)], []))
-            allPromises.push(API.getEntity(this.getOwnerComponent().getModel("calloffV2"), "/DescrClienteVH", [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, archivFlag)], []))
-            allPromises.push(API.getEntity(this.getOwnerComponent().getModel("calloffV2"), "/MaterialeVH", [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, archivFlag)], []))
-            allPromises.push(API.getEntity(this.getOwnerComponent().getModel("calloffV2"), "/ReasonVH", [new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, archivFlag)], []))
-            const [aClienti, aDescrizioni, aMateriali, aReason] = await Promise.allSettled(allPromises);
-            this.getModel("filtersModel").setProperty(
-              "/callOff/materiale/items",
-              aMateriali.value.results.map((m) => ({ Key: m.posizione_6_28, Text: m.posizione_6_28 }))
-            );
-            this.getModel("filtersModel").setProperty(
-              "/callOff/reason/items",
-              aReason.value.results.map((m) => ({ Key: m.posizione_43_44, Text: m.posizione_43_44 }))
-            );
-            this.getModel("filtersModel").setProperty(
-              "/callOff/clienti/items",
-              aClienti.value.results.map((c) => ({ Key: c.codice_cliente_committente, Text: c.codice_cliente_committente }))
-            );
-            this.getModel("filtersModel").setProperty(
-              "/callOff/descrcliente/items",
-              aDescrizioni.value.results.map((m) => ({ Key: m.codice_cliente_committente_descrizione, Text: m.codice_cliente_committente_descrizione }))
-            );
-          }catch{
-            MessageBox.error("Errore durante il caricamento dei Filtri")
-          }
-        } else if (key === "03") {
-          let aData = this.getModel("master3SB").getProperty("/");
-          let aClienti = [...new Set(aData.map((item) => item.customer))];
-          // let aDescrizioni = [...new Set(aClienti.map((item) => item.descrizione_cliente))];
-          let aFornitori = [...new Set(aData.map((item) => item.supplier))];
-          let aFatture = [];
-          aData.forEach((item) => {
-            if (item.dettaglio_fattura) {
-              item.dettaglio_fattura.forEach((pos) => {
-                if (pos.numero_fattura) {
-                  aFatture.push(pos.numero_fattura);
-                }
-              });
-            }
           });
-          aFatture = [...new Set(aFatture)];
-          this.getModel("filtersModel").setProperty(
-            "/selfBilling/fatture/items",
-            aFatture.map((m) => ({ Key: m, Text: m }))
-          );
-          this.getModel("filtersModel").setProperty(
-            "/selfBilling/clienti/items",
-            aClienti.map((m) => ({ Key: m, Text: m }))
-          );
-          this.getModel("filtersModel").setProperty(
-            "/selfBilling/fornitori/items",
-            aFornitori.map((m) => ({ Key: m, Text: m }))
-          );
-          // this.getModel("filtersModel").setProperty(
-          //   "/callOff/descrClienti/items",
-          //   aDescrizioni.map((m) => ({ Key: m, Text: m }))
-          // );
-        } else if (key === "04") {
-          let aData = this.getModel("master3DesAdv").getProperty("/");
-          let aIdoc = [...new Set(aData.map((item) => item.numero_idoc))];
-          let aNumCons = [...new Set(aData.map((item) => item.numero_consegna))];
-          let aNumDDTCl = [...new Set(aData.map((item) => item.numero_ddt))];
-          let aBp = [...new Set(aData.map((item) => item.numero_bp_sold_to))];
-          this.getModel("filtersModel").setProperty(
-            "/desadv/numiDoc/items",
-            aIdoc.map((m) => ({ Key: m, Text: m }))
-          );
-          this.getModel("filtersModel").setProperty(
-            "/desadv/numConsegna/items",
-            aNumCons.map((m) => ({ Key: m, Text: m }))
-          );
-          this.getModel("filtersModel").setProperty(
-            "/desadv/numDDTCliente/items",
-            aNumDDTCl.map((m) => ({ Key: m, Text: m }))
-          );
-          this.getModel("filtersModel").setProperty(
-            "/desadv/bp/items",
-            aBp.map((m) => ({ Key: m, Text: m }))
-          );
-        } else if (key === "05") {
-          let aData = this.getModel("master3Inv").getProperty("/");
-          let aIdoc = [...new Set(aData.map((item) => item.numero_idoc))];
-          let aNumFat = [...new Set(aData.map((item) => item.fattura_di_vendita))];
-          let aNumDocCont = [...new Set(aData.map((item) => item.numero_documento_contabile))];
-          let aDateFat = [...new Set(aData.map((item) => item.data_di_fatturazione))];
-          let aBp = [...new Set(aData.map((item) => item.BP))];
-          let aDateCreDoc = [...new Set(aData.map((item) => item.data_creazione_doc_contabile))];
-
-          this.getModel("filtersModel").setProperty(
-            "/invoice/numiDoc/items",
-            aIdoc.map((m) => ({ Key: m, Text: m }))
-          );
-          this.getModel("filtersModel").setProperty(
-            "/invoice/numFattVend/items",
-            aNumFat.map((m) => ({ Key: m, Text: m }))
-          );
-          this.getModel("filtersModel").setProperty(
-            "/invoice/dataFattura/items",
-            aDateFat.map((m) => ({ Key: m, Text: m }))
-          );
-          this.getModel("filtersModel").setProperty(
-            "/invoice/numDocCont/items",
-            aNumDocCont.map((m) => ({ Key: m, Text: m }))
-          );
-          this.getModel("filtersModel").setProperty(
-            "/invoice/bp/items",
-            aBp.map((m) => ({ Key: m, Text: m }))
-          );
-          this.getModel("filtersModel").setProperty(
-            "/invoice/dataDocCont/items",
-            aDateCreDoc.map((m) => ({ Key: m, Text: m }))
-          );
-        } else if (key === "06") {
-          let aData = this.getModel("master3Scart").getProperty("/");
-          let aFile = [...new Set(aData.map((item) => item.filename))];
+        };     
+        const config = mapper.getConfigForKey(key);
+        if (!config) return;
+        if (config.static) {
+          const aData = this.getModel("master3Scart").getProperty("/");
+          const aFile = [...new Set(aData.map(item => item.filename))];
           this.getModel("filtersModel").setProperty(
             "/scartati/nomeFile/items",
-            aFile.map((m) => ({ Key: m, Text: m }))
+            aFile.map(f => ({ Key: f, Text: f }))
           );
+          return;
+        }
+      
+        try {
+          const results = await executeRequests(config.model, config.endpoints);
+          const data = config.endpoints.map((ep, index) => ({
+            resultKey: results[index],
+            mapFn: ep.map,
+            propertyPath: ep.property
+          }));
+          setProperties(key, data);
+        } catch (e) {
+          MessageBox.error("Errore durante il caricamento dei Filtri");
         }
       },
       // FILTRI X APP VARIAZIONI
