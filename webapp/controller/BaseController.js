@@ -601,10 +601,14 @@ sap.ui.define(
           if (filters.messaggio) {
             filtrato = true;
             filters.messaggio.oValue1 = filters.messaggio.oValue1.replace(/'/g, "''");
-            if(filters.messaggio.oValue1.includes('/')){
-              filters.messaggio.oValue1 = filters.messaggio.oValue1.replace(/\//g, "%2F")
+            if (filters.messaggio.oValue1.includes('/')) {
+              const parts = filters.messaggio.oValue1.split('/');
+              const firstPart = parts[0];
+              const secondPart = parts[1];      
+              logFilter = `(contains(messaggio, '${firstPart}') and contains(messaggio, '${secondPart}'))`;
+            }else {
+              logFilter = `messaggio eq '${filters.messaggio.oValue1}'`
             }
-            logFilter = `messaggio eq '${filters.messaggio.oValue1}'`
           }
           if (filters.data_ricezione) {
             masterFilter = `data_ricezione eq '${filters.data_ricezione.oValue1}'`;
