@@ -26,6 +26,7 @@ sap.ui.define(
         });
       },
       _onObjectMatched: async function (oEvent) {
+        this._resetPageModels()
         this._onRouteChange(oEvent)
         this.getOwnerComponent().getModel("datiAppoggio").setProperty("/currentPage", "archivio");
         await this._getCounters(true);

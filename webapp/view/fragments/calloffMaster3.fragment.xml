@@ -218,6 +218,12 @@
 							<Text text="{master3CO>ordine_vendita}" wrapping="false" />
 						</ui:template>
 					</ui:Column>
+          <ui:Column width="12rem">
+						<Label text="Numero Consegna" />
+						<ui:template>
+							<Text text="{master3CO>numero_consegna}" wrapping="false" />
+						</ui:template>
+					</ui:Column>
           <ui:Column width="4rem" hAlign="Center">
 						<Label text="Stato" />
 						<ui:template>

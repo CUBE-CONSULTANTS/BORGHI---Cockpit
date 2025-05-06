@@ -45,6 +45,7 @@ sap.ui.define(
       },
 
       _onObjectMatched: async function (oEvent) {
+        this._resetPageModels()
         this._onRouteChange(oEvent)
         this.getOwnerComponent().getModel("datiAppoggio").setProperty("/currentPage", "master3");
         await this._getCounters(false);
