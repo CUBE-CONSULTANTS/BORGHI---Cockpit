@@ -693,7 +693,7 @@ sap.ui.define(
             modelMeta.getProperty("/").forEach((testata) => {
               testata.posizioni_testata = Object.values(testata.posizioni_testata.results);
             });
-            if (top) {
+            if (top ) {
               const oTreeModel = this.getModel("master3CO") || new JSONModel({});
               let aCurrentData = oTreeModel.getData()
               if (!Array.isArray(aCurrentData)) {
@@ -1766,7 +1766,31 @@ sap.ui.define(
         }
       },
       navToHome: function () {
+        this._resetPageModels()
         this.getRouter().navTo("home");
+      },
+      _resetPageModels: function(){
+        const emptyData = [];
+
+        const modelsToReset = [
+          "master3",
+          "master3CO",
+          "master3SB",
+          "master3DesAdv",
+          "master3Inv",
+          "master3Scart",
+          "pagination"
+        ];
+
+        modelsToReset.forEach((modelName) => {
+          const oModel = this.getOwnerComponent().getModel(modelName);
+          if (oModel) {
+            oModel.setData(emptyData);
+          } else {
+            this.getOwnerComponent().setModel(new JSONModel(emptyData), modelName);
+          }
+        });
+
       },
       handleCloseDetail: function () {
         this.getModel("datiAppoggio").getProperty("/currentPage") === "archivio" ? this.getRouter().navTo("archivio") : this.getRouter().navTo("master3");
