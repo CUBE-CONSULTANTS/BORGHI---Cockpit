@@ -87,7 +87,7 @@ sap.ui.define(
               });
             }
             if(currentBegColViewName ==='programmi.consegne.edi.view.DetailMaster3'){
-              oEvent.getSource().getParent().getParent().getParent().getParent().getParent().setLayout(sNextLayout);
+              this.onNavBack()
             }
         },
 
