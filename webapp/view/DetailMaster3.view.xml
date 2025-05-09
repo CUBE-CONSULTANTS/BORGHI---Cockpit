@@ -185,7 +185,11 @@
                           icon="sap-icon://excel-attachment"
                           press="downloadExcelFileDett"
                          
-                        />
+                        >
+                          <m:customData>
+                            <core:CustomData key="deeptable"/>
+                          </m:customData>
+                        </m:Button>
                         <m:Button
                           text="Elabora"
                           icon="sap-icon://process"

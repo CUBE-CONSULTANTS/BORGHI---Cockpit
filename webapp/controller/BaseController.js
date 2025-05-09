@@ -853,6 +853,12 @@ sap.ui.define(
       downloadExcelFileDett: function (oEvent) {
         let oModel = this.getModel("detailData");
         let aData = oModel.getProperty("/");
+
+        //inizio - differenziazione tra esportazioni excel
+        const aCustomData = oEvent.getSource().getCustomData() || []//[0].getProperty("key")
+        const sKeyCustomData = aCustomData[0]?.getProperty("key")
+        //fine - differenziazione tra esportazioni excel
+
         if (!aData || aData.length === 0) {
           MessageToast.show("Nessun dato disponibile per l'esportazione");
           return;
@@ -868,18 +874,19 @@ sap.ui.define(
           progrInvio = oModel.getProperty("/numero_progressivo_invio") : oModel.getProperty("/progressivo_invio") ?
             progrInvio = oModel.getProperty("/progressivo_invio") : progrInvio = oModel.getProperty("/DettaglioMaster3/new_trasmission")
         let filename = `Dettaglio ${codCliente} - ${progrInvio} - ${date}`
-        this.buildSpreadSheet(aData, filename);
+        this.buildSpreadSheet(aData, filename, sKeyCustomData);
         this.hideBusy(0)
       },
       //COSTRUZIONE DELLO SHEET
-      buildSpreadSheet: function (aExportData, filename) {
+      buildSpreadSheet: function (aExportData, filename, sKeyCustomData) {
         if (aExportData.hasOwnProperty("DettaglioFatture")) {
           aExportData = Object.values(aExportData)[0];
         }
         let exportData = Array.isArray(aExportData) ? aExportData : [aExportData];
         let flatExportData;
         if (!exportData[0].RFFON || exportData[0].RFFON === undefined) {
-          flatExportData = mapper._formatExcelData(exportData);
+          flatExportData =  sKeyCustomData == "deeptable"  ? mapper._formatExcelDataDeeperNesting(exportData) : mapper._formatExcelData(exportData);
+          //flatExportData = mapper._formatExcelDataDeeperNesting(exportData);
         } else {
           flatExportData = mapper._formatCumulativi(exportData);
         }

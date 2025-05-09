@@ -533,6 +533,40 @@ sap.ui.define(["../model/API", "../model/formatter"], function (API, formatter) 
 
       return output;
     },
+    _formatExcelDataDeeperNesting: function (aData) {
+      let aExportData = [];
+      aData.forEach((item) => {
+        let row = this._cleanAndFormatData(item);
+        //aExportData.push(row)
+        let positions = item.posizioni || item.posizioni_testata || item.dettaglio_fattura || [];
+        if (positions.results) {
+          positions = Object.values(positions.results);
+        }
+        positions.forEach((position) => {
+          position.codice_cliente = item.codice_cliente;
+          position.data_progressivo_invio = item.data_progressivo_invio;
+          let positionRow = { ...row, ...this._cleanAndFormatData(position) };
+          //aExportData.push(positionRow)
+          let schedules =
+            (position.schedulazioni?.results && position.schedulazioni.results.length > 0 && position.schedulazioni.results) ||
+            (position.riferimento_ddt?.results && position.riferimento_ddt.results.length > 0 && position.riferimento_ddt.results) ||
+            (Array.isArray(position.riferimento_ddt) && position.riferimento_ddt.length > 0 && position.riferimento_ddt) ||
+            (position.riferimento_ddt ? [position.riferimento_ddt] : []);
+          if (schedules.length > 0) {
+            schedules.forEach((schedule) => {
+              let rigafattura = schedule.riga_fattura || {}
+              let scheduleRow = {
+                ...positionRow,
+                ...this._cleanAndFormatData(schedule),
+                ...this._cleanAndFormatData(rigafattura)
+              };
+              aExportData.push(scheduleRow)
+            });
+          }
+        });
+      });
+      return aExportData;
+    },
     _formatExcelData: function (aData) {
       let aExportData = [];
       aData.forEach((item) => {
@@ -554,19 +588,21 @@ sap.ui.define(["../model/API", "../model/formatter"], function (API, formatter) 
             (position.riferimento_ddt ? [position.riferimento_ddt] : []);
           if (schedules.length > 0) {
             schedules.forEach((schedule) => {
+              let rigafattura = schedule.riga_fattura || {}
               let scheduleRow = {
                 ...positionRow,
                 ...this._cleanAndFormatData(schedule),
+                ...this._cleanAndFormatData(rigafattura),
               };
               aExportData.push(scheduleRow)
-              let invoiceLines = Array.isArray(schedule.riga_fattura) ? schedule.riga_fattura : [schedule.riga_fattura];
+              /*let invoiceLines = Array.isArray(schedule.riga_fattura) ? schedule.riga_fattura : [schedule.riga_fattura];
               invoiceLines.forEach((invoice) => {
                 let invoiceRow = {
                   ...scheduleRow,
                   ...this._cleanAndFormatData(invoice),
                 };
                 aExportData.push(invoiceRow);
-              });
+              });*/
             });
           }
         });

@@ -190,7 +190,11 @@
                       text="Esporta excel"
                       icon="sap-icon://excel-attachment"
                       press="downloadExcelFileDett"
-                    />
+                    >
+                     <m:customData>
+                            <core:CustomData key="deeptable"/>
+                          </m:customData>
+                    </m:Button>
                     <m:Button
                       text="Elimina"
                       icon="sap-icon://delete"
