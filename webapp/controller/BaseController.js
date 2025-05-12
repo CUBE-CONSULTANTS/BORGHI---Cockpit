@@ -324,10 +324,10 @@ sap.ui.define(
       },
       //COSTRUZIONE FILTRI X TUTTI I TAB
       onFiltersBuilding: async function (oEvent, key) {
-        const archivFlag = this.getModel("datiAppoggio").getProperty("/currentPage") !== "master3";  
+        const archivFlag = this.getModel("datiAppoggio").getProperty("/currentPage") !== "master3";
         const buildFilter = () => [
           new sap.ui.model.Filter("archiviazione", sap.ui.model.FilterOperator.EQ, archivFlag)
-        ];   
+        ];
         const executeRequests = async (modelName, endpoints) => {
           const model = this.getOwnerComponent().getModel(modelName);
           const promises = endpoints.map(ep => API.getEntity(model, ep.path, buildFilter(), []));
@@ -340,7 +340,7 @@ sap.ui.define(
               resultKey.value.results.map(mapFn)
             );
           });
-        };     
+        };
         const config = mapper.getConfigForKey(key);
         if (!config) return;
         if (config.static) {
@@ -352,7 +352,7 @@ sap.ui.define(
           );
           return;
         }
-      
+
         try {
           const results = await executeRequests(config.model, config.endpoints);
           const data = config.endpoints.map((ep, index) => ({
@@ -440,7 +440,7 @@ sap.ui.define(
         if ((oEvent && oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("delivery")) || (!oEvent && filterTab === "01")) {
           this.getModel("filtersModel").setSizeLimit(1000000);
           oFilterSet = this.getModel("filtersModel").getProperty("/delivery");
-          
+
           let aFilters = mapper.buildFilters(oFilterSet, (key = "01"), operator);
           let filters = {
             data_ricezione: aFilters.find((f) => f.sPath === "data_ricezione"),
@@ -480,9 +480,9 @@ sap.ui.define(
             if (filters.messaggio.oValue1.includes('/')) {
               const parts = filters.messaggio.oValue1.split('/');
               const firstPart = parts[0];
-              const secondPart = parts[1];      
+              const secondPart = parts[1];
               logFilter = `(contains(messaggio, '${firstPart}') and contains(messaggio, '${secondPart}'))`;
-            }else {
+            } else {
               logFilter = `messaggio eq '${filters.messaggio.oValue1}'`
             }
           }
@@ -518,10 +518,10 @@ sap.ui.define(
           const oPagination = this.getModel("pagination").getData();
           const top = oPagination.pageSize;
           const skip = oPagination.currentPage * oPagination.pageSize;
-          if(aFilters.length === 1 && aFilters[0].sPath === 'archiviazione' && expandQuery === 'master,posizioni,posizioni($expand=log($orderby=data,ora),testata)'){
-            await this.callData(this.getOwnerComponent().getModel("modelloV2"), "/Testata", aFilters, [expandQuery], "01", filtrato,top,skip);
-          }else{
-            await this.callData(this.getOwnerComponent().getModel("modelloV2"), "/Testata", aFilters, [expandQuery], "01", filtrato,undefined,undefined);
+          if (aFilters.length === 1 && aFilters[0].sPath === 'archiviazione' && expandQuery === 'master,posizioni,posizioni($expand=log($orderby=data,ora),testata)') {
+            await this.callData(this.getOwnerComponent().getModel("modelloV2"), "/Testata", aFilters, [expandQuery], "01", filtrato, top, skip);
+          } else {
+            await this.callData(this.getOwnerComponent().getModel("modelloV2"), "/Testata", aFilters, [expandQuery], "01", filtrato, undefined, undefined);
           }
         } // GESTIONE FILTRI CALLOFF
         else if ((oEvent && oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("callOff")) || (!oEvent && filterTab === "02")) {
@@ -570,12 +570,12 @@ sap.ui.define(
           const oPagination = this.getModel("pagination").getData();
           const top = oPagination.pageSize;
           const skip = oPagination.currentPage * oPagination.pageSize;
-          
+
           if (aFilters.length === 0 && expandQuery === `posizioni_testata($filter=archiviazione eq ${valPosArch}),posizioni_testata($expand=log_posizioni,testata),master`) {
             await this.callData(this.getOwnerComponent().getModel("calloffV2"), "/Testata", aFilters, [expandQuery], "02", filtrato, top, skip);
           } else {
             await this.callData(this.getOwnerComponent().getModel("calloffV2"), "/Testata", aFilters, [expandQuery], "02", filtrato);
-          } 
+          }
         } // GESTIONE FILTRI SELFBILLING
         else if ((oEvent && oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("selfBilling")) || (!oEvent && filterTab === "03")) {
           this.getModel("filtersModel").setSizeLimit(1000000);
@@ -665,22 +665,22 @@ sap.ui.define(
               testata.posizioni = Object.values(testata.posizioni.results);
             });
             if (top) {
-              
+
               const oTreeModel = this.getModel("master3") || new JSONModel({});
               let aCurrentData = oTreeModel.getData()
-                if (!Array.isArray(aCurrentData)) {
-                  aCurrentData = [];
-                }
-                const aNewData = modelMeta.getProperty("/") || []
-                const aExistingIds = new Set(aCurrentData.map(item => item.id));
-                const aFilteredNew = aNewData.filter(item => !aExistingIds.has(item.id));
-                const aMergedData = [...aCurrentData, ...aFilteredNew];
-                oTreeModel.setData(aMergedData);
-                this.getOwnerComponent().setModel(oTreeModel, "master3");
-                const iTotalCount = Number(this.getModel("count").getProperty(this._getTabCountKey(key)));
-                this.getModel("pagination").setProperty("/totalCount", iTotalCount);
-                this.getModel("pagination").setProperty("/hasMore", aMergedData.length < iTotalCount)
-                this.getModel("pagination").setProperty("/isLoading", false) 
+              if (!Array.isArray(aCurrentData)) {
+                aCurrentData = [];
+              }
+              const aNewData = modelMeta.getProperty("/") || []
+              const aExistingIds = new Set(aCurrentData.map(item => item.id));
+              const aFilteredNew = aNewData.filter(item => !aExistingIds.has(item.id));
+              const aMergedData = [...aCurrentData, ...aFilteredNew];
+              oTreeModel.setData(aMergedData);
+              this.getOwnerComponent().setModel(oTreeModel, "master3");
+              const iTotalCount = Number(this.getModel("count").getProperty(this._getTabCountKey(key)));
+              this.getModel("pagination").setProperty("/totalCount", iTotalCount);
+              this.getModel("pagination").setProperty("/hasMore", aMergedData.length < iTotalCount)
+              this.getModel("pagination").setProperty("/isLoading", false)
             } else {
               this.getOwnerComponent().setModel(modelMeta, "master3");
               this.getModel("pagination").setProperty("/isLoading", false)
@@ -693,7 +693,7 @@ sap.ui.define(
             modelMeta.getProperty("/").forEach((testata) => {
               testata.posizioni_testata = Object.values(testata.posizioni_testata.results);
             });
-            if (top ) {
+            if (top) {
               const oTreeModel = this.getModel("master3CO") || new JSONModel({});
               let aCurrentData = oTreeModel.getData()
               if (!Array.isArray(aCurrentData)) {
@@ -741,13 +741,13 @@ sap.ui.define(
         } catch (error) {
           MessageBox.error("Errore durante la ricezione dei dati");
         } finally {
-          
+
           this.onExpandFirstLevel()
           this.hideBusy(0);
         }
       },
       onTreeScroll: function (oEvent) {
-        
+
         const oPagination = this.getModel("pagination").getData();
         const sSelectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
         let oTreeTable, sModelName;
@@ -762,9 +762,9 @@ sap.ui.define(
         const iFirstVisibleRow = oEvent.getParameter("firstVisibleRow");
         const iVisibleRowCount = oTreeTable.getVisibleRowCount();
         const iTotalRows = this.getModel(sModelName).getData()?.length || 0;
-        const iLoadThreshold = Math.floor(iVisibleRowCount * 0.3);   
+        const iLoadThreshold = Math.floor(iVisibleRowCount * 0.3);
         if ((iFirstVisibleRow + iVisibleRowCount) >= (iTotalRows - iLoadThreshold)) {
-            this._loadMoreData();
+          this._loadMoreData();
         }
       },
       _loadMoreData: async function () {
@@ -806,47 +806,198 @@ sap.ui.define(
       //   };
       // },
       //DOWLOAD MAIN TABLE
-      downloadExcelFile: function (oEvent) {
-        let selectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
-        !selectedKey ? (selectedKey = key) : (selectedKey = selectedKey);
-        let oModel
-        let filename
+      _otherFiltersActive: function (selectedKey, oAllFilters) {
+        let oFilterSet;
+        let hasActiveFilter = false;
 
         switch (selectedKey) {
           case "01":
-            oModel = this.getModel("master3");
-            filename = "Export Excel Delivery Forecast"
+            oFilterSet = oAllFilters.delivery;
+            if (oFilterSet.dataRic ||
+              (oFilterSet.numProg && oFilterSet.numProg.value) ||
+              (oFilterSet.cliente && oFilterSet.cliente.value) ||
+              (oFilterSet.descrcliente && oFilterSet.descrcliente.value) ||
+              (oFilterSet.materiale && oFilterSet.materiale.value) ||
+              (oFilterSet.stato && oFilterSet.stato.value) ||
+              (oFilterSet.messaggio && oFilterSet.messaggio.value)) {
+              hasActiveFilter = true;
+            }
             break;
           case "02":
-            oModel = this.getModel("master3CO");
-            filename = "Export Excel Call Off"
+            oFilterSet = oAllFilters.callOff;
+            if (oFilterSet.dataRic ||
+              (oFilterSet.clienti && oFilterSet.clienti.value) ||
+              (oFilterSet.descrcliente && oFilterSet.descrcliente.value) ||
+              (oFilterSet.materiale && oFilterSet.materiale.value) ||
+              (oFilterSet.reason && oFilterSet.reason.value)) {
+              hasActiveFilter = true;
+            }
             break;
           case "03":
-            oModel = this.getModel("master3SB");
-            filename = "Export Excel Self Billing"
+            oFilterSet = oAllFilters.selfBilling;
+            if (oFilterSet.dataRic ||
+              (oFilterSet.clienti && oFilterSet.clienti.value) ||
+              (oFilterSet.descrClienti && oFilterSet.descrClienti.value) ||
+              (oFilterSet.fornitori && oFilterSet.fornitori.value) ||
+              (oFilterSet.fatture && oFilterSet.fatture.value)) {
+              hasActiveFilter = true;
+            }
             break;
           case "04":
-            oModel = this.getModel("master3DesAdv");
-            filename = "Export Excel Despatch Advice"
+            oFilterSet = oAllFilters.desadv;
+            if (oFilterSet.dataCreaDoc ||
+              (oFilterSet.numDDTCliente && oFilterSet.numDDTCliente.value) ||
+              (oFilterSet.numConsegna && oFilterSet.numConsegna.value) ||
+              (oFilterSet.numiDoc && oFilterSet.numiDoc.value) ||
+              (oFilterSet.bp && oFilterSet.bp.value)) {
+              hasActiveFilter = true;
+            }
             break;
           case "05":
-            oModel = this.getModel("master3Inv");
-            filename = "Export Excel Invoice"
+            oFilterSet = oAllFilters.invoice;
+            if (oFilterSet.dataDocCont ||
+              oFilterSet.dataFattura ||
+              (oFilterSet.numiDoc && oFilterSet.numiDoc.value) ||
+              (oFilterSet.numDocCont && oFilterSet.numDocCont.value) ||
+              (oFilterSet.numFattVend && oFilterSet.numFattVend.value) ||
+              (oFilterSet.bp && oFilterSet.bp.value)) {
+              hasActiveFilter = true;
+            }
             break;
           case "06":
-            oModel = this.getModel("master3Scart");
-            filename = "Export Excel File Scartati"
+            oFilterSet = oAllFilters.scartati;
+            if (oFilterSet.dataRic ||
+              (oFilterSet.nomeFile && oFilterSet.nomeFile.value)) {
+              hasActiveFilter = true;
+            }
             break;
           default:
+            hasActiveFilter = false;
         }
-        let aData = oModel.getProperty("/");
-        if (!aData || aData.length === 0) {
-          MessageToast.show("Nessun dato disponibile per l'esportazione");
+        return hasActiveFilter;
+      },
+      //DOWNLOAD DI EXCEL
+      downloadExcelFile: async function (oEvent) {
+        this.showBusy(0)
+        try {
+          let selectedKey = this.getView().byId("idIconTabBar").getSelectedKey()
+          !selectedKey ? (selectedKey = key) : (selectedKey = selectedKey)
+          const oAllFilters = this.getModel("filtersModel").getData();
+          const bOtherFiltersActive = this._otherFiltersActive(selectedKey, oAllFilters)
+          let aData
+          let filename
+          if (!bOtherFiltersActive) {
+            let oDataModelName, sEntitySet, aFilters = [], aExpands = [], processDataCallback
+            const archivVal = this.getModel("datiAppoggio").getProperty("/currentPage") === "archivio";
+            const baseFilter = new Filter("archiviazione", FilterOperator.EQ, archivVal);
+            aFilters.push(baseFilter);
+
+            switch (selectedKey) {
+              case "01":
+                oDataModelName = "modelloV2";
+                sEntitySet = "/Testata";
+                aExpands = ["master", "posizioni", "posizioni($expand=log($orderby=data,ora),testata)"];
+                filename = "Export Excel Delivery Forecast";
+                processDataCallback = function (responseResults) {
+                  let datiFiltrati = responseResults.filter((x) => x.master !== null && x.posizioni.results.length > 0);
+                  return datiFiltrati.map(testata => ({
+                    ...testata,
+                    posizioni: testata.posizioni && testata.posizioni.results ? Object.values(testata.posizioni.results) : []
+                  }));
+                };
+                break;
+              case "02":
+                oDataModelName = "calloffV2";
+                sEntitySet = "/Testata";
+                aExpands = [`posizioni_testata($filter=archiviazione eq ${archivVal}),posizioni_testata($expand=log_posizioni,testata),master`];
+                filename = "Export Excel Call Off";
+                processDataCallback = function (responseResults) {
+                  let datiFiltrati = responseResults.filter((x) => x.master !== null && x.posizioni_testata.results.length > 0);
+                  return datiFiltrati.map(testata => ({
+                    ...testata,
+                    posizioni_testata: testata.posizioni_testata && testata.posizioni_testata.results ? Object.values(testata.posizioni_testata.results) : []
+                  }));
+                };
+                break;
+              case "03":
+                oDataModelName = "selfBillingV2";
+                sEntitySet = "/Testata";
+                aExpands = [`dettaglio_fattura($filter=archiviazione eq ${archivVal}),dettaglio_fattura($expand=riferimento_ddt,riferimento_ddt/riga_fattura)`];
+                filename = "Export Excel Self Billing";
+                processDataCallback = function (responseResults) {
+                  return responseResults.map(testata => ({
+                    ...testata,
+                    dettaglio_fattura: testata.dettaglio_fattura && testata.dettaglio_fattura.results ? Object.values(testata.dettaglio_fattura.results) : []
+                  }));
+                };
+                break;
+              case "04":
+                oDataModelName = "despatchAdviceV2";
+                sEntitySet = "/Testata";
+                aExpands = [];
+                filename = "Export Excel Despatch Advice";
+                processDataCallback = function (responseResults) { return responseResults; };
+                break;
+              case "05":
+                oDataModelName = "invoiceV2";
+                sEntitySet = "/Invoice";
+                aExpands = [];
+                filename = "Export Excel Invoice";
+                processDataCallback = function (responseResults) { return responseResults; };
+                break;
+              case "06":
+                oDataModelName = "fileScartatiV2";
+                sEntitySet = "/FileScartati";
+                aExpands = [];
+                filename = "Export Excel File Scartati";
+                processDataCallback = function (responseResults) { return responseResults; };
+                break;
+              default:
+                MessageToast.show("Tipo di esportazione non riconosciuto.");
+                this.hideBusy(0);
+                return;
+            }
+            const response = await API.getEntity(this.getOwnerComponent().getModel(oDataModelName), sEntitySet, aFilters, aExpands);
+            if (!response || !response.success || !response.results) {
+              MessageBox.error("Errore durante il recupero dei dati per l'esportazione.");
+              this.hideBusy(0);
+              return;
+            }
+
+            aData = processDataCallback(response.results);
+            if (!aData || aData.length === 0) {
+              MessageToast.show("Nessun dato disponibile per l'esportazione dopo il recupero.");
+              this.hideBusy(0);
+              return;
+            }
+            this.buildSpreadSheet(aData, filename);
+          } else {
+            let oLocalModel;
+            switch (selectedKey) {
+              case "01": oLocalModel = this.getModel("master3"); filename = "Export Excel Delivery Forecast"; break;
+              case "02": oLocalModel = this.getModel("master3CO"); filename = "Export Excel Call Off"; break;
+              case "03": oLocalModel = this.getModel("master3SB"); filename = "Export Excel Self Billing"; break;
+              case "04": oLocalModel = this.getModel("master3DesAdv"); filename = "Export Excel Despatch Advice"; break;
+              case "05": oLocalModel = this.getModel("master3Inv"); filename = "Export Excel Invoice"; break;
+              case "06": oLocalModel = this.getModel("master3Scart"); filename = "Export Excel File Scartati"; break;
+              default: MessageToast.show("Tipo di esportazione non riconosciuto."); this.hideBusy(0); return;
+            }
+            aData = oLocalModel.getProperty("/");
+
+            if (!aData || aData.length === 0) {
+              MessageToast.show("Nessun dato disponibile per l'esportazione dopo il recupero.");
+              MessageToast.show("Nessun dato disponibile per l'esportazione.");
+              this.hideBusy(0);
+              return;
+            }
+            this.buildSpreadSheet(aData, filename);
+          }
+        } catch (error) {
+          MessageBox.error("Errore durante l'esportazione Excel: " + (error.message || error));
+        } finally {
+          this.hideBusy(0)
           return;
         }
-        this.showBusy(0)
-        this.buildSpreadSheet(aData, filename);
-        this.hideBusy(0)
       },
 
       // DOWNLOAD DI EXCEL X DETTAGLI
@@ -885,7 +1036,7 @@ sap.ui.define(
         let exportData = Array.isArray(aExportData) ? aExportData : [aExportData];
         let flatExportData;
         if (!exportData[0].RFFON || exportData[0].RFFON === undefined) {
-          flatExportData =  sKeyCustomData == "deeptable"  ? mapper._formatExcelDataDeeperNesting(exportData) : mapper._formatExcelData(exportData);
+          flatExportData = sKeyCustomData == "deeptable" ? mapper._formatExcelDataDeeperNesting(exportData) : mapper._formatExcelData(exportData);
           //flatExportData = mapper._formatExcelDataDeeperNesting(exportData);
         } else {
           flatExportData = mapper._formatCumulativi(exportData);
@@ -1776,7 +1927,7 @@ sap.ui.define(
         this._resetPageModels()
         this.getRouter().navTo("home");
       },
-      _resetPageModels: function(){
+      _resetPageModels: function () {
         const emptyData = [];
 
         const modelsToReset = [
