@@ -89,7 +89,10 @@
             />
             <m:Text text="{detailData>/master/nome_file}" />
           </m:VBox>
-          <m:VBox class="sapUiTinyMarginBottom" visible="{=${detailData>/numero_idoc} ? true : false }">
+          <m:VBox
+            class="sapUiTinyMarginBottom"
+            visible="{=${detailData>/numero_idoc} ? true : false }"
+          >
             <m:Label
               text="IDoc"
               design="Bold"
@@ -152,7 +155,7 @@
       </m:HBox>
     </headerContent>
     <sections>
-      <ObjectPageSection title="Posizioni" >
+      <ObjectPageSection title="Posizioni">
         <subSections>
           <ObjectPageSubSection>
             <blocks>
@@ -173,7 +176,7 @@
                     ariaLabelledBy="title"
                     sap.ui.fl:flexibility="sap/m/flexibility/EngineFlex"
                   >
-                  <!-- parameters: {
+                    <!-- parameters: {
                     arrayNames: ['log']
                   } -->
                     <!--try-->
@@ -184,10 +187,9 @@
                           text="Esporta excel"
                           icon="sap-icon://excel-attachment"
                           press="downloadExcelFileDett"
-                         
                         >
                           <m:customData>
-                            <core:CustomData key="deeptable"/>
+                            <core:CustomData key="deeptable" />
                           </m:customData>
                         </m:Button>
                         <m:Button
@@ -223,7 +225,7 @@
                         <m:Label text=" " />
                         <ui:template>
                           <m:Button
-                          visible="{= ${detailData>messaggio} === undefined }"
+                            visible="{= ${detailData>messaggio} === undefined }"
                             icon="sap-icon://search"
                             tooltip="Schedulazioni"
                             type="Emphasized"
@@ -244,9 +246,9 @@
                           <m:Button
                             icon="{= ${detailData>stato} === '53' ? 'sap-icon://status-positive' : ${detailData>stato} === '51' ? 'sap-icon://status-negative' : ${detailData>stato} === '64'? 'sap-icon://pending'  : ${detailData>stato} === '50' ? 'sap-icon://cancel' :'sap-icon://in-progress'}"
                             type="{= ${detailData>stato} === '53' ? 'Accept' : ${detailData>stato} === '51' ? 'Negative' : ${detailData>stato} === '64'? 'Critical' : ${detailData>stato} === '50' ? 'Attention' : 'Ghost'}"
-                            tooltip="{= ${detailData>stato} === '53' ? 'Elaborato Positivamente' : ${detailData>stato} === '51' ? 'In Errore' : ${detailData>stato} === '64' ? 'In Elaborazione' : ${detailData>stato} === '50' ? 'Variante: Da non Processare' : 'Non Elaborato'}"           
-                            press="onStatoPress"                                
-                            />
+                            tooltip="{= ${detailData>stato} === '53' ? 'Elaborato Positivamente' : ${detailData>stato} === '51' ? 'In Errore' : ${detailData>stato} === '64' ? 'In Elaborazione' : ${detailData>stato} === '50' ? 'Variante: Da non Processare' : 'Non Elaborato'}"
+                            press="onStatoPress"
+                          />
                         </ui:template>
                       </ui:Column>
                       <ui:Column
@@ -274,7 +276,7 @@
                         </ui:template>
                       </ui:Column>
                       <ui:Column
-                      showSortMenuEntry="false"
+                        showSortMenuEntry="false"
                         width="10rem"
                         tooltip="Codice cliente materiale"
                         app:p13nKey="codice_cliente_materiale_col"
@@ -321,7 +323,6 @@
                           <m:ObjectIdentifier text="{detailData>consignment}" />
                         </ui:template>
                       </ui:Column>
-
                       <ui:Column
                         width="10rem"
                         sortProperty="Punto di scarico"
@@ -479,17 +480,67 @@
                         </ui:template>
                       </ui:Column>
                       <ui:Column
-                      width="10rem"
-                      tooltip="Cumulativo Quantità Ord"
-                      app:p13nKey="cumulativo_quantita_ordinata_col"
-                      sortProperty="Cumulativo Quantità Ord"
-                      showSortMenuEntry="false"
-                    >
-                      <m:Label text="Cumulativo Quant Ord" />
-                      <ui:template>
-                        <m:ObjectIdentifier text="{detailData>cumulativo_quantita_ordinata}" />
-                      </ui:template>
-                    </ui:Column>
+                        width="11rem"
+                        tooltip="Data Val Programma da"
+                        sortProperty="Data Programma Consegna"
+                        app:p13nKey="data_programma_consegna_col"
+                        showSortMenuEntry="false"
+                      >
+                        <m:Label text="Data Val Programma da:" />
+                        <!-- cambio binding -->
+                        <ui:template>
+                          <m:DatePicker
+                            editable="false"
+                            visible="{= ${master3>data_programma_consegna} ? true : false}"
+                            value="{
+                              path: 'master3>data_programma_consegna',
+                              type: 'sap.ui.model.type.Date',
+                              formatOptions: {
+                                pattern: 'dd/MM/yyyy'
+                              }
+                            }"
+                            valueFormat="dd/MM/yyyy"
+                            displayFormat="dd/MM/yyyy"
+                          />
+                        </ui:template>
+                      </ui:Column>
+                      <ui:Column
+                        width="11rem"
+                        tooltip="Data Val Programma a"
+                        sortProperty="Data Val Programma a"
+                        app:p13nKey="data_programma_a_col"
+                        showSortMenuEntry="false"
+                      >
+                        <m:Label text="Data Val Programma a:" />
+                        <!-- cambio binding -->
+                        <ui:template>
+                          <m:DatePicker
+                            editable="false"
+                            visible="{= ${master3>data_validita_programma_a} ? true : false}"
+                            value="{
+                              path: 'master3>data_validita_programma_a',
+                              type: 'sap.ui.model.type.Date',
+                              formatOptions: {
+                                pattern: 'dd/MM/yyyy'
+                              }
+                            }"
+                            valueFormat="dd/MM/yyyy"
+                            displayFormat="dd/MM/yyyy"
+                          />
+                        </ui:template>
+                      </ui:Column>
+                      <ui:Column
+                        width="10rem"
+                        tooltip="Cumulativo Quantità Ord"
+                        app:p13nKey="cumulativo_quantita_ordinata_col"
+                        sortProperty="Cumulativo Quantità Ord"
+                        showSortMenuEntry="false"
+                      >
+                        <m:Label text="Cumulativo Quant Ord" />
+                        <ui:template>
+                          <m:ObjectIdentifier text="{detailData>cumulativo_quantita_ordinata}" />
+                        </ui:template>
+                      </ui:Column>
                       <ui:Column
                         width="13rem"
                         tooltip="Quantità cumulativa ricevuta"
@@ -611,17 +662,17 @@
                         </ui:template>
                       </ui:Column>
                       <ui:Column
-                      width="10rem"
-                      tooltip="Contatto cliente"
-                      sortProperty="Contatto cliente"
-                      app:p13nKey="contatto_cliente_col"
-                      showSortMenuEntry="false"
-                    >
-                      <m:Label text="Contatto cliente" />
-                      <ui:template>
-                        <m:ObjectIdentifier text="{detailData>contatto_cliente}" />
-                      </ui:template>
-                    </ui:Column>
+                        width="10rem"
+                        tooltip="Contatto cliente"
+                        sortProperty="Contatto cliente"
+                        app:p13nKey="contatto_cliente_col"
+                        showSortMenuEntry="false"
+                      >
+                        <m:Label text="Contatto cliente" />
+                        <ui:template>
+                          <m:ObjectIdentifier text="{detailData>contatto_cliente}" />
+                        </ui:template>
+                      </ui:Column>
                     </ui:columns>
                   </ui:Table>
                 </m:ScrollContainer>

@@ -665,7 +665,6 @@ sap.ui.define(
               testata.posizioni = Object.values(testata.posizioni.results);
             });
             if (top) {
-
               const oTreeModel = this.getModel("master3") || new JSONModel({});
               let aCurrentData = oTreeModel.getData()
               if (!Array.isArray(aCurrentData)) {

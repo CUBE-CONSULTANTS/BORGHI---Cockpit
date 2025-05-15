@@ -25,6 +25,21 @@ sap.ui.define(["../model/API", "../model/formatter"], function (API, formatter) 
             path: "destinatario",
           },
           {
+            key: "data_programma_consegna_col",
+            label: "Data Val Programma da",
+            path: "data_programma_consegna"
+          },
+          {
+            key: "data_programma_consegna_col",
+            label: "Data Val Programma da",
+            path: "data_programma_consegna"
+          },
+          {
+            key: "data_programma_a_col",
+            label: "Data Val Programma a",
+            path: "data_validita_programma_a"
+          },
+          {
             key: "codice_cliente_materiale_col",
             label: "Codice cliente materiale",
             path: "codice_cliente_materiale",
@@ -278,7 +293,7 @@ sap.ui.define(["../model/API", "../model/formatter"], function (API, formatter) 
           aFilters.push(new sap.ui.model.Filter("posizioni/codice_cliente_materiale", sap.ui.model.FilterOperator.EQ, oFilterSet.materiale.value));
         }
         if (oFilterSet.stato && oFilterSet.stato.value) {
-          
+
           if (oFilterSet.stato.value === "In Errore") {
             oFilterSet.stato.value = "51";
           } else if (oFilterSet.stato.value === "Non Elaborato") {
@@ -373,7 +388,7 @@ sap.ui.define(["../model/API", "../model/formatter"], function (API, formatter) 
           aFilters.push(new sap.ui.model.Filter("data_creazione_doc_contabile", sap.ui.model.FilterOperator.EQ, formattedDate));
         }
         if (oFilterSet.dataFattura) {
-          let oDataFatt = formatter.returnDate(oFilterSet.dataFattura, "dd/MM/yyyy", "yyyyMMdd");      
+          let oDataFatt = formatter.returnDate(oFilterSet.dataFattura, "dd/MM/yyyy", "yyyyMMdd");
           let formattedDate = formatter.convertiDataInTimestampSAP(oDataFatt);
           aFilters.push(new sap.ui.model.Filter("data_di_fatturazione", sap.ui.model.FilterOperator.EQ, formattedDate));
         }
@@ -404,57 +419,57 @@ sap.ui.define(["../model/API", "../model/formatter"], function (API, formatter) 
       return aFilters;
     },
     getConfigForKey: function (key) {
-    var configMap = {  
-      "01": {
-        model: "modelloV2",
-        endpoints: [
-          { path: "/ProgressivoInvioVH", property: "/delivery/numProg/items", map: function(o) { return { Key: o.numero_progressivo_invio, Text: o.numero_progressivo_invio }; } },
-          { path: "/ClienteVH", property: "/delivery/cliente/items", map: function(o) { return { Key: o.codice_cliente, Text: o.codice_cliente }; } },
-          { path: "/DescrClienteVH", property: "/delivery/descrcliente/items", map: function(o) { return { Key: o.descrizione_cliente, Text: o.descrizione_cliente }; } },
-          { path: "/MaterialeVH", property: "/delivery/materiale/items", map: function(o) { return { Key: o.codice_cliente_materiale, Text: o.codice_cliente_materiale }; } },
-          { path: "/StatoVH", property: "/delivery/stato/items", map: function(o) { return { Key: o.stato, Text: o.descrizione_stato }; } },
-          { path: "/MessaggioVH", property: "/delivery/messaggio/items", map: function(o) { return { Key: o.messaggio, Text: o.messaggio }; } }
-        ]
-      },
-      "02": {
-        model: "calloffV2",
-        endpoints: [
-          { path: "/ClienteVH", property: "/callOff/clienti/items", map: function(o) { return { Key: o.codice_cliente_committente, Text: o.codice_cliente_committente }; } },
-          { path: "/DescrClienteVH", property: "/callOff/descrcliente/items", map: function(o) { return { Key: o.codice_cliente_committente_descrizione, Text: o.codice_cliente_committente_descrizione }; } },
-          { path: "/MaterialeVH", property: "/callOff/materiale/items", map: function(o) { return { Key: o.posizione_6_28, Text: o.posizione_6_28 }; } },
-          { path: "/ReasonVH", property: "/callOff/reason/items", map: function(o) { return { Key: o.posizione_43_44, Text: o.posizione_43_44 }; } }
-        ]
-      },
-      "03": {
-        model: "selfBillingV2",
-        endpoints: [
-          { path: "/ClienteVH", property: "/selfBilling/clienti/items", map: function(o) { return { Key: o.customer, Text: o.customer }; } },
-          { path: "/NumeroFatturaVH", property: "/selfBilling/fatture/items", map: function(o) { return { Key: o.numero_fattura, Text: o.numero_fattura }; } },
-          { path: "/FornitoreVH", property: "/selfBilling/fornitori/items", map: function(o) { return { Key: o.supplier, Text: o.supplier }; } }
-        ]
-      },
-      "04": {
-        model: "despatchAdviceV2",
-        endpoints: [
-          { path: "/NumeroIDocVH", property: "/desadv/numiDoc/items", map: function(o) { return { Key: o.numero_idoc, Text: o.numero_idoc }; } },
-          { path: "/NumeroConsegnaVH", property: "/desadv/numConsegna/items", map: function(o) { return { Key: o.numero_consegna, Text: o.numero_consegna }; } },
-          { path: "/NumDDTClienteVH", property: "/desadv/numDDTCliente/items", map: function(o) { return { Key: o.numero_ddt, Text: o.numero_ddt }; } },
-          { path: "/BusinessPartnerVH", property: "/desadv/bp/items", map: function(o) { return { Key: o.numero_bp_ship_to, Text: o.numero_bp_ship_to }; } }
-        ]
-      },
-      "05": {
-        model: "invoiceV2",
-        endpoints: [
-          { path: "/NumeroIDocVH", property: "/invoice/numiDoc/items", map: function(o) { return { Key: o.numero_idoc, Text: o.numero_idoc }; } },
-          { path: "/NumeroFatturaVenditaVH", property: "/invoice/numFattVend/items", map: function(o) { return { Key: o.fattura_di_vendita, Text: o.fattura_di_vendita }; } },
-          { path: "/NumeroDocContabileVH", property: "/invoice/numDocCont/items", map: function(o) { return { Key: o.numero_documento_contabile, Text: o.numero_documento_contabile }; } },
-          { path: "/BusinessPartnerVH", property: "/invoice/bp/items", map: function(o) { return { Key: o.BP, Text: o.BP }; } }
-        ]
-      },
-      "06": {
-        static: true
+      var configMap = {
+        "01": {
+          model: "modelloV2",
+          endpoints: [
+            { path: "/ProgressivoInvioVH", property: "/delivery/numProg/items", map: function (o) { return { Key: o.numero_progressivo_invio, Text: o.numero_progressivo_invio }; } },
+            { path: "/ClienteVH", property: "/delivery/cliente/items", map: function (o) { return { Key: o.codice_cliente, Text: o.codice_cliente }; } },
+            { path: "/DescrClienteVH", property: "/delivery/descrcliente/items", map: function (o) { return { Key: o.descrizione_cliente, Text: o.descrizione_cliente }; } },
+            { path: "/MaterialeVH", property: "/delivery/materiale/items", map: function (o) { return { Key: o.codice_cliente_materiale, Text: o.codice_cliente_materiale }; } },
+            { path: "/StatoVH", property: "/delivery/stato/items", map: function (o) { return { Key: o.stato, Text: o.descrizione_stato }; } },
+            { path: "/MessaggioVH", property: "/delivery/messaggio/items", map: function (o) { return { Key: o.messaggio, Text: o.messaggio }; } }
+          ]
+        },
+        "02": {
+          model: "calloffV2",
+          endpoints: [
+            { path: "/ClienteVH", property: "/callOff/clienti/items", map: function (o) { return { Key: o.codice_cliente_committente, Text: o.codice_cliente_committente }; } },
+            { path: "/DescrClienteVH", property: "/callOff/descrcliente/items", map: function (o) { return { Key: o.codice_cliente_committente_descrizione, Text: o.codice_cliente_committente_descrizione }; } },
+            { path: "/MaterialeVH", property: "/callOff/materiale/items", map: function (o) { return { Key: o.posizione_6_28, Text: o.posizione_6_28 }; } },
+            { path: "/ReasonVH", property: "/callOff/reason/items", map: function (o) { return { Key: o.posizione_43_44, Text: o.posizione_43_44 }; } }
+          ]
+        },
+        "03": {
+          model: "selfBillingV2",
+          endpoints: [
+            { path: "/ClienteVH", property: "/selfBilling/clienti/items", map: function (o) { return { Key: o.customer, Text: o.customer }; } },
+            { path: "/NumeroFatturaVH", property: "/selfBilling/fatture/items", map: function (o) { return { Key: o.numero_fattura, Text: o.numero_fattura }; } },
+            { path: "/FornitoreVH", property: "/selfBilling/fornitori/items", map: function (o) { return { Key: o.supplier, Text: o.supplier }; } }
+          ]
+        },
+        "04": {
+          model: "despatchAdviceV2",
+          endpoints: [
+            { path: "/NumeroIDocVH", property: "/desadv/numiDoc/items", map: function (o) { return { Key: o.numero_idoc, Text: o.numero_idoc }; } },
+            { path: "/NumeroConsegnaVH", property: "/desadv/numConsegna/items", map: function (o) { return { Key: o.numero_consegna, Text: o.numero_consegna }; } },
+            { path: "/NumDDTClienteVH", property: "/desadv/numDDTCliente/items", map: function (o) { return { Key: o.numero_ddt, Text: o.numero_ddt }; } },
+            { path: "/BusinessPartnerVH", property: "/desadv/bp/items", map: function (o) { return { Key: o.numero_bp_ship_to, Text: o.numero_bp_ship_to }; } }
+          ]
+        },
+        "05": {
+          model: "invoiceV2",
+          endpoints: [
+            { path: "/NumeroIDocVH", property: "/invoice/numiDoc/items", map: function (o) { return { Key: o.numero_idoc, Text: o.numero_idoc }; } },
+            { path: "/NumeroFatturaVenditaVH", property: "/invoice/numFattVend/items", map: function (o) { return { Key: o.fattura_di_vendita, Text: o.fattura_di_vendita }; } },
+            { path: "/NumeroDocContabileVH", property: "/invoice/numDocCont/items", map: function (o) { return { Key: o.numero_documento_contabile, Text: o.numero_documento_contabile }; } },
+            { path: "/BusinessPartnerVH", property: "/invoice/bp/items", map: function (o) { return { Key: o.BP, Text: o.BP }; } }
+          ]
+        },
+        "06": {
+          static: true
+        }
       }
-    }
       return configMap[key] || null;
     },
     _formatCumulativi: function (aData) {
@@ -487,10 +502,10 @@ sap.ui.define(["../model/API", "../model/formatter"], function (API, formatter) 
         NumeroLips3: "Num. DDT 3",
         QuanLips3: "Qtà DDT 3",
         DataInitCalcCumu: "Data inizio calcolo cumulativi",
-        DataFineCalcCumu: "Data fine calcolo cumulativi",       
+        DataFineCalcCumu: "Data fine calcolo cumulativi",
         IdocNum: "Numero IDOC",
       };
-      
+
       let newDataset = aData.map((element) => {
         let newElement = {};
         for (let key in element) {
@@ -514,7 +529,7 @@ sap.ui.define(["../model/API", "../model/formatter"], function (API, formatter) 
           "Rif. Ordine Cliente": element["Rif. Ordine Cliente"],
           "Cumulativo Ricevuto": element["Cumulativo Ricevuto"],
           "Cumulativo Spedito": element["Cumulativo Spedito"],
-          "Cumulativo in transito": element["Cumulativo in transito"],       
+          "Cumulativo in transito": element["Cumulativo in transito"],
           "Data DDT 1": element["Data DDT 1"],
           "Num. DDT 1": element["Num. DDT 1"],
           "Qtà DDT 1": element["Qtà DDT 1"],
@@ -645,8 +660,8 @@ sap.ui.define(["../model/API", "../model/formatter"], function (API, formatter) 
         ["edi", "payload_db", "id"].forEach((key) => delete cleanedData.master[key]);
       }
       Object.keys(cleanedData).forEach((key) => {
-        
-        if (key.toLowerCase().includes("data_nota") || key.toLowerCase().includes("data_bolla") || key.toLowerCase().includes("data_fattura")) {
+        if (key.toLowerCase().includes("data_nota") || key.toLowerCase().includes("data_bolla") ||
+          key.toLowerCase().includes("data_fattura") || key.toLowerCase().includes("data_validita_programma_da") || key.toLowerCase().includes("data_validita_programma_a")) {
           cleanedData[key] = formatter.returnDate(cleanedData[key], "yyyyMMdd", "dd/MM/YYYY");
         }
         if (

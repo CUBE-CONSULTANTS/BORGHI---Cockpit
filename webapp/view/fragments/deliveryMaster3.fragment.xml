@@ -285,7 +285,9 @@
           <ObjectIdentifier title="{master3>numero_idoc}" />
         </ui:template>
       </ui:Column>
-      <ui:Column
+      
+      
+  <ui:Column
        width="6rem"
         hAlign="Center"
         tooltip="Stato"
@@ -306,54 +308,6 @@
           <!-- <Text text="X"/> -->
         </ui:template>
       </ui:Column>
-      <ui:Column
-      width="11rem"
-      tooltip="Data Val Programma da"
-      visible="false"
-    >
-      <Label text="Data Val Programma da:" />
-      <!-- cambio binding -->
-      <ui:template>
-        <DatePicker
-          editable="false"
-          visible="{= ${master3>data_validita_programma_da} ? true : false}"
-          value="{
-            path: 'master3>data_validita_programma_da',
-            type: 'sap.ui.model.type.Date',
-            formatOptions: {
-              pattern: 'dd/MM/yyyy'
-            }
-          }"
-          valueFormat="dd/MM/yyyy"
-          displayFormat="dd/MM/yyyy"
-        />
-
-      </ui:template>
-    </ui:Column>
-    <ui:Column
-    width="11rem"
-    tooltip="Data Val Programma a"
-    visible="false"
-  >
-    <Label text="Data Val Programma a:" />
-    <!-- cambio binding -->
-    <ui:template>
-      <DatePicker
-        editable="false"
-        visible="{= ${master3>data_validita_programma_a} ? true : false}"
-        value="{
-          path: 'master3>data_validita_programma_a',
-          type: 'sap.ui.model.type.Date',
-          formatOptions: {
-            pattern: 'dd/MM/yyyy'
-          }
-        }"
-        valueFormat="dd/MM/yyyy"
-        displayFormat="dd/MM/yyyy"
-      />
-
-    </ui:template>
-  </ui:Column>
       <ui:Column
         width="15rem"
         hAlign="Center"
