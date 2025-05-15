@@ -482,8 +482,8 @@
                       <ui:Column
                         width="11rem"
                         tooltip="Data Val Programma da"
-                        sortProperty="Data Programma Consegna"
-                        app:p13nKey="data_programma_consegna_col"
+                        sortProperty="Data Val Programma da"
+                        app:p13nKey="data_val_programma_da_col"
                         showSortMenuEntry="false"
                       >
                         <m:Label text="Data Val Programma da:" />
@@ -491,9 +491,9 @@
                         <ui:template>
                           <m:DatePicker
                             editable="false"
-                            visible="{= ${master3>data_programma_consegna} ? true : false}"
+                            visible="{= ${detailData>data_programma_consegna} ? true : false}"
                             value="{
-                              path: 'master3>data_programma_consegna',
+                              path: 'detailData>data_programma_consegna',
                               type: 'sap.ui.model.type.Date',
                               formatOptions: {
                                 pattern: 'dd/MM/yyyy'
@@ -516,9 +516,9 @@
                         <ui:template>
                           <m:DatePicker
                             editable="false"
-                            visible="{= ${master3>data_validita_programma_a} ? true : false}"
+                            visible="{= ${detailData>data_validita_programma_a} ? true : false}"
                             value="{
-                              path: 'master3>data_validita_programma_a',
+                              path: 'detailData>data_validita_programma_a',
                               type: 'sap.ui.model.type.Date',
                               formatOptions: {
                                 pattern: 'dd/MM/yyyy'
@@ -529,6 +529,7 @@
                           />
                         </ui:template>
                       </ui:Column>
+                     
                       <ui:Column
                         width="10rem"
                         tooltip="Cumulativo Quantità Ord"

@@ -25,12 +25,7 @@ sap.ui.define(["../model/API", "../model/formatter"], function (API, formatter) 
             path: "destinatario",
           },
           {
-            key: "data_programma_consegna_col",
-            label: "Data Val Programma da",
-            path: "data_programma_consegna"
-          },
-          {
-            key: "data_programma_consegna_col",
+            key: "data_val_programma_da_col",
             label: "Data Val Programma da",
             path: "data_programma_consegna"
           },
@@ -654,18 +649,24 @@ sap.ui.define(["../model/API", "../model/formatter"], function (API, formatter) 
         "testata",
         "schedulazioni",
         "archiviazione",
-        "DATI"
+        "DATI",
+        
       ].forEach((key) => delete cleanedData[key]);
       if (cleanedData.master) {
         ["edi", "payload_db", "id"].forEach((key) => delete cleanedData.master[key]);
       }
       Object.keys(cleanedData).forEach((key) => {
-        if (key.toLowerCase().includes("data_nota") || key.toLowerCase().includes("data_bolla") ||
-          key.toLowerCase().includes("data_fattura") || key.toLowerCase().includes("data_validita_programma_da") || key.toLowerCase().includes("data_validita_programma_a")) {
+        if (key === "data_programma_consegna") {
+          cleanedData["data_validita_programma_da"] = cleanedData[key];
+          delete cleanedData[key];
+          key = "data_validita_programma_da";
+        }
+        if (key.toLowerCase().includes("data_nota") || key.toLowerCase().includes("data_bolla")  ||
+          key.toLowerCase().includes("data_fattura") ) {
           cleanedData[key] = formatter.returnDate(cleanedData[key], "yyyyMMdd", "dd/MM/YYYY");
         }
         if (
-          (key.toLowerCase().includes("data") || key.toLowerCase().includes("date")) &&
+          (key.toLowerCase().includes("data_programma_consegna") || key.toLowerCase().includes("data_validita_programma_da") || key.toLowerCase().includes("data_validita_programma_a") || key.toLowerCase().includes("data") || key.toLowerCase().includes("date")) &&
           !(key.toLowerCase().includes("data_nota") || key.toLowerCase().includes("data_bolla") || key.toLowerCase().includes("data_fattura"))
         ) {
           cleanedData[key] = formatter.formatDate(cleanedData[key]);
