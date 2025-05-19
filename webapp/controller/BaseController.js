@@ -1884,6 +1884,7 @@ sap.ui.define(
           detail = this.getModel("master3").getProperty(`${detailPath}`);
 
           if (level) {
+            
             this.getOwnerComponent().getModel("datiAppoggio").setProperty("/posizioneCorrente", detail);
             let oNextUIState;
             this.getOwnerComponent()

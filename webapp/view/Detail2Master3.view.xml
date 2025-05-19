@@ -28,30 +28,12 @@
       <f:DynamicPageHeader pinnable="true">
         <layout:HorizontalLayout allowWrapping="true">
           <layout:VerticalLayout class="sapUiMediumMarginEnd">
-            <m:ObjectAttribute
-            title="Codice cliente materiale"
-            text="{detailData2>/DettaglioMaster3/codiceClienteMateriale}"
-          />
-          <m:ObjectAttribute
-          title="Descr Materiale "
-          text="{detailData2>/DettaglioMaster3/materiale}"
-        />
-            <m:ObjectAttribute
-              title="Idoc"
-              text="{detailData2>/DettaglioMaster3/idoc}"
-            />
-            <m:ObjectAttribute
-              title="N. progressivo invio"
-              text="{detailData2>/DettaglioMaster3/numeroProgressivoInvio}"
-            />
-            <m:ObjectAttribute
-              title="Cliente"
-              text="{detailData2>/DettaglioMaster3/cliente}"
-            />
-            <m:ObjectAttribute
-              title="N. ordine di acquisto"
-              text="{detailData2>/DettaglioMaster3/numeroOrdineAcquisto}"
-            />
+          <m:ObjectAttribute title="Codice cliente materiale" text="{detailSched>/codiceClienteMateriale}" />
+            <m:ObjectAttribute title="Descr Materiale" text="{detailSched>/materiale}" />
+            <m:ObjectAttribute title="Idoc" text="{detailSched>/idoc}" />
+            <m:ObjectAttribute title="N. progressivo invio" text="{detailSched>/numeroProgressivoInvio}" />
+            <m:ObjectAttribute title="Cliente" text="{detailSched>/cliente}" />
+            <m:ObjectAttribute title="N. ordine di acquisto" text="{detailSched>/numeroOrdineAcquisto}" />
 
           </layout:VerticalLayout>
         </layout:HorizontalLayout>
