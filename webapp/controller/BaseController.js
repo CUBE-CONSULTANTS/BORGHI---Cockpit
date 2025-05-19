@@ -235,6 +235,11 @@ sap.ui.define(
       },
       //NAVIGAZIONE VERSO VARIAZIONI
       navToAPP: function (oEvent) {
+        if(this.getRouter()._getLastMatchedRouteName() === 'Detail2Master3'){
+          const oLayoutModel = this.getOwnerComponent().getModel("layout")
+          const sCloseMidColumnLayout = oLayoutModel.getProperty("/actionButtonsInfo/midColumn/closeColumn")
+          this.getView().getParent().getParent().setLayout(sCloseMidColumnLayout)
+        }
         let level = oEvent.getSource().getParent().getParent().getBindingContext("master3").getPath();
         let oCodArt = oEvent.getSource().getParent().getParent().getBindingContext("master3").getObject().codice_cliente_materiale;
 
@@ -248,6 +253,7 @@ sap.ui.define(
           codice_cliente: oCodCliente,
         });
         if (level.includes("posizioni")) {
+
           this.getRouter().navTo("master", {
             prevApp: this.getOwnerComponent().getModel("datiAppoggio").getProperty("/currentPage"),
           });
@@ -1883,8 +1889,7 @@ sap.ui.define(
           detailPath = oEvent.getSource().getParent().getBindingContext("master3").getPath();
           detail = this.getModel("master3").getProperty(`${detailPath}`);
 
-          if (level) {
-            
+          if (level) {      
             this.getOwnerComponent().getModel("datiAppoggio").setProperty("/posizioneCorrente", detail);
             let oNextUIState;
             this.getOwnerComponent()
