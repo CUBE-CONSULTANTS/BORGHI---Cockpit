@@ -128,7 +128,7 @@ xmlns:mvc="sap.ui.core.mvc">
             <Button
               icon="sap-icon://sort"
               text="Ordinamento"
-              press="sortCategories"
+              press="userSort"
             />
             <Button
             text="Esporta excel"

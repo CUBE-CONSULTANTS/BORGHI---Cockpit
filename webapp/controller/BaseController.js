@@ -154,43 +154,62 @@ sap.ui.define(
         }
       },
       //UTILITY X TUTTE LE TABELLE
+      userSort: function(){
+        this._userTriggeredSort = true;
+        this.sortCategories();
+        this._userTriggeredSort = false;
+      },
       sortCategories: function () {
         let oTable;
         let aSorters = [];
-        switch (this.getView().byId("idIconTabBar").getSelectedKey()) {
+        let selectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
+
+        switch (selectedKey) {
           case "01":
             oTable = this.byId("treetableMain");
-            aSorters = this.sortTables(oTable, ["codice_cliente", "numero_progressivo_invio"]);
+            aSorters = this.sortTables(oTable, ["codice_cliente", "numero_progressivo_invio"], selectedKey);
             break;
           case "02":
             oTable = this.byId("treetableCallOff");
-            aSorters = this.sortTables(oTable, ["codice_terre_cliente", "progressivo_invio"]);
+            aSorters = this.sortTables(oTable, ["codice_cliente_committente", "progressivo_invio"], selectedKey);
             break;
           case "03":
             oTable = this.byId("treetableSB");
-            aSorters = this.sortTables(oTable, ["customer", "data_ricezione"]);
+            aSorters = this.sortTables(oTable, ["customer", "data_ricezione"], selectedKey);
             break;
           case "04":
             oTable = this.byId("tableDes");
-            aSorters = this.sortTables(oTable, ["data_creazione_documento", "numero_ddt"]);
+            aSorters = this.sortTables(oTable, ["data_creazione_documento", "numero_ddt"], selectedKey);
             break;
           case "05":
             oTable = this.byId("tableInvoice");
-            aSorters = this.sortTables(oTable, ["data_di_fatturazione", "fattura_di_vendita"]);
+            aSorters = this.sortTables(oTable, ["data_di_fatturazione", "fattura_di_vendita"], selectedKey);
             break;
           case "06":
             oTable = this.byId("tableScartati");
-            aSorters = this.sortTables(oTable, ["filename", "data_ricezione"]);
+            aSorters = this.sortTables(oTable, ["filename", "data_ricezione"], selectedKey);
             break;
           default:
             return;
         }
       },
-      sortTables: function (table, aSortFields) {
+      sortTables: function (table, aSortFields, key) {
         let oBinding = table.getBinding("rows");
-        let aCurrentSorters = oBinding.aSorters || [];
-        let bDescending = aCurrentSorters.length === 0 || !aCurrentSorters[0].bDescending;
-        let aSorters = aSortFields.map((field) => new sap.ui.model.Sorter(field, bDescending));
+        if (!oBinding) return;
+        this._sortDirections = this._sortDirections || {};
+        this._sortInitialized = this._sortInitialized || {};
+        let bDescending;
+        if (!this._sortInitialized[key]) {
+          bDescending = false;
+          this._sortDirections[key] = bDescending;
+          this._sortInitialized[key] = true;
+        } else if (this._userTriggeredSort) {
+          bDescending = !this._sortDirections[key];
+          this._sortDirections[key] = bDescending;
+        } else {
+          bDescending = this._sortDirections[key];
+        }
+        const aSorters = aSortFields.map(field => new sap.ui.model.Sorter(field, bDescending));
         oBinding.sort(aSorters);
       },
       onCollapseAll: function () {
@@ -746,7 +765,7 @@ sap.ui.define(
         } catch (error) {
           MessageBox.error("Errore durante la ricezione dei dati");
         } finally {
-
+          this.sortCategories()
           this.onExpandFirstLevel()
           this.hideBusy(0);
         }
