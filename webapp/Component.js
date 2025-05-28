@@ -25,7 +25,7 @@ sap.ui.define(
         this.getRouter().initialize();
         this.getRouter().attachRouteMatched(this._onRouteMatched, this);
         this.setModel(models.createLayoutModel(), "layout");
-
+        sap.ui.getCore().getConfiguration().setLanguage("it-IT")
         this.setModel(
           new JSONModel({
             testata: "",
