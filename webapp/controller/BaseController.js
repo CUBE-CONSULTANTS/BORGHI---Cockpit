@@ -1222,12 +1222,12 @@ sap.ui.define(
         let testate = [];
         let selectedPos = [];
         let flag = false;
-
+        let clonedItems
         if (indices.length !== 0) {
-          let aSelectedItems = indices.map(function (iIndex) {
-            return table.getContextByIndex(iIndex).getObject();
+          let aSelectedItems = indices.map(function (iIndex) {  
+           return structuredClone(table.getContextByIndex(iIndex).getObject())     
           });
-
+           
           aSelectedItems = aSelectedItems
             .map((item) => {
               if (item.posizioni) {
@@ -1267,7 +1267,7 @@ sap.ui.define(
                     testate.forEach((x) => {
                       if (x.hasOwnProperty("posizioni")) {
                         x.posizioni.forEach((pos) => (pos["numero_progressivo_invio"] = x.numero_progressivo_invio));
-                        selectedPos = selectedPos.concat(x.posizioni);
+                       selectedPos = selectedPos.concat(x.posizioni);
                       } else if (x.hasOwnProperty("posizioni_testata")) {
                         x.posizioni_testata.forEach((pos) => (pos["numero_progressivo_invio"] = x.progressivo_invio));
                         selectedPos = selectedPos.concat(x.posizioni_testata);

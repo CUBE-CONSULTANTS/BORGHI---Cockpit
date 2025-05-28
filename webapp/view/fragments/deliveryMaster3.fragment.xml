@@ -205,7 +205,7 @@
             tooltip="{=${master3>master/template} === 'LOCALE' ? 'Caricamento manuale' : 'Caricamento in cloud'}"
           />
         </ui:template>
-      </ui:Column>
+      </ui:Column>  
       <ui:Column
         width="11rem"
         tooltip="Cliente"
