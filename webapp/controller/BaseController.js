@@ -155,15 +155,14 @@ sap.ui.define(
       },
       //UTILITY X TUTTE LE TABELLE
       userSort: function(){
-        this._userTriggeredSort = true;
+        // this._userTriggeredSort = true;
         this.sortCategories();
-        this._userTriggeredSort = false;
+        // this._userTriggeredSort = false;
       },
       sortCategories: function () {
         let oTable;
         let aSorters = [];
         let selectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
-
         switch (selectedKey) {
           case "01":
             oTable = this.byId("treetableMain");
@@ -179,7 +178,7 @@ sap.ui.define(
             break;
           case "04":
             oTable = this.byId("tableDes");
-            aSorters = this.sortTables(oTable, ["data_creazione_documento", "numero_ddt"], selectedKey);
+            aSorters = this.sortTables(oTable, ["numero_idoc","numero_consegna"], selectedKey);
             break;
           case "05":
             oTable = this.byId("tableInvoice");
@@ -194,21 +193,20 @@ sap.ui.define(
         }
       },
       sortTables: function (table, aSortFields, key) {
+        
         let oBinding = table.getBinding("rows");
         if (!oBinding) return;
         this._sortDirections = this._sortDirections || {};
         this._sortInitialized = this._sortInitialized || {};
         let bDescending;
         if (!this._sortInitialized[key]) {
-          bDescending = false;
+          bDescending = true;
           this._sortDirections[key] = bDescending;
           this._sortInitialized[key] = true;
-        } else if (this._userTriggeredSort) {
+        } else{
           bDescending = !this._sortDirections[key];
           this._sortDirections[key] = bDescending;
-        } else {
-          bDescending = this._sortDirections[key];
-        }
+        } 
         const aSorters = aSortFields.map(field => new sap.ui.model.Sorter(field, bDescending));
         oBinding.sort(aSorters);
       },
@@ -484,7 +482,7 @@ sap.ui.define(
               if (index !== -1) aFilters.splice(index, 1);
             }
           });
-          let expandQuery = `master,posizioni,posizioni($expand=log($orderby=data,ora),testata)`;
+          let expandQuery = `master,posizioni,posizioni($expand=log($orderby=data,ora),testata)&$orderby=codice_cliente,numero_progressivo_invio`;
           let posizioniFilter = "";
           let masterFilter = "";
           let logFilter = "";
@@ -516,20 +514,20 @@ sap.ui.define(
           }
           if (posizioniFilter) {
             if (masterFilter) {
-              expandQuery = `master($filter=${masterFilter}),posizioni($filter=${posizioniFilter}),posizioni($expand=log($orderby=data,ora),testata)`;
+              expandQuery = `master($filter=${masterFilter}),posizioni($filter=${posizioniFilter}),posizioni($expand=log($orderby=data,ora),testata)&$orderby=codice_cliente,numero_progressivo_invio`;
             } else if (logFilter) {
-              expandQuery = `master,posizioni($filter=${posizioniFilter}),posizioni($expand=log($filter=${logFilter};$orderby=data,ora),testata)`;
+              expandQuery = `master,posizioni($filter=${posizioniFilter}),posizioni($expand=log($filter=${logFilter};$orderby=data,ora),testata)&$orderby=codice_cliente,numero_progressivo_invio`;
             } else {
-              expandQuery = `master,posizioni($filter=${posizioniFilter}),posizioni($expand=log($orderby=data,ora),testata)`;
+              expandQuery = `master,posizioni($filter=${posizioniFilter}),posizioni($expand=log($orderby=data,ora),testata)&$orderby=codice_cliente,numero_progressivo_invio`;
             }
           } else if (masterFilter) {
-            expandQuery = `master($filter=${masterFilter}),posizioni,posizioni($expand=log($orderby=data,ora),testata)`;
+            expandQuery = `master($filter=${masterFilter}),posizioni,posizioni($expand=log($orderby=data,ora),testata)&$orderby=codice_cliente,numero_progressivo_invio`;
           } else if (logFilter) {
-            expandQuery = `master,posizioni,posizioni($expand=log($filter=${logFilter};$orderby=data,ora),testata)`;
+            expandQuery = `master,posizioni,posizioni($expand=log($filter=${logFilter};$orderby=data,ora),testata)&$orderby=codice_cliente,numero_progressivo_invio`;
           } else if (logFilter && masterFilter) {
-            expandQuery = `master($filter=${masterFilter}),posizioni,posizioni($expand=log($filter=${logFilter};$orderby=data,ora),testata)`;
+            expandQuery = `master($filter=${masterFilter}),posizioni,posizioni($expand=log($filter=${logFilter};$orderby=data,ora),testata)&$orderby=codice_cliente,numero_progressivo_invio`;
           } else {
-            expandQuery = `master,posizioni,posizioni($expand=log($orderby=data,ora),testata)`;
+            expandQuery = `master,posizioni,posizioni($expand=log($orderby=data,ora),testata)&$orderby=codice_cliente,numero_progressivo_invio`;
           }
           if (oEvent) {
             this.getModel("pagination").setProperty("/", {
@@ -543,7 +541,7 @@ sap.ui.define(
           const oPagination = this.getModel("pagination").getData();
           const top = oPagination.pageSize;
           const skip = oPagination.currentPage * oPagination.pageSize;
-          if (aFilters.length === 1 && aFilters[0].sPath === 'archiviazione' && expandQuery === 'master,posizioni,posizioni($expand=log($orderby=data,ora),testata)') {
+          if (aFilters.length === 1 && aFilters[0].sPath === 'archiviazione' && expandQuery === 'master,posizioni,posizioni($expand=log($orderby=data,ora),testata)&$orderby=codice_cliente,numero_progressivo_invio') {
             await this.callData(this.getOwnerComponent().getModel("modelloV2"), "/Testata", aFilters, [expandQuery], "01", filtrato, top, skip);
           } else {
             await this.callData(this.getOwnerComponent().getModel("modelloV2"), "/Testata", aFilters, [expandQuery], "01", filtrato, undefined, undefined);
@@ -582,7 +580,7 @@ sap.ui.define(
           if (filters.data_ricezione) {
             masterFilter = `($filter=data_ricezione eq '${filters.data_ricezione.oValue1}')`;
           }
-          let expandQuery = `posizioni_testata($filter=${posizioniFilter}),posizioni_testata($expand=log_posizioni,testata),master${masterFilter}`;
+          let expandQuery = `posizioni_testata($filter=${posizioniFilter}),posizioni_testata($expand=log_posizioni,testata),master${masterFilter}&$orderby=codice_cliente_committente,progressivo_invio`;
           if (oEvent) {
             this.getModel("pagination").setProperty("/", {
               pageSize: 25,
@@ -596,7 +594,7 @@ sap.ui.define(
           const top = oPagination.pageSize;
           const skip = oPagination.currentPage * oPagination.pageSize;
 
-          if (aFilters.length === 0 && expandQuery === `posizioni_testata($filter=archiviazione eq ${valPosArch}),posizioni_testata($expand=log_posizioni,testata),master`) {
+          if (aFilters.length === 0 && expandQuery === `posizioni_testata($filter=archiviazione eq ${valPosArch}),posizioni_testata($expand=log_posizioni,testata),master&$orderby=codice_cliente_committente,progressivo_invio`) {
             await this.callData(this.getOwnerComponent().getModel("calloffV2"), "/Testata", aFilters, [expandQuery], "02", filtrato, top, skip);
           } else {
             await this.callData(this.getOwnerComponent().getModel("calloffV2"), "/Testata", aFilters, [expandQuery], "02", filtrato);
@@ -625,26 +623,26 @@ sap.ui.define(
           if (filters.fatture) {
             posizioniFilter += ` and numero_fattura eq '${filters.fatture.oValue1}'`;
           }
-          let expandQuery = `dettaglio_fattura($filter=${posizioniFilter}),dettaglio_fattura($expand=riferimento_ddt),dettaglio_fattura/riferimento_ddt($expand=riga_fattura)`;
+          let expandQuery = `dettaglio_fattura($filter=${posizioniFilter}),dettaglio_fattura($expand=riferimento_ddt),dettaglio_fattura/riferimento_ddt($expand=riga_fattura)&$orderby=customer,data_ricezione`;
           await this.callData(this.getOwnerComponent().getModel("selfBillingV2"), "/Testata", aFilters, [expandQuery], "03", false);
         } // GESTIONE FILTRI DESADV
         else if ((oEvent && oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("desadv")) || (!oEvent && filterTab === "04")) {
           this.getModel("filtersModel").setSizeLimit(1000000);
           oFilterSet = this.getModel("filtersModel").getProperty("/desadv");
           let aFilters = mapper.buildFilters(oFilterSet, (key = "04"), operator);
-          await this.callData(this.getOwnerComponent().getModel("despatchAdviceV2"), "/Testata", aFilters, [], "04", false);
+          await this.callData(this.getOwnerComponent().getModel("despatchAdviceV2"), "/Testata", aFilters, [], "04", false,undefined,undefined,{ $orderby: "numero_idoc,numero_consegna" });
         } // GESTIONE FILTRI INVOICE
         else if ((oEvent && oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("invoice")) || (!oEvent && filterTab === "05")) {
           this.getModel("filtersModel").setSizeLimit(1000000);
           oFilterSet = this.getModel("filtersModel").getProperty("/invoice");
           let aFilters = mapper.buildFilters(oFilterSet, (key = "05"), operator);
-          await this.callData(this.getOwnerComponent().getModel("invoiceV2"), "/Invoice", aFilters, [], "05", false);
+          await this.callData(this.getOwnerComponent().getModel("invoiceV2"), "/Invoice", aFilters, [], "05", false,undefined,undefined,{ $orderby: "data_di_fatturazione,fattura_di_vendita"});
         } //GESTIONE FILTRI SCARTATI
         else if ((oEvent && oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("scartati")) || (!oEvent && filterTab === "06")) {
           this.getModel("filtersModel").setSizeLimit(1000000);
           oFilterSet = this.getModel("filtersModel").getProperty("/scartati");
           let aFilters = mapper.buildFilters(oFilterSet, (key = "06"), operator);
-          await this.callData(this.getOwnerComponent().getModel("fileScartatiV2"), "/FileScartati", aFilters, [], "06", false);
+          await this.callData(this.getOwnerComponent().getModel("fileScartatiV2"), "/FileScartati", aFilters, [], "06", false,undefined,undefined,{ $orderby: "filename,data_ricezione" })
         }
         this.hideBusy(0)
       },
@@ -660,18 +658,19 @@ sap.ui.define(
         return map[tabKey] || "/delivery";
       },
       //gestione CHIAMATE E BINDING X TAB
-      callData: async function (oModel, entity, aFilters, Expands, key, filtrato, top, skip) {
+      callData: async function (oModel, entity, aFilters, Expands, key, filtrato, top, skip, params = {}) {
         let metadata, modelMeta;
         try {
           const oPaginationModel = this.getModel("pagination");
           oPaginationModel.setProperty("/isLoading", true)
-          const params = {
+          const queryParams = {
             $top: top,
             $skip: skip,
-            $count: true
+            $count: true,
+            ...params
           };
 
-          metadata = await API.getEntity(oModel, entity, aFilters, Expands, params);
+          metadata = await API.getEntity(oModel, entity, aFilters, Expands, queryParams);
           if (key === "01") {
             let datiFiltrati = metadata.results.filter((x) => x.master !== null && x.posizioni.results.length > 0);
             if (filtrato) {
@@ -765,7 +764,7 @@ sap.ui.define(
         } catch (error) {
           MessageBox.error("Errore durante la ricezione dei dati");
         } finally {
-          this.sortCategories()
+          // this.sortCategories()
           this.onExpandFirstLevel()
           this.hideBusy(0);
         }
