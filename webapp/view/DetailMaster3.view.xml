@@ -437,7 +437,7 @@
                       >
                         <m:Label text="N. ordine di acquisto" />
                         <ui:template>
-                          <m:ObjectIdentifier text="{detailData>numero_ordine_acquisto}" />
+                          <m:ObjectIdentifier text="{path: 'detailData>numero_ordine_acquisto', formatter: '.formatter.formatterMultipleWhiteSpaces'}" />
                         </ui:template>
                       </ui:Column>
                       <ui:Column
