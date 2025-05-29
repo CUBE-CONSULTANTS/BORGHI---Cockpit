@@ -24,6 +24,7 @@ sap.ui.define(
             return oItem.getText().match(new RegExp(sTerm, "i")) || oItem.getKey().match(new RegExp(sTerm, "i"));
           });
         });
+        this._onScrollingDebounced = this._debounce(this.onScrolling.bind(this), 200)
       },
       _onObjectMatched: async function (oEvent) {
         this._resetPageModels()
