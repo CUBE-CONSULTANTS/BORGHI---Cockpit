@@ -623,8 +623,8 @@ sap.ui.define(
           if (filters.fatture) {
             posizioniFilter += ` and numero_fattura eq '${filters.fatture.oValue1}'`;
           }
-          let expandQuery = `dettaglio_fattura($filter=${posizioniFilter}),dettaglio_fattura($expand=riferimento_ddt),dettaglio_fattura/riferimento_ddt($expand=riga_fattura)&$orderby=customer,data_ricezione`;
-          await this.callData(this.getOwnerComponent().getModel("selfBillingV2"), "/Testata", aFilters, [expandQuery], "03", false);
+          let expandQuery = `dettaglio_fattura($filter=${posizioniFilter}),dettaglio_fattura($expand=riferimento_ddt),dettaglio_fattura/riferimento_ddt($expand=riga_fattura)`;
+          await this.callData(this.getOwnerComponent().getModel("selfBillingV2"), "/Testata", aFilters, [expandQuery], "03", false,undefined,undefined,{$orderby:"customer,data_ricezione"});
         } // GESTIONE FILTRI DESADV
         else if ((oEvent && oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("desadv")) || (!oEvent && filterTab === "04")) {
           this.getModel("filtersModel").setSizeLimit(1000000);
