@@ -273,7 +273,7 @@
       >
         <Label text="N. Ordine Acquisto" />
         <ui:template>
-          <ObjectIdentifier title="{master3>numero_ordine_acquisto}" />
+          <ObjectIdentifier title="{path:'master3>numero_ordine_acquisto', formatter: '.formatter.formatterMultipleWhiteSpaces'}" />
         </ui:template>
       </ui:Column>
       <ui:Column

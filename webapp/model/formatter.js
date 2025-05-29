@@ -97,6 +97,9 @@ sap.ui.define([
         return true
       }
       return false
+    },
+    formatterMultipleWhiteSpaces: function (title) {
+        return title?.replaceAll(" ", "\u00A0")
     }
   };
 });
