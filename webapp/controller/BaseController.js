@@ -535,7 +535,8 @@ sap.ui.define(
               currentPage: 0,
               totalCount: 0,
               isLoading: false,
-              hasMore: true
+              hasMore: true,
+              lastLoadedRow: 0
             });
           }
           const oPagination = this.getModel("pagination").getData();
@@ -587,7 +588,8 @@ sap.ui.define(
               currentPage: 0,
               totalCount: 0,
               isLoading: false,
-              hasMore: true
+              hasMore: true,
+              lastLoadedRow: 0
             });
           }
           const oPagination = this.getModel("pagination").getData();
@@ -770,7 +772,10 @@ sap.ui.define(
         }
       },
       onTreeScroll: function (oEvent) {
-
+        
+        this._onScrollingDebounced(oEvent)
+      },
+      onScrolling:function (oEvent){
         const oPagination = this.getModel("pagination").getData();
         const sSelectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
         let oTreeTable, sModelName;
@@ -786,7 +791,10 @@ sap.ui.define(
         const iVisibleRowCount = oTreeTable.getVisibleRowCount();
         const iTotalRows = this.getModel(sModelName).getData()?.length || 0;
         const iLoadThreshold = Math.floor(iVisibleRowCount * 0.3);
-        if ((iFirstVisibleRow + iVisibleRowCount) >= (iTotalRows - iLoadThreshold)) {
+        const iTriggerRow = iTotalRows - iLoadThreshold;
+        if ((iFirstVisibleRow + iVisibleRowCount >= iTriggerRow) &&
+            (iFirstVisibleRow > oPagination.lastLoadedRow)) {
+          this.getModel("pagination").setProperty("/lastLoadedRow", iFirstVisibleRow);
           this._loadMoreData();
         }
       },
@@ -821,13 +829,13 @@ sap.ui.define(
           oPaginationModel.setProperty("/isLoading", false);
         }
       },
-      // _debounce: function (fn, delay) {
-      //   let timer;
-      //   return function (...args) {
-      //     clearTimeout(timer);
-      //     timer = setTimeout(() => fn.apply(this, args), delay);
-      //   };
-      // },
+      _debounce: function (fn, delay) {
+        let timer;
+        return function (...args) {
+          clearTimeout(timer);
+          timer = setTimeout(() => fn.apply(this, args), delay);
+        };
+      },
       //DOWLOAD MAIN TABLE
       _otherFiltersActive: function (selectedKey, oAllFilters) {
         let oFilterSet;

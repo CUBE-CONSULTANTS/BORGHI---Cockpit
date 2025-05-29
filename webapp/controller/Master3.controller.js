@@ -42,6 +42,7 @@ sap.ui.define(
             return oItem.getText().match(new RegExp(sTerm, "i")) || oItem.getKey().match(new RegExp(sTerm, "i"));
           });
         });
+        this._onScrollingDebounced = this._debounce(this.onScrolling.bind(this), 200)
       },
 
       _onObjectMatched: async function (oEvent) {
@@ -64,7 +65,8 @@ sap.ui.define(
           currentPage: 0, 
           totalCount: 0,
           isLoading: false,
-          hasMore: true 
+          hasMore: true,
+          lastLoadedRow: 0
         });
         await this.onSearchData(undefined, selectedKey);
         this.onFiltersBuilding(oEvent, selectedKey);

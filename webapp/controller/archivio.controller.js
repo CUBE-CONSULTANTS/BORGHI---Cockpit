@@ -44,7 +44,8 @@ sap.ui.define(
           currentPage: 0, 
           totalCount: 0,
           isLoading: false,
-          hasMore: true 
+          hasMore: true,
+          lastLoadedRow: 0
         });
         await this.onSearchData(undefined, selectedKey);
         this.onFiltersBuilding(oEvent, selectedKey);
