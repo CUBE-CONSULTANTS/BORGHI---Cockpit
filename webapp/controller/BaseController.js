@@ -495,7 +495,17 @@ sap.ui.define(
           }
           if (filters.materiale) {
             posizioniFilter += posizioniFilter ? ` and ` : "";
-            posizioniFilter += `codice_cliente_materiale eq '${filters.materiale.oValue1}'`;
+              if (filters.materiale.oValue1.includes('/')) {
+              const parts = filters.materiale.oValue1.split('/');
+              const firstPart = parts[0];
+              const secondPart = parts[1];
+              posizioniFilter += posizioniFilter ? ` and ` : "";
+              posizioniFilter += `(contains(codice_cliente_materiale, '${firstPart}') and contains(codice_cliente_materiale, '${secondPart}'))`;
+            } else {
+              posizioniFilter += posizioniFilter ? ` and ` : "";
+              posizioniFilter += `codice_cliente_materiale eq '${filters.materiale.oValue1}'`;
+            }
+            // posizioniFilter += `codice_cliente_materiale eq '${filters.materiale.oValue1}'`;
           }
           if (filters.messaggio) {
             filtrato = true;
@@ -572,8 +582,15 @@ sap.ui.define(
           });
           let posizioniFilter = `archiviazione eq ${valPosArch}`;
           if (filters.materiale) {
-            posizioniFilter += ` and posizione_6_28 eq '${filters.materiale.oValue1}'`;
-          }
+            let value = filters.materiale.oValue1.replace(/'/g, "''")
+            if (value.includes('/')) {
+                const parts = value.split('/');
+                const conditions = parts.map(part => `contains(posizione_6_28, '${part}')`);
+                posizioniFilter += ` and (${conditions.join(' and ')})`;
+              } else {
+                posizioniFilter += ` and posizione_6_28 eq '${value}'`;
+              }          
+            }
           if (filters.reason) {
             posizioniFilter += ` and posizione_43_44 eq '${filters.reason.oValue1}'`;
           }
@@ -771,8 +788,7 @@ sap.ui.define(
           this.hideBusy(0);
         }
       },
-      onTreeScroll: function (oEvent) {
-        
+      onTreeScroll: function (oEvent) {    
         this._onScrollingDebounced(oEvent)
       },
       onScrolling:function (oEvent){
