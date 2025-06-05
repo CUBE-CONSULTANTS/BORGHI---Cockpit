@@ -208,7 +208,7 @@
           <ui:Column width="6rem">
 						<Label text="Num IDoc" />
 						<ui:template>
-							<Text text="{master3CO>numero_idoc}" wrapping="false" />
+							<Text text="{path: 'master3CO>numero_idoc', formatter: '.formatter.formatterIdocNumb'}" wrapping="false" />
 						</ui:template>
 					</ui:Column>
                     

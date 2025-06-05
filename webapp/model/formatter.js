@@ -100,6 +100,9 @@ sap.ui.define([
     },
     formatterMultipleWhiteSpaces: function (title) {
         return title?.replaceAll(" ", "\u00A0")
+    },
+    formatterIdocNumb: function (idocNumb){
+      return /^0+$/.test(idocNumb) ? '' : idocNumb;
     }
   };
 });

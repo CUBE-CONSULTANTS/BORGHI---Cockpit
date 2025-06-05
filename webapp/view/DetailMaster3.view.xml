@@ -97,7 +97,7 @@
               text="IDoc"
               design="Bold"
             />
-            <m:Text text="{detailData>/numero_idoc}" />
+            <m:Text text="{path:'detailData>/numero_idoc',formatter: '.formatter.formatterIdocNumb'}" />
           </m:VBox>
           <m:VBox>
             <m:Label
@@ -260,7 +260,7 @@
                       >
                         <m:Label text="N. IDoc" />
                         <ui:template>
-                          <m:ObjectIdentifier text="{detailData>numero_idoc}" />
+                          <m:ObjectIdentifier text="{path:'detailData>numero_idoc',formatter: '.formatter.formatterIdocNumb'}" />
                         </ui:template>
                       </ui:Column>
                       <ui:Column

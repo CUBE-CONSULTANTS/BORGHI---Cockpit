@@ -282,7 +282,7 @@
       >
         <Label text="N. IDoc" />
         <ui:template>
-          <ObjectIdentifier title="{master3>numero_idoc}" />
+          <ObjectIdentifier title="{path: 'master3>numero_idoc' , formatter: '.formatter.formatterIdocNumb' }" />
         </ui:template>
       </ui:Column>
       

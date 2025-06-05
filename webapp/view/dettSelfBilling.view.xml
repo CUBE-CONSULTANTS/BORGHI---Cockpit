@@ -438,7 +438,7 @@
                       >
                         <m:Label text="Num IDoc" />
                         <ui:template>
-                          <m:ObjectIdentifier text="{detailData>numero_idoc}" />
+                          <m:ObjectIdentifier text="{path: 'detailData>numero_idoc',formatter: '.formatter.formatterIdocNumb'}" />
                         </ui:template>
                       </ui:Column>
                       <ui:Column

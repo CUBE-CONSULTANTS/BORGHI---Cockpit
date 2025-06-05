@@ -146,7 +146,7 @@
         <Label text="Num iDoc" />
         <ui:template>
           <Text
-            text="{master3DesAdv>numero_idoc}"
+            text="{path : 'master3DesAdv>numero_idoc', formatter: '.formatter.formatterIdocNumb'}"
             wrapping="false"
           />
         </ui:template>
