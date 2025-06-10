@@ -154,7 +154,7 @@ sap.ui.define(
         }
       },
       //UTILITY X TUTTE LE TABELLE
-      userSort: function(){
+      userSort: function () {
         // this._userTriggeredSort = true;
         this.sortCategories();
         // this._userTriggeredSort = false;
@@ -178,7 +178,7 @@ sap.ui.define(
             break;
           case "04":
             oTable = this.byId("tableDes");
-            aSorters = this.sortTables(oTable, ["numero_idoc","numero_consegna"], selectedKey);
+            aSorters = this.sortTables(oTable, ["numero_idoc", "numero_consegna"], selectedKey);
             break;
           case "05":
             oTable = this.byId("tableInvoice");
@@ -193,7 +193,7 @@ sap.ui.define(
         }
       },
       sortTables: function (table, aSortFields, key) {
-        
+
         let oBinding = table.getBinding("rows");
         if (!oBinding) return;
         this._sortDirections = this._sortDirections || {};
@@ -203,10 +203,10 @@ sap.ui.define(
           bDescending = true;
           this._sortDirections[key] = bDescending;
           this._sortInitialized[key] = true;
-        } else{
+        } else {
           bDescending = !this._sortDirections[key];
           this._sortDirections[key] = bDescending;
-        } 
+        }
         const aSorters = aSortFields.map(field => new sap.ui.model.Sorter(field, bDescending));
         oBinding.sort(aSorters);
       },
@@ -252,7 +252,7 @@ sap.ui.define(
       },
       //NAVIGAZIONE VERSO VARIAZIONI
       navToAPP: function (oEvent) {
-        if(this.getRouter()._getLastMatchedRouteName() === 'Detail2Master3'){
+        if (this.getRouter()._getLastMatchedRouteName() === 'Detail2Master3') {
           const oLayoutModel = this.getOwnerComponent().getModel("layout")
           const sCloseMidColumnLayout = oLayoutModel.getProperty("/actionButtonsInfo/midColumn/closeColumn")
           this.getView().getParent().getParent().setLayout(sCloseMidColumnLayout)
@@ -495,7 +495,7 @@ sap.ui.define(
           }
           if (filters.materiale) {
             posizioniFilter += posizioniFilter ? ` and ` : "";
-              if (filters.materiale.oValue1.includes('/')) {
+            if (filters.materiale.oValue1.includes('/')) {
               const parts = filters.materiale.oValue1.split('/');
               const firstPart = parts[0];
               const secondPart = parts[1];
@@ -584,13 +584,13 @@ sap.ui.define(
           if (filters.materiale) {
             let value = filters.materiale.oValue1.replace(/'/g, "''")
             if (value.includes('/')) {
-                const parts = value.split('/');
-                const conditions = parts.map(part => `contains(posizione_6_28, '${part}')`);
-                posizioniFilter += ` and (${conditions.join(' and ')})`;
-              } else {
-                posizioniFilter += ` and posizione_6_28 eq '${value}'`;
-              }          
+              const parts = value.split('/');
+              const conditions = parts.map(part => `contains(posizione_6_28, '${part}')`);
+              posizioniFilter += ` and (${conditions.join(' and ')})`;
+            } else {
+              posizioniFilter += ` and posizione_6_28 eq '${value}'`;
             }
+          }
           if (filters.reason) {
             posizioniFilter += ` and posizione_43_44 eq '${filters.reason.oValue1}'`;
           }
@@ -643,25 +643,25 @@ sap.ui.define(
             posizioniFilter += ` and numero_fattura eq '${filters.fatture.oValue1}'`;
           }
           let expandQuery = `dettaglio_fattura($filter=${posizioniFilter}),dettaglio_fattura($expand=riferimento_ddt),dettaglio_fattura/riferimento_ddt($expand=riga_fattura)`;
-          await this.callData(this.getOwnerComponent().getModel("selfBillingV2"), "/Testata", aFilters, [expandQuery], "03", false,undefined,undefined,{$orderby:"customer,data_ricezione"});
+          await this.callData(this.getOwnerComponent().getModel("selfBillingV2"), "/Testata", aFilters, [expandQuery], "03", false, undefined, undefined, { $orderby: "customer,data_ricezione" });
         } // GESTIONE FILTRI DESADV
         else if ((oEvent && oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("desadv")) || (!oEvent && filterTab === "04")) {
           this.getModel("filtersModel").setSizeLimit(1000000);
           oFilterSet = this.getModel("filtersModel").getProperty("/desadv");
           let aFilters = mapper.buildFilters(oFilterSet, (key = "04"), operator);
-          await this.callData(this.getOwnerComponent().getModel("despatchAdviceV2"), "/Testata", aFilters, [], "04", false,undefined,undefined,{ $orderby: "numero_idoc,numero_consegna" });
+          await this.callData(this.getOwnerComponent().getModel("despatchAdviceV2"), "/Testata", aFilters, [], "04", false, undefined, undefined, { $orderby: "numero_idoc,numero_consegna" });
         } // GESTIONE FILTRI INVOICE
         else if ((oEvent && oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("invoice")) || (!oEvent && filterTab === "05")) {
           this.getModel("filtersModel").setSizeLimit(1000000);
           oFilterSet = this.getModel("filtersModel").getProperty("/invoice");
           let aFilters = mapper.buildFilters(oFilterSet, (key = "05"), operator);
-          await this.callData(this.getOwnerComponent().getModel("invoiceV2"), "/Invoice", aFilters, [], "05", false,undefined,undefined,{ $orderby: "data_di_fatturazione,fattura_di_vendita"});
+          await this.callData(this.getOwnerComponent().getModel("invoiceV2"), "/Invoice", aFilters, [], "05", false, undefined, undefined, { $orderby: "data_di_fatturazione,fattura_di_vendita" });
         } //GESTIONE FILTRI SCARTATI
         else if ((oEvent && oEvent.getParameters().selectionSet[0].getBindingInfo("value").parts[0].path.includes("scartati")) || (!oEvent && filterTab === "06")) {
           this.getModel("filtersModel").setSizeLimit(1000000);
           oFilterSet = this.getModel("filtersModel").getProperty("/scartati");
           let aFilters = mapper.buildFilters(oFilterSet, (key = "06"), operator);
-          await this.callData(this.getOwnerComponent().getModel("fileScartatiV2"), "/FileScartati", aFilters, [], "06", false,undefined,undefined,{ $orderby: "filename,data_ricezione" })
+          await this.callData(this.getOwnerComponent().getModel("fileScartatiV2"), "/FileScartati", aFilters, [], "06", false, undefined, undefined, { $orderby: "filename,data_ricezione" })
         }
         this.hideBusy(0)
       },
@@ -788,10 +788,10 @@ sap.ui.define(
           this.hideBusy(0);
         }
       },
-      onTreeScroll: function (oEvent) {    
+      onTreeScroll: function (oEvent) {
         this._onScrollingDebounced(oEvent)
       },
-      onScrolling:function (oEvent){
+      onScrolling: function (oEvent) {
         const oPagination = this.getModel("pagination").getData();
         const sSelectedKey = this.getView().byId("idIconTabBar").getSelectedKey();
         let oTreeTable, sModelName;
@@ -809,7 +809,7 @@ sap.ui.define(
         const iLoadThreshold = Math.floor(iVisibleRowCount * 0.3);
         const iTriggerRow = iTotalRows - iLoadThreshold;
         if ((iFirstVisibleRow + iVisibleRowCount >= iTriggerRow) &&
-            (iFirstVisibleRow > oPagination.lastLoadedRow)) {
+          (iFirstVisibleRow > oPagination.lastLoadedRow)) {
           this.getModel("pagination").setProperty("/lastLoadedRow", iFirstVisibleRow);
           this._loadMoreData();
         }
@@ -1245,18 +1245,20 @@ sap.ui.define(
         let testate = [];
         let selectedPos = [];
         let flag = false;
-        let clonedItems
         if (indices.length !== 0) {
-          let aSelectedItems = indices.map(function (iIndex) {  
-           return structuredClone(table.getContextByIndex(iIndex).getObject())     
+          let aSelectedItems = indices.map(function (iIndex) {
+            return structuredClone(table.getContextByIndex(iIndex).getObject())
           });
-           
           aSelectedItems = aSelectedItems
             .map((item) => {
               if (item.posizioni) {
-                item.posizioni = item.posizioni.filter((pos) => pos.stato !== "53" && pos.stato !== "64" && pos.stato !== "50");
+                if (action === "elab") {
+                  item.posizioni = item.posizioni.filter((pos) => pos.stato !== "53" && pos.stato !== "64" && pos.stato !== "50");
+                } else if (action === "delete") {
+                  item.posizioni = item.posizioni.filter((pos) => pos.stato !== "53" && pos.stato !== "64");
+                }
               }
-              if ((item.stato !== "53" && item.stato !== "64" && item.stato !== "50") || (item.posizioni && item.posizioni.length > 0)) {
+              if ((item.stato !== "53" && item.stato !== "64" && (action === "delete" || item.stato !== "50")) || (item.posizioni && item.posizioni.length > 0)) {
                 return item;
               }
               return null;
@@ -1290,7 +1292,7 @@ sap.ui.define(
                     testate.forEach((x) => {
                       if (x.hasOwnProperty("posizioni")) {
                         x.posizioni.forEach((pos) => (pos["numero_progressivo_invio"] = x.numero_progressivo_invio));
-                       selectedPos = selectedPos.concat(x.posizioni);
+                        selectedPos = selectedPos.concat(x.posizioni);
                       } else if (x.hasOwnProperty("posizioni_testata")) {
                         x.posizioni_testata.forEach((pos) => (pos["numero_progressivo_invio"] = x.progressivo_invio));
                         selectedPos = selectedPos.concat(x.posizioni_testata);
@@ -1931,7 +1933,7 @@ sap.ui.define(
           detailPath = oEvent.getSource().getParent().getBindingContext("master3").getPath();
           detail = this.getModel("master3").getProperty(`${detailPath}`);
 
-          if (level) {      
+          if (level) {
             this.getOwnerComponent().getModel("datiAppoggio").setProperty("/posizioneCorrente", detail);
             let oNextUIState;
             this.getOwnerComponent()
